@@ -116,21 +116,21 @@ urlpatterns = [
 
 Теперь можно открыть API в вашем браузере по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/), и увидеть ваше API 'users'. Так же, если вы воспользуетесь кнопкой 'Login' в верхнем правом углу, вы так же сможете добавлять, изменять и удалять пользователей из системы.
 
-## Быстрый старт {#quickstart}
+## Быстрый старт
 
-Не можете дождаться, чтобы начать? Руководство по [быстрому старту](/bistrii-start.md) - быстрейший способ.
+Не можете дождаться, чтобы начать? Руководство по [быстрому старту](quick-start.md) - быстрейший способ.
 
-## Руководство {#tutorial}
+## Руководство
 
 Руководство проведет вас через все этапы настройки DRF. Это займет немного времени, однако вы получите полное понимание того, как все компоненты работают друг с другом и данное руководство крайне рекомендовано к прочтению.
 
-1. [Сериализация](/bistrii-start/serializatsiya.md)
-2. [Запросы и Ответы](http://www.django-rest-framework.org/tutorial/2-requests-and-responses/)
-3. [Представления - классы](http://www.django-rest-framework.org/tutorial/3-class-based-views/)
-4. [Авторизация и права доступа](http://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/)
-5. [Отношения и связанные API](http://www.django-rest-framework.org/tutorial/5-relationships-and-hyperlinked-apis/)
-6. [Наборы представлений\(Viewsets\) и маршрутизаторы](http://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/)
-7. [Схемы и клиентские библиотеки](http://www.django-rest-framework.org/tutorial/7-schemas-and-client-libraries/)
+1. [Сериализация](quick-start/serialization.md)
+2. [Запросы-ответы](quick-start/request-response.md)
+3. [Представления-классы](quick-start/class-based-views.md)
+4. [Аутентификация/права доступа](quick-start/auth-and-perm.md)
+5. [Отношения и связи](quick-start/relations-and-hypelinks.md)
+6. [Наборы представлений и роутеры](quick-start/viewsets-and-routers.md)
+7. [Схемы и клиентские библиотеки](quick-start/schemas-and-client-libs.md)
 
 Так же есть пример работающего API законченного руководства для тестовых целей, [доступен здесь](http://restframework.herokuapp.com/).
 
@@ -166,7 +166,7 @@ urlpatterns = [
 * [Testing](http://www.django-rest-framework.org/api-guide/testing/)
 * [Settings](http://www.django-rest-framework.org/api-guide/settings/)
 
-## Статьи {#topics}
+## Статьи
 
 Основные руководства для использующих DRF.
 
@@ -195,9 +195,9 @@ urlpatterns = [
 * [Release Notes](http://www.django-rest-framework.org/topics/release-notes/)
 * [Jobs](http://www.django-rest-framework.org/topics/jobs/)
 
-## Разработка {#development}
+## Разработка
 
-Прочтите [руководство для разработчиков](https://www.gitbook.com/book/ilyachch/django-rest-framework-ru/edit#) для получения информации о том, как склонировать репозиторий, запустить набор тестов и отправить изменения обратно в DRF.
+Прочтите [руководство для разработчиков](http://www.django-rest-framework.org/topics/contributing/) для получения информации о том, как склонировать репозиторий, запустить набор тестов и отправить изменения обратно в DRF.
 
 ## Поддержка
 

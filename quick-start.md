@@ -175,7 +175,7 @@ bash: curl -H 'Accept: application/json; indent=4' -u admin:password123 http://1
         },
         {
             "email": "tom@example.com",
-            "groups": [                ],
+            "groups": [],
             "url": "http://127.0.0.1:8000/users/2/",
             "username": "tom"
         }
@@ -203,7 +203,7 @@ HTTP/1.1 200 OK
         },
         {
             "email": "tom@example.com",
-            "groups": [                ],
+            "groups": [],
             "url": "http://127.0.0.1:8000/users/2/",
             "username": "tom"
         }
@@ -219,5 +219,5 @@ HTTP/1.1 200 OK
 
 Это было легко=\)
 
-Если вы хотите изучить, как все части DRF работают друг с другом, продолжайте читать [руководство](/bistrii-start/serializatsiya.md), или начните изучать путеводитель по API.
+Если вы хотите изучить, как все части DRF работают друг с другом, продолжайте читать [руководство](quick-start/serialization.md), или начните изучать путеводитель по API.
 
