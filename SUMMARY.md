@@ -9,7 +9,10 @@
   * [Представления-классы](quick-start/class-based-views.md)
   * [Аутентификация/права доступа](quick-start/auth-and-perm.md)
 
-## Methods
+## Справочник предоставляемого API
 
 * [Defining Methods](methods.md)
 
+## Статьи
+
+* [Статьи](topics.md)
