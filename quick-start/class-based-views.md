@@ -1,10 +1,12 @@
 # Урок 3: Представления-классы
 
-Мы также можем написать наши представления API, используя представления-классы, а не представления-функции. Как мы далее убедимся это мощный паттерн, который позволяет многократно использовать общий функционал и соблюдать принцип DRY (Don't repeat youself).
+Мы также можем написать наши представления API, используя представления-классы, а не представления-функции. Как мы далее убедимся, это мощный паттерн, который позволяет многократно использовать общий функционал и соблюдать принцип [DRY](https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself) (Don't repeat youself).
 
-Rewriting our API using class-based views
-We'll start by rewriting the root view as a class-based view. All this involves is a little bit of refactoring of views.py.
+## Переписываем наш API используя предствления-классы
 
+Начнем с того, что перепишем основные предсталения, как представления-классы. Придется переписать `snippets/views.py`.
+
+```py
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from django.http import Http404
@@ -28,8 +30,11 @@ class SnippetList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-So far, so good. It looks pretty similar to the previous case, but we've got better separation between the different HTTP methods. We'll also need to update the instance view in views.py.
+```
 
+Наше представление выглядит очень похоже на его предыдущее состояние, однако у нас теперь более наглядное разделение используемых HTTP методов. Теперь нужно обновить представление, отвечающее за представление конкретного объекта.
+
+```py
 class SnippetDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.
@@ -57,10 +62,13 @@ class SnippetDetail(APIView):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-That's looking good. Again, it's still pretty similar to the function based view right now.
+```
 
-We'll also need to refactor our urls.py slightly now that we're using class-based views.
+Это по преднему очень похоже на предыдущее состояние.
 
+Так же нам необходимо обновить `snippets/urls.py`, поскольку мы теперь используем представления классы.
+
+```py
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from snippets import views
@@ -71,15 +79,19 @@ urlpatterns = [
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
-Okay, we're done. If you run the development server everything should be working just as before.
+```
 
-Using mixins
-One of the big wins of using class-based views is that it allows us to easily compose reusable bits of behaviour.
+Теперь, если вы запустите сервер, все должно работать точно, как раньше.
 
-The create/retrieve/update/delete operations that we've been using so far are going to be pretty similar for any model-backed API views we create. Those bits of common behaviour are implemented in REST framework's mixin classes.
+## Используем примеси
 
-Let's take a look at how we can compose the views by using the mixin classes. Here's our views.py module again.
+Одним из решающих преимуществ предсталений-классов является возможность выделять переиспользуемые элементы.
 
+Операции создания/просмотра/изменения/удаления, которые мы используем, по сути, одинаковы для всех представлений. Эти операции реализованы в классах-примесях DRF.
+
+Приведем пример того, как мы можем создать представление используя классы-примеси. Ниже представлен обновленный `snippets/views.py`:
+
+```py
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework import mixins
@@ -96,10 +108,13 @@ class SnippetList(mixins.ListModelMixin,
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
-We'll take a moment to examine exactly what's happening here. We're building our view using GenericAPIView, and adding in ListModelMixin and CreateModelMixin.
+```
 
-The base class provides the core functionality, and the mixin classes provide the .list() and .create() actions. We're then explicitly binding the get and post methods to the appropriate actions. Simple enough stuff so far.
+Давайте рассмотрим, что сейчас произошло. Мы создаем наше представление, используя класс `GenericAPIView` и добавляя классы-примеси `ListModelMixin` и `CreateModelMixin`.
 
+Базовый класс реализует основной функционал, а классы-примеси реаллизуют методы `.list()` и `.create()`. Затем мы явно привязываем методы `GET` и `POST` к предоставляемым методам. Достаточно просто.
+
+```py
 class SnippetDetail(mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
@@ -115,11 +130,15 @@ class SnippetDetail(mixins.RetrieveModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
-Pretty similar. Again we're using the GenericAPIView class to provide the core functionality, and adding in mixins to provide the .retrieve(), .update() and .destroy() actions.
+```
 
-Using generic class-based views
-Using the mixin classes we've rewritten the views to use slightly less code than before, but we can go one step further. REST framework provides a set of already mixed-in generic views that we can use to trim down our views.py module even more.
+Здесь мы поступили подобным образом. Снова использовали базовый класс `GenericAPIView` и добавили примеси, реализующие методы `.retrieve()`, `.update()` и `.destroy()`.
 
+## Используем встроенные представления-классы
+
+Используя встроенные классы-примеси мы переписали представления, используя очень мало кода, по сравнению с предыдущими реализациями, однако мы можем зайти еще дальше. DRF предоставляет набор классов, в которых уже содержатся примеси, которые мы можем использовать, чтобы сократить модуль `snippets/views.py` еще сильнее.
+
+```py
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework import generics
@@ -133,6 +152,8 @@ class SnippetList(generics.ListCreateAPIView):
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-Wow, that's pretty concise. We've gotten a huge amount for free, and our code looks like good, clean, idiomatic Django.
+```
 
-Next we'll move onto part 4 of the tutorial, where we'll take a look at how we can deal with authentication and permissions for our API.
+Вот теперь это выглядит достаточно лаконично. Мы получили очень много функционала не прикладывая усилий. 
+
+В [4 уроке](quick-start/auth-and-perm.md) этого руководства мы рассмотрим вопросы авторизации и прав доступа к нашему API.
