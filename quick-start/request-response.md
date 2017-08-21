@@ -179,7 +179,7 @@ http http://127.0.0.1:8000/snippets.api   # ФОрмат браузерной в
 Так же мы можем управлять форматом запроса, который мы отправили, используя заголовок `Content-Type`.
 
 ```py
-# POST using form data
+# POST запрос используя данные формы
 http --form POST http://127.0.0.1:8000/snippets/ code="print 123"
 
 {
@@ -191,7 +191,7 @@ http --form POST http://127.0.0.1:8000/snippets/ code="print 123"
   "style": "friendly"
 }
 
-# POST using JSON
+# POST запрос используя JSON
 http --json POST http://127.0.0.1:8000/snippets/ code="print 456"
 
 {
@@ -217,4 +217,4 @@ http --json POST http://127.0.0.1:8000/snippets/ code="print 456"
 <!-- See the browsable api topic for more information about the browsable API feature and how to customize it. -->
 ## Что дальше?
 
-В уроке 3, мы будем использовать представления-классы(class-based views, CBV) и посмотрим, как встроенные представления уменьшат количесво необходимого кода.
+В [уроке 3](class-based-views.md), мы будем использовать представления-классы(class-based views, CBV) и посмотрим, как встроенные представления уменьшат количесво необходимого кода.
