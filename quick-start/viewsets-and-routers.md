@@ -1,27 +1,35 @@
-Tutorial 6: ViewSets & Routers
-REST framework includes an abstraction for dealing with ViewSets, that allows the developer to concentrate on modeling the state and interactions of the API, and leave the URL construction to be handled automatically, based on common conventions.
+# Урок 6: наборы представлений и маршрутизаторы
 
-ViewSet classes are almost the same thing as View classes, except that they provide operations such as read, or update, and not method handlers such as get or put.
+DRF включает в себя абстракцию для работы с наборами представлений(`ViewSets`), которая позволяет разработчику сконцентрироваться на моделировании состояния и взимодействии с API, а URL адреса сформировать автоматически, основываясь на общих соглашениях.
 
-A ViewSet class is only bound to a set of method handlers at the last moment, when it is instantiated into a set of views, typically by using a Router class which handles the complexities of defining the URL conf for you.
+Наборы представлений - почти то же самое, что и классы представлений, только предоставляют они операции, такие как чтение или обновление, а не методы, такие как `GET` или `PUT`.
 
-Refactoring to use ViewSets
-Let's take our current set of views, and refactor them into view sets.
+Класс набора представлений привязывается к обработчикам методов в момент создания и превращения в множество представлений, что обычно происходит в момент, когда класс `Router` обрабатывает и создает конфигурацию URL-ов для вас.
+<!--A ViewSet class is only bound to a set of method handlers at the last moment, when it is instantiated into a set of views, typically by using a Router class which handles the complexities of defining the URL conf for you.-->
 
-First of all let's refactor our UserList and UserDetail views into a single UserViewSet. We can remove the two views, and replace them with a single class:
+## Изменение для использования наборов представлений
 
+Давайте возьмем наше множество представлений и переделаем их в набор представлений.
+
+Для начала, давайте переделаем наши классы `UserList` и `UserDetail` в один `UserViewSet`. Мы можем убрать два представления и заменить их одним классом:
+
+```py
 from rest_framework import viewsets
+
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    This viewset automatically provides `list` and `detail` actions.
+    Этот набор представлений автоматически создает действия `list` и `detail`.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-Here we've used the ReadOnlyModelViewSet class to automatically provide the default 'read-only' operations. We're still setting the queryset and serializer_class attributes exactly as we did when we were using regular views, but we no longer need to provide the same information to two separate classes.
+```
 
-Next we're going to replace the SnippetList, SnippetDetail and SnippetHighlight view classes. We can remove the three views, and again replace them with a single class.
+Здесь мы использовали класс `ReadOnlyModelViewSet` для обеспечения операций только на чтение. Мы по прежнему указываем запрос(`queryset`) и класс сериализатора, точно так же, как когда писали обычные предславления, но нам больше нет необходимости дублировать эту информацию в двух разных классах.
 
+Теперь мы собираемся заменить классы `SnippetList`, `SnippetDetail` и `SnippetHighlight`. Мы можем убрать три представления и заменить их одним классом.
+
+```py
 from rest_framework.decorators import detail_route
 
 class SnippetViewSet(viewsets.ModelViewSet):
@@ -43,19 +51,23 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-This time we've used the ModelViewSet class in order to get the complete set of default read and write operations.
+```
 
-Notice that we've also used the @detail_route decorator to create a custom action, named highlight. This decorator can be used to add any custom endpoints that don't fit into the standard create/update/delete style.
+На этот раз мы использовали класс `ModelViewSet` для того, чтобы получить набор стандартных операций чтения и записи.
 
-Custom actions which use the @detail_route decorator will respond to GET requests by default. We can use the methods argument if we wanted an action that responded to POST requests.
+Обратите внимание, что мы использовали декоратор `@detail_route`, чтобы создать собственную операцию, названную `highlight`. Этот декоратор используется для того, чтобы создать собственные конечные точки, которых нет среди стандартных операций создания/обновления/удаления.
 
-The URLs for custom actions by default depend on the method name itself. If you want to change the way url should be constructed, you can include url_path as a decorator keyword argument.
+Собственные действия, которые используют декоратор `@detail_route`, по умолчанию обрабатывают `GET` запрос. Мы можем использовать аргумент метода, если хотим, чтобы действие обрабатывало `POST` запросы.
 
-Binding ViewSets to URLs explicitly
-The handler methods only get bound to the actions when we define the URLConf. To see what's going on under the hood let's first explicitly create a set of views from our ViewSets.
+URL адреса для собственных действий по умолчанию зависят от названия метода. Если вы хотите изменить правило, как URL должен быть создан, вы можете включить `url_path` как именованый аргумент декоратора.
 
-In the urls.py file we bind our ViewSet classes into a set of concrete views.
+## Явное связывание наборов представлений и URL адресов
 
+Методы обработчика связываются с действиями когда мы определяем конфигурацию URL. Чтобы увидеть, что происходит аод капотом, давайте сначала явно создадим множество представлений из нашего набора представлений(`ViewSet`).
+
+В `snippet/urls.py` мы связываем наши классы `ViewSet` в множество конкретных представлений.
+
+```py
 from snippets.views import SnippetViewSet, UserViewSet, api_root
 from rest_framework import renderers
 
@@ -78,10 +90,13 @@ user_list = UserViewSet.as_view({
 user_detail = UserViewSet.as_view({
     'get': 'retrieve'
 })
-Notice how we're creating multiple views from each ViewSet class, by binding the http methods to the required action for each view.
+```
 
-Now that we've bound our resources into concrete views, we can register the views with the URL conf as usual.
+Заметьте, как мы создаем множественные представления для каждого класса `ViewSet`, связывая методы с требуемыми действиями для каждого представления.
 
+Теперь, связав наши ресурсы в конкретными представлениями, мы можем зарегистрировать их в конфигурации URL, как обычно.
+
+```py
 urlpatterns = format_suffix_patterns([
     url(r'^$', api_root),
     url(r'^snippets/$', snippet_list, name='snippet-list'),
@@ -90,11 +105,15 @@ urlpatterns = format_suffix_patterns([
     url(r'^users/$', user_list, name='user-list'),
     url(r'^users/(?P<pk>[0-9]+)/$', user_detail, name='user-detail')
 ])
-Using Routers
-Because we're using ViewSet classes rather than View classes, we actually don't need to design the URL conf ourselves. The conventions for wiring up resources into views and urls can be handled automatically, using a Router class. All we need to do is register the appropriate view sets with a router, and let it do the rest.
+```
 
-Here's our re-wired urls.py file.
+## Используя маршрутизаторы
 
+Поскольку мы используем наборы представлений(`ViewSet`), а не обычные представления-классы, мы, ыообще-то, можем не проектировать конфигурацию URL. Вся конфигурация может быть создана автоматически, используя класс `Router`. Все, что нам нужно, это зарегистрировать наборы форм с префиксом, остальное маршрутизатор сделаем сам за нас.
+
+Вот наш новый, переписанный файл `snippets/urls.py`:
+
+```py
 from django.conf.urls import url, include
 from snippets import views
 from rest_framework.routers import DefaultRouter
@@ -110,13 +129,17 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
-Registering the viewsets with the router is similar to providing a urlpattern. We include two arguments - the URL prefix for the views, and the viewset itself.
+```
 
-The DefaultRouter class we're using also automatically creates the API root view for us, so we can now delete the api_root method from our views module.
+Регистрация наборов представлений в маршрутизаторе идентична созданию шаблонов URL адресов. Мы включаем два аргумента - URL префикс и, собственно, набор представлений.
 
-Trade-offs between views vs viewsets
-Using viewsets can be a really useful abstraction. It helps ensure that URL conventions will be consistent across your API, minimizes the amount of code you need to write, and allows you to concentrate on the interactions and representations your API provides rather than the specifics of the URL conf.
+Класс `DefaultRouter`, который мы используем, автоматически создает корень API, так что мы можем удалить метод `api_root` из модуля представлений.
 
-That doesn't mean it's always the right approach to take. There's a similar set of trade-offs to consider as when using class-based views instead of function based views. Using viewsets is less explicit than building your views individually.
 
-In part 7 of the tutorial we'll look at how we can add an API schema, and interact with our API using a client library or command line tool.
+## Компромис между представлениями и наборами представлений
+
+Использование наборов представлений может быть очень полезной абстракцией. Это позволяет быть уверенным в том, что принцип построения API будет одинаков для всего вашего API, уменьшает количество необходимого кода и позволяет сконцентрироваться взаимодействии и представлении данных, а не на специфике конфигурации URL.
+
+Однако, это не означает, что это всегда правильно. Бывают ситуации, когда использование представлений-функций более оправдано, чем использование представлений-классов. Так и с наборами представлений. Их использование менее явно, чем создание каждого отдельного представления.
+
+В [уроке 7](schemas-and-client-libs.md) данного руководства мы посмотрим на то, как мы можем добавить схему API и взаимодействовать с API, используя клиентские библиотеки или командную строку.
