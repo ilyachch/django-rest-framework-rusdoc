@@ -138,7 +138,7 @@ urlpatterns = [
 
 Навигатор по API - исчерпывающее руководство по всему функционалу, предоставляемому DRF.
 
-* [Requests](http://www.django-rest-framework.org/api-guide/requests/)
+* [Requests](api-navigation/requests.md)
 * [Responses](http://www.django-rest-framework.org/api-guide/responses/)
 * [Views](http://www.django-rest-framework.org/api-guide/views/)
 * [Generic views](http://www.django-rest-framework.org/api-guide/generic-views/)
