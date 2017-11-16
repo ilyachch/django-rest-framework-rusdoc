@@ -142,7 +142,7 @@ urlpatterns = [
 * [Responses](api-navigation/responses.md)
 * [Views](api-navigation/views.md)
 * [Generic views](api-navigation/generic-views.md)
-* [Viewsets](http://www.django-rest-framework.org/api-guide/viewsets/)
+* [Viewsets](api-navigation/viewsets.md)
 * [Routers](http://www.django-rest-framework.org/api-guide/routers/)
 * [Parsers](http://www.django-rest-framework.org/api-guide/parsers/)
 * [Renderers](http://www.django-rest-framework.org/api-guide/renderers/)
