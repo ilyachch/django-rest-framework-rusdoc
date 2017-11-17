@@ -61,7 +61,7 @@ url(r'^/users/', ListCreateAPIView.as_view(queryset=User.objects.all(), serializ
 **Пагинация:**
 Следующие атрибуты используются для управлении пагинацией при использовании list views.
 
-* `pagination_class` - класс пагинации, который нужно использовать при нумерации результатов list. По умолчанию принимает те же значения, что и настройка `DEFAULT_PAGINATION_CLASS`, а именно `'rest_framework.pagination.PageNumberPagination'`. Настройка `pagination_class=None` отключает пагианцию в данном представлении.
+* `pagination_class` - класс пагинации, который нужно использовать при постраничном выводе результатов list. По умолчанию принимает те же значения, что и настройка `DEFAULT_PAGINATION_CLASS`, а именно `'rest_framework.pagination.PageNumberPagination'`. Настройка `pagination_class=None` отключает пагианцию в данном представлении.
 
 **Фильтрация**
 
@@ -169,8 +169,8 @@ def perform_create(self, serializer):
 
 * `get_serializer_context(self)` - возвращает словарь с любым дополнительным контекстом, который должен быть предоставлен сериализатору. По умолчанию включает ключи'request', 'view' и 'format'.
 * `get_serializer(self, instance=None, data=None, many=False, partial=False)` - Возвращает сериализованный экземпляр.
-* `get_paginated_response(self, data)` - Возвращает нумерованный объект `Response`.
-* `paginate_queryset(self, queryset)` - Нумерует queryset как необходимо, либо возвращая объект страницы, либо `None`, если пагинация не настроена для данного представления.
+* `get_paginated_response(self, data)` - Постранично выводит объект `Response`.
+* `paginate_queryset(self, queryset)` - Постранично выводит queryset, либо возвращает объект страницы, либо `None`, если пагинация не настроена для данного представления.
 * `filter_queryset(self, queryset)` - При наличии queryset фильтруего его с помощью фильтров бэкэнда, возвращая новый  queryset.
 
 
