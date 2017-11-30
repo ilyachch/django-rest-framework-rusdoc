@@ -138,15 +138,15 @@ urlpatterns = [
 
 Навигатор по API - исчерпывающее руководство по всему функционалу, предоставляемому DRF.
 
-* [Requests](api-navigation/requests.md)
-* [Responses](api-navigation/responses.md)
-* [Views](api-navigation/views.md)
-* [Generic views](api-navigation/generic-views.md)
+* [Запросы](api-navigation/requests.md)
+* [Ответы](api-navigation/responses.md)
+* [Представления](api-navigation/views.md)
+* [Общие представления](api-navigation/generic-views.md)
 * [Viewsets](api-navigation/viewsets.md)
-* [Routers](api-navigation/routers.md)
-* [Parsers](api-navigation/parsers.md)
-* [Renderers](http://www.django-rest-framework.org/api-guide/renderers/)
-* [Serializers](http://www.django-rest-framework.org/api-guide/serializers/)
+* [Маршрутизаторы](api-navigation/routers.md)
+* [Парсеры](api-navigation/parsers.md)
+* [Рендеры](api-navigation/renders.md)
+* [Cериализаторы](api-navigation/serializers.md)
 * [Serializer fields](http://www.django-rest-framework.org/api-guide/fields/)
 * [Serializer relations](http://www.django-rest-framework.org/api-guide/relations/)
 * [Validators](http://www.django-rest-framework.org/api-guide/validators/)
