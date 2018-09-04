@@ -128,7 +128,7 @@ urlpatterns = [
 2. [Запросы-ответы](quick-start/request-response.md)
 3. [Представления-классы](quick-start/class-based-views.md)
 4. [Аутентификация/права доступа](quick-start/auth-and-perm.md)
-5. [Отношения и связи](quick-start/relations-and-hypelinks.md)
+5. [Отношения и связи](quick-start/relations-and-hyperlinks.md)
 6. [Наборы представлений и роутеры](quick-start/viewsets-and-routers.md)
 7. [Схемы и клиентские библиотеки](quick-start/schemas-and-client-libs.md)
 

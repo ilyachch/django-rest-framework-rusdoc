@@ -43,7 +43,7 @@ cd tutorial
 python manage.py startapp snippets
 ```
 
-Для продолжения работы мы должны добавить наше новое приложение snippets и `rest_framework` в секцию `INSTALLED_APPS`. Измените модуль `tutorial/settings.py`:
+Для продолжения работы мы должны добавить наше новое приложение snippets и `rest_framework` в секцию `INSTALLED_APPS`. Измените модуль `settings.py`:
 
 ```py
 INSTALLED_APPS = (
@@ -93,7 +93,7 @@ python manage.py migrate
 
 Первая вещь, которую нам надо сделать для нашего API, это создать способ сериализации и десериализации объектов модели `Snippet` в такие формы, как, например, JSON. Мы можем сделать это описав сериализатор и работать с ним подобно тому, как мы работаем с Django формами.
 
-Создайте модуль `serializers.py` в пакете `tutorial/snippets`.
+Создайте модуль `serializers.py` в пакете `snippets`.
 
 ```py
 from rest_framework import serializers
@@ -321,7 +321,7 @@ urlpatterns = [
 ]
 ```
 
-Так же мы должны привязать данный диспетчер URL к корневому. Для этого зайдите в `tutorial/urls.py` и подключите URL диспетчер нашего приложения:
+Так же мы должны привязать данный диспетчер URL к корневому. Для этого зайдите в `urls.py` и подключите URL диспетчер нашего приложения:
 
 ```py
 from django.conf.urls import url, include

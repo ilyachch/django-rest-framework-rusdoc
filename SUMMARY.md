@@ -8,7 +8,7 @@
   * [Запросы-ответы](quick-start/request-response.md)
   * [Представления-классы](quick-start/class-based-views.md)
   * [Аутентификация/права доступа](quick-start/auth-and-perm.md)
-  * [Отношения и связи](quick-start/relations-and-hypelinks.md)
+  * [Отношения и связи](quick-start/relations-and-hyperlinks.md)
   * [Наборы представлений и роутеры](quick-start/viewsets-and-routers.md)
   * [Схемы и клиентские библиотеки](quick-start/schemas-and-client-libs.md)
 * Навигация по API:

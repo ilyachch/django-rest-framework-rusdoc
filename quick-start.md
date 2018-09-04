@@ -47,7 +47,7 @@ python manage.py createsuperuser
 
 ## Сериализаторы
 
-Для начала мы определим несколько сериализаторов. Создайте модуль `serializers.py`, расположенный в `tutorial/quickstart`, который мы будем использовать для представления наших данных.
+Для начала мы определим несколько сериализаторов. Создайте модуль `serializers.py`, расположенный в `quickstart`, который мы будем использовать для представления наших данных.
 
 ```py
 from django.contrib.auth.models import User, Group 
@@ -69,7 +69,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 ## Представления
 
-Теперь мы добавим несколько представлений. Откройте `tutorial/quickstart/views.py` и напишите:
+Теперь мы добавим несколько представлений. Откройте `quickstart/views.py` и напишите:
 
 ```py
 from django.contrib.auth.models import User, Group
@@ -101,7 +101,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 ## URL-ы
 
-Теперь давайте привяжем к нашему API URL адреса. Заходим в `tutorial/urls.py`:
+Теперь давайте привяжем к нашему API URL адреса. Заходим в `urls.py`:
 
 ```py
 from django.conf.urls import url, include

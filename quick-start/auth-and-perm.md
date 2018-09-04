@@ -159,7 +159,7 @@ permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 Мы можем добавить представление авторизации, изменив корневой диспетчер URL-ов.
 
-Добавьте следующее в `tutorial/urls.py`:
+Добавьте следующее в `urls.py`:
 
 ```py
 from django.conf.urls import include
