@@ -211,3 +211,17 @@ urlpatterns = [
 
 Отправьте описание проблемы по почте [rest-framework-security@googlegroups.com](mailto:rest-framework-security@googlegroups.com). Руководители проекта будут работать с вами для решения любых подобных проблем.
 
+-------------------
+## Авторы перевода
+
+* [Ilya Chichak](https://github.com/ilyachch/)
+
+## Помощь в переводе
+* [https://github.com/pymq](https://github.com/pymq)
+* [https://github.com/rufatpro](https://github.com/rufatpro)
+
+Пожалуйста, открывая Pull Request, указывайте меня в качестве ревьюера, так я буду узнавать об этом моментально.
+
+Спасибо всем за помощь в переводе!
+
+Перевод производится с помощью утилиты [md_docs-trans-app](https://github.com/ilyachch/md_docs-trans-app)
