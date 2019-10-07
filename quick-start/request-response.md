@@ -169,7 +169,7 @@ http http://127.0.0.1:8000/snippets/ Accept:application/json  # Request JSON
 http http://127.0.0.1:8000/snippets/ Accept:text/html         # Request HTML
 ```
 
-Или с помощью добавления в конец суффикса формата:
+Или с помощью добавления в конец расширения файла для формата:
 
 ```
 http http://127.0.0.1:8000/snippets.json  # JSON Формат
