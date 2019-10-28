@@ -11,6 +11,8 @@ Django REST framework \(DRF\) - мощный и гибкий инструмен�
 * Расширенная документация и [отличная поддержка сообщества](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework);
 * Используется и пользуется уважением таких узнаваемых компаний, как [Mozilla](http://www.mozilla.org/en-US/about/), [Red Hat](https://www.redhat.com/), [Heroku](https://www.heroku.com/), [Eventbrite](https://www.eventbrite.co.uk/about/).
 
+Существует пример API для тестирования, который доступен здесь [доступно здесь][sandbox].
+
 ## Зависимости
 
 У DRF следующие требования:
@@ -18,73 +20,35 @@ Django REST framework \(DRF\) - мощный и гибкий инструмен�
 * Python \(3.5, 3.6, 3.7\)
 * Django \(1.11, 2.0, 2.1, 2.2\)
 
-Данные пакеты не обязательны:
-
-* [coreapi](https://www.gitbook.com/book/ilyachch/django-rest-framework-ru/edit#) \(1.32.0+\) - Schema generation support.
-* [Markdown](http://pypi.python.org/pypi/Markdown/) \(2.1.0+\) - Markdown support for the browsable API.
-* [django-filter](http://pypi.python.org/pypi/django-filter) \(1.0.1+\) - Filtering support.
-* [django-crispy-forms](https://github.com/maraujop/django-crispy-forms) - Improved HTML display for filtering.
-* [django-guardian](https://github.com/django-guardian/django-guardian) \(1.1.1+\) - Object level permissions support.
+Мы **настоятельно рекомендуем** и официально поддерживаем только последние версии патчей для каждой серии Python и Django.
 
 ## Установка
 
 Установите с помощью `pip`
 
-```py
-pip install djangorestframework
-pip install markdown        # Опционально
-pip install django-filter   # Опционально
-```
-
-или склонируйте проект с Guthub
-
-```
-git clone git@github.com:encode/django-rest-framework.git
-```
+    pip install djangorestframework
 
 Добавьте `'rest_framework'` в `INSTALLED_APPS`  в настройках:
 
-```py
-INSTALLED_APPS = (
-    ...
-    'rest_framework',
-)
-```
 
-Если вы планируете использовать браузерную версию API, возможно, вы захотите добавить предстваления входа и выхода. Для этого добавьте следующее в корневой диспетчер URL:
-
-```py
-urlpatterns = [
-    ...
-    url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework'))
-]
-```
-
-Важно помнить, что в качестве пути вы можете указать что угодно, однако подключить необходимо `rest_framework.urls` с указанием пространства имен `rest_framework`. Но в Django версии 1.9 и выше, пространство имен можно оставить пустым и DRF заполнит его за вас.
+    INSTALLED_APPS = (
+        ...
+        'rest_framework',
+    )
 
 ## Пример
 
-Давайте рассмотрим небольшой пример использования DRF для построения основанного на моделях API.
+Давайте рассмотрим краткий пример использования инфраструктуры REST для создания простого API на основе модели для доступа к пользователям и группам.
 
-Мы создадим API с возможностью чтения/записи и доступом к данным пользователей нашего проекта.
+Запустите новый проект, как ...
 
-Любые глобальные настройки DRF описываются в словаре конфигурации `REST_FRAMEWORK`. Начните с того, что добавите следующее в `settings.py`:
+    pip install django
+    pip install djangorestframework
+    django-admin startproject example .
+    ./manage.py migrate
+    ./manage.py createsuperuser
 
-```py
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
-}
-```
-
-Не забудьте добавить `'rest_framework'` в `INSTALLED_APPS`.
-
-Теперь мы готовы к созданию собственного API.
-
-Ниже представлен корневой диспетчер URL:
+Теперь отредактируйте модуль `example / urls.py` в вашем проекте:
 
 ```py
 from django.conf.urls import url, include
@@ -95,7 +59,7 @@ from rest_framework import routers, serializers, viewsets
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'is_staff')
+        fields = ['url', 'username', 'email', 'is_staff']
 
 # Наборы представлений описывают поведение представлений.
 class UserViewSet(viewsets.ModelViewSet):
@@ -114,8 +78,53 @@ urlpatterns = [
 ]
 ```
 
+Мы также хотели бы настроить несколько параметров для нашего API.
+
+Добавьте следующее к вашему `settings.py` модулю:
+
+```python
+INSTALLED_APPS = [
+    ...  # Убедитесь, что здесь включены установленные по умолчанию приложения.
+    'rest_framework',
+]
+
+REST_FRAMEWORK = {
+    # Используйте стандартные Django  `django.contrib.auth` разрешения,
+    # или разрешите доступ только для чтения для неаутентифицированных пользователей.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+```
+
+Вот и все, мы закончили!
+
+    ./manage.py runserver
+
 Теперь можно открыть API в вашем браузере по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/), и увидеть ваше API `'users'`. Так же, если вы воспользуетесь кнопкой `'Login'` в верхнем правом углу и авторизуетесь, вы сможете добавлять, изменять и удалять пользователей из системы.
 
+Вы также можете взаимодействовать с API с помощью инструментов командной строки, таких как curl. Например, чтобы вывести конечную точку пользователей:
+
+    $ curl -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
+    [
+        {
+            "url": "http://127.0.0.1:8000/users/1/",
+            "username": "admin",
+            "email": "admin@example.com",
+            "is_staff": true,
+        }
+    ]
+
+Или создать нового пользователя:
+
+    $ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
+    {
+        "url": "http://127.0.0.1:8000/users/2/",
+        "username": "new",
+        "email": "new@example.com",
+        "is_staff": false,
+    }
+	
 ## Быстрый старт
 
 Не можете дождаться, чтобы начать? Руководство по [быстрому старту](quick-start.md) - быстрейший способ.
@@ -227,3 +236,5 @@ urlpatterns = [
 Спасибо всем за помощь в переводе!
 
 Перевод производится с помощью утилиты [md_docs-trans-app](https://github.com/ilyachch/md_docs-trans-app)
+
+[sandbox]: https://restframework.herokuapp.com/
