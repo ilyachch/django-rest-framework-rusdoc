@@ -26,7 +26,7 @@
   * [Validators](http://www.django-rest-framework.org/api-guide/validators/)
   * [Authentication](http://www.django-rest-framework.org/api-guide/authentication/)
   * [Permissions](http://www.django-rest-framework.org/api-guide/permissions/)
-  * [Chaching](http://www.django-rest-framework.org/api-guide/caching/)
+  * [Caching](http://www.django-rest-framework.org/api-guide/caching/)
   * [Throttling](http://www.django-rest-framework.org/api-guide/throttling/)
   * [Filtering](http://www.django-rest-framework.org/api-guide/filtering/)
   * [Pagination](http://www.django-rest-framework.org/api-guide/pagination/)
