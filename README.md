@@ -48,7 +48,7 @@ Django REST framework \(DRF\) - мощный и гибкий инструмен�
     ./manage.py migrate
     ./manage.py createsuperuser
 
-Теперь отредактируйте модуль `example / urls.py` в вашем проекте:
+Теперь отредактируйте модуль `example/urls.py` в вашем проекте:
 
 ```py
 from django.conf.urls import url, include
