@@ -16,10 +16,9 @@ DRF включает в себя абстракцию для работы с н�
 ```py
 from rest_framework import viewsets
 
-
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Этот набор представлений автоматически создает действия `list` и `detail`.
+    This viewset automatically provides `list` and `detail` actions.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -30,7 +29,8 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 Теперь мы собираемся заменить классы `SnippetList`, `SnippetDetail` и `SnippetHighlight`. Мы можем убрать три представления и заменить их одним классом.
 
 ```py
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class SnippetViewSet(viewsets.ModelViewSet):
     """
@@ -41,10 +41,10 @@ class SnippetViewSet(viewsets.ModelViewSet):
     """
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
 
-    @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
     def highlight(self, request, *args, **kwargs):
         snippet = self.get_object()
         return Response(snippet.highlighted)
@@ -98,12 +98,12 @@ user_detail = UserViewSet.as_view({
 
 ```py
 urlpatterns = format_suffix_patterns([
-    url(r'^$', api_root),
-    url(r'^snippets/$', snippet_list, name='snippet-list'),
-    url(r'^snippets/(?P<pk>[0-9]+)/$', snippet_detail, name='snippet-detail'),
-    url(r'^snippets/(?P<pk>[0-9]+)/highlight/$', snippet_highlight, name='snippet-highlight'),
-    url(r'^users/$', user_list, name='user-list'),
-    url(r'^users/(?P<pk>[0-9]+)/$', user_detail, name='user-detail')
+    path('', api_root),
+    path('snippets/', snippet_list, name='snippet-list'),
+    path('snippets/<int:pk>/', snippet_detail, name='snippet-detail'),
+    path('snippets/<int:pk>/highlight/', snippet_highlight, name='snippet-highlight'),
+    path('users/', user_list, name='user-list'),
+    path('users/<int:pk>/', user_detail, name='user-detail')
 ])
 ```
 
@@ -114,9 +114,9 @@ urlpatterns = format_suffix_patterns([
 Вот наш новый, переписанный файл `snippets/urls.py`:
 
 ```py
-from django.conf.urls import url, include
-from snippets import views
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from snippets import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
@@ -124,10 +124,8 @@ router.register(r'snippets', views.SnippetViewSet)
 router.register(r'users', views.UserViewSet)
 
 # The API URLs are now determined automatically by the router.
-# Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('', include(router.urls)),
 ]
 ```
 
