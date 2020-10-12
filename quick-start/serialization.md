@@ -150,10 +150,10 @@ from snippets.serializers import SnippetSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
-snippet = Snippet(code='foo = "bar"n')
+snippet = Snippet(code='foo = "bar"\n')
 snippet.save()
 
-snippet = Snippet(code='print "hello, world"n')
+snippet = Snippet(code='print "hello, world"\n')
 snippet.save()
 ```
 
@@ -163,7 +163,7 @@ snippet.save()
 serializer = SnippetSerializer(snippet)
 serializer.data
 
-# {'id': 2, 'title': u'', 'code': u'print "hello, world"n', 'linenos': False, 'language': u'python', 'style': u'friendly'}
+# {'id': 2, 'title': '', 'code': 'print("hello, world")\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}
 ```
 
 Сейчас мы перевели объект модели во встроенные типы данных Python. Для завершения сериализации мы сформируем из этих данных JSON.
@@ -172,7 +172,7 @@ serializer.data
 content = JSONRenderer().render(serializer.data)
 content
 
-# '{"id": 2, "title": "", "code": "print "hello, world"n", "linenos": false, "language": "python", "style": "friendly"}'
+# b'{"id": 2, "title": "", "code": "print(\\"hello, world\\")\\n", "linenos": false, "language": "python", "style": "friendly"}'
 ```
 
 Десериализация - подобна сериализации. Сначала мы парсим данные во встроенные типы данных Python.
@@ -191,9 +191,9 @@ serializer = SnippetSerializer(data=data)
 serializer.is_valid()
 # True
 serializer.validated_data
-# OrderedDict([('title', ''), ('code', 'print "hello, world"n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])
+# OrderedDict([('title', ''), ('code', 'print("hello, world")\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])
 serializer.save()
-# <Snippet: Snippet object>;
+# <Snippet: Snippet object>
 ```
 
 Обратите внимание, насколько похожа работа с API на работу с формами. Эта схожесть должна стать более заметной, когда мы начнем писать представления, использующие наш сериализатор.
@@ -204,7 +204,7 @@ serializer.save()
 serializer = SnippetSerializer(Snippet.objects.all(), many=True)
 serializer.data
 
-# [OrderedDict([('id', 1), ('title', u''), ('code', u'foo = "bar"n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 2), ('title', u''), ('code', u'print "hello, world"n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 3), ('title', u''), ('code', u'print "hello, world"'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])]
+# [OrderedDict([('id', 1), ('title', ''), ('code', 'foo = "bar"\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 2), ('title', ''), ('code', 'print("hello, world")\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 3), ('title', ''), ('code', 'print("hello, world")'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])]
 ```
 
 ## Использование модельных сериализаторов
@@ -222,7 +222,7 @@ class SnippetSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'code', 'linenos', 'language', 'style')
 ```
 
-У сериализаторов есть одно интересное свойство - вы можете узнать все поля в объекта сериализатора, выведя его представление. Чтобы попробовать это, откройте консоль Django и выполните следующее:
+У сериализаторов есть одно интересное свойство - вы можете узнать все поля в объекте сериализатора, выведя его представление. Чтобы попробовать это, откройте консоль Django и выполните следующее:
 
 ```py
 from snippets.serializers import SnippetSerializer
