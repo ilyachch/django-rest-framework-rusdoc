@@ -31,7 +31,7 @@ DRF предоставляет два способа обозначения пр
 
 Эти способы обозначения добавляют некоторый функционал в представления. Например, они всегда преобразуют запрос в объект `Request`, или добавляют контекст в объект `Response`, чтобы можно было согласовать контент. 
 
-Так же они предоставляют такой функционал, как возврат `405 Method Not Allowed` ответа, когда надо и обработка ошибок `ParseError`, когда данные в `request.data` неверно сформированы.
+Так же они предоставляют такой функционал, как возврат `405 Method Not Allowed` ответа, когда это необходимо, и обработку ошибок `ParseError`, когда данные в `request.data` неверно сформированы.
 
 ## Собираем все вместе
 
@@ -50,7 +50,7 @@ from snippets.serializers import SnippetSerializer
 @api_view(['GET', 'POST'])
 def snippet_list(request):
     """
-    List all snippets, or create a new snippet.
+    List all code snippets, or create a new snippet.
     """
     if request.method == 'GET':
         snippets = Snippet.objects.all()
@@ -73,7 +73,7 @@ def snippet_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def snippet_detail(request, pk):
     """
-    Retrieve, update or delete a snippet instance.
+    Retrieve, update or delete a code snippet.
     """
     try:
         snippet = Snippet.objects.get(pk=pk)
@@ -102,7 +102,7 @@ def snippet_detail(request, pk):
 
 ## Добавление определителей формата в URL
 
-Чтобы использовать премущество, что наши представления больше не привязаны к одному формату данных, давайте добавим поддержку определителей формата. Используя эти определители мы можем сообщать представлениям, какой формат данных мы от них ожидаем. Это позволит нам использовать URL-ы такого вида http://example.com/api/items/4.json.
+Чтобы использовать премущество, что наши представления больше не привязаны к одному формату данных, давайте добавим поддержку определителей формата. Используя эти определители, мы можем сообщать представлениям, какой формат данных мы от них ожидаем. Это позволит нам использовать URL-ы такого вида http://example.com/api/items/4.json.
 
 Начем с того, что добавим именованный параметр к нашим представлениям
 ```py
@@ -118,13 +118,13 @@ def snippet_detail(request, pk, format=None):
 Теперь необходимо обновить `urls.py`, добавив `format_suffix_patterns` в дополнение к уже имеющимся представлениям.
 
 ```py
-from django.conf.urls import url
+from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from snippets import views
 
 urlpatterns = [
-    url(r'^snippets/$', views.snippet_list),
-    url(r'^snippets/(?P<pk>[0-9]+)$', views.snippet_detail),
+    path('snippets/', views.snippet_list),
+    path('snippets/<int:pk>', views.snippet_detail),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
@@ -155,7 +155,7 @@ HTTP/1.1 200 OK
   {
     "id": 2,
     "title": "",
-    "code": "print \"hello, world\"\n",
+    "code": "print(\"hello, world\")\n",
     "linenos": false,
     "language": "python",
     "style": "friendly"
@@ -180,24 +180,24 @@ http http://127.0.0.1:8000/snippets.api   # Формат браузерной в
 
 ```py
 # POST запрос используя данные формы
-http --form POST http://127.0.0.1:8000/snippets/ code="print 123"
+http --form POST http://127.0.0.1:8000/snippets/ code="print(123)"
 
 {
   "id": 3,
   "title": "",
-  "code": "print 123",
+  "code": "print(123)",
   "linenos": false,
   "language": "python",
   "style": "friendly"
 }
 
 # POST запрос используя JSON
-http --json POST http://127.0.0.1:8000/snippets/ code="print 456"
+http --json POST http://127.0.0.1:8000/snippets/ code="print(456)"
 
 {
     "id": 4,
     "title": "",
-    "code": "print 456",
+    "code": "print(456)",
     "linenos": false,
     "language": "python",
     "style": "friendly"
