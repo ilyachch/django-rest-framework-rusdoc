@@ -37,8 +37,8 @@ def save(self, *args, **kwargs):
     representation of the code snippet.
     """
     lexer = get_lexer_by_name(self.language)
-    linenos = self.linenos and 'table' or False
-    options = self.title and {'title': self.title} or {}
+    linenos = 'table' if self.linenos else False
+    options = {'title': self.title} if self.title else {}
     formatter = HtmlFormatter(style=self.style, linenos=linenos,
                               full=True, **options)
     self.highlighted = highlight(self.code, lexer, formatter)
@@ -48,7 +48,7 @@ def save(self, *args, **kwargs):
 После того, как все будет готово, нам необходимо обновить нашу базу данных. Обычно, для этого мы используем миграции, но, в рамках обучения, мы удалим БД с миграциями и создадим заново.
 
 ```bash
-rm -f tmp.db db.sqlite3
+rm -f db.sqlite3
 rm -r snippets/migrations
 python manage.py makemigrations snippets
 python manage.py migrate
@@ -72,7 +72,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'snippets')
+        fields = ['id', 'username', 'snippets']
 ```
 
 Поскольку `snippets` - обратная связь с моделью `User`, она не будет подключена по умолчанию при использовании класса `ModelSerializer`, поэтому мы должны добавить явное указание на это поле.
@@ -103,13 +103,13 @@ from snippets.serializers import UserSerializer
 
 
 ```py
-url(r'^users/$', views.UserList.as_view()),
-url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
+path('users/', views.UserList.as_view()),
+path('users/<int:pk>/', views.UserDetail.as_view()),
 ```
 
 ## Связываем сниппеты и пользователей
 
-Сейчас, при создании сниппета, пользователь не будет связан с созданным сниппетом, поскольку пользователь не посылается, как часть запроса. Однако, он является частью запроса(`request.user`).
+Сейчас, при создании сниппета, пользователь не будет связан с созданным сниппетом, поскольку пользователь не посылается, как часть сериализованного представления. Однако, он является частью входящего запроса (`request.user`).
 
 Мы можем решить эту проблему переопределив метод `.perform_create()` нашего представления сниппета, который определяет то, как сохраняется наш объект и добавить любую информацию, которая неявно присутствует в нашем запросе или запрашиваемом URL.
 
@@ -162,19 +162,18 @@ permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 Добавьте следующее в `urls.py`:
 
 ```py
-from django.conf.urls import include
+from django.urls import path, include
 ```
 
 А так же в конец этого же модуля допишите:
 
 ```py
 urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 ```
 
-Шаблон `r'^api-auth/'` может быть каким угодно, Главное, чтобы подключаемые URL-ы имели пространство имен `'rest_framework'`. В Django версии 1.9 и выше DRF сам установит пространство имен и вы можете оставить его пустым.
+Часть шаблона `'api-auth/'` может быть любым URL-адресом, который вы хотите использовать.
 
 Сейчас, если вы обновите страницу, вы увидите ссылку `Login` в правом верхнем углу. Войдя под одном из пользователей, что вы создали ранее, вы получите доступ к созданию сниппетов.
 
@@ -210,8 +209,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 Теперь мы можем добавить собственные права доступа ресурсу сниппета, добавив свойство `permission_classes` класса-представления `SnippetDetail`:
 
 ```py
-permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                      IsOwnerOrReadOnly,)
+permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                      IsOwnerOrReadOnly]
 ```
 
 Убедитесь, что подключили класс `IsOwnerOrReadOnly`.
@@ -234,7 +233,7 @@ from snippets.permissions import IsOwnerOrReadOnly
 Если мы попробуем создать сниппет без авторизации, мы получим ошибку:
 
 ```
-http POST http://127.0.0.1:8000/snippets/ code="print 123"
+http POST http://127.0.0.1:8000/snippets/ code="print(123)"
 
 {
     "detail": "Authentication credentials were not provided."
@@ -244,13 +243,13 @@ http POST http://127.0.0.1:8000/snippets/ code="print 123"
 Мы можем выполнить запрос, включив имя пользователя и пароль одного из наших пользователей.
 
 ```
-http -a tom:password123 POST http://127.0.0.1:8000/snippets/ code="print 789"
+http -a admin:password123 POST http://127.0.0.1:8000/snippets/ code="print(789)"
 
 {
     "id": 1,
-    "owner": "tom",
+    "owner": "admin",
     "title": "foo",
-    "code": "print 789",
+    "code": "print(789)",
     "linenos": false,
     "language": "python",
     "style": "friendly"
