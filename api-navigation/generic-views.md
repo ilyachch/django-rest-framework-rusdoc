@@ -68,6 +68,7 @@ url(r'^/users/', ListCreateAPIView.as_view(queryset=User.objects.all(), serializ
 * `lookup_url_kwarg` - ключовй аргумент URL, который используется для поиска объекта. URL conf должен включать аргумент-ключ, который относится к этому значению. По умолчнию указаны те же значения, что и в `lookup_field`. 
 
 **Пагинация:**
+
 Следующие атрибуты используются для управлении пагинацией при использовании list views.
 
 * `pagination_class` - класс пагинации, который нужно использовать при постраничном выводе результатов list. По умолчанию принимает те же значения, что и настройка `DEFAULT_PAGINATION_CLASS`, а именно `'rest_framework.pagination.PageNumberPagination'`. Настройка `pagination_class=None` отключает пагианцию в данном представлении.

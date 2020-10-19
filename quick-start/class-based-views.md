@@ -6,7 +6,7 @@
 
 Прежде всего перепишем наше корневое представление таким образом, чтобы оно использовало классы. Для этого нужно лишь немного изменить содержимое `snippets/views.py`.
 
-```py
+```python
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from django.http import Http404
@@ -34,7 +34,7 @@ class SnippetList(APIView):
 
 Как видите, это было несложно. Результат не сильно отличается от того, что было раньше, но зато теперь мы добились лучшего разделения между разными HTTP методами. Нам также потребуется внести изменения в экземпляр представления в `snippets/views.py`.
 
-```py
+```python
 class SnippetDetail(APIView):
     """
     Извлекает, обновляет или удаляет экземпляр сниппета.
@@ -66,7 +66,7 @@ class SnippetDetail(APIView):
 
 Выглядит неплохо! Опять же, это очень похоже на представления-функции. Нам потребуется немного изменить наш файл `snippets/urls.py`, так как теперь мы используем представления на основе классов.
 
-```py
+```python
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from snippets import views
@@ -89,7 +89,7 @@ urlpatterns = format_suffix_patterns(urlpatterns)
 
 Давайте посмотрим, как можно написать наши представления с помошью классов примесей. Снова откроем модуль `snippets/views.py`.
 
-```py
+```python
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework import mixins
@@ -113,7 +113,7 @@ class SnippetList(mixins.ListModelMixin,
 
 Базовый класс предоставялет основной функционал, в то время как классы примесей дают операции `.list()` и .`create()`. После этого мы явно привязываем методы `get` и `post` для соответствующих действий. Пока что все довольно просто.
 
-```py
+```python
 class SnippetDetail(mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
@@ -137,7 +137,7 @@ class SnippetDetail(mixins.RetrieveModelMixin,
 
 С помощью классов примесей мы переписали наши представления и немного оптимизировали код, но можно пойти еще дальше. REST framework включает набор универсальных представлений, с помощью которых можно еще сильнее сократить наш модуль `snippets/views.py`.
 
-``` py
+```python
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework import generics

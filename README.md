@@ -50,7 +50,7 @@ Django REST framework \(DRF\) - мощный и гибкий инструмен�
 
 Теперь отредактируйте модуль `example/urls.py` в вашем проекте:
 
-```py
+```python
 from django.conf.urls import url, include
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
