@@ -72,7 +72,7 @@ url(r'^/users/', ListCreateAPIView.as_view(queryset=User.objects.all(), serializ
 
 * `pagination_class` - класс пагинации, который нужно использовать при постраничном выводе результатов list. По умолчанию принимает те же значения, что и настройка `DEFAULT_PAGINATION_CLASS`, а именно `'rest_framework.pagination.PageNumberPagination'`. Настройка `pagination_class=None` отключает пагианцию в данном представлении.
 
-**Фильтрация**
+**Фильтрация:**
 
 * `filter_backends` - список классов, используемых для фильтрации queryset. По умолчанию принимает такие же значения, как и настройка `DEFAULT_FILTER_BACKENDS`.
 
@@ -197,7 +197,7 @@ def perform_create(self, serializer):
 
 ---
 
-**Другие методы**
+**Другие методы:**
 
 Как правило, вам не нужно переписыать следующие методы, хотя вы можете прибегнуть к этому, если пишите совбственные представления, используя `GenericAPIView`.
 

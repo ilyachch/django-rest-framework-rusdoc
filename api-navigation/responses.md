@@ -79,7 +79,7 @@ response['Cache-Control'] = 'no-cache'
 
 ## .render()
 
-**Сигнатруа**: `.render()`
+**Сигнатруа:** `.render()`
 
 Как и в случае с другими методами TemplateResponse, этот метод вызывается для того, чтобы срендерить преобразованные данные ответа в конечную сущность. Когда вызывается `.render()`, сущность ответа будет сводиться к результату вызова метода `.render(data, accepted_media_type, renderer_context)` экземпляра `accepted_renderer`.
 

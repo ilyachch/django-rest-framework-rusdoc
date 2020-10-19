@@ -129,7 +129,7 @@ class UserDetail(generics.RetrieveAPIView):
 
 Если вы конструируете веб страницы, которые используют `TemplateHTMLRenderer` наравне с другими классами рендеров, то вы должны разместить `TemplateHTMLRenderer` на первое месо в списке `renderer_classes`, таким образом он будет иметь главный приоритет даже для браузеров, которые некорректно формируют заговлоки `ACCEPT:`.
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
 **.format:** `'.html'`
 
@@ -151,7 +151,7 @@ def simple_html_view(request):
 
 Вы можете использовать  `StaticHTMLRenderer` либо для того чтобы возвращать обычные HTML страницы с использованием REST framework, или для того чтобы возвращать как HTML, так и API ответы из одной конечной точки.
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
 **.format:** `'.html'`
 
@@ -203,13 +203,13 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
 ```
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
-**.format**: `'.admin'`
+**.format:** `'.admin'`
 
-**.charset**: `utf-8`
+**.charset:** `utf-8`
 
-**.template**: `'rest_framework/admin.html'`
+**.template:** `'rest_framework/admin.html'`
 
 ## HTMLFormRenderer
 
@@ -225,23 +225,23 @@ class AccountSerializer(serializers.ModelSerializer):
 </form>
 ```
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
-**.format**: `'.form'`
+**.format:** `'.form'`
 
-**.charset**: `utf-8`
+**.charset:** `utf-8`
 
-**.template**: `'rest_framework/horizontal/form.html'`
+**.template:** `'rest_framework/horizontal/form.html'`
 
 ## MultiPartRenderer
 
 Этот рендер используется для рендера многокомпонентных данных форм HTML. Он не подходит для рендера ответа, но используется для создания тестовых запросов с помощью инструментов для теста REST framework.
 
-**.media_type**: `multipart/form-data; boundary=BoUnDaRyStRiNg`
+**.media_type:** `multipart/form-data; boundary=BoUnDaRyStRiNg`
 
-**.format**: `'.multipart'`
+**.format:** `'.multipart'`
 
-**.charset**: `utf-8`
+**.charset:** `utf-8`
 
 # Кастомные рендеры
 
@@ -446,7 +446,7 @@ REST_FRAMEWORK = {
 
 [REST framework JSONP](http://jpadilla.github.io/django-rest-framework-jsonp/) предоставляет поддержку JSONP рендеринга. Раньше он был установлен в REST framework по умолчанию, а теперь доступен в качестве стороннего пакета.
 
-**Внимание**: если вам нужны междоменные AJAX запросы, то в качестве альтернативы JSONP вы должны использовать более современный подход CORS. См документацию по [CORS](https://www.w3.org/TR/cors/) для подробностей.
+**Внимание:** если вам нужны междоменные AJAX запросы, то в качестве альтернативы JSONP вы должны использовать более современный подход CORS. См документацию по [CORS](https://www.w3.org/TR/cors/) для подробностей.
 
 По сути `jsonp` это такой hack браузера, и он подходит лишь для глобальных читаемых конечных точек API, когда запросы GET недостоврены и не требуют права доступа от пользователя. 
 

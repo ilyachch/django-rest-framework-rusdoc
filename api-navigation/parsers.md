@@ -70,7 +70,7 @@ def example_view(request, format=None):
 
 Парсит контент JSON.
 
-**.media_type**: application/json
+**.media_type:** application/json
 
 ## FormParser
 
@@ -78,7 +78,7 @@ def example_view(request, format=None):
 
 Предпочтительнее использовать одновременно `FormParser` и `MultiPartParser` для того чтобы обеспечить наиболее полную поддержику данных форм HTML.
 
-**.media_type**: `application/x-www-form-urlencoded`
+**.media_type:** `application/x-www-form-urlencoded`
 
 ## MultiPartParser
 
@@ -86,7 +86,7 @@ def example_view(request, format=None):
 
 Предпочтительнее использовать одновременно `FormParser` и `MultiPartParser` для того чтобы обеспечить наиболее полную поддержику данных форм HTML.
 
-**.media_type**: `.media_type: multipart/form-data`
+**.media_type:** `.media_type: multipart/form-data`
 
 ## FileUploadParser
 
@@ -96,7 +96,7 @@ def example_view(request, format=None):
 
 Если оно вызвано без аргумента `filename`, то клиент должен прописать имя файла в загаловке HTTP `Content-Disposition`. Например `Content-Disposition: attachment; filename=upload.jpg.`
 
-**.media_type**: */*
+**.media_type:** */*
 
 Замечания:
 
