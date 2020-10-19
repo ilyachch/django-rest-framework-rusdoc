@@ -179,7 +179,6 @@ class PlainTextParser(BaseParser):
 Установка с помощью pip
 
 ```python
-
 $ pip install djangorestframework-yaml
 ```
 

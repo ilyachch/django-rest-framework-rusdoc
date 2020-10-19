@@ -13,7 +13,6 @@
 Как правило, при использовании общих представлений вы должны переписать ваше представление и установить несколько атрибутов класса:
 
 ```python
-
 from django.contrib.auth.models import User
 from myapp.serializers import UserSerializer
 from rest_framework import generics
@@ -94,12 +93,12 @@ url(r'^/users/', ListCreateAPIView.as_view(queryset=User.objects.all(), serializ
 Например:
 
 ```python
-
 def get_queryset(self):
     user = self.request.user
     return user.accounts.all()
-get_object(self)
 ```
+
+* `get_object(self)`
 
 Возвращает экземпляр объекта, который используется для detail views. По умолчанию для фильтрации базового queryset используется параметр `lookup_field`. Вместо этого может использоваться более сложный сценарий, например поиск объектов по более чем одному URL kwarg.
 
@@ -141,6 +140,7 @@ def filter_queryset(self, queryset):
 
     return queryset
 ```
+
 * `get_serializer_class(self)`
 
 Возвращает класс, который должен использоваться с сериализатором. По умолчанию возвращает атрибут `serializer_class`.
@@ -170,8 +170,11 @@ def get_serializer_class(self):
 
 def perform_create(self, serializer):
     serializer.save(user=self.request.user)
+```
+
 These override points are also particularly useful for adding behavior that occurs before or after saving an object, such as emailing a confirmation, or logging the update.
 
+```python
 def perform_update(self, serializer):
     instance = serializer.save()
     send_email_confirmation(user=self.request.user, modified=instance)
@@ -191,6 +194,7 @@ def perform_create(self, serializer):
 **Примечание:** эти методы заменяют старые методы версии 2.x `pre_save`, `post_save`, `pre_delete` и `post_delete`, которые больше недоступны.
 
 **Другие методы**
+
 Как правило, вам не нужно переписыать следующие методы, хотя вы можете прибегнуть к этому, если пишите совбственные представления, используя `GenericAPIView`.
 
 * `get_serializer_context(self)` - возвращает словарь с любым дополнительным контекстом, который должен быть предоставлен сериализатору. По умолчанию включает ключи'request', 'view' и 'format'.
@@ -379,8 +383,7 @@ class BaseRetrieveUpdateDestroyView(MultipleFieldLookupMixin,
 
 Использование `PUT` для создания является проблематичной задачей, так как это обязательно раскроет информацию о существовании или отсутствии объектов. Также не совсем очевидно преимущество прозрачного воссоздания удаленных экземпляров перед обычным возвратом соообщений `404`. ***` It's also not obvious that transparently allowing re-creating of previously deleted instances is necessarily a better default behavior than simply returning 404 responses.`***
 
-Оба подхода "PUT как 404" и "PUT как create" мргут быть валидными в разных ситациях, но начиная с версии 3.0 по умолчанию используется вариант с 404, так как он более прост и очевиден.
-Если вы хотите релизовать поведение PUT-as-create, то возможно вы включите класс-миксин наподобие `AllowPUTAsCreateMixin` в ваши представления.
+Оба подхода "PUT как 404" и "PUT как create" мргут быть валидными в разных ситациях, но начиная с версии 3.0 по умолчанию используется вариант с 404, так как он более прост и очевиден. Если вы хотите релизовать поведение PUT-as-create, то возможно вы включите класс-миксин наподобие `AllowPUTAsCreateMixin` в ваши представления.
 
 # Сторонние пакеты
 

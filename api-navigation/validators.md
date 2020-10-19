@@ -24,19 +24,24 @@ When you're using `ModelSerializer` all of this is handled automatically for you
 
 As an example of how REST framework uses explicit validation, we'll take a simple model class that has a field with a uniqueness constraint.
 
+```
     class CustomerReportRecord(models.Model):
         time_raised = models.DateTimeField(default=timezone.now, editable=False)
         reference = models.CharField(unique=True, max_length=20)
         description = models.TextField()
+```
 
 Here's a basic `ModelSerializer` that we can use for creating or updating instances of `CustomerReportRecord`:
 
+```
     class CustomerReportSerializer(serializers.ModelSerializer):
         class Meta:
             model = CustomerReportRecord
+```
 
 If we open up the Django shell using `manage.py shell` we can now
 
+```
     >>> from project.example.serializers import CustomerReportSerializer
     >>> serializer = CustomerReportSerializer()
     >>> print(repr(serializer))
@@ -45,6 +50,7 @@ If we open up the Django shell using `manage.py shell` we can now
         time_raised = DateTimeField(read_only=True)
         reference = CharField(max_length=20, validators=[<UniqueValidator(queryset=CustomerReportRecord.objects.all())>])
         description = CharField(style={'type': 'textarea'})
+```
 
 The interesting bit here is the `reference` field. We can see that the uniqueness constraint is being explicitly enforced by a validator on the serializer field.
 
@@ -54,8 +60,7 @@ Because of this more explicit style REST framework includes a few validator clas
 
 ## UniqueValidator
 
-This validator can be used to enforce the `unique=True` constraint on model fields.
-It takes a single required argument, and an optional `messages` argument:
+This validator can be used to enforce the `unique=True` constraint on model fields. It takes a single required argument, and an optional `messages` argument:
 
 * `queryset` *required* - This is the queryset against which uniqueness should be enforced.
 * `message` - The error message that should be used when validation fails.
@@ -63,17 +68,18 @@ It takes a single required argument, and an optional `messages` argument:
 
 This validator should be applied to *serializer fields*, like so:
 
+```
     from rest_framework.validators import UniqueValidator
 
     slug = SlugField(
         max_length=100,
         validators=[UniqueValidator(queryset=BlogPost.objects.all())]
     )
+```
 
 ## UniqueTogetherValidator
 
-This validator can be used to enforce `unique_together` constraints on model instances.
-It has two required arguments, and a single optional `messages` argument:
+This validator can be used to enforce `unique_together` constraints on model instances. It has two required arguments, and a single optional `messages` argument:
 
 * `queryset` *required* - This is the queryset against which uniqueness should be enforced.
 * `fields` *required* - A list or tuple of field names which should make a unique set. These must exist as fields on the serializer class.
@@ -81,6 +87,7 @@ It has two required arguments, and a single optional `messages` argument:
 
 The validator should be applied to *serializer classes*, like so:
 
+```
     from rest_framework.validators import UniqueTogetherValidator
 
     class ExampleSerializer(serializers.Serializer):
@@ -95,6 +102,7 @@ The validator should be applied to *serializer classes*, like so:
                     fields=['list', 'position']
                 )
             ]
+```
 
 ---
 
@@ -117,6 +125,7 @@ These validators can be used to enforce the `unique_for_date`, `unique_for_month
 
 The validator should be applied to *serializer classes*, like so:
 
+```
     from rest_framework.validators import UniqueForYearValidator
 
     class ExampleSerializer(serializers.Serializer):
@@ -130,6 +139,7 @@ The validator should be applied to *serializer classes*, like so:
                     date_field='published'
                 )
             ]
+```
 
 The date field that is used for the validation is always required to be present on the serializer class. You can't simply rely on a model class `default=...`, because the value being used for the default wouldn't be generated until after the validation has run.
 
@@ -139,19 +149,25 @@ There are a couple of styles you may want to use for this depending on how you w
 
 If you want the date field to be writable the only thing worth noting is that you should ensure that it is always available in the input data, either by setting a `default` argument, or by setting `required=True`.
 
+```
     published = serializers.DateTimeField(required=True)
+```
 
 #### Using with a read-only date field.
 
 If you want the date field to be visible, but not editable by the user, then set `read_only=True` and additionally set a `default=...` argument.
 
+```
     published = serializers.DateTimeField(read_only=True, default=timezone.now)
+```
 
 #### Using with a hidden date field.
 
 If you want the date field to be entirely hidden from the user, then use `HiddenField`. This field type does not accept user input, but instead always returns its default value to the `validated_data` in the serializer.
 
+```
     published = serializers.HiddenField(default=timezone.now)
+```
 
 ---
 
@@ -174,9 +190,11 @@ REST framework includes a couple of defaults that may be useful in this context.
 
 A default class that can be used to represent the current user. In order to use this, the 'request' must have been provided as part of the context dictionary when instantiating the serializer.
 
+```
     owner = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
+```
 
 #### CreateOnlyDefault
 
@@ -184,34 +202,29 @@ A default class that can be used to *only set a default argument during create o
 
 It takes a single argument, which is the default value or callable that should be used during create operations.
 
+```
     created_at = serializers.DateTimeField(
         default=serializers.CreateOnlyDefault(timezone.now)
     )
+```
 
 ---
 
 # Limitations of validators
 
-There are some ambiguous cases where you'll need to instead handle validation
-explicitly, rather than relying on the default serializer classes that
-`ModelSerializer` generates.
+There are some ambiguous cases where you'll need to instead handle validation explicitly, rather than relying on the default serializer classes that `ModelSerializer` generates.
 
-In these cases you may want to disable the automatically generated validators,
-by specifying an empty list for the serializer `Meta.validators` attribute.
+In these cases you may want to disable the automatically generated validators, by specifying an empty list for the serializer `Meta.validators` attribute.
 
 ## Optional fields
 
-By default "unique together" validation enforces that all fields be
-`required=True`. In some cases, you might want to explicit apply
-`required=False` to one of the fields, in which case the desired behaviour
-of the validation is ambiguous.
+By default "unique together" validation enforces that all fields be `required=True`. In some cases, you might want to explicit apply `required=False` to one of the fields, in which case the desired behaviour of the validation is ambiguous.
 
-In this case you will typically need to exclude the validator from the
-serializer class, and instead write any validation logic explicitly, either
-in the `.validate()` method, or else in the view.
+In this case you will typically need to exclude the validator from the serializer class, and instead write any validation logic explicitly, either in the `.validate()` method, or else in the view.
 
 For example:
 
+```
     class BillingRecordSerializer(serializers.ModelSerializer):
         def validate(self, attrs):
             # Apply custom validation either here, or in the view.
@@ -220,38 +233,28 @@ For example:
             fields = ['client', 'date', 'amount']
             extra_kwargs = {'client': {'required': False}}
             validators = []  # Remove a default "unique together" constraint.
+```
 
 ## Updating nested serializers
 
-When applying an update to an existing instance, uniqueness validators will
-exclude the current instance from the uniqueness check. The current instance
-is available in the context of the uniqueness check, because it exists as
-an attribute on the serializer, having initially been passed using
-`instance=...` when instantiating the serializer.
+When applying an update to an existing instance, uniqueness validators will exclude the current instance from the uniqueness check. The current instance is available in the context of the uniqueness check, because it exists as an attribute on the serializer, having initially been passed using `instance=...` when instantiating the serializer.
 
-In the case of update operations on *nested* serializers there's no way of
-applying this exclusion, because the instance is not available.
+In the case of update operations on *nested* serializers there's no way of applying this exclusion, because the instance is not available.
 
-Again, you'll probably want to explicitly remove the validator from the
-serializer class, and write the code the for the validation constraint
-explicitly, in a `.validate()` method, or in the view.
+Again, you'll probably want to explicitly remove the validator from the serializer class, and write the code the for the validation constraint explicitly, in a `.validate()` method, or in the view.
 
 ## Debugging complex cases
 
-If you're not sure exactly what behavior a `ModelSerializer` class will
-generate it is usually a good idea to run `manage.py shell`, and print
-an instance of the serializer, so that you can inspect the fields and
-validators that it automatically generates for you.
+If you're not sure exactly what behavior a `ModelSerializer` class will generate it is usually a good idea to run `manage.py shell`, and print an instance of the serializer, so that you can inspect the fields and validators that it automatically generates for you.
 
+```
     >>> serializer = MyComplexModelSerializer()
     >>> print(serializer)
     class MyComplexModelSerializer:
         my_fields = ...
+```
 
-Also keep in mind that with complex cases it can often be better to explicitly
-define your serializer classes, rather than relying on the default
-`ModelSerializer` behavior. This involves a little more code, but ensures
-that the resulting behavior is more transparent.
+Also keep in mind that with complex cases it can often be better to explicitly define your serializer classes, rather than relying on the default `ModelSerializer` behavior. This involves a little more code, but ensures that the resulting behavior is more transparent.
 
 ---
 
@@ -263,20 +266,21 @@ You can use any of Django's existing validators, or write your own custom valida
 
 A validator may be any callable that raises a `serializers.ValidationError` on failure.
 
+```
     def even_number(value):
         if value % 2 != 0:
             raise serializers.ValidationError('This field must be an even number.')
+```
 
 #### Field-level validation
 
-You can specify custom field-level validation by adding `.validate_<field_name>` methods
-to your `Serializer` subclass. This is documented in the
-[Serializer docs](https://www.django-rest-framework.org/api-guide/serializers/#field-level-validation)
+You can specify custom field-level validation by adding `.validate_<field_name>` methods to your `Serializer` subclass. This is documented in the [Serializer docs](https://www.django-rest-framework.org/api-guide/serializers/#field-level-validation)
 
 ## Class-based
 
 To write a class-based validator, use the `__call__` method. Class-based validators are useful as they allow you to parameterize and reuse behavior.
 
+```
     class MultipleOf:
         def __init__(self, base):
             self.base = base
@@ -285,18 +289,17 @@ To write a class-based validator, use the `__call__` method. Class-based validat
             if value % self.base != 0:
                 message = 'This field must be a multiple of %d.' % self.base
                 raise serializers.ValidationError(message)
+```
 
 #### Accessing the context
 
-In some advanced cases you might want a validator to be passed the serializer
-field it is being used with as additional context. You can do so by setting
-a `requires_context = True` attribute on the validator. The `__call__` method
-will then be called with the `serializer_field`
-or `serializer` as an additional argument.
+In some advanced cases you might want a validator to be passed the serializer field it is being used with as additional context. You can do so by setting a `requires_context = True` attribute on the validator. The `__call__` method will then be called with the `serializer_field` or `serializer` as an additional argument.
 
+```
     requires_context = True
 
     def __call__(self, value, serializer_field):
         ...
+```
 
 [cite]: https://docs.djangoproject.com/en/stable/ref/validators/

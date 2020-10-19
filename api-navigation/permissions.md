@@ -18,8 +18,7 @@ A slightly less strict style of permission would be to allow full access to auth
 
 Permissions in REST framework are always defined as a list of permission classes.
 
-Before running the main body of the view each permission in the list is checked.
-If any permission check fails an `exceptions.PermissionDenied` or `exceptions.NotAuthenticated` exception will be raised, and the main body of the view will not run.
+Before running the main body of the view each permission in the list is checked. If any permission check fails an `exceptions.PermissionDenied` or `exceptions.NotAuthenticated` exception will be raised, and the main body of the view will not run.
 
 When the permissions checks fail either a "403 Forbidden" or a "401 Unauthorized" response will be returned, according to the following rules:
 
@@ -31,31 +30,26 @@ When the permissions checks fail either a "403 Forbidden" or a "401 Unauthorized
 
 REST framework permissions also support object-level permissioning.  Object level permissions are used to determine if a user should be allowed to act on a particular object, which will typically be a model instance.
 
-Object level permissions are run by REST framework's generic views when `.get_object()` is called.
-As with view level permissions, an `exceptions.PermissionDenied` exception will be raised if the user is not allowed to act on the given object.
+Object level permissions are run by REST framework's generic views when `.get_object()` is called. As with view level permissions, an `exceptions.PermissionDenied` exception will be raised if the user is not allowed to act on the given object.
 
-If you're writing your own views and want to enforce object level permissions,
-or if you override the `get_object` method on a generic view, then you'll need to explicitly call the `.check_object_permissions(request, obj)` method on the view at the point at which you've retrieved the object.
+If you're writing your own views and want to enforce object level permissions, or if you override the `get_object` method on a generic view, then you'll need to explicitly call the `.check_object_permissions(request, obj)` method on the view at the point at which you've retrieved the object.
 
 This will either raise a `PermissionDenied` or `NotAuthenticated` exception, or simply return if the view has the appropriate permissions.
 
 For example:
 
+```
     def get_object(self):
         obj = get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])
         self.check_object_permissions(self.request, obj)
         return obj
+```
 
 ---
 
-**Note**: With the exception of `DjangoObjectPermissions`, the provided
-permission classes in `rest_framework.permissions` **do not** implement the
-methods necessary to check object permissions.
+**Note**: With the exception of `DjangoObjectPermissions`, the provided permission classes in `rest_framework.permissions` **do not** implement the methods necessary to check object permissions.
 
-If you wish to use the provided permission classes in order to check object
-permissions, **you must** subclass them and implement the
-`has_object_permission()` method described in the [_Custom
-permissions_](#custom-permissions) section (below).
+If you wish to use the provided permission classes in order to check object permissions, **you must** subclass them and implement the `has_object_permission()` method described in the [_Custom permissions_](#custom-permissions) section (below).
 
 ---
 
@@ -69,21 +63,25 @@ Often when you're using object level permissions you'll also want to [filter the
 
 The default permission policy may be set globally, using the `DEFAULT_PERMISSION_CLASSES` setting.  For example.
 
+```
     REST_FRAMEWORK = {
         'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.IsAuthenticated',
         ]
     }
+```
 
 If not specified, this setting defaults to allowing unrestricted access:
 
+```
     'DEFAULT_PERMISSION_CLASSES': [
        'rest_framework.permissions.AllowAny',
     ]
+```
 
-You can also set the authentication policy on a per-view, or per-viewset basis,
-using the `APIView` class-based views.
+You can also set the authentication policy on a per-view, or per-viewset basis, using the `APIView` class-based views.
 
+```
     from rest_framework.permissions import IsAuthenticated
     from rest_framework.response import Response
     from rest_framework.views import APIView
@@ -96,9 +94,11 @@ using the `APIView` class-based views.
                 'status': 'request was permitted'
             }
             return Response(content)
+```
 
 Or, if you're using the `@api_view` decorator with function based views.
 
+```
     from rest_framework.decorators import api_view, permission_classes
     from rest_framework.permissions import IsAuthenticated
     from rest_framework.response import Response
@@ -110,11 +110,13 @@ Or, if you're using the `@api_view` decorator with function based views.
             'status': 'request was permitted'
         }
         return Response(content)
+```
 
 __Note:__ when you set new permission classes through class attribute or decorators you're telling the view to ignore the default list set over the __settings.py__ file.
 
 Provided they inherit from `rest_framework.permissions.BasePermission`, permissions can be composed using standard Python bitwise operators. For example, `IsAuthenticatedOrReadOnly` could be written:
 
+```
     from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
     from rest_framework.response import Response
     from rest_framework.views import APIView
@@ -131,8 +133,9 @@ Provided they inherit from `rest_framework.permissions.BasePermission`, permissi
                 'status': 'request was permitted'
             }
             return Response(content)
+```
 
-__Note:__ it supports & (and), | (or) and ~ (not).
+__Note:__ it supports `& (and)`, `| (or)` and `~ (not)`.
 
 ---
 
@@ -178,7 +181,9 @@ To use custom model permissions, override `DjangoModelPermissions` and set the `
 
 If you're using this permission with a view that uses an overridden `get_queryset()` method there may not be a `queryset` attribute on the view. In this case we suggest also marking the view with a sentinel queryset, so that this class can determine the required permissions. For example:
 
+```
     queryset = User.objects.none()  # Required for DjangoModelPermissions
+```
 
 ## DjangoModelPermissionsOrAnonReadOnly
 
@@ -215,10 +220,12 @@ The methods should return `True` if the request should be granted access, and `F
 
 If you need to test if a request is a read operation or a write operation, you should check the request method against the constant `SAFE_METHODS`, which is a tuple containing `'GET'`, `'OPTIONS'` and `'HEAD'`.  For example:
 
+```
     if request.method in permissions.SAFE_METHODS:
         # Check permissions for read-only request
     else:
         # Check permissions for write request
+```
 
 ---
 
@@ -228,6 +235,7 @@ If you need to test if a request is a read operation or a write operation, you s
 
 Custom permissions will raise a `PermissionDenied` exception if the test fails. To change the error message associated with the exception, implement a `message` attribute directly on your custom permission. Otherwise the `default_detail` attribute from `PermissionDenied` will be used. Similarly, to change the code identifier associated with the exception, implement a `code` attribute directly on your custom permission - otherwise the `default_code` attribute from `PermissionDenied` will be used.
 
+```
     from rest_framework import permissions
 
     class CustomerAccessPermission(permissions.BasePermission):
@@ -235,11 +243,13 @@ Custom permissions will raise a `PermissionDenied` exception if the test fails. 
 
         def has_permission(self, request, view):
              ...
+```
 
 ## Examples
 
 The following is an example of a permission class that checks the incoming request's IP address against a blocklist, and denies the request if the IP has been blocked.
 
+```
     from rest_framework import permissions
 
     class BlocklistPermission(permissions.BasePermission):
@@ -251,9 +261,11 @@ The following is an example of a permission class that checks the incoming reque
             ip_addr = request.META['REMOTE_ADDR']
             blocked = Blocklist.objects.filter(ip_addr=ip_addr).exists()
             return not blocked
+```
 
 As well as global permissions, that are run against all incoming requests, you can also create object-level permissions, that are only run against operations that affect a particular object instance.  For example:
 
+```
     class IsOwnerOrReadOnly(permissions.BasePermission):
         """
         Object-level permission to only allow owners of an object to edit it.
@@ -268,6 +280,7 @@ As well as global permissions, that are run against all incoming requests, you c
 
             # Instance must have an attribute named `owner`.
             return obj.owner == request.user
+```
 
 Note that the generic views will check the appropriate object level permissions, but if you're writing your own custom views, you'll need to make sure you check the object level permission checks yourself.  You can do so by calling `self.check_object_permissions(request, obj)` from the view once you have the object instance.  This call will raise an appropriate `APIException` if any object-level permission checks fail, and will otherwise simply return.
 
@@ -310,7 +323,6 @@ The [Django Rest Framework Role Filters][django-rest-framework-role-filters] pac
 ## Django Rest Framework PSQ
 
 The [Django Rest Framework PSQ][drf-psq] package is an extension that gives support for having action-based **permission_classes**, **serializer_class**, and **queryset** dependent on permission-based rules.
-
 
 [cite]: https://developer.apple.com/library/mac/#documentation/security/Conceptual/AuthenticationAndAuthorizationGuide/Authorization/Authorization.html
 [authentication]: authentication.md

@@ -18,6 +18,7 @@ When using the `ModelSerializer` class, serializer fields and relationships will
 
 To do so, open the Django shell, using `python manage.py shell`, then import the serializer class, instantiate it, and print the object representation…
 
+```
     >>> from myapp.serializers import AccountSerializer
     >>> serializer = AccountSerializer()
     >>> print(repr(serializer))
@@ -25,11 +26,13 @@ To do so, open the Django shell, using `python manage.py shell`, then import the
         id = IntegerField(label='ID', read_only=True)
         name = CharField(allow_blank=True, max_length=100, required=False)
         owner = PrimaryKeyRelatedField(queryset=User.objects.all())
+```
 
 # API Reference
 
 In order to explain the various types of relational fields, we'll use a couple of simple models for our examples.  Our models will be for music albums, and the tracks listed on each album.
 
+```
     class Album(models.Model):
         album_name = models.CharField(max_length=100)
         artist = models.CharField(max_length=100)
@@ -46,6 +49,7 @@ In order to explain the various types of relational fields, we'll use a couple o
 
         def __str__(self):
             return '%d: %s' % (self.order, self.title)
+```
 
 ## StringRelatedField
 
@@ -53,15 +57,18 @@ In order to explain the various types of relational fields, we'll use a couple o
 
 For example, the following serializer:
 
+```
     class AlbumSerializer(serializers.ModelSerializer):
         tracks = serializers.StringRelatedField(many=True)
 
         class Meta:
             model = Album
             fields = ['album_name', 'artist', 'tracks']
+```
 
 Would serialize to the following representation:
 
+```
     {
         'album_name': 'Things We Lost In The Fire',
         'artist': 'Low',
@@ -72,6 +79,7 @@ Would serialize to the following representation:
             ...
         ]
     }
+```
 
 This field is read only.
 
@@ -85,15 +93,18 @@ This field is read only.
 
 For example, the following serializer:
 
+```
     class AlbumSerializer(serializers.ModelSerializer):
         tracks = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
         class Meta:
             model = Album
             fields = ['album_name', 'artist', 'tracks']
+```
 
 Would serialize to a representation like this:
 
+```
     {
         'album_name': 'Undun',
         'artist': 'The Roots',
@@ -104,6 +115,7 @@ Would serialize to a representation like this:
             ...
         ]
     }
+```
 
 By default this field is read-write, although you can change this behavior using the `read_only` flag.
 
@@ -114,13 +126,13 @@ By default this field is read-write, although you can change this behavior using
 * `allow_null` - If set to `True`, the field will accept values of `None` or the empty string for nullable relationships. Defaults to `False`.
 * `pk_field` - Set to a field to control serialization/deserialization of the primary key's value. For example, `pk_field=UUIDField(format='hex')` would serialize a UUID primary key into its compact hex representation.
 
-
 ## HyperlinkedRelatedField
 
 `HyperlinkedRelatedField` may be used to represent the target of the relationship using a hyperlink.
 
 For example, the following serializer:
 
+```
     class AlbumSerializer(serializers.ModelSerializer):
         tracks = serializers.HyperlinkedRelatedField(
             many=True,
@@ -131,9 +143,11 @@ For example, the following serializer:
         class Meta:
             model = Album
             fields = ['album_name', 'artist', 'tracks']
+```
 
 Would serialize to a representation like this:
 
+```
     {
         'album_name': 'Graceland',
         'artist': 'Paul Simon',
@@ -144,6 +158,7 @@ Would serialize to a representation like this:
             ...
         ]
     }
+```
 
 By default this field is read-write, although you can change this behavior using the `read_only` flag.
 
@@ -173,6 +188,7 @@ If you require more complex hyperlinked representation you'll need to customize 
 
 For example, the following serializer:
 
+```
     class AlbumSerializer(serializers.ModelSerializer):
         tracks = serializers.SlugRelatedField(
             many=True,
@@ -183,9 +199,11 @@ For example, the following serializer:
         class Meta:
             model = Album
             fields = ['album_name', 'artist', 'tracks']
+```
 
 Would serialize to a representation like this:
 
+```
     {
         'album_name': 'Dear John',
         'artist': 'Loney Dear',
@@ -196,6 +214,7 @@ Would serialize to a representation like this:
             ...
         ]
     }
+```
 
 By default this field is read-write, although you can change this behavior using the `read_only` flag.
 
@@ -212,20 +231,24 @@ When using `SlugRelatedField` as a read-write field, you will normally want to e
 
 This field can be applied as an identity relationship, such as the `'url'` field on  a HyperlinkedModelSerializer.  It can also be used for an attribute on the object.  For example, the following serializer:
 
+```
     class AlbumSerializer(serializers.HyperlinkedModelSerializer):
         track_listing = serializers.HyperlinkedIdentityField(view_name='track-list')
 
         class Meta:
             model = Album
             fields = ['album_name', 'artist', 'track_listing']
+```
 
 Would serialize to a representation like this:
 
+```
     {
         'album_name': 'The Eraser',
         'artist': 'Thom Yorke',
         'track_listing': 'http://www.example.com/api/track_list/12/',
     }
+```
 
 This field is always read-only.
 
@@ -240,9 +263,7 @@ This field is always read-only.
 
 # Nested relationships
 
-As opposed to previously discussed _references_ to another entity, the referred entity can instead also be embedded or _nested_
-in the representation of the object that refers to it.
-Such nested relationships can be expressed by using serializers as fields. 
+As opposed to previously discussed _references_ to another entity, the referred entity can instead also be embedded or _nested_ in the representation of the object that refers to it. Such nested relationships can be expressed by using serializers as fields. 
 
 If the field is used to represent a to-many relationship, you should add the `many=True` flag to the serializer field.
 
@@ -250,6 +271,7 @@ If the field is used to represent a to-many relationship, you should add the `ma
 
 For example, the following serializer:
 
+```
     class TrackSerializer(serializers.ModelSerializer):
         class Meta:
             model = Track
@@ -261,9 +283,11 @@ For example, the following serializer:
         class Meta:
             model = Album
             fields = ['album_name', 'artist', 'tracks']
+```
 
 Would serialize to a nested representation like this:
 
+```
     >>> album = Album.objects.create(album_name="The Grey Album", artist='Danger Mouse')
     >>> Track.objects.create(album=album, order=1, title='Public Service Announcement', duration=245)
     <Track: Track object>
@@ -283,11 +307,13 @@ Would serialize to a nested representation like this:
             ...
         ],
     }
+```
 
 ## Writable nested serializers
 
 By default nested serializers are read-only. If you want to support write-operations to a nested serializer field you'll need to create `create()` and/or `update()` methods in order to explicitly specify how the child relationships should be saved:
 
+```
     class TrackSerializer(serializers.ModelSerializer):
         class Meta:
             model = Track
@@ -321,14 +347,13 @@ By default nested serializers are read-only. If you want to support write-operat
     True
     >>> serializer.save()
     <Album: Album object>
+```
 
 ---
 
 # Custom relational fields
 
-In rare cases where none of the existing relational styles fit the representation you need,
-you can implement a completely custom relational field, that describes exactly how the
-output representation should be generated from the model instance.
+In rare cases where none of the existing relational styles fit the representation you need, you can implement a completely custom relational field, that describes exactly how the output representation should be generated from the model instance.
 
 To implement a custom relational field, you should override `RelatedField`, and implement the `.to_representation(self, value)` method. This method takes the target of the field as the `value` argument, and should return the representation that should be used to serialize the target. The `value` argument will typically be a model instance.
 
@@ -340,6 +365,7 @@ To provide a dynamic queryset based on the `context`, you can also override `.ge
 
 For example, we could define a relational field to serialize a track to a custom string representation, using its ordering, title, and duration:
 
+```
     import time
 
     class TrackListingField(serializers.RelatedField):
@@ -353,9 +379,11 @@ For example, we could define a relational field to serialize a track to a custom
         class Meta:
             model = Album
             fields = ['album_name', 'artist', 'tracks']
+```
 
 This custom field would then serialize to the following representation:
 
+```
     {
         'album_name': 'Sometimes I Wish We Were an Eagle',
         'artist': 'Bill Callahan',
@@ -366,7 +394,7 @@ This custom field would then serialize to the following representation:
             ...
         ]
     }
-
+```
 ---
 
 # Custom hyperlinked fields
@@ -379,8 +407,7 @@ You can achieve this by overriding `HyperlinkedRelatedField`. There are two meth
 
 The `get_url` method is used to map the object instance to its URL representation.
 
-May raise a `NoReverseMatch` if the `view_name` and `lookup_field`
-attributes are not configured to correctly match the URL conf.
+May raise a `NoReverseMatch` if the `view_name` and `lookup_field` attributes are not configured to correctly match the URL conf.
 
 **get_object(self, view_name, view_args, view_kwargs)**
 
@@ -394,12 +421,15 @@ May raise an `ObjectDoesNotExist` exception.
 
 Say we have a URL for a customer object that takes two keyword arguments, like so:
 
+```
     /api/<organization_slug>/customers/<customer_pk>/
+```
 
 This cannot be represented with the default implementation, which accepts only a single lookup field.
 
 In this case we'd need to override `HyperlinkedRelatedField` to get the behavior we want:
 
+```
     from rest_framework import serializers
     from rest_framework.reverse import reverse
 
@@ -421,6 +451,7 @@ In this case we'd need to override `HyperlinkedRelatedField` to get the behavior
                'pk': view_kwargs['customer_pk']
             }
             return self.get_queryset().get(**lookup_kwargs)
+```
 
 Note that if you wanted to use this style together with the generic views then you'd also need to override `.get_object` on the view in order to get the correct lookup behavior.
 
@@ -446,9 +477,11 @@ The built-in `__str__` method of the model will be used to generate string repre
 
 To provide customized representations for such inputs, override `display_value()` of a `RelatedField` subclass. This method will receive a model object, and should return a string suitable for representing it. For example:
 
+```
     class TrackPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
         def display_value(self, instance):
             return 'Track: %s' % (instance.title)
+```
 
 ## Select field cutoffs
 
@@ -465,31 +498,39 @@ You can also control these globally using the settings `HTML_SELECT_CUTOFF` and 
 
 In cases where the cutoff is being enforced you may want to instead use a plain input field in the HTML form. You can do so using the `style` keyword argument. For example:
 
+```
     assigned_to = serializers.SlugRelatedField(
        queryset=User.objects.all(),
        slug_field='username',
        style={'base_template': 'input.html'}
     )
+```
 
 ## Reverse relations
 
 Note that reverse relationships are not automatically included by the `ModelSerializer` and `HyperlinkedModelSerializer` classes.  To include a reverse relationship, you must explicitly add it to the fields list.  For example:
 
+```
     class AlbumSerializer(serializers.ModelSerializer):
         class Meta:
             fields = ['tracks', ...]
+```
 
 You'll normally want to ensure that you've set an appropriate `related_name` argument on the relationship, that you can use as the field name.  For example:
 
+```
     class Track(models.Model):
         album = models.ForeignKey(Album, related_name='tracks', on_delete=models.CASCADE)
         ...
+```
 
 If you have not set a related name for the reverse relationship, you'll need to use the automatically generated related name in the `fields` argument.  For example:
 
+```
     class AlbumSerializer(serializers.ModelSerializer):
         class Meta:
             fields = ['track_set', ...]
+```
 
 See the Django documentation on [reverse relationships][reverse-relationships] for more details.
 
@@ -499,6 +540,7 @@ If you want to serialize a generic foreign key, you need to define a custom fiel
 
 For example, given the following model for a tag, which has a generic relationship with other arbitrary models:
 
+```
     class TaggedItem(models.Model):
         """
         Tags arbitrary model instances using a generic relation.
@@ -512,9 +554,11 @@ For example, given the following model for a tag, which has a generic relationsh
 
         def __str__(self):
             return self.tag_name
+```
 
 And the following two models, which may have associated tags:
 
+```
     class Bookmark(models.Model):
         """
         A bookmark consists of a URL, and 0 or more descriptive tags.
@@ -529,9 +573,11 @@ And the following two models, which may have associated tags:
         """
         text = models.CharField(max_length=1000)
         tags = GenericRelation(TaggedItem)
+```
 
 We could define a custom field that could be used to serialize tagged instances, using the type of each instance to determine how it should be serialized:
 
+```
     class TaggedObjectRelatedField(serializers.RelatedField):
         """
         A custom field to use for the `tagged_object` generic relationship.
@@ -546,9 +592,11 @@ We could define a custom field that could be used to serialize tagged instances,
             elif isinstance(value, Note):
                 return 'Note: ' + value.text
             raise Exception('Unexpected type of tagged object')
+```
 
 If you need the target of the relationship to have a nested representation, you can use the required serializers inside the `.to_representation()` method:
 
+```
         def to_representation(self, value):
             """
             Serialize bookmark instances using a bookmark serializer,
@@ -562,6 +610,7 @@ If you need the target of the relationship to have a nested representation, you 
                 raise Exception('Unexpected type of tagged object')
 
             return serializer.data
+```
 
 Note that reverse generic keys, expressed using the `GenericRelation` field, can be serialized using the regular relational field types, since the type of the target in the relationship is always known.
 
@@ -569,12 +618,9 @@ For more information see [the Django documentation on generic relations][generic
 
 ## ManyToManyFields with a Through Model
 
-By default, relational fields that target a ``ManyToManyField`` with a
-``through`` model specified are set to read-only.
+By default, relational fields that target a ``ManyToManyField`` with a ``through`` model specified are set to read-only.
 
-If you explicitly specify a relational field pointing to a
-``ManyToManyField`` with a through model, be sure to set ``read_only``
-to ``True``.
+If you explicitly specify a relational field pointing to a ``ManyToManyField`` with a through model, be sure to set ``read_only`` to ``True``.
 
 If you wish to represent [extra fields on a through model][django-intermediary-manytomany] then you may serialize the through model as [a nested object][dealing-with-nested-objects].
 

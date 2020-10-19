@@ -25,6 +25,7 @@ If any throttle check fails an `exceptions.Throttled` exception will be raised, 
 
 The default throttling policy may be set globally, using the `DEFAULT_THROTTLE_CLASSES` and `DEFAULT_THROTTLE_RATES` settings.  For example.
 
+```
     REST_FRAMEWORK = {
         'DEFAULT_THROTTLE_CLASSES': [
             'rest_framework.throttling.AnonRateThrottle',
@@ -35,15 +36,17 @@ The default throttling policy may be set globally, using the `DEFAULT_THROTTLE_C
             'user': '1000/day'
         }
     }
+```
 
 The rate descriptions used in `DEFAULT_THROTTLE_RATES` may include `second`, `minute`, `hour` or `day` as the throttle period.
 
 You can also set the throttling policy on a per-view or per-viewset basis,
 using the `APIView` class-based views.
 
-	from rest_framework.response import Response
+```
+    from rest_framework.response import Response
     from rest_framework.throttling import UserRateThrottle
-	from rest_framework.views import APIView
+    from rest_framework.views import APIView
 
     class ExampleView(APIView):
         throttle_classes = [UserRateThrottle]
@@ -53,9 +56,11 @@ using the `APIView` class-based views.
                 'status': 'request was permitted'
             }
             return Response(content)
+```
 
 Or, if you're using the `@api_view` decorator with function based views.
 
+```
     @api_view(['GET'])
     @throttle_classes([UserRateThrottle])
     def example_view(request, format=None):
@@ -63,6 +68,7 @@ Or, if you're using the `@api_view` decorator with function based views.
             'status': 'request was permitted'
         }
         return Response(content)
+```
 
 ## How clients are identified
 
@@ -80,10 +86,12 @@ The throttle classes provided by REST framework use Django's cache backend.  You
 
 If you need to use a cache other than `'default'`, you can do so by creating a custom throttle class and setting the `cache` attribute.  For example:
 
+```
     from django.core.cache import caches
 
     class CustomAnonRateThrottle(AnonRateThrottle):
         cache = caches['alternate']
+```
 
 You'll need to remember to also set your custom throttle class in the `'DEFAULT_THROTTLE_CLASSES'` settings key, or using the `throttle_classes` view attribute.
 
@@ -115,14 +123,17 @@ An API may have multiple `UserRateThrottles` in place at the same time.  To do s
 
 For example, multiple user throttle rates could be implemented by using the following classes...
 
+```
     class BurstRateThrottle(UserRateThrottle):
         scope = 'burst'
 
     class SustainedRateThrottle(UserRateThrottle):
         scope = 'sustained'
+```
 
 ...and the following settings.
 
+```
     REST_FRAMEWORK = {
         'DEFAULT_THROTTLE_CLASSES': [
             'example.throttles.BurstRateThrottle',
@@ -133,6 +144,7 @@ For example, multiple user throttle rates could be implemented by using the foll
             'sustained': '1000/day'
         }
     }
+```
 
 `UserRateThrottle` is suitable if you want simple global rate restrictions per-user.
 
@@ -144,6 +156,7 @@ The allowed request rate is determined by the `DEFAULT_THROTTLE_RATES` setting u
 
 For example, given the following views...
 
+```
     class ContactListView(APIView):
         throttle_scope = 'contacts'
         ...
@@ -155,9 +168,11 @@ For example, given the following views...
     class UploadView(APIView):
         throttle_scope = 'uploads'
         ...
+```
 
 ...and the following settings.
 
+```
     REST_FRAMEWORK = {
         'DEFAULT_THROTTLE_CLASSES': [
             'rest_framework.throttling.ScopedRateThrottle',
@@ -167,6 +182,7 @@ For example, given the following views...
             'uploads': '20/day'
         }
     }
+```
 
 User requests to either `ContactListView` or `ContactDetailView` would be restricted to a total of 1000 requests per-day.  User requests to `UploadView` would be restricted to 20 requests per day.
 
@@ -184,11 +200,13 @@ If the `.wait()` method is implemented and the request is throttled, then a `Ret
 
 The following is an example of a rate throttle, that will randomly throttle 1 in every 10 requests.
 
+```
     import random
 
     class RandomRateThrottle(throttling.BaseThrottle):
         def allow_request(self, request, view):
             return random.randint(1, 10) != 1
+```
 
 [cite]: https://developer.twitter.com/en/docs/basics/rate-limiting
 [permissions]: permissions.md

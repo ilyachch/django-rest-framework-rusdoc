@@ -4,8 +4,7 @@
 >
 > — Документация Ruby on Rails
 
-Некоторые веб фреймворки, как Rails, автоматически реализуют механизм логической свзяи URL'ов приложения с входящими запросами.
-REST framework добавляет поддержку автоматического роутинга для Джанго, тем самым предоставляя пользователю простой и надежный способ написания логики представлении для набора URL.
+Некоторые веб фреймворки, как Rails, автоматически реализуют механизм логической свзяи URL'ов приложения с входящими запросами. REST framework добавляет поддержку автоматического роутинга для Джанго, тем самым предоставляя пользователю простой и надежный способ написания логики представлении для набора URL.
 
 ## Использование
 
@@ -94,8 +93,6 @@ urlpatterns = [
 Любые методы viewset, используемые с декораторами `@detail_route` или `@list_route` также будут маршрутизированы. Например, при использовании данного метода на классе `UserViewSet`:
 
 ```python
-
-
 from myapp.permissions import IsAdminOrIsSelf
 from rest_framework.decorators import detail_route
 
@@ -144,6 +141,7 @@ class UserViewSet(ModelViewSet):
     def set_password(self, request, pk=None):
         ...
 ```
+
 Этот пример сгенерирует следующий URL паттерн:
 
 * URL паттерн: `^users/{pk}/set_password/$` Имя: `'user-change-password'`
@@ -153,7 +151,9 @@ class UserViewSet(ModelViewSet):
 Для дополнительно информации смотри документацию viewset о создании [дополнительных действий для маршрутизатора](viewsets.md).
 
 # Руководство API
+
 ## SimpleRouter
+
 Этот роутер включает маршруты для стандартного набора действий  `list`, `create`, `retrieve`, `update`, `partial_update` и `destroy`. Viewset также может выделить дополнительные методы для маршрутизации, использя декораторы `@detail_route` или `@list_route`.
 
 <style type="text/css">
@@ -366,9 +366,9 @@ class CustomReadOnlyRouter(SimpleRouter):
 ```
 
 Давайте посмотрим на пути, которые наш `CustomReadOnlyRouter` сгенерирует для простого viewset.
-`views.py`:
 
 ```python
+# views.py
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     A viewset that provides the standard actions
@@ -386,11 +386,8 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         user = self.get_object()
         groups = user.groups.all()
         return Response([group.name for group in groups])
-```
 
-`urls.py`:
-
-```python
+# urls.py
 
 router = CustomReadOnlyRouter()
 router.register('users', UserViewSet)
@@ -418,7 +415,7 @@ urlpatterns = router.urls
 
 Также доступны следующие пакеты.
 
-##DRF Nested Routers
+## DRF Nested Routers
 
 Пакет [drf-nested-routers](https://github.com/alanjds/drf-nested-routers) активирует вложенные ресурсы в роутере и связанных полях.
 

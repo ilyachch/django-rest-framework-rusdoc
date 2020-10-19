@@ -34,16 +34,18 @@ The value of `request.user` and `request.auth` for unauthenticated requests can 
 
 The default authentication schemes may be set globally, using the `DEFAULT_AUTHENTICATION_CLASSES` setting.  For example.
 
+```
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': [
             'rest_framework.authentication.BasicAuthentication',
             'rest_framework.authentication.SessionAuthentication',
         ]
     }
+```
 
-You can also set the authentication scheme on a per-view or per-viewset basis,
-using the `APIView` class-based views.
+You can also set the authentication scheme on a per-view or per-viewset basis, using the `APIView` class-based views.
 
+```
     from rest_framework.authentication import SessionAuthentication, BasicAuthentication
     from rest_framework.permissions import IsAuthenticated
     from rest_framework.response import Response
@@ -59,9 +61,11 @@ using the `APIView` class-based views.
                 'auth': unicode(request.auth),  # None
             }
             return Response(content)
+```
 
 Or, if you're using the `@api_view` decorator with function based views.
 
+```
     @api_view(['GET'])
     @authentication_classes([SessionAuthentication, BasicAuthentication])
     @permission_classes([IsAuthenticated])
@@ -71,6 +75,7 @@ Or, if you're using the `@api_view` decorator with function based views.
             'auth': unicode(request.auth),  # None
         }
         return Response(content)
+```
 
 ## Unauthorized and Forbidden responses
 
@@ -91,8 +96,11 @@ Note that if deploying to [Apache using mod_wsgi][mod_wsgi_official], the author
 
 If you are deploying to Apache, and using any non-session based authentication, you will need to explicitly configure mod_wsgi to pass the required headers through to the application.  This can be done by specifying the `WSGIPassAuthorization` directive in the appropriate context and setting it to `'On'`.
 
+```
     # this can go in either server config, virtual host, directory or .htaccess
     WSGIPassAuthorization On
+
+```
 
 ---
 
@@ -109,7 +117,9 @@ If successfully authenticated, `BasicAuthentication` provides the following cred
 
 Unauthenticated responses that are denied permission will result in an `HTTP 401 Unauthorized` response with an appropriate WWW-Authenticate header.  For example:
 
+```
     WWW-Authenticate: Basic realm="api"
+```
 
 **Note:** If you use `BasicAuthentication` in production you must ensure that your API is only available over `https`.  You should also ensure that your API clients will always re-request the username and password at login, and will never store those details to persistent storage.
 
@@ -119,10 +129,12 @@ This authentication scheme uses a simple token-based HTTP Authentication scheme.
 
 To use the `TokenAuthentication` scheme you'll need to [configure the authentication classes](#setting-the-authentication-scheme) to include `TokenAuthentication`, and additionally include `rest_framework.authtoken` in your `INSTALLED_APPS` setting:
 
+```
     INSTALLED_APPS = [
         ...
         'rest_framework.authtoken'
     ]
+```
 
 ---
 
@@ -132,14 +144,18 @@ To use the `TokenAuthentication` scheme you'll need to [configure the authentica
 
 You'll also need to create tokens for your users.
 
+```
     from rest_framework.authtoken.models import Token
 
     token = Token.objects.create(user=...)
     print(token.key)
+```
 
 For clients to authenticate, the token key should be included in the `Authorization` HTTP header.  The key should be prefixed by the string literal "Token", with whitespace separating the two strings.  For example:
 
+```
     Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+```
 
 **Note:** If you want to use a different keyword in the header, such as `Bearer`, simply subclass `TokenAuthentication` and set the `keyword` class variable.
 
@@ -150,11 +166,15 @@ If successfully authenticated, `TokenAuthentication` provides the following cred
 
 Unauthenticated responses that are denied permission will result in an `HTTP 401 Unauthorized` response with an appropriate WWW-Authenticate header.  For example:
 
+```
     WWW-Authenticate: Token
+```
 
 The `curl` command line tool may be useful for testing token authenticated APIs.  For example:
 
+```
     curl -X GET http://127.0.0.1:8000/api/example/ -H 'Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'
+```
 
 ---
 
@@ -168,6 +188,7 @@ The `curl` command line tool may be useful for testing token authenticated APIs.
 
 If you want every user to have an automatically generated Token, you can simply catch the User's `post_save` signal.
 
+```
     from django.conf import settings
     from django.db.models.signals import post_save
     from django.dispatch import receiver
@@ -177,41 +198,48 @@ If you want every user to have an automatically generated Token, you can simply 
     def create_auth_token(sender, instance=None, created=False, **kwargs):
         if created:
             Token.objects.create(user=instance)
+```
 
 Note that you'll want to ensure you place this code snippet in an installed `models.py` module, or some other location that will be imported by Django on startup.
 
 If you've already created some users, you can generate tokens for all existing users like this:
 
+```
     from django.contrib.auth.models import User
     from rest_framework.authtoken.models import Token
 
     for user in User.objects.all():
         Token.objects.get_or_create(user=user)
+```
 
 ##### By exposing an api endpoint
 
 When using `TokenAuthentication`, you may want to provide a mechanism for clients to obtain a token given the username and password.  REST framework provides a built-in view to provide this behavior.  To use it, add the `obtain_auth_token` view to your URLconf:
 
+```
     from rest_framework.authtoken import views
     urlpatterns += [
         path('api-token-auth/', views.obtain_auth_token)
     ]
+```
 
 Note that the URL part of the pattern can be whatever you want to use.
 
 The `obtain_auth_token` view will return a JSON response when valid `username` and `password` fields are POSTed to the view using form data or JSON:
 
+```
     { 'token' : '9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b' }
+```
 
 Note that the default `obtain_auth_token` view explicitly uses JSON requests and responses, rather than using default renderer and parser classes in your settings.
 
-By default there are no permissions or throttling applied to the  `obtain_auth_token` view. If you do wish to apply throttling you'll need to override the view class,
-and include them using the `throttle_classes` attribute.
+By default there are no permissions or throttling applied to the  `obtain_auth_token` view. If you do wish to apply throttling you'll need to override the view class, and include them using the `throttle_classes` attribute.
 
 If you need a customized version of the `obtain_auth_token` view, you can do so by subclassing the `ObtainAuthToken` view class, and using that in your url conf instead.
 
 For example, you may return additional user information beyond the `token` value:
 
+```
     from rest_framework.authtoken.views import ObtainAuthToken
     from rest_framework.authtoken.models import Token
     from rest_framework.response import Response
@@ -229,13 +257,15 @@ For example, you may return additional user information beyond the `token` value
                 'user_id': user.pk,
                 'email': user.email
             })
+```
 
 And in your `urls.py`:
 
+```
     urlpatterns += [
         path('api-token-auth/', CustomAuthToken.as_view())
     ]
-
+```
 
 ##### With Django admin
 
@@ -243,25 +273,31 @@ It is also possible to create Tokens manually through admin interface. In case y
 
 `your_app/admin.py`:
 
+```
     from rest_framework.authtoken.admin import TokenAdmin
 
     TokenAdmin.raw_id_fields = ['user']
-
+```
 
 #### Using Django manage.py command
 
 Since version 3.6.4 it's possible to generate a user token using the following command:
 
+```
     ./manage.py drf_create_token <username>
+```
 
 this command will return the API token for the given user, creating it if it doesn't exist:
 
+```
     Generated token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b for user user1
+```
 
 In case you want to regenerate the token (for example if it has been compromised or leaked) you can pass an additional parameter:
 
+```
     ./manage.py drf_create_token -r <username>
-
+```
 
 ## SessionAuthentication
 
@@ -283,13 +319,9 @@ CSRF validation in REST framework works slightly differently to standard Django 
 
 ## RemoteUserAuthentication
 
-This authentication scheme allows you to delegate authentication to your web server, which sets the `REMOTE_USER`
-environment variable.
+This authentication scheme allows you to delegate authentication to your web server, which sets the `REMOTE_USER` environment variable.
 
-To use it, you must have `django.contrib.auth.backends.RemoteUserBackend` (or a subclass) in your
-`AUTHENTICATION_BACKENDS` setting. By default, `RemoteUserBackend` creates `User` objects for usernames that don't
-already exist. To change this and other behaviour, consult the
-[Django documentation](https://docs.djangoproject.com/en/stable/howto/auth-remote-user/).
+To use it, you must have `django.contrib.auth.backends.RemoteUserBackend` (or a subclass) in your `AUTHENTICATION_BACKENDS` setting. By default, `RemoteUserBackend` creates `User` objects for usernames that don't already exist. To change this and other behaviour, consult the [Django documentation](https://docs.djangoproject.com/en/stable/howto/auth-remote-user/).
 
 If successfully authenticated, `RemoteUserAuthentication` provides the following credentials:
 
@@ -300,7 +332,6 @@ Consult your web server's documentation for information about configuring an aut
 
 * [Apache Authentication How-To](https://httpd.apache.org/docs/2.4/howto/auth.html)
 * [NGINX (Restricting Access)](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/)
-
 
 # Custom authentication
 
@@ -327,6 +358,7 @@ If the `.authenticate_header()` method is not overridden, the authentication sch
 
 The following example will authenticate any incoming request as the user given by the username in a custom request header named 'X-USERNAME'.
 
+```
 	from django.contrib.auth.models import User
     from rest_framework import authentication
     from rest_framework import exceptions
@@ -343,6 +375,7 @@ The following example will authenticate any incoming request as the user given b
                 raise exceptions.AuthenticationFailed('No such user')
 
             return (user, None)
+```
 
 ---
 
@@ -358,10 +391,13 @@ The [Django OAuth Toolkit][django-oauth-toolkit] package provides OAuth 2.0 supp
 
 Install using `pip`.
 
+```
     pip install django-oauth-toolkit
+```
 
 Add the package to your `INSTALLED_APPS` and modify your REST framework settings.
 
+```
     INSTALLED_APPS = [
         ...
         'oauth2_provider',
@@ -372,6 +408,7 @@ Add the package to your `INSTALLED_APPS` and modify your REST framework settings
             'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         ]
     }
+```
 
 For more details see the [Django REST framework - Getting started][django-oauth-toolkit-getting-started] documentation.
 
@@ -385,7 +422,9 @@ This package was previously included directly in REST framework but is now suppo
 
 Install the package using `pip`.
 
+```
     pip install djangorestframework-oauth
+```
 
 For details on configuration and usage see the Django REST framework OAuth documentation for [authentication][django-rest-framework-oauth-authentication] and [permissions][django-rest-framework-oauth-permissions].
 
@@ -408,7 +447,6 @@ HTTP Signature (currently a [IETF draft][http-signature-ietf-draft]) provides a 
 ## django-rest-auth / dj-rest-auth
 
 This library provides a set of REST API endpoints for registration, authentication (including social media authentication), password reset, retrieve and update user details, etc. By having these API endpoints, your client apps such as AngularJS, iOS, Android, and others can communicate to your Django backend site independently via REST APIs for user management.
-
 
 There are currently two forks of this project.
 
