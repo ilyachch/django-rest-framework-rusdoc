@@ -191,7 +191,11 @@ def perform_create(self, serializer):
     serializer.save(user=self.request.user)
 ```
 
+---
+
 **Примечание:** эти методы заменяют старые методы версии 2.x `pre_save`, `post_save`, `pre_delete` и `post_delete`, которые больше недоступны.
+
+---
 
 **Другие методы**
 

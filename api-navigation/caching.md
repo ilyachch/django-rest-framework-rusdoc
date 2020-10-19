@@ -44,7 +44,11 @@ class PostView(APIView):
         return Response(content)
 ```
 
-**ПРИМЕЧАНИЕ:** Декоратор [`cache_page`][page] кэширует только ответы` GET` и `HEAD` со статусом 200.
+---
+
+**Примечание:** Декоратор [`cache_page`][page] кэширует только ответы` GET` и `HEAD` со статусом 200.
+
+---
 
 [page]: https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache
 [cookie]: https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_cookie
