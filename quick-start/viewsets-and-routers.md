@@ -13,7 +13,7 @@ DRF включает в себя абстракцию для работы с н�
 
 Для начала, давайте переделаем наши классы `UserList` и `UserDetail` в один `UserViewSet`. Мы можем убрать два представления и заменить их одним классом:
 
-```py
+```python
 from rest_framework import viewsets
 
 
@@ -29,7 +29,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 Теперь мы собираемся заменить классы `SnippetList`, `SnippetDetail` и `SnippetHighlight`. Мы можем убрать три представления и заменить их одним классом.
 
-```py
+```python
 from rest_framework.decorators import detail_route
 
 class SnippetViewSet(viewsets.ModelViewSet):
@@ -67,7 +67,7 @@ URL адреса для собственных действий по умолч�
 
 В `snippet/urls.py` мы связываем наши классы `ViewSet` в множество конкретных представлений.
 
-```py
+```python
 from snippets.views import SnippetViewSet, UserViewSet, api_root
 from rest_framework import renderers
 
@@ -96,7 +96,7 @@ user_detail = UserViewSet.as_view({
 
 Теперь, связав наши ресурсы в конкретными представлениями, мы можем зарегистрировать их в конфигурации URL, как обычно.
 
-```py
+```python
 urlpatterns = format_suffix_patterns([
     url(r'^$', api_root),
     url(r'^snippets/$', snippet_list, name='snippet-list'),
@@ -113,7 +113,7 @@ urlpatterns = format_suffix_patterns([
 
 Вот наш новый, переписанный файл `snippets/urls.py`:
 
-```py
+```python
 from django.conf.urls import url, include
 from snippets import views
 from rest_framework.routers import DefaultRouter

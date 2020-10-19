@@ -13,7 +13,7 @@
 
 Добавьте следующие поля в класс модели `Snippet`, который находится в `snippets/models.py`:
 
-```py
+```python
 owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
 highlighted = models.TextField()
 ```
@@ -22,7 +22,7 @@ highlighted = models.TextField()
 
 Импортируем несколько новых пакетов:
 
-```py
+```python
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
@@ -30,7 +30,7 @@ from pygments import highlight
 
 Теперь мы можем расширить метод `.save()` нашей модели:
 
-```py
+```python
 def save(self, *args, **kwargs):
     """
     Use the `pygments` library to create a highlighted HTML
@@ -56,7 +56,7 @@ python manage.py migrate
 
 Также, есть смысл создать нескольких пользователей, чтобы протестировать наше API. Самый быстрый способ - использовать команду `createsuperuser`.
 
-```
+```bash
 python manage.py createsuperuser
 ```
 
@@ -64,7 +64,7 @@ python manage.py createsuperuser
 
 Теперь у нас есть несколько пользователей, с которыми можно работать. Добавим их в наше API. Создадим сериализатор для них. Добавляем в `snippets/serializers.py`:
 
-```py
+```python
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -79,7 +79,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 Так же мы добавим несколько представлений в `snippets/views.py`. Мы добавим представления только для чтения, поэтому мы используем встроенные представления классы `ListAPIView` и `RetrieveAPIView`.
 
-```py
+```python
 from django.contrib.auth.models import User
 
 
@@ -95,14 +95,14 @@ class UserDetail(generics.RetrieveAPIView):
 
 Убедитесь, что вы подключили класс `UserSerializer`.
 
-```py
+```python
 from snippets.serializers import UserSerializer
 ```
 
 Теперь нам необходимо добавить эти представления в API, определив их URL. Добавим следующие шаблоны в `snippets/urls.py`:
 
 
-```py
+```python
 path('users/', views.UserList.as_view()),
 path('users/<int:pk>/', views.UserDetail.as_view()),
 ```
@@ -115,7 +115,7 @@ path('users/<int:pk>/', views.UserDetail.as_view()),
 
 Добавьте следующий метод в класс представления `SnippetList`:
 
-```py
+```python
 def perform_create(self, serializer):
     serializer.save(owner=self.request.user)
 ```
@@ -126,7 +126,7 @@ def perform_create(self, serializer):
 
 Теперь сниппеты связаны с создавшими их пользователями, давайте обновим `SnippetSerializer`. Добавьте следующее в `snippets/serializers.py`:
 
-```py
+```python
 owner = serializers.ReadOnlyField(source='owner.username')
 ```
 
@@ -144,12 +144,12 @@ DRF включает большое число классов доступа, к
 
 Для начала, добавьте следующее в `snippets/views.py`:
 
-```py
+```python
 from rest_framework import permissions
 ```
 Затем, добавьте следующее свойство в классы `SnippetList` и `SnippetDetail` в том же модуле.
 
-```py
+```python
 permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 ```
 
@@ -161,13 +161,13 @@ permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 Добавьте следующее в `urls.py`:
 
-```py
+```python
 from django.urls import path, include
 ```
 
 А так же в конец этого же модуля допишите:
 
-```py
+```python
 urlpatterns += [
     path('api-auth/', include('rest_framework.urls')),
 ]
@@ -187,7 +187,7 @@ urlpatterns += [
 
 В приложении `snippets` создайте модуль `permissions.py` со следующим содержимым:
 
-```py
+```python
 from rest_framework import permissions
 
 
@@ -208,14 +208,14 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
 Теперь мы можем добавить собственные права доступа ресурсу сниппета, добавив свойство `permission_classes` класса-представления `SnippetDetail`:
 
-```py
+```python
 permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                       IsOwnerOrReadOnly]
 ```
 
 Убедитесь, что подключили класс `IsOwnerOrReadOnly`.
 
-```py
+```python
 from snippets.permissions import IsOwnerOrReadOnly
 ```
 
@@ -232,7 +232,7 @@ from snippets.permissions import IsOwnerOrReadOnly
 
 Если мы попробуем создать сниппет без авторизации, мы получим ошибку:
 
-```
+```bash
 http POST http://127.0.0.1:8000/snippets/ code="print(123)"
 
 {
@@ -242,7 +242,7 @@ http POST http://127.0.0.1:8000/snippets/ code="print(123)"
 
 Мы можем выполнить запрос, включив имя пользователя и пароль одного из наших пользователей.
 
-```
+```bash
 http -a admin:password123 POST http://127.0.0.1:8000/snippets/ code="print(789)"
 
 {

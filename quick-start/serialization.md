@@ -12,14 +12,14 @@
 
 Прежде чем что-то начать делать, мы должны создать новое виртуальное окружение. Это изолирует среду выполнения от остальных проектов
 
-```
+```bash
 virtualenv env
 source env/bin/activate    # Для Windows envScriptsactivate
 ```
 
 Теперь мы в виртуальном окружении и можем установить наши зависимости.
 
-```
+```bash
 pip install django
 pip install djangorestframework
 pip install pygments  # Мы будем использовать это для подсветки синтаксиса
@@ -31,7 +31,7 @@ pip install pygments  # Мы будем использовать это для �
 
 Для начала давайте создадим новый проект, с которым нам предстоит работать.
 
-```
+```bash
 cd ~
 django-admin.py startproject tutorial
 cd tutorial
@@ -39,13 +39,13 @@ cd tutorial
 
 Создав проект, мы можем создать приложение, в котором мы будем создавать Web API.
 
-```
+```bash
 python manage.py startapp snippets
 ```
 
 Для продолжения работы мы должны добавить наше новое приложение snippets и `rest_framework` в секцию `INSTALLED_APPS`. Измените модуль `settings.py`:
 
-```py
+```python
 INSTALLED_APPS = (
     ...
     'rest_framework',
@@ -58,7 +58,7 @@ INSTALLED_APPS = (
 
 Для целей данного руководства мы начнем с создания простой модели `Snippet`, которая будет использоваться для хранения блоков кода(Сниппетов).
 
-```py
+```python
 from django.db import models
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
@@ -95,7 +95,7 @@ python manage.py migrate
 
 Создайте модуль `serializers.py` в пакете `snippets`.
 
-```py
+```python
 from rest_framework import serializers
 from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 
@@ -138,13 +138,13 @@ class SnippetSerializer(serializers.Serializer):
 
 Прежде чем двигаться дальше, давайте освоимся с классом `Serializer`. Для этого перейдем в консоль Django.
 
-```
+```bash
 python manage.py shell
 ```
 
 Теперь нам необходимо импортировать несколько пакетов. Так же давайте сделаем пару сниппетов, с которыми будем работать.
 
-```py
+```python
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework.renderers import JSONRenderer
@@ -159,7 +159,7 @@ snippet.save()
 
 Теперь у нас есть несколько объектов `Snippet`, с которыми мы можем поиграть. Давайте посмотрим на сериализацию одного из объектов.
 
-```py
+```python
 serializer = SnippetSerializer(snippet)
 serializer.data
 
@@ -168,7 +168,7 @@ serializer.data
 
 Сейчас мы перевели объект модели во встроенные типы данных Python. Для завершения сериализации мы сформируем из этих данных JSON.
 
-```py
+```python
 content = JSONRenderer().render(serializer.data)
 content
 
@@ -177,7 +177,7 @@ content
 
 Десериализация - подобна сериализации. Сначала мы парсим данные во встроенные типы данных Python.
 
-```py
+```python
 from django.utils.six import BytesIO
 
 stream = BytesIO(content)
@@ -186,7 +186,7 @@ data = JSONParser().parse(stream)
 
 Затем переводим эти данные в полностью сформированный объект.
 
-```py
+```python
 serializer = SnippetSerializer(data=data)
 serializer.is_valid()
 # True
@@ -200,7 +200,7 @@ serializer.save()
 
 Так же мы можем сериализовать запрос(`Queryset`), а не отдельный объект модели. для этого необходимо добавить параметр `many=True` в аргументы сериализатора.
 
-```py
+```python
 serializer = SnippetSerializer(Snippet.objects.all(), many=True)
 serializer.data
 
@@ -215,7 +215,7 @@ serializer.data
 
 Давайте перепишем наш класс сериализатора, используя класс `ModelSerializer`. Для этого перейдите в модуль `snippets/serializers.py` и измените код, как описано ниже.
 
-```py
+```python
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
@@ -224,7 +224,7 @@ class SnippetSerializer(serializers.ModelSerializer):
 
 У сериализаторов есть одно интересное свойство - вы можете узнать все поля в объекта сериализатора, выведя его представление. Чтобы попробовать это, откройте консоль Django и выполните следующее:
 
-```py
+```python
 from snippets.serializers import SnippetSerializer
 serializer = SnippetSerializer()
 print(repr(serializer))
@@ -247,7 +247,7 @@ print(repr(serializer))
 
 Для этого откройте `snippets/views.py` и добавьте следующее:
 
-```py
+```python
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
@@ -258,7 +258,7 @@ from snippets.serializers import SnippetSerializer
 
 Корнем нашего API должно быть представление, которое поддерживает вывод всех существующих сниппетов, а так же создание новых.
 
-```py
+```python
 @csrf_exempt
 def snippet_list(request):
     """
@@ -281,7 +281,7 @@ def snippet_list(request):
 
 Так же нам нужно представление, которое обрабатывает отдельный сниппет и позволяет получаеть, обновлять и удалять сниппет.
 
-```py
+```python
 @csrf_exempt
 def snippet_detail(request, pk):
     """
@@ -311,7 +311,7 @@ def snippet_detail(request, pk):
 
 В конце, мы должны привязать данные представления. Создайте `snippets/urls.py` со следующим содержимым:  
 
-```py
+```python
 from django.conf.urls import url
 from snippets import views
 
@@ -323,7 +323,7 @@ urlpatterns = [
 
 Так же мы должны привязать данный диспетчер URL к корневому. Для этого зайдите в `urls.py` и подключите URL диспетчер нашего приложения:
 
-```py
+```python
 from django.conf.urls import url, include
 
 urlpatterns = [
@@ -339,13 +339,13 @@ urlpatterns = [
 
 Выйдите из консоли Django...
 
-```
+```python
 quit()
 ```
 
 ...и запустите сервер Django.
 
-```
+```bash
 python manage.py runserver
 
 Validating models...
@@ -361,13 +361,13 @@ In another terminal window, we can test the server.
 
 Вы можете установить `httpie` использя `pip`:
 
-```
+```bash
 pip install httpie
 ```
 
 Теперь мы, наконец, можем получить список всех сниппетов:
 
-```
+```bash
 http http://127.0.0.1:8000/snippets/
 
 HTTP/1.1 200 OK
@@ -394,7 +394,7 @@ HTTP/1.1 200 OK
 
 Или мы можем получить отдельный сниппет, запросив его по id:
 
-```
+```bash
 http http://127.0.0.1:8000/snippets/2/
 
 HTTP/1.1 200 OK

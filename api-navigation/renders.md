@@ -1,13 +1,13 @@
 # Рендереры
 
-Перед тем как экземпляр `TemplateResponse` будет возвращен клиенту, он должен быть срендерен. В процессе рендеринга шаблон и контекст превращаются в байтовый поток, который отправляется клиенту.
-
-— документация Django
+> Перед тем как экземпляр `TemplateResponse` будет возвращен клиенту, он должен быть срендерен. В процессе рендеринга шаблон и контекст превращаются в байтовый поток, который отправляется клиенту.
+> 
+> — документация Django
 
 REST framework включает несколько встроенных классов рендера, которые позволяют возвращать ответы с различными типами медиа. Также есть возможность определить ваш собственный рендер для гибкой настройки ваших собственных типов медиа.
 
 ## Как определяется рендер
- 
+
 Набор валдиных рендеров представления всегда имеет вид списка классов. REST framework определяет наиболее подходящий рендер для запроса, анализирует заголовок `Accept` запроса для того, чтобы выяснить какой тип медиа ожидается в ответе.
 
 Вы также можете использовать форматирующий суффикс с URL, чтобы добиться желаемого отображения. Например URL  http://example.com/api/users_count.json на конечной точке всегда будет возвращать данные JSON.
@@ -75,6 +75,7 @@ def user_count_view(request, format=None):
 Рендерит данные запроса в формате JSON, используя кодировку utf-8.
 
 Обратите внимание, что стиль по умолчанию включает символы unicode и рендерит ответ, используя сжатый стиль, без лишних пробелов:
+
 ```python
 {"unicode black star":"★","value":999}
 ```
@@ -128,7 +129,7 @@ class UserDetail(generics.RetrieveAPIView):
 
 Если вы конструируете веб страницы, которые используют `TemplateHTMLRenderer` наравне с другими классами рендеров, то вы должны разместить `TemplateHTMLRenderer` на первое месо в списке `renderer_classes`, таким образом он будет иметь главный приоритет даже для браузеров, которые некорректно формируют заговлоки `ACCEPT:`.
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
 **.format:** `'.html'`
 
@@ -147,9 +148,10 @@ def simple_html_view(request):
     data = '<html><body><h1>Hello, world</h1></body></html>'
     return Response(data)
 ```
+
 Вы можете использовать  `StaticHTMLRenderer` либо для того чтобы возвращать обычные HTML страницы с использованием REST framework, или для того чтобы возвращать как HTML, так и API ответы из одной конечной точки.
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
 **.format:** `'.html'`
 
@@ -191,9 +193,7 @@ class CustomBrowsableAPIRenderer(BrowsableAPIRenderer):
 
 Обратите внимание, что представления, которые были вложены или список сериализаторов ну будут работать корректно с `AdminRenderer` так как HTML формы не поддерживают их.
 
-Замечание: `AdminRenderer` может только включать ссылки на страницы с единственной точкой входа, при наличии правильно настроенного атрибута URL_FIELD_NAME(url по умолчанию) в данных. Это верно для `HyperlinkedModelSerializer`, но для классов
-`ModelSerializer` или простых классов `Serializer` вы должны явно включить поле. Например здесь мы используем метод модели 
-`get_absolute_url`:
+Замечание: `AdminRenderer` может только включать ссылки на страницы с единственной точкой входа, при наличии правильно настроенного атрибута URL_FIELD_NAME(url по умолчанию) в данных. Это верно для `HyperlinkedModelSerializer`, но для классов `ModelSerializer` или простых классов `Serializer` вы должны явно включить поле. Например здесь мы используем метод модели `get_absolute_url`:
 
 ```python
 class AccountSerializer(serializers.ModelSerializer):
@@ -203,18 +203,17 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
 ```
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
-**.format**: `'.admin'`
+**.format:** `'.admin'`
 
-**.charset**: `utf-8`
+**.charset:** `utf-8`
 
-**.template**: `'rest_framework/admin.html'`
+**.template:** `'rest_framework/admin.html'`
 
 ## HTMLFormRenderer
 
-Данные рендера вовзвращаются сериализатором в форме HTML. Результат этого рендера не включает теги ё, скрытое поле CSRF или кнопки submit. 
-Этот рендер не предназначен для прямого использования, но может быть задействован в шаблонах путем передачи экземпляра сериализатора в тег шаблога `render_form`.
+Данные рендера вовзвращаются сериализатором в форме HTML. Результат этого рендера не включает теги ё, скрытое поле CSRF или кнопки submit. Этот рендер не предназначен для прямого использования, но может быть задействован в шаблонах путем передачи экземпляра сериализатора в тег шаблога `render_form`.
 
 ```python
 {% load rest_framework %}
@@ -226,23 +225,23 @@ class AccountSerializer(serializers.ModelSerializer):
 </form>
 ```
 
-**.media_type**: `text/html`
+**.media_type:** `text/html`
 
-**.format**: `'.form'`
+**.format:** `'.form'`
 
-**.charset**: `utf-8`
+**.charset:** `utf-8`
 
-**.template**: `'rest_framework/horizontal/form.html'`
+**.template:** `'rest_framework/horizontal/form.html'`
 
 ## MultiPartRenderer
 
 Этот рендер используется для рендера многокомпонентных данных форм HTML. Он не подходит для рендера ответа, но используется для создания тестовых запросов с помощью инструментов для теста REST framework.
 
-**.media_type**: `multipart/form-data; boundary=BoUnDaRyStRiNg`
+**.media_type:** `multipart/form-data; boundary=BoUnDaRyStRiNg`
 
-**.format**: `'.multipart'`
+**.format:** `'.multipart'`
 
-**.charset**: `utf-8`
+**.charset:** `utf-8`
 
 # Кастомные рендеры
 
@@ -333,6 +332,7 @@ class JPEGRenderer(renderers.BaseRenderer):
 В некоторых случаях нужно, чтобы в представлении использовались разные стили сериализации, в зависимости от принимаемого типа медиа. Для этого можно обратиться к `request.accepted_renderer` и определить рендер, который будет использоваться для запроса.
 
 Например:
+
 ``` python
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -442,11 +442,11 @@ REST_FRAMEWORK = {
 }
 ```
 
-##JSONP
+## JSONP
 
 [REST framework JSONP](http://jpadilla.github.io/django-rest-framework-jsonp/) предоставляет поддержку JSONP рендеринга. Раньше он был установлен в REST framework по умолчанию, а теперь доступен в качестве стороннего пакета.
 
-**Внимание**: если вам нужны междоменные AJAX запросы, то в качестве альтернативы JSONP вы должны использовать более современный подход CORS. См документацию по [CORS](https://www.w3.org/TR/cors/) для подробностей.
+**Внимание:** если вам нужны междоменные AJAX запросы, то в качестве альтернативы JSONP вы должны использовать более современный подход CORS. См документацию по [CORS](https://www.w3.org/TR/cors/) для подробностей.
 
 По сути `jsonp` это такой hack браузера, и он подходит лишь для глобальных читаемых конечных точек API, когда запросы GET недостоврены и не требуют права доступа от пользователя. 
 

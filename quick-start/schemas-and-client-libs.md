@@ -43,7 +43,7 @@ urlpatterns = [
 
 Мы также можем запросить схему из командной строки, указав необходимый тип содержимого в заголовке `Accept`.
 
-```
+```bash
 $ http http://127.0.0.1:8000/schema/ Accept:application/coreapi+json
 HTTP/1.0 200 OK
 Allow: GET, HEAD, OPTIONS
@@ -67,13 +67,13 @@ Content-Type: application/coreapi+json
 
 Консольный клиент доступен как в пакете `coreapi-cli`:
 
-```
+```bash
 $ pip install coreapi-cli
 ```
 
 Теперь проверьте, что он доступен в командной строке...
 
-```
+```bash
 $ coreapi
 Usage: coreapi [OPTIONS] COMMAND [ARGS]...
 
@@ -91,7 +91,7 @@ Commands:
 
 Сначала мы загрузим схему API с помощью консольного клиента.
 
-```
+```bash
 $ coreapi get http://127.0.0.1:8000/schema/
 <Pastebin API "http://127.0.0.1:8000/schema/">
     snippets: {
@@ -109,7 +109,7 @@ $ coreapi get http://127.0.0.1:8000/schema/
 
 Давайте попробуем вывести список существующих фрагментов с помощью консольного клиента:
 
-```
+```bash
 $ coreapi action snippets list
 [
     {
@@ -128,7 +128,7 @@ $ coreapi action snippets list
 
 Некоторые из конечных точек API требуют именованные параметры. Например, чтобы вернуть подсвеченный HTML-код для конкретного сниппета нужно предоставить id.
 
-```
+```bash
 $ coreapi action snippets highlight --param id=1
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -144,7 +144,7 @@ $ coreapi action snippets highlight --param id=1
 
 Убедитесь в том, что вы заменили `<username>` и `<password>` вашими именем пользователя и паролем.
 
-```
+```bash
 $ coreapi credentials add 127.0.0.1 <username>:<password> --auth basic
 Added credentials
 127.0.0.1 "Basic <...>"
@@ -152,7 +152,7 @@ Added credentials
 
 Теперь, если мы снова запросим схему, мы должны быть в состоянии видеть полный набор имеющихся взаимодействий.
 
-```
+```bash
 $ coreapi reload
 Pastebin API "http://127.0.0.1:8000/schema/">
     snippets: {
@@ -172,7 +172,7 @@ Pastebin API "http://127.0.0.1:8000/schema/">
 
 Теперь мы можем взаимодействовать с этими конечными точками. Например, чтобы создать новый сниппет:
 
-```
+```bash
 $ coreapi action snippets create --param title="Example" --param code="print('hello, world')"
 {
     "url": "http://127.0.0.1:8000/snippets/7/",
@@ -189,7 +189,7 @@ $ coreapi action snippets create --param title="Example" --param code="print('he
 
 И чтобы удалить фрагмент:
 
-```
+```bash
 $ coreapi action snippets delete --param id=7
 ```
 

@@ -49,7 +49,7 @@ python manage.py createsuperuser
 
 Для начала мы определим несколько сериализаторов. Создайте модуль `serializers.py`, расположенный в `quickstart`, который мы будем использовать для представления наших данных.
 
-```py
+```python
 from django.contrib.auth.models import User, Group 
 from rest_framework import serializers
 
@@ -71,7 +71,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 Теперь мы добавим несколько представлений. Откройте `quickstart/views.py` и напишите:
 
-```py
+```python
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from tutorial.quickstart.serializers import UserSerializer, GroupSerializer
@@ -103,7 +103,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 Теперь давайте привяжем к нашему API URL адреса. Заходим в `urls.py`:
 
-```py
+```python
 from django.conf.urls import url, include
 from rest_framework import routers
 from tutorial.quickstart import views
@@ -131,7 +131,7 @@ urlpatterns = [
 
 Так же мы добавим несколько глобальных настроек. Мы включим постраничный вывод и предоставим доступ только пользователям-администраторам. модуль настроек находится в `tutorual/settings.py`.
 
-```py
+```python
 INSTALLED_APPS = (
     ...
     'rest_framework',

@@ -6,7 +6,7 @@
 
 DRF использует объект `Request`, расширяющий функционал стандартного `HttpRequest` и позволяющий более гибко разбирать запросы. Основной функицонал `Request` в том, что он предоставляет аттрибут `request.data`, который схож с `request.POST`, однако более полезен при работе с API.
 
-```py
+```python
 request.POST  # Содержит только данные из формы.  Работает только с методом POST.
 request.data  # Обрабатывает произвольные данные.  Работает с POST, PUT и PATCH методами.
 ```
@@ -15,7 +15,7 @@ request.data  # Обрабатывает произвольные данные. 
 
 Также DRF предоставляет объект Response, являющийся расширением TemplateResponse, который берет сырые данные и использует их для определения и формирование правильного типа контента, возвращаемого клиенту.
 
-```py
+```python
 return Response(data)  # Формирует тип ответа, согласно запросу клиента.
 ```
 
@@ -39,7 +39,7 @@ DRF предоставляет два способа обозначения пр
 
 Мы больше не нуждаемся в классе `JSONResponse` в модуле `views.py`, так что можно его удалить. Когда это будет сделано, мы можем продолжить переписывать наши представления.
 
-```py
+```python
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -69,7 +69,7 @@ def snippet_list(request):
 
 Здесь у нас предствление отдельного сниппета. 
 
-```py
+```python
 @api_view(['GET', 'PUT', 'DELETE'])
 def snippet_detail(request, pk):
     """
@@ -105,19 +105,20 @@ def snippet_detail(request, pk):
 Чтобы использовать премущество, что наши представления больше не привязаны к одному формату данных, давайте добавим поддержку определителей формата. Используя эти определители, мы можем сообщать представлениям, какой формат данных мы от них ожидаем. Это позволит нам использовать URL-ы такого вида http://example.com/api/items/4.json.
 
 Начем с того, что добавим именованный параметр к нашим представлениям
-```py
+
+```python
 def snippet_list(request, format=None):
 ```
 
 и
 
-```py
+```python
 def snippet_detail(request, pk, format=None):
 ```
 
 Теперь необходимо обновить `urls.py`, добавив `format_suffix_patterns` в дополнение к уже имеющимся представлениям.
 
-```py
+```python
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from snippets import views
@@ -138,7 +139,7 @@ urlpatterns = format_suffix_patterns(urlpatterns)
 
 Мы можем получить список всех сниппетов, как и раньше.
 
-```
+```bash
 http http://127.0.0.1:8000/snippets/
 
 HTTP/1.1 200 OK
@@ -164,21 +165,21 @@ HTTP/1.1 200 OK
 ```
 Мы можем управлять форматом ответа, используя заголовок `Accept`:
 
-```
+```bash
 http http://127.0.0.1:8000/snippets/ Accept:application/json  # Request JSON
 http http://127.0.0.1:8000/snippets/ Accept:text/html         # Request HTML
 ```
 
 Или с помощью добавления в конец расширения файла для формата:
 
-```
+```bash
 http http://127.0.0.1:8000/snippets.json  # JSON Формат
 http http://127.0.0.1:8000/snippets.api   # Формат браузерной версии API
 ```
 
 Так же мы можем управлять форматом запроса, который мы отправили, используя заголовок `Content-Type`.
 
-```py
+```bash
 # POST запрос используя данные формы
 http --form POST http://127.0.0.1:8000/snippets/ code="print(123)"
 

@@ -6,7 +6,7 @@
 
 На данный момент мы имеем точки входа для `snippets` и `users`, но у нас нет единой точки входа для API. Для ее создания мы используем обычную функцию-представление с декоратором `@api_view`, который мы видели раньше. Добавьте в `snippets/views.py`:
 
-```py
+```python
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -32,7 +32,7 @@ def api_root(request, format=None):
 
 Вместо того, чтобы использовать встроенное представление, мы создадим базовый класс для представления объектов и определим собственный метод `.get()`. Добавьте в ваш `snippets/views.py`:
 
-```py
+```python
 from rest_framework import renderers
 from rest_framework.response import Response
 
@@ -47,13 +47,13 @@ class SnippetHighlight(generics.GenericAPIView):
 
 Как и всегда, мы должны добавить наши новые представления в конфигурацию URL-ов. Добавьте шаблон URL-а в `snippets/urls.py`:
 
-```py
+```python
 path('', views.api_root),
 ```
 
 А затем добавьте шаблон URL-адреса для выделения фрагмента:
 
-```py
+```python
 path('snippets/<int:pk>/highlight/', views.SnippetHighlight.as_view()),
 ```
 
@@ -80,7 +80,7 @@ DRF реализует все эти способы и может применя
 
 Мы можем просто переписать наши существующие сериализаторы для использования ссылок. Измените ваш `snippets/serializers.py`:
 
-```py
+```python
 class SnippetSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='snippet-highlight', format='html')
@@ -105,8 +105,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 ## Убеждаемся, что наши шаблоны URL названы
 
-Если мы собираемся использовать ссылочно связанный API, мы должны убедиться, что шаблоны URL у нас названы. Давайте посмотрим, какие шаблоны URL мы должны назвать.
-If we're going to have a hyperlinked API, we need to make sure we name our URL patterns. Let's take a look at which URL patterns we need to name.
+Если мы собираемся использовать ссылочно связанный API, мы должны убедиться, что шаблоны URL у нас названы. Давайте посмотрим, какие шаблоны URL мы должны назвать. Если мы собираемся иметь API с гиперссылками, нам нужно убедиться, что мы даем имена нашим шаблонам URL. Давайте посмотрим, какие шаблоны URL нам нужно назвать.
 
 * Корень нашего API ссылается на `'user-list'` и `'snippet-list'`.
 * Наш сериализатор сниппета включает поле, которое ссылается на `'snippet-highlight'`.
@@ -114,7 +113,7 @@ If we're going to have a hyperlinked API, we need to make sure we name our URL p
 * Наши сериализаторы сниппетов и пользователей содержат `'url'` поле, которое ссылается на `'{название_модели}-detail'`, которое, в нашем случае будет `'snippet-detail'` и `'user-detail'`.
 * После добавления всех этих имен в нашу конфигурацию URL, `snippets/urls.py` должен выглядеть вот так:
 
-```py
+```python
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from snippets import views
@@ -146,7 +145,7 @@ urlpatterns = format_suffix_patterns([
 
 Мы можем изменить стандартное поведение, изменив `settings.py`. Добавьте следующую настройку:
 
-```py
+```python
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
