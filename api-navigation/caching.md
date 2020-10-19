@@ -1,16 +1,14 @@
-# Caching
+# Кэширование
 
-> A certain woman had a very sharp consciousness but almost no
-> memory ... She remembered enough to work, and she worked hard.
+> У одной женщины было очень острое сознание, но почти не было памяти ... Она помнила достаточно, чтобы работать, и она много работала.
+>
 > - Lydia Davis
 
-Caching in REST Framework works well with the cache utilities provided in Django.
+Кэширование в REST Framework хорошо работает с утилитами кеширования, предоставленными в Django.
 
----
+## Использование кеша с apiview и viewsets
 
-## Using cache with apiview and viewsets
-
-Django provides a [`method_decorator`][decorator] to use decorators with class based views. This can be used with other cache decorators such as [`cache_page`][page] and [`vary_on_cookie`][cookie].
+Django предоставляет [`method_decorator`][decorator] для использования декораторов с представлениями на основе классов. Его можно использовать с другими кэщтрующими декораторами, такими как [`cache_page`][page] и [` var_on_cookie`][cookie].
 
 ```python
 from django.utils.decorators import method_decorator
@@ -46,7 +44,7 @@ class PostView(APIView):
         return Response(content)
 ```
 
-**NOTE:** The [`cache_page`][page] decorator only caches the `GET` and `HEAD` responses with status 200.
+**ПРИМЕЧАНИЕ:** Декоратор [`cache_page`][page] кэширует только ответы` GET` и `HEAD` со статусом 200.
 
 [page]: https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache
 [cookie]: https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_cookie
