@@ -1,211 +1,209 @@
-# Throttling
+# Дросселирование (Регулирование)
 
 > HTTP/1.1 420 Enhance Your Calm
 >
 > [Twitter API rate limiting response][cite]
 
-Throttling is similar to [permissions], in that it determines if a request should be authorized.  Throttles indicate a temporary state, and are used to control the rate of requests that clients can make to an API.
+Регулирование похоже на [разрешения][permissions] в том, что оно определяет, должен ли запрос быть авторизован. Дроссели (Throttles) указывают на временное состояние и используются для управления скоростью запросов, которые клиенты могут отправлять к API.
 
-As with permissions, multiple throttles may be used.  Your API might have a restrictive throttle for unauthenticated requests, and a less restrictive throttle for authenticated requests.
+Как и в случае с разрешениями, можно использовать несколько дросселей. Ваш API может иметь ограничительный дроссель для неаутентифицированных запросов и менее строгий дроссель для аутентифицированных запросов.
 
-Another scenario where you might want to use multiple throttles would be if you need to impose different constraints on different parts of the API, due to some services being particularly resource-intensive.
+Другой сценарий, в котором вы можете захотеть использовать несколько дросселей, - если вам нужно наложить разные ограничения на разные части API из-за того, что некоторые службы являются особенно ресурсоемкими.
 
-Multiple throttles can also be used if you want to impose both burst throttling rates, and sustained throttling rates.  For example, you might want to limit a user to a maximum of 60 requests per minute, and 1000 requests per day.
+Также можно использовать несколько дросселей, если вы хотите установить как частоту пакетного регулирования, так и постоянную скорость дросселирования. Например, вы можете ограничить пользователя до 60 запросов в минуту и ​​1000 запросов в день.
 
-Throttles do not necessarily only refer to rate-limiting requests.  For example a storage service might also need to throttle against bandwidth, and a paid data service might want to throttle against a certain number of a records being accessed.
+Дроссели не обязательно относятся только к запросам ограничения скорости. Например, службе хранения может также потребоваться регулирование пропускной способности, а платной службе данных может потребоваться регулирование определенного количества записей, к которым осуществляется доступ.
 
-## How throttling is determined
+## Как определяется дросселирование
 
-As with permissions and authentication, throttling in REST framework is always defined as a list of classes.
+Как и в случае с разрешениями и проверкой подлинности, регулирование в REST framework всегда определяется как список классов.
 
-Before running the main body of the view each throttle in the list is checked.
-If any throttle check fails an `exceptions.Throttled` exception will be raised, and the main body of the view will not run.
+Перед запуском основной части представления проверяется каждый дроссель в списке.
 
-## Setting the throttling policy
+Если какая-либо проверка дросселя не удалась, будет возбуждено исключение `exceptions.Throttled`, и основная часть представления не будет запущена.
 
-The default throttling policy may be set globally, using the `DEFAULT_THROTTLE_CLASSES` and `DEFAULT_THROTTLE_RATES` settings.  For example.
+## Установка политики регулирования
 
-```
-    REST_FRAMEWORK = {
-        'DEFAULT_THROTTLE_CLASSES': [
-            'rest_framework.throttling.AnonRateThrottle',
-            'rest_framework.throttling.UserRateThrottle'
-        ],
-        'DEFAULT_THROTTLE_RATES': {
-            'anon': '100/day',
-            'user': '1000/day'
-        }
+Политика регулирования по умолчанию может быть установлена ​​глобально с помощью параметров `DEFAULT_THROTTLE_CLASSES` и `DEFAULT_THROTTLE_RATES`. Например:
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
     }
+}
 ```
 
-The rate descriptions used in `DEFAULT_THROTTLE_RATES` may include `second`, `minute`, `hour` or `day` as the throttle period.
+Описания скорости, используемые в `DEFAULT_THROTTLE_RATES`, могут включать `second`, `minute`, `hour` или `day` в качестве периода дросселирования.
 
-You can also set the throttling policy on a per-view or per-viewset basis,
-using the `APIView` class-based views.
+Вы также можете установить политику регулирования для каждого представления или набора представлений, с использованием представлений на основе классов `APIView`.
 
-```
-    from rest_framework.response import Response
-    from rest_framework.throttling import UserRateThrottle
-    from rest_framework.views import APIView
+```python
+from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
+from rest_framework.views import APIView
 
-    class ExampleView(APIView):
-        throttle_classes = [UserRateThrottle]
+class ExampleView(APIView):
+    throttle_classes = [UserRateThrottle]
 
-        def get(self, request, format=None):
-            content = {
-                'status': 'request was permitted'
-            }
-            return Response(content)
-```
-
-Or, if you're using the `@api_view` decorator with function based views.
-
-```
-    @api_view(['GET'])
-    @throttle_classes([UserRateThrottle])
-    def example_view(request, format=None):
+    def get(self, request, format=None):
         content = {
             'status': 'request was permitted'
         }
         return Response(content)
 ```
 
-## How clients are identified
+Или, если вы используете декоратор `@api_view` с представлениями на основе функций.
 
-The `X-Forwarded-For` HTTP header and `REMOTE_ADDR` WSGI variable are used to uniquely identify client IP addresses for throttling.  If the `X-Forwarded-For` header is present then it will be used, otherwise the value of the `REMOTE_ADDR` variable from the WSGI environment will be used.
-
-If you need to strictly identify unique client IP addresses, you'll need to first configure the number of application proxies that the API runs behind by setting the `NUM_PROXIES` setting.  This setting should be an integer of zero or more.  If set to non-zero then the client IP will be identified as being the last IP address in the `X-Forwarded-For` header, once any application proxy IP addresses have first been excluded.  If set to zero, then the `REMOTE_ADDR` value will always be used as the identifying IP address.
-
-It is important to understand that if you configure the `NUM_PROXIES` setting, then all clients behind a unique [NAT'd](https://en.wikipedia.org/wiki/Network_address_translation) gateway will be treated as a single client.
-
-Further context on how the `X-Forwarded-For` header works, and identifying a remote client IP can be [found here][identifying-clients].
-
-## Setting up the cache
-
-The throttle classes provided by REST framework use Django's cache backend.  You should make sure that you've set appropriate [cache settings][cache-setting].  The default value of `LocMemCache` backend should be okay for simple setups.  See Django's [cache documentation][cache-docs] for more details.
-
-If you need to use a cache other than `'default'`, you can do so by creating a custom throttle class and setting the `cache` attribute.  For example:
-
-```
-    from django.core.cache import caches
-
-    class CustomAnonRateThrottle(AnonRateThrottle):
-        cache = caches['alternate']
+```python
+@api_view(['GET'])
+@throttle_classes([UserRateThrottle])
+def example_view(request, format=None):
+    content = {
+        'status': 'request was permitted'
+    }
+    return Response(content)
 ```
 
-You'll need to remember to also set your custom throttle class in the `'DEFAULT_THROTTLE_CLASSES'` settings key, or using the `throttle_classes` view attribute.
+## Как идентифицируются клиенты
 
----
+HTTP-заголовок `X-Forwarded-For` и переменная WSGI `REMOTE_ADDR` используются для однозначной идентификации клиентских IP-адресов для регулирования. Если присутствует заголовок `X-Forwarded-For`, то он будет использоваться, в противном случае будет использоваться значение переменной `REMOTE_ADDR` из среды WSGI.
 
-# API Reference
+Если вам нужно строго идентифицировать уникальные IP-адреса клиентов, вам необходимо сначала настроить количество прокси приложений, за которыми работает API, установив параметр `NUM_PROXIES`. Этот параметр должен быть целым числом от нуля или более. Если установлено ненулевое значение, то IP-адрес клиента будет определяться как последний IP-адрес в заголовке `X-Forwarded-For` после того, как любые IP-адреса прокси-сервера приложения были сначала исключены. Если установлено в ноль, тогда значение REMOTE_ADDR всегда будет использоваться как идентифицирующий IP-адрес.
+
+Важно понимать, что если вы настроите параметр `NUM_PROXIES`, то все клиенты, находящиеся за уникальным [NAT'd](https://en.wikipedia.org/wiki/Network_address_translation) шлюзом, будут рассматриваться как один клиент.
+
+Дополнительный контекст о том, как работает заголовок `X-Forwarded-For` и определение IP-адреса удаленного клиента, можно [найти здесь][identify-clients].
+
+## Настройка кеша
+
+Классы дросселей, предоставляемые REST framework, используют бэкэнд кеширования Django. Вы должны убедиться, что вы установили соответствующие [настройки кеша][cache-setting]. Значение по умолчанию для backend `LocMemCache` должно подходить для простых настроек. См. [Кеш-документацию][cache-docs] Django для получения более подробной информации.
+
+Если вам нужно использовать кеш, отличный от `'default'`, вы можете сделать это, создав собственный класс дросселя и установив атрибут `cache`. Например:
+
+```python
+from django.core.cache import caches
+
+class CustomAnonRateThrottle(AnonRateThrottle):
+    cache = caches['alternate']
+```
+
+Вам необходимо также не забыть установить свой собственный класс дроссельной заслонки в ключе настроек `'DEFAULT_THROTTLE_CLASSES'` или с помощью атрибута представления `throttle_classes`.
+
+# Справочник по API
 
 ## AnonRateThrottle
 
-The `AnonRateThrottle` will only ever throttle unauthenticated users.  The IP address of the incoming request is used to generate a unique key to throttle against.
+`AnonRateThrottle` будет блокировать только неаутентифицированных пользователей. IP-адрес входящего запроса используется для генерации уникального ключа, который нужно ограничить.
 
-The allowed request rate is determined from one of the following (in order of preference).
+Допустимая частота запросов определяется одним из следующих (в порядке объявления).
 
-* The `rate` property on the class, which may be provided by overriding `AnonRateThrottle` and setting the property.
-* The `DEFAULT_THROTTLE_RATES['anon']` setting.
+* Свойство `rate` в классе, которое может быть предоставлено путем переопределения `AnonRateThrottle` и установки свойства.
+* Параметр `DEFAULT_THROTTLE_RATES['anon']`.
 
-`AnonRateThrottle` is suitable if you want to restrict the rate of requests from unknown sources.
+`AnonRateThrottle` подходит, если вы хотите ограничить скорость запросов из неизвестных источников.
 
 ## UserRateThrottle
 
-The `UserRateThrottle` will throttle users to a given rate of requests across the API.  The user id is used to generate a unique key to throttle against.  Unauthenticated requests will fall back to using the IP address of the incoming request to generate a unique key to throttle against.
+`UserRateThrottle` будет ограничивать пользователей заданной скоростью запросов через API. Идентификатор пользователя используется для генерации уникального ключа, против которого можно действовать. Запросы, не прошедшие проверку подлинности, будут использовать IP-адрес входящего запроса для генерации уникального ключа, который будет подавляться.
 
-The allowed request rate is determined from one of the following (in order of preference).
+Допустимая частота запросов определяется одним из следующих (в порядке предпочтения).
 
-* The `rate` property on the class, which may be provided by overriding `UserRateThrottle` and setting the property.
-* The `DEFAULT_THROTTLE_RATES['user']` setting.
+* Свойство `rate` в классе, которое может быть предоставлено путем переопределения `UserRateThrottle` и установки свойства.
+* Параметр `DEFAULT_THROTTLE_RATES['user']`.
 
-An API may have multiple `UserRateThrottles` in place at the same time.  To do so, override `UserRateThrottle` and set a unique "scope" for each class.
+API может иметь несколько `UserRateThrottles` одновременно. Для этого переопределите `UserRateThrottle` и установите уникальную «область видимости» для каждого класса.
 
-For example, multiple user throttle rates could be implemented by using the following classes...
+Например, несколько пользовательских дросселей могут быть реализованы с помощью следующих классов ...
 
+```python
+class BurstRateThrottle(UserRateThrottle):
+    scope = 'burst'
+
+class SustainedRateThrottle(UserRateThrottle):
+    scope = 'sustained'
 ```
-    class BurstRateThrottle(UserRateThrottle):
-        scope = 'burst'
 
-    class SustainedRateThrottle(UserRateThrottle):
-        scope = 'sustained'
-```
+... и следующие настройки.
 
-...and the following settings.
-
-```
-    REST_FRAMEWORK = {
-        'DEFAULT_THROTTLE_CLASSES': [
-            'example.throttles.BurstRateThrottle',
-            'example.throttles.SustainedRateThrottle'
-        ],
-        'DEFAULT_THROTTLE_RATES': {
-            'burst': '60/min',
-            'sustained': '1000/day'
-        }
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'example.throttles.BurstRateThrottle',
+        'example.throttles.SustainedRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'burst': '60/min',
+        'sustained': '1000/day'
     }
+}
 ```
 
-`UserRateThrottle` is suitable if you want simple global rate restrictions per-user.
+`UserRateThrottle` подходит, если вам нужны простые глобальные ограничения скорости для каждого пользователя.
 
 ## ScopedRateThrottle
 
-The `ScopedRateThrottle` class can be used to restrict access to specific parts of the API.  This throttle will only be applied if the view that is being accessed includes a `.throttle_scope` property.  The unique throttle key will then be formed by concatenating the "scope" of the request with the unique user id or IP address.
+Класс `ScopedRateThrottle` можно использовать для ограничения доступа к определенным частям API. Этот дроссель будет применяться только в том случае, если представление, к которому осуществляется доступ, включает свойство `.throttle_scope`. Затем уникальный дроссельный ключ будет сформирован путем объединения "области видимости" запроса с уникальным идентификатором пользователя или IP-адресом.
 
-The allowed request rate is determined by the `DEFAULT_THROTTLE_RATES` setting using a key from the request "scope".
+Допустимая частота запросов определяется установкой `DEFAULT_THROTTLE_RATES` с использованием ключа из "области видимости" запроса.
 
-For example, given the following views...
+Например, учитывая следующие представления ...
 
+```python
+class ContactListView(APIView):
+    throttle_scope = 'contacts'
+    ...
+
+class ContactDetailView(APIView):
+    throttle_scope = 'contacts'
+    ...
+
+class UploadView(APIView):
+    throttle_scope = 'uploads'
+    ...
 ```
-    class ContactListView(APIView):
-        throttle_scope = 'contacts'
-        ...
 
-    class ContactDetailView(APIView):
-        throttle_scope = 'contacts'
-        ...
+... и следующие настройки.
 
-    class UploadView(APIView):
-        throttle_scope = 'uploads'
-        ...
-```
-
-...and the following settings.
-
-```
-    REST_FRAMEWORK = {
-        'DEFAULT_THROTTLE_CLASSES': [
-            'rest_framework.throttling.ScopedRateThrottle',
-        ],
-        'DEFAULT_THROTTLE_RATES': {
-            'contacts': '1000/day',
-            'uploads': '20/day'
-        }
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'contacts': '1000/day',
+        'uploads': '20/day'
     }
+}
 ```
 
-User requests to either `ContactListView` or `ContactDetailView` would be restricted to a total of 1000 requests per-day.  User requests to `UploadView` would be restricted to 20 requests per day.
-
----
+Запросы пользователей к `ContactListView` или `ContactDetailView` будут ограничены в общей сложности 1000 запросами в день. Запросы пользователей к `UploadView` будут ограничены 20 запросами в день.
 
 # Custom throttles
 
-To create a custom throttle, override `BaseThrottle` and implement `.allow_request(self, request, view)`.  The method should return `True` if the request should be allowed, and `False` otherwise.
+# Пользовательские дроссели
 
-Optionally you may also override the `.wait()` method.  If implemented, `.wait()` should return a recommended number of seconds to wait before attempting the next request, or `None`.  The `.wait()` method will only be called if `.allow_request()` has previously returned `False`.
+Чтобы создать собственный дроссель, переопределите `BaseThrottle` и реализуйте `.allow_request(self, request, view)`. Метод должен возвращать `True`, если запрос должен быть разрешен, и `False` в противном случае.
 
-If the `.wait()` method is implemented and the request is throttled, then a `Retry-After` header will be included in the response.
+При желании вы также можете переопределить метод `.wait()`. Если реализовано, `.wait()` должна возвращать рекомендуемое количество секунд ожидания перед попыткой следующего запроса или `None`. Метод `.wait()` будет вызываться только в том случае, если `.allow_request()` ранее вернул `False`.
+
+Если реализован метод `.wait()` и запрос регулируется, то в ответ будет включен заголовок `Retry-After`.
 
 ## Example
 
-The following is an example of a rate throttle, that will randomly throttle 1 in every 10 requests.
+Ниже приведен пример дросселирования скорости, который произвольно дросселирует 1 из каждых 10 запросов.
 
-```
-    import random
+```python
+import random
 
-    class RandomRateThrottle(throttling.BaseThrottle):
-        def allow_request(self, request, view):
-            return random.randint(1, 10) != 1
+class RandomRateThrottle(throttling.BaseThrottle):
+    def allow_request(self, request, view):
+        return random.randint(1, 10) != 1
 ```
 
 [cite]: https://developer.twitter.com/en/docs/basics/rate-limiting
