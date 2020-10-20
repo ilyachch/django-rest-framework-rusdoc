@@ -21,13 +21,13 @@
   * [Парсеры](api-navigation/parsers.md)
   * [Рендеры](api-navigation/renders.md)
   * [Cериализаторы](api-navigation/serializers.md)
-  * [Serializer fields](api-navigation/fields.md)
-  * [Serializer relations](api-navigation/relations.md)
-  * [Validators](api-navigation/validators.md)
-  * [Authentication](api-navigation/authentication.md)
-  * [Permissions](api-navigation/permissions.md)
-  * [Caching](api-navigation/caching.md)
-  * [Throttling](api-navigation/throttling.md)
+  * [Поля сериализатора](api-navigation/fields.md)
+  * [Отношения сериализатора](api-navigation/relations.md)
+  * [Валидаторы](api-navigation/validators.md)
+  * [Аутентификация](api-navigation/authentication.md)
+  * [Разрешения](api-navigation/permissions.md)
+  * [Кэширование](api-navigation/caching.md)
+  * [Дросселирование (Регулирование)](api-navigation/throttling.md)
   * [Filtering](http://www.django-rest-framework.org/api-guide/filtering/)
   * [Pagination](http://www.django-rest-framework.org/api-guide/pagination/)
   * [Versioning](http://www.django-rest-framework.org/api-guide/versioning/)
@@ -40,10 +40,6 @@
   * [Status codes](http://www.django-rest-framework.org/api-guide/status-codes/)
   * [Testing](http://www.django-rest-framework.org/api-guide/testing/)
   * [Settings](http://www.django-rest-framework.org/api-guide/settings/)
-
-## Справочник предоставляемого API
-
-* [Defining Methods](methods.md)
 
 ## Статьи
 
