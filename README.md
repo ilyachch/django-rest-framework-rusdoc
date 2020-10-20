@@ -26,27 +26,32 @@ Django REST framework \(DRF\) - мощный и гибкий инструмен�
 
 Установите с помощью `pip`
 
+```bash
     pip install djangorestframework
+```
 
 Добавьте `'rest_framework'` в `INSTALLED_APPS`  в настройках:
 
-
+```python
     INSTALLED_APPS = (
         ...
         'rest_framework',
     )
+```
 
 ## Пример
 
 Давайте рассмотрим краткий пример использования инфраструктуры REST для создания простого API на основе модели для доступа к пользователям и группам.
 
-Запустите новый проект, как ...
+Создайте новый проект:
 
-    pip install django
-    pip install djangorestframework
-    django-admin startproject example .
-    ./manage.py migrate
-    ./manage.py createsuperuser
+```bash
+pip install django
+pip install djangorestframework
+django-admin startproject example .
+./manage.py migrate
+./manage.py createsuperuser
+```
 
 Теперь отредактируйте модуль `example/urls.py` в вашем проекте:
 
@@ -99,32 +104,38 @@ REST_FRAMEWORK = {
 
 Вот и все, мы закончили!
 
-    ./manage.py runserver
+```bash
+./manage.py runserver
+```
 
 Теперь можно открыть API в вашем браузере по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/), и увидеть ваше API `'users'`. Так же, если вы воспользуетесь кнопкой `'Login'` в верхнем правом углу и авторизуетесь, вы сможете добавлять, изменять и удалять пользователей из системы.
 
 Вы также можете взаимодействовать с API с помощью инструментов командной строки, таких как curl. Например, чтобы вывести конечную точку пользователей:
 
-    $ curl -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
-    [
-        {
-            "url": "http://127.0.0.1:8000/users/1/",
-            "username": "admin",
-            "email": "admin@example.com",
-            "is_staff": true,
-        }
-    ]
+```bash
+$ curl -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
+[
+    {
+        "url": "http://127.0.0.1:8000/users/1/",
+        "username": "admin",
+        "email": "admin@example.com",
+        "is_staff": true,
+    }
+]
+```
 
 Или создать нового пользователя:
 
-    $ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
-    {
-        "url": "http://127.0.0.1:8000/users/2/",
-        "username": "new",
-        "email": "new@example.com",
-        "is_staff": false,
-    }
-	
+```bash
+$ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
+{
+    "url": "http://127.0.0.1:8000/users/2/",
+    "username": "new",
+    "email": "new@example.com",
+    "is_staff": false,
+}
+```
+
 ## Быстрый старт
 
 Не можете дождаться, чтобы начать? Руководство по [быстрому старту](quick-start.md) - быстрейший способ.
@@ -156,13 +167,13 @@ REST_FRAMEWORK = {
 * [Парсеры](api-navigation/parsers.md)
 * [Рендеры](api-navigation/renders.md)
 * [Cериализаторы](api-navigation/serializers.md)
-* [Serializer fields](http://www.django-rest-framework.org/api-guide/fields/)
-* [Serializer relations](http://www.django-rest-framework.org/api-guide/relations/)
-* [Validators](http://www.django-rest-framework.org/api-guide/validators/)
-* [Authentication](http://www.django-rest-framework.org/api-guide/authentication/)
-* [Permissions](http://www.django-rest-framework.org/api-guide/permissions/)
-* [Caching](http://www.django-rest-framework.org/api-guide/caching/)
-* [Throttling](http://www.django-rest-framework.org/api-guide/throttling/)
+* [Поля сериализатора](api-navigation/fields.md)
+* [Отношения сериализатора](api-navigation/relations.md)
+* [Валидаторы](api-navigation/validators.md)
+* [Аутентификация](api-navigation/authentication.md)
+* [Разрешения](api-navigation/permissions.md)
+* [Кэширование](api-navigation/caching.md)
+* [Дросселирование (Регулирование)](api-navigation/throttling.md)
 * [Filtering](http://www.django-rest-framework.org/api-guide/filtering/)
 * [Pagination](http://www.django-rest-framework.org/api-guide/pagination/)
 * [Versioning](http://www.django-rest-framework.org/api-guide/versioning/)
@@ -180,7 +191,7 @@ REST_FRAMEWORK = {
 
 Основные руководства для использующих DRF.
 
-* [Documenting your API](http://www.django-rest-framework.org/topics/documenting-your-api/)
+* [Documenting your API](https://www.django-rest-framework.org/topics/documenting-your-api/)
 * [API Clients](http://www.django-rest-framework.org/topics/api-clients/)
 * [Internationalization](http://www.django-rest-framework.org/topics/internationalization/)
 * [AJAX, CSRF & CORS](http://www.django-rest-framework.org/topics/ajax-csrf-cors/)
@@ -191,19 +202,6 @@ REST_FRAMEWORK = {
 * [Third Party Packages](http://www.django-rest-framework.org/topics/third-party-packages/)
 * [Tutorials and Resources](http://www.django-rest-framework.org/topics/tutorials-and-resources/)
 * [Contributing to REST framework](http://www.django-rest-framework.org/topics/contributing/)
-* [Project management](http://www.django-rest-framework.org/topics/project-management/)
-* [3.0 Announcement](http://www.django-rest-framework.org/topics/3.0-announcement/)
-* [3.1 Announcement](http://www.django-rest-framework.org/topics/3.1-announcement/)
-* [3.2 Announcement](http://www.django-rest-framework.org/topics/3.2-announcement/)
-* [3.3 Announcement](http://www.django-rest-framework.org/topics/3.3-announcement/)
-* [3.4 Announcement](http://www.django-rest-framework.org/topics/3.4-announcement/)
-* [3.5 Announcement](http://www.django-rest-framework.org/topics/3.5-announcement/)
-* [3.6 Announcement](http://www.django-rest-framework.org/topics/3.6-announcement/)
-* [Kickstarter Announcement](http://www.django-rest-framework.org/topics/kickstarter-announcement/)
-* [Mozilla Grant](http://www.django-rest-framework.org/topics/mozilla-grant/)
-* [Funding](http://www.django-rest-framework.org/topics/funding/)
-* [Release Notes](http://www.django-rest-framework.org/topics/release-notes/)
-* [Jobs](http://www.django-rest-framework.org/topics/jobs/)
 
 ## Разработка
 
