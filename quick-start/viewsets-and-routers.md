@@ -30,7 +30,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 Теперь мы собираемся заменить классы `SnippetList`, `SnippetDetail` и `SnippetHighlight`. Мы можем убрать три представления и заменить их одним классом.
 
 ```python
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 
 class SnippetViewSet(viewsets.ModelViewSet):
     """
@@ -44,7 +44,7 @@ class SnippetViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
 
-    @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
     def highlight(self, request, *args, **kwargs):
         snippet = self.get_object()
         return Response(snippet.highlighted)
@@ -55,9 +55,9 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
 На этот раз мы использовали класс `ModelViewSet` для того, чтобы получить набор стандартных операций чтения и записи.
 
-Обратите внимание, что мы использовали декоратор `@detail_route`, чтобы создать собственную операцию, названную `highlight`. Этот декоратор используется для того, чтобы создать собственные конечные точки, которых нет среди стандартных операций создания/обновления/удаления.
+Обратите внимание, что мы использовали декоратор `@action`, чтобы создать собственную операцию, названную `highlight`. Этот декоратор используется для того, чтобы создать собственные конечные точки, которых нет среди стандартных операций создания/обновления/удаления.
 
-Собственные действия, которые используют декоратор `@detail_route`, по умолчанию обрабатывают `GET` запрос. Мы можем использовать аргумент метода, если хотим, чтобы действие обрабатывало `POST` запросы.
+Собственные действия, которые используют декоратор `@action`, по умолчанию обрабатывают `GET` запрос. Мы можем использовать аргумент метода, если хотим, чтобы действие обрабатывало `POST` запросы.
 
 URL адреса для собственных действий по умолчанию зависят от названия метода. Если вы хотите изменить правило, как URL должен быть создан, вы можете включить `url_path` как именованый аргумент декоратора.
 
