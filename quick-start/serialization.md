@@ -178,7 +178,7 @@ content
 Десериализация - подобна сериализации. Сначала мы парсим данные во встроенные типы данных Python.
 
 ```python
-from django.utils.six import BytesIO
+from io import BytesIO
 
 stream = BytesIO(content)
 data = JSONParser().parse(stream)
