@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Check for changes
         id: check
-        run: echo "::set-output name=new_files::${python3 ./.scripts/sync_original.py}"
+        run: echo "::set-output name=new_files::$(python3 ./.scripts/sync_original.py)"
       - name: Check if branch already exists
         if: steps.check.outputs.new_files != ''
         run: |
