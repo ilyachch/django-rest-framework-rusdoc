@@ -10,32 +10,33 @@ from typing import List, Tuple
 class Tool:
     ORIGINAL_URL = 'https://github.com/encode/django-rest-framework.git'
     BASE_DIR = Path(__file__).resolve().parent.parent
+    REFERENCE_DIR = BASE_DIR / '.reference'
 
     DATA_TO_WATCH = [
         (
             [
                 Path('docs/api-guide/'),
             ],
-            BASE_DIR / Path('.sources/api-navigation/'),
+            REFERENCE_DIR / Path('api-navigation/'),
         ),
         (
             [
                 Path('docs/tutorial/'),
                 Path('docs/coreapi/'),
             ],
-            BASE_DIR / Path('.sources/quick-start/'),
+            REFERENCE_DIR / Path('quick-start/'),
         ),
         (
             [
                 Path('docs/topics/'),
             ],
-            BASE_DIR / Path('.sources/topics/'),
+            REFERENCE_DIR / Path('topics/'),
         ),
         (
             [
                 Path('docs/index.md'),
             ],
-            BASE_DIR / Path('.sources/README.md'),
+            REFERENCE_DIR / Path('README.md'),
         ),
     ]
 
@@ -43,8 +44,7 @@ class Tool:
         self._temp_dir = self._get_temp_dir()
 
     def _get_temp_dir(self) -> Path:
-        # return tempfile.mkdtemp()
-        return self.BASE_DIR / '.tmp'
+        return tempfile.mkdtemp()
 
     def clone(self) -> None:
         self._temp_dir.mkdir(parents=True, exist_ok=True)
@@ -92,11 +92,15 @@ class Tool:
             print(file_.relative_to(self.BASE_DIR))
         hash_file.write_text(file_hash)
 
+    def clean(self) -> None:
+        self._temp_dir.unlink()
+
     def run(self) -> None:
         self.clone()
         files_to_copy = self.make_list_of_files_to_copy()
         for source, target in files_to_copy:
             self.copy_file(source, target)
+        self.clean()
 
 
 if __name__ == '__main__':

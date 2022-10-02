@@ -1,0 +1,44 @@
+name: Check source for changes
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check_source_for_changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check for changes
+        id: check
+        uses: python3 ./.scripts/sync_original.py
+      - name: Check if branch already exists
+        if: steps.check.outputs.stdout != ''
+        run: |
+          git fetch
+          if git branch -r | grep -q "origin/sync-with-original"; then
+            echo "Branch already exists"
+            exit 1
+          fi
+      - name: Open PR
+        if: steps.check.outputs.stdout != '' && steps.branch_exists.stdout != 'Branch already exists'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: Sync with original
+          body: |
+            Sync with original
+            {% for line in steps.check.outputs.stdout %}
+            {{ line }}
+            {% endfor %}
+          labels: sync
+          branch: sync-with-original
+          branch-suffix: random
+          commit-message: Sync with original
+          delete-branch: true
+          assignees: ${{ github.repository_owner }}
+          draft: true
