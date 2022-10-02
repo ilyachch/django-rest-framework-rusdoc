@@ -16,25 +16,21 @@ jobs:
         uses: actions/checkout@v3
       - name: Check for changes
         id: check
-        uses: python3 ./.scripts/sync_original.py
+        run: echo "::set-output name=new_files::$(python3 ./.scripts/sync_original.py)"
       - name: Check if branch already exists
-        if: steps.check.outputs.stdout != ''
+        if: steps.check.outputs.new_files != ''
         run: |
           git fetch
           if git branch -r | grep -q "origin/sync-with-original"; then
-            echo "Branch already exists"
-            exit 1
+            echo "::set-output name=branch_exists::1"
           fi
       - name: Open PR
-        if: steps.check.outputs.stdout != '' && steps.branch_exists.stdout != 'Branch already exists'
+        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs != '1'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Sync with original
           body: |
             Sync with original
-            {% for line in steps.check.outputs.stdout %}
-            {{ line }}
-            {% endfor %}
           labels: sync
           branch: sync-with-original
           branch-suffix: random

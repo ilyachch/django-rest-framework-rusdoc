@@ -10,48 +10,48 @@ from typing import List, Tuple
 class Tool:
     ORIGINAL_URL = 'https://github.com/encode/django-rest-framework.git'
     BASE_DIR = Path(__file__).resolve().parent.parent
-    REFERENCE_DIR = BASE_DIR / '.reference'
 
     DATA_TO_WATCH = [
         (
             [
                 Path('docs/api-guide/'),
             ],
-            REFERENCE_DIR / Path('api-navigation/'),
+            BASE_DIR / Path('.reference/api-navigation/'),
         ),
         (
             [
                 Path('docs/tutorial/'),
                 Path('docs/coreapi/'),
             ],
-            REFERENCE_DIR / Path('quick-start/'),
+            BASE_DIR / Path('.reference/quick-start/'),
         ),
         (
             [
                 Path('docs/topics/'),
             ],
-            REFERENCE_DIR / Path('topics/'),
+            BASE_DIR / Path('.reference/topics/'),
         ),
         (
             [
                 Path('docs/index.md'),
             ],
-            REFERENCE_DIR / Path('README.md'),
+            BASE_DIR / Path('.reference/README.md'),
         ),
     ]
 
     def __init__(self) -> None:
-        self._temp_dir = self._get_temp_dir()
+        self._temp_dir: Path = self._get_temp_dir()
 
     def _get_temp_dir(self) -> Path:
-        return tempfile.mkdtemp()
+        temp_dir = tempfile.mkdtemp()
+        return Path(temp_dir)
 
     def clone(self) -> None:
         self._temp_dir.mkdir(parents=True, exist_ok=True)
-        if self._temp_dir.exists():
-            subprocess.run(['git', 'pull'], cwd=self._temp_dir, check=True)
+        if self._temp_dir.exists() and '.git' in self._temp_dir.iterdir():
+            subprocess.run(['git', 'pull'], cwd=self._temp_dir, check=True, capture_output=True)
         else:
-            subprocess.run(['git', 'clone', self.ORIGINAL_URL, self._temp_dir], check=True)
+            subprocess.run(['git', 'clone', self.ORIGINAL_URL, self._temp_dir], check=True, capture_output=True)
 
     def make_list_of_files_to_copy(self) -> List[Tuple[Path, Path]]:
         files_to_copy = []
@@ -93,7 +93,15 @@ class Tool:
         hash_file.write_text(file_hash)
 
     def clean(self) -> None:
-        self._temp_dir.unlink()
+        self.delete_folder(self._temp_dir)
+
+    def delete_folder(self, path: Path) -> None:
+        for sub in path.iterdir():
+            if sub.is_dir():
+                self.delete_folder(sub)
+            else:
+                sub.unlink()
+        path.rmdir()
 
     def run(self) -> None:
         self.clone()
