@@ -32,9 +32,7 @@ jobs:
           title: Sync with original
           body: |
             Sync with original
-            {% for line in steps.check.outputs.stdout %}
-            {{ line }}
-            {% endfor %}
+            ${{ steps.check.outputs.new_files }}
           labels: sync
           branch: sync-with-original
           branch-suffix: random
