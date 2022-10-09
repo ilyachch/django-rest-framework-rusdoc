@@ -21,11 +21,13 @@ jobs:
         if: steps.check.outputs.new_files != ''
         run: |
           git fetch
-          if git branch -r | grep -q "origin/sync-with-original"; then
+          if git branch -r | grep "sync-with-original"; then
             echo "::set-output name=branch_exists::1"
+          else
+            echo "::set-output name=branch_exists::0"
           fi
       - name: Open PR
-        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs != '1'
+        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs.branch_exists != '1'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Sync with original
