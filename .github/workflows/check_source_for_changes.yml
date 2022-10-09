@@ -18,6 +18,7 @@ jobs:
         id: check
         run: echo "::set-output name=new_files::$(python3 ./.scripts/sync_original.py)"
       - name: Check if branch already exists
+        id: check_branch
         if: steps.check.outputs.new_files != ''
         run: |
           git fetch
@@ -27,7 +28,7 @@ jobs:
             echo "::set-output name=branch_exists::0"
           fi
       - name: Open PR
-        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs.branch_exists != '1'
+        if: steps.check.outputs.new_files != '' && steps.check_branch.outputs.branch_exists != '1'
         uses: peter-evans/create-pull-request@v4
         with:
           title: Sync with original
