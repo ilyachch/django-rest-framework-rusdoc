@@ -1,12 +1,13 @@
 ---
-
-## source: - routers.py
+source:
+  - routers.py
+---
 
 # Routers
 
 > Resource routing allows you to quickly declare all of the common routes for a given resourceful controller. Instead of declaring separate routes for your index... a resourceful route declares them in a single line of code.
 >
-> — [Ruby on Rails Documentation][cite]
+> — \[Ruby on Rails Documentation\]\[cite\]
 
 Some Web frameworks such as Rails provide functionality for automatically determining how the URLs for an application should be mapped to the logic that deals with handling incoming requests.
 
@@ -352,7 +353,6 @@ rest.router.register_model(MyModel)
 
 The [`DRF-extensions` package][drf-extensions] provides [routers][drf-extensions-routers] for creating [nested viewsets][drf-extensions-nested-viewsets], [collection level controllers][drf-extensions-collection-level-controllers] with [customizable endpoint names][drf-extensions-customizable-endpoint-names].
 
-[cite]: https://guides.rubyonrails.org/routing.html
 [drf-extensions]: https://chibisov.github.io/drf-extensions/docs/
 [drf-extensions-collection-level-controllers]: https://chibisov.github.io/drf-extensions/docs/#collection-level-controllers
 [drf-extensions-customizable-endpoint-names]: https://chibisov.github.io/drf-extensions/docs/#controller-endpoint-name

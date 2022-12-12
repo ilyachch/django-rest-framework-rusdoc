@@ -1,12 +1,13 @@
 ---
-
-## source: - response.py
+source:
+  - response.py
+---
 
 # Responses
 
 > Unlike basic HttpResponse objects, TemplateResponse objects retain the details of the context that was provided by the view to compute the response. The final output of the response is not computed until it is needed, later in the response process.
 >
-> — [Django documentation][cite]
+> — \[Django documentation\]\[cite\]
 
 REST framework supports HTTP content negotiation by providing a `Response` class which allows you to return content that can be rendered into multiple content types, depending on the client request.
 
@@ -95,5 +96,4 @@ As with any other `TemplateResponse`, this method is called to render the serial
 
 You won't typically need to call `.render()` yourself, as it's handled by Django's standard response cycle.
 
-[cite]: https://docs.djangoproject.com/en/stable/ref/template-response/
 [statuscodes]: status-codes.md

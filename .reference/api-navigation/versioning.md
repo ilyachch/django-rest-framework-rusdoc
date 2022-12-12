@@ -1,18 +1,19 @@
 ---
-
-## source: - versioning.py
+source:
+  - versioning.py
+---
 
 # Versioning
 
 > Versioning an interface is just a "polite" way to kill deployed clients.
 >
-> — [Roy Fielding][cite].
+> — \[Roy Fielding\]\[cite\].
 
 API versioning allows you to alter behavior between different clients. REST framework provides for a number of different versioning schemes.
 
 Versioning is determined by the incoming client request, and may either be based on the request URL, or based on the request headers.
 
-There are a number of valid approaches to approaching versioning. [Non-versioned systems can also be appropriate][roy-fielding-on-versioning], particularly if you're engineering for very long-term systems with multiple clients outside of your control.
+There are a number of valid approaches to approaching versioning. \[Non-versioned systems can also be appropriate\]\[roy-fielding-on-versioning\], particularly if you're engineering for very long-term systems with multiple clients outside of your control.
 
 ## Versioning with REST framework
 
@@ -247,10 +248,8 @@ class XAPIVersionScheme(versioning.BaseVersioning):
 
 If your versioning scheme is based on the request URL, you will also want to alter how versioned URLs are determined. In order to do so you should override the `.reverse()` method on the class. See the source code for examples.
 
-[cite]: https://www.slideshare.net/evolve_conference/201308-fielding-evolve/31
 [heroku-guidelines]: https://github.com/interagent/http-api-design/blob/master/en/foundations/require-versioning-in-the-accepts-header.md
 [json-parameters]: https://tools.ietf.org/html/rfc4627#section-6
 [klabnik-guidelines]: http://blog.steveklabnik.com/posts/2011-07-03-nobody-understands-rest-or-http#i_want_my_api_to_be_versioned
 [lvh]: https://reinteractive.net/posts/199-developing-and-testing-rails-applications-with-subdomains
-[roy-fielding-on-versioning]: https://www.infoq.com/articles/roy-fielding-on-versioning
 [vendor-media-type]: https://en.wikipedia.org/wiki/Internet_media_type#Vendor_tree

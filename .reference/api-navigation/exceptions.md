@@ -1,12 +1,13 @@
 ---
-
-## source: - exceptions.py
+source:
+  - exceptions.py
+---
 
 # Exceptions
 
 > Exceptions… allow error handling to be organized cleanly in a central or high-level place within the program structure.
 >
-> — Doug Hellmann, [Python Exception Handling Techniques][cite]
+> — Doug Hellmann, \[Python Exception Handling Techniques\]\[cite\]
 
 ## Exception handling in REST framework views
 
@@ -288,6 +289,5 @@ The following third-party packages are also available.
 The [drf-standardized-errors] package provides an exception handler that generates the same format for all 4xx and 5xx responses. It is a drop-in replacement for the default exception handler and allows customizing the error response format without rewriting the whole exception handler. The standardized error response format is easier to document and easier to handle by API consumers.
 
 [authentication]: authentication.md
-[cite]: https://doughellmann.com/blog/2009/06/19/python-exception-handling-techniques/
 [django-custom-error-views]: https://docs.djangoproject.com/en/dev/topics/http/views/#customizing-error-views
 [drf-standardized-errors]: https://github.com/ghazi-git/drf-standardized-errors

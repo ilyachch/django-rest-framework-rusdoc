@@ -1,18 +1,19 @@
 ---
-
-## source: - test.py
+source:
+  - test.py
+---
 
 # Testing
 
 > Code without tests is broken as designed.
 >
-> — [Jacob Kaplan-Moss][cite]
+> — \[Jacob Kaplan-Moss\]\[cite\]
 
 REST framework includes a few helper classes that extend Django's existing test framework, and improve support for making API requests.
 
 # APIRequestFactory
 
-Extends [Django's existing `RequestFactory` class][requestfactory].
+Extends \[Django's existing `RequestFactory` class\]\[requestfactory\].
 
 ## Creating test requests
 
@@ -451,10 +452,8 @@ REST_FRAMEWORK = {
 }
 ```
 
-[cite]: https://jacobian.org/writing/django-apps-with-buildout/#s-create-a-test-wrapper
 [client]: https://docs.djangoproject.com/en/stable/topics/testing/tools/#the-test-client
 [configuration]: #configuration
 [provided_test_case_classes]: https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes
 [refresh_from_db_docs]: https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.refresh_from_db
-[requestfactory]: https://docs.djangoproject.com/en/stable/topics/testing/advanced/#django.test.client.RequestFactory
 [session_objects]: https://requests.readthedocs.io/en/master/user/advanced/#session-objects
