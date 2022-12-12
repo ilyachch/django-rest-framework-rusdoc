@@ -1,140 +1,120 @@
 # Django REST framework
 
-Django REST framework \(DRF\) - мощный и гибкий инструмент для построения Web API.
+Django REST framework - это мощный и гибкий инструментарий для создания веб API.
 
-Вот несколько причин, чтобы использовать DRF:
+Некоторые причины, по которым вы можете выбрать Framework REST:
 
-* Крайне удобная для разработчиков [браузерная версия API](http://restframework.herokuapp.com/);
-* Наличие пакетов для OAuth1a и OAuth2 авторизации;
-* Сериализация, поддерживающая ORM и не-ORM источники данных;
-* Возможность полной и детальной настройки - можно использовать обычные представления-функции, если вы не нуждаетесь в мощном функционале;
-* Расширенная документация и [отличная поддержка сообщества](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework);
-* Используется и пользуется уважением таких узнаваемых компаний, как [Mozilla](http://www.mozilla.org/en-US/about/), [Red Hat](https://www.redhat.com/), [Heroku](https://www.heroku.com/), [Eventbrite](https://www.eventbrite.co.uk/about/).
+* [Web Browsable API](https://restframework.herokuapp.com/) - огромное удобство использования для ваших разработчиков.
+* [Политики аутентификации](API-Guide/Authentication.md), включая пакеты для [OAuth1a] (API-Guide/Authentication/#django-rest-framework-oauth) и [OAuth2] (API-Guide/Authentication/#django-Oauth-toolkit).
+* [Сериализация](API-Guide/Serializers.md), которая поддерживает как [ORM] (API-Guide/Serializers#ModelseRializer), так и [non-ORM](API-Guide/Serializers#Serializers) источники данных.
+* Полностью настраиваемый - просто используйте [обычные представления-функции](API-Guide/Views#Function-Views), если вам не нужно [больше](API-Guide/Generic-Views.md) [мощных](API-Guide/Viewsets.md) [возможностей](API-Guide/Routers.md).
+* Обширная документация и [великолепная поддержка сообщества](https://groups.google.com/forum/?fromGroups#!Forum/django-rest-framework).
+* Используется и пользуется доверием международно признанным компаниям, включая [Mozilla](https://www.mozilla.org/en-us/about/), [Red Hat](https://www.redhat.com/), [heroku](https://www.heroku.com/) и [eventbrite](https://www.eventbrite.co.uk/about/).
 
-Существует пример API для тестирования, который доступен здесь [доступно здесь][sandbox].
+## Требования
 
-## Зависимости
+REST framework требует следующего:
 
-У DRF следующие требования:
+* Python (3.6, 3.7, 3.8, 3.9, 3.10, 3.11)
+* Django (2.2, 3.0, 3.1, 3.2, 4.0, 4.1)
 
-* Python \(3.5, 3.6, 3.7\)
-* Django \(1.11, 2.0, 2.1, 2.2\)
+Мы **настоятельно рекомендуем** и официально поддерживаем только последний патч-выпуск каждой серии Python и Django.
 
-Мы **настоятельно рекомендуем** и официально поддерживаем только последние версии патчей для каждой серии Python и Django.
+Следующие пакеты необязательны:
+
+* [PyYAML](https://pypi.org/project/pyyaml/), [uritemplate](https://pypi.org/project/uritemplate/) (5.1+, 3.0.0+) - Поддержка генерации схем.
+* [Markdown](https://pypi.org/project/markdown/) (3.0.0+) - поддержка Markdown для Web Browsable API.
+* [Pygments](https://pypi.org/project/pygments/) (2.4.0+) - добавляет подстветку синтаксиса для Markdown.
+* [django-filter](https://pypi.org/project/django-filter/) (1.0.1+) - поддержка фильтрации.
+* [django-guardian](https://github.com/django-guardian/django-guardian) (1.1.1+) - Поддержка разрешений на уровне объекта.
 
 ## Установка
 
-Установите с помощью `pip`
+Установите, используя `pip`, включая любые дополнительные пакеты, которые вы хотите...
 
-```bash
-    pip install djangorestframework
 ```
-
-Добавьте `'rest_framework'` в `INSTALLED_APPS`  в настройках:
-
-```python
-    INSTALLED_APPS = (
-        ...
-        'rest_framework',
-    )
-```
-
-## Пример
-
-Давайте рассмотрим краткий пример использования инфраструктуры REST для создания простого API на основе модели для доступа к пользователям и группам.
-
-Создайте новый проект:
-
-```bash
-pip install django
 pip install djangorestframework
-django-admin startproject example .
-./manage.py migrate
-./manage.py createsuperuser
+pip install markdown       # Markdown support for the browsable API.
+pip install django-filter  # Filtering support
 ```
 
-Теперь отредактируйте модуль `example/urls.py` в вашем проекте:
+... или клонируйте проект с GitHub.
 
-```python
-from django.conf.urls import url, include
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
-
-# Сериализаторы описывают представление данных.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-# Наборы представлений описывают поведение представлений.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-# Роутеры позволяют быстро и просто сконфигурировать адреса.
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-
-# Привяжите конфигурацию URL, используя роутеры.
-# Так же мы предоставляем URL для авторизации в браузере.
-urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
+```
+git clone https://github.com/encode/django-rest-framework
 ```
 
-Мы также хотели бы настроить несколько параметров для нашего API.
-
-Добавьте следующее к вашему `settings.py` модулю:
+Добавьте `'rest_framework'` в секцию `INSTALLED_APPS` ваших настроек.
 
 ```python
 INSTALLED_APPS = [
-    ...  # Убедитесь, что здесь включены установленные по умолчанию приложения.
+    ...
     'rest_framework',
 ]
+```
 
+Если вы собираетесь использовать веб интерфейс API, вероятно, также захотите добавить представления для входа и выхода. Добавьте следующее в свой корневой `urls.py` файл.
+
+```python
+urlpatterns = [
+    ...
+    path('api-auth/', include('rest_framework.urls'))
+]
+```
+
+Обратите внимание, что путь URL может быть любым.
+
+## Пример
+
+Давайте посмотрим на быстрый пример использования REST framework для создания простого API, основанного на модели.
+
+Мы создадим API чтения-записи для доступа к информации о пользователях нашего проекта.
+
+Любые глобальные настройки для API REST framework хранятся в одном словаре конфигурации с именем `REST_FRAMEWORK`. Начните с добавления следующего в свой модуль `settings.py`:
+
+```python
 REST_FRAMEWORK = {
-    # Используйте стандартные Django  `django.contrib.auth` разрешения,
-    # или разрешите доступ только для чтения для неаутентифицированных пользователей.
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
 ```
 
-Вот и все, мы закончили!
+Не забудьте убедиться, что вы также добавили `rest_framework` в `INSTALLED_APPS`.
 
-```bash
-./manage.py runserver
-```
+Мы готовы создать наш API. Вот кореневой модуль `urls.py` нашего проекта:
 
-Теперь можно открыть API в вашем браузере по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/), и увидеть ваше API `'users'`. Так же, если вы воспользуетесь кнопкой `'Login'` в верхнем правом углу и авторизуетесь, вы сможете добавлять, изменять и удалять пользователей из системы.
+```python
+from django.urls import path, include
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
 
-Вы также можете взаимодействовать с API с помощью инструментов командной строки, таких как curl. Например, чтобы вывести конечную точку пользователей:
+# Сериализаторы определяют вид API.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']
 
-```bash
-$ curl -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
-[
-    {
-        "url": "http://127.0.0.1:8000/users/1/",
-        "username": "admin",
-        "email": "admin@example.com",
-        "is_staff": true,
-    }
+# Наборы представлений (ViewSets) определяют поведение конечных точек.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+# Маршрутизаторы обеспечивают простой способ автоматического определения конфигурации URL.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+
+# Свяжите наше API с помощью автоматической маршрутизации URL.
+# Кроме того, мы включаем URL-адреса входа для web интерфейса API.
+urlpatterns = [
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 ```
 
-Или создать нового пользователя:
-
-```bash
-$ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
-{
-    "url": "http://127.0.0.1:8000/users/2/",
-    "username": "new",
-    "email": "new@example.com",
-    "is_staff": false,
-}
-```
+Теперь вы можете открыть API в своем браузере по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/), и просмотреть свой новый API «Пользователи». Если вы воспользуетесь формой входа в верхнем правом углу, вы также сможете добавить, создавать и удалять пользователей из системы.
 
 ## Быстрый старт
 
@@ -209,15 +189,15 @@ $ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Ac
 
 ## Поддержка
 
-Для поддержки обратитесь в [группу обсуждения DRF](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework) или создайте вопрос на StackOverflow с указанием тэга ['django-rest-framework'](http://stackoverflow.com/questions/tagged/django-rest-framework).
+Для поддержки, пожалуйста, см. [группу обсуждения REST Framework](https://groups.google.com/forum/?fromGroups#!Forum/django-rest-framework), попробуйте канал `#restframe` на `irc.libera.chat`, или создайте вопрос на [Stack Overflow](https://stackoverflow.com/) с тэгом ['django-rest-framework'] (https://stackoverflow.com/questions/tagged/].
 
-Для уведомления об обновлениях, подпишитесь на нас в [Twitter](https://twitter.com/_tomchristie).
+Для приоритетной поддержки, пожалуйста, зарегистрируйтесь на [профессиональный или премиальный спонсорский план](https://fund.django-rest-framework.org/topics/funding/).
 
 ## Безопасность
 
 Если вы уверены, что нашли пробел в безопасности, пожалуйста, **не создавайте публичный баг-репорт!**
 
-Отправьте описание проблемы по почте [rest-framework-security@googlegroups.com](mailto:rest-framework-security@googlegroups.com). Руководители проекта будут работать с вами для решения любых подобных проблем.
+Отправьте описание проблемы по почте [security@djangoproject.com](mailto:security@djangoproject.com). Руководители проекта будут работать с вами для решения любых подобных проблем.
 
 -------------------
 ## Авторы перевода
