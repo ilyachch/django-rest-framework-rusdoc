@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Tutorial 5: Relationships & Hyperlinked APIs
 
 # Учебное пособие 5: Отношения и гиперссыщенные API

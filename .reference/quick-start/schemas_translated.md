@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 source: schemas.py
 
 Источник: Schemas.py
@@ -374,7 +375,7 @@ To customise the `Link` generation you may:
     ```
     from rest_framework.views import APIView
       from rest_framework.schemas import AutoSchema
-    
+
       class CustomView(APIView):
           ...
           schema = AutoSchema(
@@ -388,11 +389,11 @@ To customise the `Link` generation you may:
     ```
     from rest_framework.views import APIView
       from rest_framework.schemas import AutoSchema
-    
+
       class CustomSchema(AutoSchema):
           def get_link(...):
               # Implement custom introspection here (or in other sub-methods)
-    
+
       class CustomView(APIView):
           ...
           schema = CustomSchema()
@@ -403,7 +404,7 @@ the view explicitly:
     ```
     from rest_framework.views import APIView
       from rest_framework.schemas import ManualSchema
-    
+
       class CustomView(APIView):
           ...
           schema = ManualSchema(fields=[

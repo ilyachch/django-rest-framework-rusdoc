@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Tutorial 3: Class-based Views
 
 # Учебное пособие 3: Просмотры на основе класса

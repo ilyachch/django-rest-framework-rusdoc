@@ -78,7 +78,7 @@ Defaults to `False`
 
 ### `source`
 
-The name of the attribute that will be used to populate the field.  May be a method that only takes a `self` argument, such as `URLField(source='get_absolute_url')`, or may use dotted notation to traverse attributes, such as `EmailField(source='user.email')`. 
+The name of the attribute that will be used to populate the field.  May be a method that only takes a `self` argument, such as `URLField(source='get_absolute_url')`, or may use dotted notation to traverse attributes, such as `EmailField(source='user.email')`.
 
 When serializing fields with dotted notation, it may be necessary to provide a `default` value if any object is not present or is empty during attribute traversal. Beware of possible n+1 problems when using source attribute if you are accessing a relational orm model. For example:
 
@@ -227,7 +227,8 @@ A field that ensures the input is a valid UUID string. The `to_internal_value` m
     - `'hex'` - The compact hex representation of the UUID, not including hyphens: `"5ce0e9a55ffa654bcee01238041fb31a"`
     - `'int'` - A 128 bit integer representation of the UUID: `"123456789012312313134124512351145145114"`
     - `'urn'` - RFC 4122 URN representation of the UUID: `"urn:uuid:5ce0e9a5-5ffa-654b-cee0-1238041fb31a"`
-  Changing the `format` parameters only affects representation values. All formats are accepted by `to_internal_value`
+
+Changing the `format` parameters only affects representation values. All formats are accepted by `to_internal_value`
 
 ## FilePathField
 

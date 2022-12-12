@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Tutorial 1: Serialization
 
 # Учебник 1: сериализация

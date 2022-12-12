@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 Django REST framework is a powerful and flexible toolkit for building Web APIs.
 
 Django Rest Framework - это мощный и гибкий инструментарий для создания веб -API.

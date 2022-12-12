@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Tutorial 2: Requests and Responses
 
 # Учебник 2: Запросы и ответы

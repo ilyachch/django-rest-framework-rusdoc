@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Legacy CoreAPI Schemas Docs
 
 # Regacy coreapi схемы документов

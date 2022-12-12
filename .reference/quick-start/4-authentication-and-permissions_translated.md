@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Tutorial 4: Authentication & Permissions
 
 # Учебное пособие 4: Аутентификация и разрешения

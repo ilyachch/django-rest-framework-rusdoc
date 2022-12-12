@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 ## Built-in API documentation
 
 ## Встроенная документация API

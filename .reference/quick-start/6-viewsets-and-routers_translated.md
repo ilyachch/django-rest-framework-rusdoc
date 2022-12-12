@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Tutorial 6: ViewSets & Routers
 
 # Учебное пособие 6: виды и маршрутизаторы

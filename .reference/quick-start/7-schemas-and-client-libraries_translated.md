@@ -1,3 +1,4 @@
+<!-- TRANSLATED by md-translate -->
 # Tutorial 7: Schemas & client libraries
 
 # Учебник 7: Схемы и клиентские библиотеки
