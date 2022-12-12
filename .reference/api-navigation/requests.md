@@ -1,13 +1,12 @@
 ---
-source:
-    - request.py
----
+
+## source: - request.py
 
 # Requests
 
 > If you're doing REST-based web service stuff ... you should ignore request.POST.
 >
-> &mdash; Malcom Tredinnick, [Django developers group][cite]
+> — Malcom Tredinnick, [Django developers group][cite]
 
 REST framework's `Request` class extends the standard `HttpRequest`, adding support for REST framework's flexible request parsing and request authentication.
 
@@ -19,11 +18,11 @@ REST framework's Request objects provide flexible request parsing that allows yo
 
 ## .data
 
-`request.data` returns the parsed content of the request body.  This is similar to the standard `request.POST` and `request.FILES` attributes except that:
+`request.data` returns the parsed content of the request body. This is similar to the standard `request.POST` and `request.FILES` attributes except that:
 
-* It includes all parsed content, including *file and non-file* inputs.
-* It supports parsing the content of HTTP methods other than `POST`, meaning that you can access the content of `PUT` and `PATCH` requests.
-* It supports REST framework's flexible request parsing, rather than just supporting form data.  For example you can handle incoming [JSON data] similarly to how you handle incoming [form data].
+- It includes all parsed content, including _file and non-file_ inputs.
+- It supports parsing the content of HTTP methods other than `POST`, meaning that you can access the content of `PUT` and `PATCH` requests.
+- It supports REST framework's flexible request parsing, rather than just supporting form data. For example you can handle incoming [JSON data] similarly to how you handle incoming [form data].
 
 For more details see the [parsers documentation].
 
@@ -41,7 +40,7 @@ You won't typically need to access this property.
 
 ---
 
-**Note:** If a client sends malformed content, then accessing `request.data` may raise a `ParseError`.  By default REST framework's `APIView` class or `@api_view` decorator will catch the error and return a `400 Bad Request` response.
+**Note:** If a client sends malformed content, then accessing `request.data` may raise a `ParseError`. By default REST framework's `APIView` class or `@api_view` decorator will catch the error and return a `400 Bad Request` response.
 
 If a client sends a request with a content-type that cannot be parsed then a `UnsupportedMediaType` exception will be raised, which by default will be caught and return a `415 Unsupported Media Type` response.
 
@@ -65,9 +64,9 @@ A string representing the media type that was accepted by the content negotiatio
 
 REST framework provides flexible, per-request authentication, that gives you the ability to:
 
-* Use different authentication policies for different parts of your API.
-* Support the use of multiple authentication policies.
-* Provide both user and token information associated with the incoming request.
+- Use different authentication policies for different parts of your API.
+- Support the use of multiple authentication policies.
+- Provide both user and token information associated with the incoming request.
 
 ## .user
 
@@ -79,7 +78,7 @@ For more details see the [authentication documentation].
 
 ## .auth
 
-`request.auth` returns any additional authentication context.  The exact behavior of `request.auth` depends on the authentication policy being used, but it may typically be an instance of the token that the request was authenticated against.
+`request.auth` returns any additional authentication context. The exact behavior of `request.auth` depends on the authentication policy being used, but it may typically be an instance of the token that the request was authenticated against.
 
 If the request is unauthenticated, or if no additional context is present, the default value of `request.auth` is `None`.
 
@@ -129,14 +128,13 @@ You won't typically need to directly access the request's content, as you'll nor
 
 # Standard HttpRequest attributes
 
-As REST framework's `Request` extends Django's `HttpRequest`, all the other standard attributes and methods are also available.  For example the `request.META` and `request.session` dictionaries are available as normal.
+As REST framework's `Request` extends Django's `HttpRequest`, all the other standard attributes and methods are also available. For example the `request.META` and `request.session` dictionaries are available as normal.
 
 Note that due to implementation reasons the `Request` class does not inherit from `HttpRequest` class, but instead extends the class using composition.
 
-
-[cite]: https://groups.google.com/d/topic/django-developers/dxI4qVzrBY4/discussion
-[parsers documentation]: parsers.md
-[JSON data]: parsers.md#jsonparser
-[form data]: parsers.md#formparser
 [authentication documentation]: authentication.md
 [browser enhancements documentation]: ../topics/browser-enhancements.md
+[cite]: https://groups.google.com/d/topic/django-developers/dxI4qVzrBY4/discussion
+[form data]: parsers.md#formparser
+[json data]: parsers.md#jsonparser
+[parsers documentation]: parsers.md

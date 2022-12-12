@@ -1,20 +1,16 @@
 # Caching
 
-> A certain woman had a very sharp consciousness but almost no
-> memory ... She remembered enough to work, and she worked hard.
+> A certain woman had a very sharp consciousness but almost no memory ... She remembered enough to work, and she worked hard.
+>
 > - Lydia Davis
 
-Caching in REST Framework works well with the cache utilities
-provided in Django.
+Caching in REST Framework works well with the cache utilities provided in Django.
 
 ---
 
 ## Using cache with apiview and viewsets
 
-Django provides a [`method_decorator`][decorator] to use
-decorators with class based views. This can be used with
-other cache decorators such as [`cache_page`][page],
-[`vary_on_cookie`][cookie] and [`vary_on_headers`][headers].
+Django provides a [`method_decorator`][decorator] to use decorators with class based views. This can be used with other cache decorators such as [`cache_page`][page], [`vary_on_cookie`][cookie] and [`vary_on_headers`][headers].
 
 ```python
 from django.utils.decorators import method_decorator
@@ -59,10 +55,9 @@ class PostView(APIView):
         return Response(content)
 ```
 
-**NOTE:** The [`cache_page`][page] decorator only caches the
-`GET` and `HEAD` responses with status 200.
+**NOTE:** The [`cache_page`][page] decorator only caches the `GET` and `HEAD` responses with status 200.
 
-[page]: https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache
 [cookie]: https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_cookie
-[headers]: https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_headers
 [decorator]: https://docs.djangoproject.com/en/dev/topics/class-based-views/intro/#decorating-the-class
+[headers]: https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_headers
+[page]: https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache
