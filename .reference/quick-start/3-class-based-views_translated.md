@@ -1,21 +1,19 @@
 <!-- TRANSLATED by md-translate -->
 # Tutorial 3: Class-based Views
 
-# Учебное пособие 3: Просмотры на основе класса
+# Учебник 3: Представления на основе классов
 
 We can also write our API views using class-based views, rather than function based views. As we'll see this is a powerful pattern that allows us to reuse common functionality, and helps us keep our code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
-Мы также можем написать наши представления API, используя представления на основе классов, а не представления на основе функций.
-Как мы увидим, это мощный шаблон, который позволяет нам повторно использовать общую функциональность и помогает нам сохранить наш код [сухой] (https://en.wikipedia.org/wiki/don%27t_repeat_yourself).
+Мы также можем писать наши представления API, используя представления на основе классов, а не на основе функций. Как мы увидим, это мощный паттерн, который позволяет нам повторно использовать общую функциональность и помогает нам сохранить наш код [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
 ## Rewriting our API using class-based views
 
-## Переписывание нашего API с использованием классовых представлений
+## Переписывание нашего API с использованием представлений на основе классов
 
 We'll start by rewriting the root view as a class-based view. All this involves is a little bit of refactoring of `views.py`.
 
-Мы начнем с переписывания корневого представления в качестве классового представления.
-Все это включает в себя немного рефакторинга `views.py`.
+Мы начнем с того, что перепишем корневое представление как представление на основе классов. Все, что для этого нужно, это немного подправить `views.py`.
 
 ```
 from snippets.models import Snippet
@@ -45,9 +43,7 @@ class SnippetList(APIView):
 
 So far, so good. It looks pretty similar to the previous case, but we've got better separation between the different HTTP methods. We'll also need to update the instance view in `views.py`.
 
-Все идет нормально.
-Это выглядит довольно похоже на предыдущий случай, но у нас лучшее разделение между различными методами HTTP.
-Нам также нужно обновить представление экземпляра в `views.py`.
+Пока все хорошо. Это выглядит довольно похоже на предыдущий случай, но мы получили лучшее разделение между различными HTTP-методами. Нам также потребуется обновить представление экземпляра в `views.py`.
 
 ```
 class SnippetDetail(APIView):
@@ -81,12 +77,11 @@ class SnippetDetail(APIView):
 
 That's looking good. Again, it's still pretty similar to the function based view right now.
 
-Это выглядит хорошо.
-Опять же, сейчас это все еще очень похоже на представление на основе функций.
+Выглядит неплохо. Опять же, сейчас это все еще очень похоже на представление на основе функций.
 
 We'll also need to refactor our `snippets/urls.py` slightly now that we're using class-based views.
 
-Нам также нужно рефакторировать наши фрагменты/urls.py`, теперь, когда мы используем представления на основе классов.
+Нам также придется немного подрефакторить наш `snippets/urls.py` теперь, когда мы используем представления на основе классов.
 
 ```
 from django.urls import path
@@ -103,26 +98,23 @@ urlpatterns = format_suffix_patterns(urlpatterns)
 
 Okay, we're done. If you run the development server everything should be working just as before.
 
-Хорошо, мы закончили.
-Если вы запускаете сервер разработки, все должно работать так же, как и раньше.
+Хорошо, мы закончили. Если вы запустите сервер разработки, все должно работать как прежде.
 
 ## Using mixins
 
-## Использование Mixins
+## Использование миксинов
 
 One of the big wins of using class-based views is that it allows us to easily compose reusable bits of behavior.
 
-Одна из больших побед в использовании классовых представлений заключается в том, что он позволяет нам легко составлять многократные биты поведения.
+Одним из главных преимуществ использования представлений на основе классов является то, что они позволяют нам легко составлять многократно используемые фрагменты поведения.
 
 The create/retrieve/update/delete operations that we've been using so far are going to be pretty similar for any model-backed API views we create. Those bits of common behavior are implemented in REST framework's mixin classes.
 
-Операции Create/Retive/Update/Delete, которые мы использовали до сих пор, будут очень похожи для любых видов API, поддерживаемых моделью, которые мы создаем.
-Эти кусочки общего поведения реализованы в классах микшина REST Framework.
+Операции create/retrieve/update/delete, которые мы использовали до сих пор, будут довольно похожими для всех создаваемых нами представлений API, основанных на моделях. Эти части общего поведения реализованы в классах-миксинах REST framework.
 
 Let's take a look at how we can compose the views by using the mixin classes. Here's our `views.py` module again.
 
-Давайте посмотрим, как мы можем составить представление, используя классы Mixin.
-Вот наш модуль `views.py` снова.
+Давайте рассмотрим, как мы можем компоновать представления с помощью классов mixin. Вот наш модуль `views.py`.
 
 ```
 from snippets.models import Snippet
@@ -145,14 +137,11 @@ class SnippetList(mixins.ListModelMixin,
 
 We'll take a moment to examine exactly what's happening here. We're building our view using `GenericAPIView`, and adding in `ListModelMixin` and `CreateModelMixin`.
 
-Мы потратим минутку, чтобы изучить именно то, что здесь происходит.
-Мы создаем наш взгляд, используя `genericapiview` и добавляем` listmodelmixin` и `createmodelmixin`.
+Сейчас мы рассмотрим, что именно здесь происходит. Мы создаем наше представление, используя `GenericAPIView`, и добавляем `ListModelMixin` и `CreateModelMixin`.
 
 The base class provides the core functionality, and the mixin classes provide the `.list()` and `.create()` actions. We're then explicitly binding the `get` and `post` methods to the appropriate actions. Simple enough stuff so far.
 
-Базовый класс обеспечивает основную функциональность, а классы Mixin обеспечивают действия `.list ()` и `.create ()`.
-Затем мы явно связываем методы «get» и «post» с соответствующими действиями.
-Достаточно простые вещи до сих пор.
+Базовый класс обеспечивает основную функциональность, а классы-миксины предоставляют действия `.list()` и `.create()`. Затем мы явно привязываем методы `get` и `post` к соответствующим действиям. Пока все достаточно просто.
 
 ```
 class SnippetDetail(mixins.RetrieveModelMixin,
@@ -174,17 +163,15 @@ class SnippetDetail(mixins.RetrieveModelMixin,
 
 Pretty similar. Again we're using the `GenericAPIView` class to provide the core functionality, and adding in mixins to provide the `.retrieve()`, `.update()` and `.destroy()` actions.
 
-Довольно похожий.
-Опять же, мы используем класс `genericapiview`, чтобы обеспечить основную функциональность, и добавляем в микшины для предоставления действий` .retrive () `,` .update () `и` .destroy () `.
+Довольно похоже. Мы снова используем класс `GenericAPIView` для обеспечения основной функциональности, и добавляем миксины для обеспечения действий `.retrieve()`, `.update()` и `.destroy()`.
 
 ## Using generic class-based views
 
-## Использование общих просмотров на основе классов
+## Использование общих представлений на основе классов
 
 Using the mixin classes we've rewritten the views to use slightly less code than before, but we can go one step further. REST framework provides a set of already mixed-in generic views that we can use to trim down our `views.py` module even more.
 
-Используя классы Mixin, мы переписали представления, чтобы использовать чуть меньше кода, чем раньше, но мы можем пойти на один шаг вперед.
-Framework REST обеспечивает набор уже смешанных общих видов, которые мы можем использовать для обрезки нашего `views.py`-модуля еще больше.
+Используя классы mixin, мы переписали представления, чтобы использовать немного меньше кода, чем раньше, но мы можем пойти еще на один шаг дальше. Фреймворк REST предоставляет набор уже смешанных общих представлений, которые мы можем использовать, чтобы еще больше сократить наш модуль `views.py`.
 
 ```
 from snippets.models import Snippet
@@ -204,9 +191,8 @@ class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
 
 Wow, that's pretty concise. We've gotten a huge amount for free, and our code looks like good, clean, idiomatic Django.
 
-Вау, это довольно кратко.
-Мы получили огромное количество бесплатно, и наш код выглядит как хороший, чистый, идиоматический Джанго.
+Ух ты, как лаконично. Мы получили огромное количество бесплатно, и наш код выглядит как хороший, чистый, идиоматический Django.
 
 Next we'll move onto [part 4 of the tutorial](4-authentication-and-permissions.md), where we'll take a look at how we can deal with authentication and permissions for our API.
 
-Затем мы перейдем к [Часть 4 Учебного пособия] (4-Authentication и Permissions.md), где мы посмотрим, как мы можем справиться с аутентификацией и разрешениями для нашего API.
+Далее мы перейдем к [части 4 учебника] (4-authentication-and-permissions.md), где мы рассмотрим, как мы можем работать с аутентификацией и разрешениями для нашего API.

@@ -7,28 +7,27 @@
 
 **DEPRECATION NOTICE:** Use of CoreAPI-based schemas were deprecated with the introduction of native OpenAPI-based schema generation as of Django REST Framework v3.10. See the [Version 3.10 Release Announcement](../community/3.10-announcement.md) for more details.
 
-** Уведомление об ископке: ** Использование схем на основе Coreapi было устарело с введением нативного генерации схем на основе OpenAPI на расстоянии Django Rest Framework v3.10.
-См. Объявление [версия 3.10 выпуска] (../ Community/3.10-Annoument.md) для получения более подробной информации.
+**УВЕДОМЛЕНИЕ О ДЕПРЕССИИ:** Использование схем на базе CoreAPI было отменено с введением генерации схем на базе OpenAPI в Django REST Framework v3.10. Более подробную информацию смотрите в [Version 3.10 Release Announcement](../community/3.10-announcement.md).
 
 If you are looking for information regarding schemas, you might want to look at these updated resources:
 
-Если вы ищете информацию о схемах, вы можете посмотреть на эти обновленные ресурсы:
+Если вы ищете информацию о схемах, обратите внимание на эти обновленные ресурсы:
 
 1. [Schema](../api-guide/schemas.md)
 2. [Documenting your API](../topics/documenting-your-api.md)
 
-1. [Схема] (../ API-Guide/Schemas.md)
-2. [документирование вашего API] (../ Темы/документирование-your-api.md)
+1. [Schema](../api-guide/schemas.md)
+2. [Документирование вашего API](../topics/documenting-your-api.md)
 
 ---
 
 A schema is a machine-readable document that describes the available API endpoints, their URLS, and what operations they support.
 
-Схема-это машино читаемый документ, который описывает доступные конечные точки API, их URL-адреса и какие операции они поддерживают.
+Схема - это машиночитаемый документ, который описывает доступные конечные точки API, их URL-адреса и операции, которые они поддерживают.
 
 Schemas can be a useful tool for auto-generated documentation, and can also be used to drive dynamic client libraries that can interact with the API.
 
-Схемы могут быть полезным инструментом для автоматической документации, а также могут использоваться для управления динамическими клиентскими библиотеками, которые могут взаимодействовать с API.
+Схемы могут быть полезным инструментом для автоматической генерации документации, а также могут использоваться для создания динамических клиентских библиотек, которые могут взаимодействовать с API.
 
 ## Core API
 
@@ -36,21 +35,19 @@ Schemas can be a useful tool for auto-generated documentation, and can also be u
 
 In order to provide schema support REST framework uses [Core API](https://www.coreapi.org/).
 
-Чтобы обеспечить схему поддержки Framework REST -Framework [Core API] (https://www.coreapi.org/).
+Для обеспечения поддержки схем REST framework использует [Core API](https://www.coreapi.org/).
 
 Core API is a document specification for describing APIs. It is used to provide an internal representation format of the available endpoints and possible interactions that an API exposes. It can either be used server-side, or client-side.
 
-Core API является спецификацией документа для описания API.
-Он используется для обеспечения внутреннего формата представления доступных конечных точек и возможных взаимодействий, которые API обнажает.
-Его можно использовать либо на стороне сервера, либо на стороне клиента.
+Core API - это спецификация документа для описания API. Она используется для обеспечения внутреннего формата представления доступных конечных точек и возможных взаимодействий, которые API раскрывает. Он может использоваться как на стороне сервера, так и на стороне клиента.
 
 When used server-side, Core API allows an API to support rendering to a wide range of schema or hypermedia formats.
 
-При использовании серверной стороны, Core API позволяет API поддерживать рендеринг в широком диапазоне форматов схемы или гипермедиа.
+При использовании на стороне сервера Core API позволяет API поддерживать рендеринг в широкий спектр форматов схем или гипермедиа.
 
 When used client-side, Core API allows for dynamically driven client libraries that can interact with any API that exposes a supported schema or hypermedia format.
 
-При использовании клиентской стороны Core API позволяет динамически управлять клиентскими библиотеками, которые могут взаимодействовать с любым API, который обнажает поддерживаемую схему или формат гипермедиа.
+При использовании на стороне клиента, Core API позволяет создавать динамически управляемые клиентские библиотеки, которые могут взаимодействовать с любым API, раскрывающим поддерживаемую схему или формат гипермедиа.
 
 ## Adding a schema
 
@@ -58,12 +55,11 @@ When used client-side, Core API allows for dynamically driven client libraries t
 
 REST framework supports either explicitly defined schema views, or automatically generated schemas. Since we're using viewsets and routers, we can simply use the automatic schema generation.
 
-Структура REST поддерживает либо явно определенные представления схемы, либо автоматически сгенерированные схемы.
-Поскольку мы используем виды и маршрутизаторы, мы можем просто использовать генерацию автоматической схемы.
+Структура REST поддерживает либо явно определенные представления схем, либо автоматически сгенерированные схемы. Поскольку мы используем наборы представлений и маршрутизаторы, мы можем просто использовать автоматическую генерацию схем.
 
 You'll need to install the `coreapi` python package in order to include an API schema, and `pyyaml` to render the schema into the commonly used YAML-based OpenAPI format.
 
-Вам нужно будет установить пакет Python `coreapi`, чтобы включить схему API, и Pyyaml`, чтобы представить схему в широко используемый формат OpenAPI на основе YAML.
+Вам потребуется установить пакет `coreapi` python, чтобы включить схему API, и `pyyaml` для преобразования схемы в широко используемый формат OpenAPI на основе YAML.
 
 ```
 $ pip install coreapi pyyaml
@@ -71,7 +67,7 @@ $ pip install coreapi pyyaml
 
 We can now include a schema for our API, by including an autogenerated schema view in our URL configuration.
 
-Теперь мы можем включить схему для нашего API, включив в нашу конфигурацию URL конфигурацию URL.
+Теперь мы можем включить схему для нашего API, включив автогенерируемое представление схемы в конфигурацию URL.
 
 ```python
 from rest_framework.schemas import get_schema_view
@@ -86,15 +82,15 @@ urlpatterns = [
 
 If you visit the `/schema/` endpoint in a browser you should now see `corejson` representation become available as an option.
 
-Если вы посетите конечную точку `/schema/` в браузере, вам теперь следует увидеть, как представление `coerjson` станет доступным в качестве опции.
+Если вы посетите конечную точку `/schema/` в браузере, вы должны увидеть, что представление `corejson` стало доступно в качестве опции.
 
 ![Schema format](../img/corejson-format.png)
 
-! [Формат схемы] (../ img/corejson-format.png)
+![Формат схемы](../img/corejson-format.png)
 
 We can also request the schema from the command line, by specifying the desired content type in the `Accept` header.
 
-Мы также можем запросить схему из командной строки, указав желаемый тип контента в заголовке `Accept`.
+Мы также можем запросить схему из командной строки, указав желаемый тип содержимого в заголовке `Accept`.
 
 ```
 $ http http://127.0.0.1:8000/schema/ Accept:application/coreapi+json
@@ -112,24 +108,23 @@ Content-Type: application/coreapi+json
 
 The default output style is to use the [Core JSON](https://www.coreapi.org/specification/encoding/#core-json-encoding) encoding.
 
-Стиль вывода по умолчанию заключается в использовании [Core JSON] (https://www.coreapi.org/specification/encoding/#core-json-encoding).
+По умолчанию используется кодировка [Core JSON](https://www.coreapi.org/specification/encoding/#core-json-encoding).
 
 Other schema formats, such as [Open API](https://openapis.org/) (formerly Swagger) are also supported.
 
-Другие форматы схемы, такие как [Open API] (https://openapis.org/) (ранее Swagger) также поддерживаются.
+Поддерживаются и другие форматы схем, такие как [Open API](https://openapis.org/) (ранее Swagger).
 
 ## Using a command line client
 
-## с помощью клиента командной строки
+## Использование клиента командной строки
 
 Now that our API is exposing a schema endpoint, we can use a dynamic client library to interact with the API. To demonstrate this, let's use the Core API command line client.
 
-Теперь, когда наш API обнажает конечную точку схемы, мы можем использовать динамическую клиентскую библиотеку для взаимодействия с API.
-Чтобы продемонстрировать это, давайте использовать клиент командной строки Core API.
+Теперь, когда наш API открывает конечную точку схемы, мы можем использовать динамическую клиентскую библиотеку для взаимодействия с API. Чтобы продемонстрировать это, давайте воспользуемся клиентом командной строки Core API.
 
 The command line client is available as the `coreapi-cli` package:
 
-Клиент командной строки доступен как пакет `coreapi-cli`:
+Клиент командной строки доступен в виде пакета `coreapi-cli`:
 
 ```
 $ pip install coreapi-cli
@@ -137,7 +132,7 @@ $ pip install coreapi-cli
 
 Now check that it is available on the command line...
 
-Теперь убедитесь, что он доступен в командной строке ...
+Теперь проверьте, что он доступен в командной строке...
 
 ```
 $ coreapi
@@ -175,7 +170,7 @@ $ coreapi get http://127.0.0.1:8000/schema/
 
 We haven't authenticated yet, so right now we're only able to see the read only endpoints, in line with how we've set up the permissions on the API.
 
-Мы еще не проверяли подлинность, поэтому сейчас мы можем видеть только конечные точки чтения, в соответствии с тем, как мы установили разрешения на API.
+Мы еще не аутентифицировались, поэтому сейчас мы можем видеть только конечные точки, доступные только для чтения, в соответствии с тем, как мы установили разрешения на API.
 
 Let's try listing the existing snippets, using the command line client:
 
@@ -200,8 +195,7 @@ $ coreapi action snippets list
 
 Some of the API endpoints require named parameters. For example, to get back the highlight HTML for a particular snippet we need to provide an id.
 
-Некоторые из конечных точек API требуют названных параметров.
-Например, чтобы вернуть HTML HTML для конкретного фрагмента, нам необходимо предоставить идентификатор.
+Некоторые конечные точки API требуют именованных параметров. Например, чтобы получить HTML-выделение для конкретного фрагмента, необходимо указать его идентификатор.
 
 ```
 $ coreapi action snippets highlight --param id=1
@@ -215,16 +209,15 @@ $ coreapi action snippets highlight --param id=1
 
 ## Authenticating our client
 
-## аутентификация нашего клиента
+## Аутентификация нашего клиента
 
 If we want to be able to create, edit and delete snippets, we'll need to authenticate as a valid user. In this case we'll just use basic auth.
 
-Если мы хотим иметь возможность создавать, редактировать и удалять фрагменты, нам нужно аутентифицировать подлинность как действительного пользователя.
-В этом случае мы просто будем использовать базовую аудиторию.
+Если мы хотим иметь возможность создавать, редактировать и удалять сниппеты, нам необходимо пройти аутентификацию в качестве действительного пользователя. В данном случае мы просто используем базовую авторизацию.
 
 Make sure to replace the `<username>` and `<password>` below with your actual username and password.
 
-Обязательно замените `<<sername>` и `<Shousle>` ниже вашим фактическим именем пользователя и паролем.
+Обязательно замените указанные ниже `<имя пользователя>` и `<пароль>` на ваши реальные имя пользователя и пароль.
 
 ```
 $ coreapi credentials add 127.0.0.1 <username>:<password> --auth basic
@@ -234,7 +227,7 @@ Added credentials
 
 Now if we fetch the schema again, we should be able to see the full set of available interactions.
 
-Теперь, если мы снова возьмем схему, мы сможем увидеть полный набор доступных взаимодействий.
+Теперь, если мы снова получим схему, мы сможем увидеть полный набор доступных взаимодействий.
 
 ```
 $ coreapi reload
@@ -256,8 +249,7 @@ Pastebin API "http://127.0.0.1:8000/schema/">
 
 We're now able to interact with these endpoints. For example, to create a new snippet:
 
-Теперь мы можем взаимодействовать с этими конечными точками.
-Например, чтобы создать новый фрагмент:
+Теперь мы можем взаимодействовать с этими конечными точками. Например, чтобы создать новый сниппет:
 
 ```
 $ coreapi action snippets create --param title="Example" --param code="print('hello, world')"
@@ -284,29 +276,27 @@ $ coreapi action snippets delete --param id=7
 
 As well as the command line client, developers can also interact with your API using client libraries. The Python client library is the first of these to be available, and a Javascript client library is planned to be released soon.
 
-Помимо клиента командной строки, разработчики также могут взаимодействовать с вашим API, используя клиентские библиотеки.
-Клиентская библиотека Python является первой из них, которая будет доступна, и в ближайшее время планируется выпустить клиентскую библиотеку JavaScript.
+Помимо клиента командной строки, разработчики могут взаимодействовать с вашим API с помощью клиентских библиотек. Клиентская библиотека для Python является первой из них, а в ближайшее время планируется выпуск клиентской библиотеки для Javascript.
 
 For more details on customizing schema generation and using Core API client libraries you'll need to refer to the full documentation.
 
-Для получения более подробной информации о создании схемы настройки и использовании клиентских библиотек Core API вам необходимо обратиться к полной документации.
+Для получения более подробной информации о настройке генерации схем и использовании клиентских библиотек Core API вам необходимо обратиться к полной документации.
 
 ## Reviewing our work
 
-## Просмотр нашей работы
+## Обзор нашей работы
 
 With an incredibly small amount of code, we've now got a complete pastebin Web API, which is fully web browsable, includes a schema-driven client library, and comes complete with authentication, per-object permissions, and multiple renderer formats.
 
-С невероятно небольшим количеством кода, у нас теперь есть полный веб-API Pastebin, который полностью доступен для веб-обозначения, включает в себя клиентскую библиотеку, основанную на схеме, и поставляется в комплекте с аутентификацией, разрешениями для каждого объекта и форматами многочисленных рендеров.
+С невероятно малым количеством кода мы теперь имеем полноценный веб-интерфейс API pastebin, который полностью доступен для просмотра в Интернете, включает клиентскую библиотеку, управляемую схемой, и поставляется в комплекте с аутентификацией, разрешениями для каждого объекта и несколькими форматами рендеринга.
 
 We've walked through each step of the design process, and seen how if we need to customize anything we can gradually work our way down to simply using regular Django views.
 
-Мы проходили каждый шаг процесса проектирования и увидели, как, если нам нужно настроить все, что мы можем постепенно пройти путь, чтобы просто использовать обычные виды Django.
+Мы прошли через каждый шаг процесса проектирования и увидели, что если нам нужно что-то изменить, мы можем постепенно перейти к использованию обычных представлений Django.
 
 You can review the final [tutorial code](https://github.com/encode/rest-framework-tutorial) on GitHub, or try out a live example in [the sandbox](https://restframework.herokuapp.com/).
 
-Вы можете просмотреть окончательный [учебный код] (https://github.com/encode/rest-framework-tutorial) на github, или попробуйте пример живого в [The Sandbox] (https://restframework.herokuapp.com
-/).
+Вы можете просмотреть окончательный [учебный код](https://github.com/encode/rest-framework-tutorial) на GitHub или опробовать живой пример в [песочнице](https://restframework.herokuapp.com/).
 
 ## Onwards and upwards
 
@@ -314,17 +304,16 @@ You can review the final [tutorial code](https://github.com/encode/rest-framewor
 
 We've reached the end of our tutorial. If you want to get more involved in the REST framework project, here are a few places you can start:
 
-Мы достигли конца нашего урока.
-Если вы хотите больше участвовать в проекте REST Framework, вот несколько мест, которые вы можете начать:
+Мы подошли к концу нашего учебника. Если вы хотите принять более активное участие в проекте REST framework, вот несколько мест, с которых вы можете начать:
 
 * Contribute on [GitHub](https://github.com/encode/django-rest-framework) by reviewing and submitting issues, and making pull requests.
 * Join the [REST framework discussion group](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework), and help build the community.
 * Follow [the author](https://twitter.com/_tomchristie) on Twitter and say hi.
 
-* Внести свой вклад в [github] (https://github.com/encode/django-rest-framework), просмотрев и отправив вопросы и выполняя запросы на привлечение.
-* Присоединяйтесь к дискуссионной группе [REST Framework] (https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework) и помогите создать сообщество.
-* Следите за [Автор] (https://twitter.com/_tomchristie) в Твиттере и скажите привет.
+* Вносите свой вклад на [GitHub](https://github.com/encode/django-rest-framework), просматривая и отправляя проблемы, а также делая запросы на исправление.
+* Присоединяйтесь к [группе обсуждения REST-фреймворка](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework) и помогайте развивать сообщество.
+* Следите за [автором](https://twitter.com/_tomchristie) в Twitter и передавайте привет.
 
 **Now go build awesome things.**
 
-** А теперь иди построить потрясающие вещи. **
+**А теперь идите и стройте удивительные вещи.**
