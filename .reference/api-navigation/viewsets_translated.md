@@ -7,39 +7,37 @@ source:
 
 * viewsets.py
 
-* Viewsets.py
+* viewsets.py
 
 ---
 
 # ViewSets
 
-# Виды
+# ViewSets
 
 > After routing has determined which controller to use for a request, your controller is responsible for making sense of the request and producing the appropriate output.
 >
 > — [Ruby on Rails Documentation](https://guides.rubyonrails.org/action_controller_overview.html)
 
-> После того, как маршрутизация определила, какой контроллер использовать для запроса, ваш контроллер отвечает за понимание запроса и создание соответствующего вывода.
+> После того, как маршрутизация определила, какой контроллер использовать для запроса, ваш контроллер отвечает за осмысление запроса и создание соответствующего вывода.
 >
-> - [Документация Ruby on Rails] (https://guides.rubyonrails.org/action_controller_overview.html)
+> - [Ruby on Rails Documentation](https://guides.rubyonrails.org/action_controller_overview.html)
 
 Django REST framework allows you to combine the logic for a set of related views in a single class, called a `ViewSet`. In other frameworks you may also find conceptually similar implementations named something like 'Resources' or 'Controllers'.
 
-Django Rest Framework позволяет объединить логику для набора связанных представлений в одном классе, называемом `viewset '.
-В других структурах вы также можете найти концептуально похожие реализации, названные что -то вроде «ресурсов» или «контроллеров».
+REST-фреймворк Django позволяет объединить логику для набора связанных представлений в одном классе, называемом `ViewSet`. В других фреймворках вы также можете найти концептуально похожие реализации, названные, например, "Ресурсы" или "Контроллеры".
 
 A `ViewSet` class is simply **a type of class-based View, that does not provide any method handlers** such as `.get()` or `.post()`, and instead provides actions such as `.list()` and `.create()`.
 
-Класс `viewset`-это просто ** тип представления на основе класса, который не предоставляет каких-либо обработчиков метода **, таких как` .get () `или` .post () `, и вместо этого предоставляет такие действия, как`.
-list () `и` .create () `.
+Класс `ViewSet` - это просто ** тип представления на основе класса, который не предоставляет никаких обработчиков методов**, таких как `.get()` или `.post()`, и вместо этого предоставляет такие действия, как `.list()` и `.create()`.
 
 The method handlers for a `ViewSet` are only bound to the corresponding actions at the point of finalizing the view, using the `.as_view()` method.
 
-Обработчики метода для `viewset` связаны только с соответствующими действиями в точке завершения представления, используя метод` .as_view () `.
+Обработчики методов для `ViewSet` привязываются к соответствующим действиям только в момент финализации представления, используя метод `.as_view()`.
 
 Typically, rather than explicitly registering the views in a viewset in the urlconf, you'll register the viewset with a router class, that automatically determines the urlconf for you.
 
-Как правило, вместо того, чтобы явно регистрировать представления в счете Views в URLConf, вы зарегистрируете смесь просмотра с помощью класса маршрутизатора, который автоматически определяет URLConf для вас.
+Обычно вместо явной регистрации представлений в наборе представлений в urlconf, вы регистрируете набор представлений в классе маршрутизатора, который автоматически определяет urlconf для вас.
 
 ## Example
 
@@ -47,7 +45,7 @@ Typically, rather than explicitly registering the views in a viewset in the urlc
 
 Let's define a simple viewset that can be used to list or retrieve all the users in the system.
 
-Давайте определим простой набор просмотра, который можно использовать для перечисления или извлечения всех пользователей в системе.
+Давайте определим простой набор представлений, который можно использовать для перечисления или извлечения всех пользователей в системе.
 
 ```
 from django.contrib.auth.models import User
@@ -74,7 +72,7 @@ class UserViewSet(viewsets.ViewSet):
 
 If we need to, we can bind this viewset into two separate views, like so:
 
-Если нам нужно, мы можем связать этот сет с двумя отдельными представлениями, например, так:
+Если нужно, мы можем связать этот набор представлений в два отдельных представления, например, так:
 
 ```
 user_list = UserViewSet.as_view({'get': 'list'})
@@ -83,7 +81,7 @@ user_detail = UserViewSet.as_view({'get': 'retrieve'})
 
 Typically we wouldn't do this, but would instead register the viewset with a router, and allow the urlconf to be automatically generated.
 
-Как правило, мы не делали этого, но вместо этого регистрируем визуальный набор с маршрутизатором и позволили бы автоматически генерировать URLConf.
+Обычно мы не делаем этого, а вместо этого регистрируем набор представлений в маршрутизаторе и позволяем автоматически генерировать urlconf.
 
 ```
 from myapp.views import UserViewSet
@@ -96,8 +94,7 @@ urlpatterns = router.urls
 
 Rather than writing your own viewsets, you'll often want to use the existing base classes that provide a default set of behavior. For example:
 
-Вместо того, чтобы писать свои собственные виды, вы часто захотите использовать существующие базовые классы, которые обеспечивают набор поведения по умолчанию.
-Например:
+Вместо того чтобы писать свои собственные наборы представлений, вы часто захотите использовать существующие базовые классы, которые предоставляют набор поведения по умолчанию. Например:
 
 ```
 class UserViewSet(viewsets.ModelViewSet):
@@ -110,28 +107,25 @@ class UserViewSet(viewsets.ModelViewSet):
 
 There are two main advantages of using a `ViewSet` class over using a `View` class.
 
-Существует два основных преимущества использования класса `viewset` по сравнению с использованием класса` view '.
+Есть два основных преимущества использования класса `ViewSet` перед классом `View`.
 
 * Repeated logic can be combined into a single class. In the above example, we only need to specify the `queryset` once, and it'll be used across multiple views.
 * By using routers, we no longer need to deal with wiring up the URL conf ourselves.
 
-* Повторная логика может быть объединена в один класс.
-В приведенном выше примере нам нужно указать только один раз один раз, и он будет использоваться в нескольких представлениях.
-* Используя маршрутизаторы, нам больше не нужно иметь дело с проводкой URL Conf.
+* Повторяющаяся логика может быть объединена в один класс. В приведенном выше примере нам нужно указать `queryset` только один раз, и он будет использоваться в нескольких представлениях.
+* Используя маршрутизаторы, нам больше не нужно самим создавать URL conf.
 
 Both of these come with a trade-off. Using regular views and URL confs is more explicit and gives you more control. ViewSets are helpful if you want to get up and running quickly, or when you have a large API and you want to enforce a consistent URL configuration throughout.
 
-Оба они поставляются с компромиссом.
-Использование регулярных представлений и URL CONFS более четко и дает вам больше контроля.
-Виды полезны, если вы хотите быстро встать и работать или когда у вас есть большой API, и вы хотите обеспечить постоянную конфигурацию URL -адреса повсюду.
+В обоих случаях приходится идти на компромисс. Использование обычных представлений и URL-конфигураций является более явным и дает вам больше контроля. Наборы представлений полезны, если вы хотите быстро приступить к работе, или если у вас большой API и вы хотите обеспечить согласованную конфигурацию URL.
 
 ## ViewSet actions
 
-## viewset actions
+## Действия ViewSet
 
 The default routers included with REST framework will provide routes for a standard set of create/retrieve/update/destroy style actions, as shown below:
 
-Маршрутизаторы по умолчанию, включенные в Framework REST, предоставят маршруты для стандартного набора действий CREATE/RESIED/UPDATE/Уничтожение стиля, как показано ниже:
+Маршрутизаторы по умолчанию, входящие в состав REST framework, обеспечивают маршруты для стандартного набора действий в стиле create/retrieve/update/destroy, как показано ниже:
 
 ```
 class UserViewSet(viewsets.ViewSet):
@@ -164,11 +158,11 @@ class UserViewSet(viewsets.ViewSet):
 
 ## Introspecting ViewSet actions
 
-## интроспективные действия визуализации
+## Интроспекция действий ViewSet
 
 During dispatch, the following attributes are available on the `ViewSet`.
 
-Во время отправки следующие атрибуты доступны на `viewset '.
+Во время диспетчеризации для `ViewSet` доступны следующие атрибуты.
 
 * `basename` - the base to use for the URL names that are created.
 * `action` - the name of the current action (e.g., `list`, `create`).
@@ -177,18 +171,16 @@ During dispatch, the following attributes are available on the `ViewSet`.
 * `name` - the display name for the viewset. This argument is mutually exclusive to `suffix`.
 * `description` - the display description for the individual view of a viewset.
 
-* `baseName` - база для использования для созданных имен URL -адресов.
-* `action` - имя текущего действия (например,` list`, `create`).
-* `Detail` - Boolean, указывая, настроено ли текущее действие для представления списка или подробного описания.
-* `Суффикс - суффикс дисплея для типа вида - отражает атрибут` detail`.
-* `name` - отображаемое имя для ViewSet.
-Этот аргумент взаимоисключает для `суффикс.
-* `description` - Описание дисплея для индивидуального представления обзора.
+* `basename` - основа, которую следует использовать для создаваемых имен URL.
+* `action` - имя текущего действия (например, `list`, `create`).
+* `detail` - булево значение, указывающее, настроено ли текущее действие на просмотр списка или деталей.
+* `suffix` - суффикс отображения для типа набора представлений - зеркальное отражение атрибута `detail`.
+* `name` - отображаемое имя для набора представлений. Этот аргумент является взаимоисключающим с `suffix`.
+* `description` - отображаемое описание для отдельного вида набора представлений.
 
 You may inspect these attributes to adjust behavior based on the current action. For example, you could restrict permissions to everything except the `list` action similar to this:
 
-Вы можете осмотреть эти атрибуты, чтобы настроить поведение на основе текущего действия.
-Например, вы можете ограничить разрешения на все, кроме действия «List», аналогично этим:
+Вы можете проверить эти атрибуты, чтобы настроить поведение в зависимости от текущего действия. Например, вы можете ограничить разрешения на все действия, кроме действия `list`, подобно этому:
 
 ```
 def get_permissions(self):
@@ -204,15 +196,11 @@ def get_permissions(self):
 
 ## Marking extra actions for routing
 
-## отмечает дополнительные действия для маршрутизации
+## Отметка дополнительных действий для маршрутизации
 
 If you have ad-hoc methods that should be routable, you can mark them as such with the `@action` decorator. Like regular actions, extra actions may be intended for either a single object, or an entire collection. To indicate this, set the `detail` argument to `True` or `False`. The router will configure its URL patterns accordingly. e.g., the `DefaultRouter` will configure detail actions to contain `pk` in their URL patterns.
 
-Если у вас есть специальные методы, которые должны быть направлены, вы можете пометить их как таковые с помощью декоратора `@action`.
-Как и регулярные действия, дополнительные действия могут быть предназначены либо для одного объекта, либо для целой коллекции.
-Чтобы указать это, установите аргумент «Detail» на `true` или` false '.
-Маршрутизатор будет настраивать свои шаблоны URL -адреса соответственно.
-Например, «Defaultrouter» будет настроить подробные действия, чтобы содержать «pk» в своих шаблонах URL.
+Если у вас есть специальные методы, которые должны быть маршрутизируемыми, вы можете пометить их как таковые с помощью декоратора `@action`. Как и обычные действия, дополнительные действия могут быть предназначены как для одного объекта, так и для целой коллекции. Чтобы указать это, установите аргумент `detail` в `True` или `False`. Маршрутизатор настроит свои шаблоны URL соответствующим образом. Например, `DefaultRouter` настроит подробные действия так, чтобы они содержали `pk` в своих шаблонах URL.
 
 A more complete example of extra actions:
 
@@ -259,8 +247,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 The `action` decorator will route `GET` requests by default, but may also accept other HTTP methods by setting the `methods` argument. For example:
 
-Декоратор «действия» будет направлять запросы `get` по умолчанию, но также может принять другие методы HTTP, установив аргумент« Методы ».
-Например:
+Декоратор `action` по умолчанию направляет запросы `GET`, но может принимать и другие методы HTTP, задавая аргумент `methods`. Например:
 
 ```
 @action(detail=True, methods=['post', 'delete'])
@@ -270,7 +257,7 @@ The `action` decorator will route `GET` requests by default, but may also accept
 
 The decorator allows you to override any viewset-level configuration such as `permission_classes`, `serializer_class`, `filter_backends`...:
 
-Декоратор позволяет переопределить любую конфигурацию на уровне обзора, такую как `rescision_class`,` serializer_class`, `filter_backends` ...:
+Декоратор позволяет переопределить любую конфигурацию уровня набора представлений, такую как `permission_classes`, `serializer_class`, `filter_backends`...:
 
 ```
 @action(detail=True, methods=['post'], permission_classes=[IsAdminOrIsSelf])
@@ -280,12 +267,11 @@ The decorator allows you to override any viewset-level configuration such as `pe
 
 The two new actions will then be available at the urls `^users/{pk}/set_password/$` and `^users/{pk}/unset_password/$`. Use the `url_path` and `url_name` parameters to change the URL segment and the reverse URL name of the action.
 
-Затем два новых действия будут доступны на URLS `^users/{pk}/set_password/$` и `^users/{pk}/unset_password/$`.
-Используйте параметры `url_path` и` url_name`, чтобы изменить сегмент URL -адреса и имя обратного URL -адреса действия.
+Два новых действия будут доступны по адресам `^users/{pk}/set_password/$` и `^users/{pk}/unset_password/$`. Используйте параметры `url_path` и `url_name` для изменения сегмента URL и обратного имени URL действия.
 
 To view all extra actions, call the `.get_extra_actions()` method.
 
-Чтобы просмотреть все дополнительные действия, вызовите метод `.get_extra_actions ()`.
+Чтобы просмотреть все дополнительные действия, вызовите метод `.get_extra_actions()`.
 
 ### Routing additional HTTP methods for extra actions
 
@@ -293,9 +279,7 @@ To view all extra actions, call the `.get_extra_actions()` method.
 
 Extra actions can map additional HTTP methods to separate `ViewSet` methods. For example, the above password set/unset methods could be consolidated into a single route. Note that additional mappings do not accept arguments.
 
-Дополнительные действия могут сопоставить дополнительные методы HTTP для разделения методов `viewset.
-Например, вышеуказанные методы установки паролей/нередовые могут быть объединены в один маршрут.
-Обратите внимание, что дополнительные сопоставления не принимают аргументы.
+Дополнительные действия могут отображать дополнительные методы HTTP на отдельные методы `ViewSet`. Например, описанные выше методы установки/снятия пароля могут быть объединены в один маршрут. Обратите внимание, что дополнительные сопоставления не принимают аргументов.
 
 ```python
 @action(detail=True, methods=['put'], name='Change Password')
@@ -311,17 +295,15 @@ Extra actions can map additional HTTP methods to separate `ViewSet` methods. For
 
 ## Reversing action URLs
 
-## Обращение URL -адресов действия
+## URL-адреса обратного действия
 
 If you need to get the URL of an action, use the `.reverse_action()` method. This is a convenience wrapper for `reverse()`, automatically passing the view's `request` object and prepending the `url_name` with the `.basename` attribute.
 
-Если вам нужно получить URL -адрес действия, используйте метод `.reverse_Action ()`.
-Это удобная обертка для `reverse ()`, автоматически передавая объект View `request` и подготовка атрибута` url_name` с атрибутом `.basename.
+Если вам нужно получить URL действия, используйте метод `.reverse_action()`. Это удобная обертка для `reverse()`, автоматически передающая объект `request` представления и дополняющая `url_name` атрибутом `.basename`.
 
 Note that the `basename` is provided by the router during `ViewSet` registration. If you are not using a router, then you must provide the `basename` argument to the `.as_view()` method.
 
-Обратите внимание, что `basename 'обеспечивается маршрутизатором во время регистрации` viewset.
-Если вы не используете маршрутизатор, то вы должны предоставить аргумент `baseName` для метода` .as_view () `.
+Обратите внимание, что `basename` предоставляется маршрутизатором во время регистрации `ViewSet`. Если вы не используете маршрутизатор, то вы должны предоставить аргумент `basename` методу `.as_view()`.
 
 Using the example from the previous section:
 
@@ -334,7 +316,7 @@ Using the example from the previous section:
 
 Alternatively, you can use the `url_name` attribute set by the `@action` decorator.
 
-В качестве альтернативы, вы можете использовать атрибут `url_name`, установленную декоратором`@action`.
+В качестве альтернативы можно использовать атрибут `url_name`, установленный декоратором `@action`.
 
 ```python
 >>> view.reverse_action(view.set_password.url_name, args=['1'])
@@ -343,53 +325,49 @@ Alternatively, you can use the `url_name` attribute set by the `@action` decorat
 
 The `url_name` argument for `.reverse_action()` should match the same argument to the `@action` decorator. Additionally, this method can be used to reverse the default actions, such as `list` and `create`.
 
-Аргумент `url_name` для` .reverse_action () `должен соответствовать тому же аргументу с декоратором`@action`.
-Кроме того, этот метод может использоваться для отмены действий по умолчанию, таких как «List» и `create`.
+Аргумент `url_name` для `.reverse_action()` должен совпадать с тем же аргументом декоратора `@action`. Кроме того, этот метод можно использовать для отмены действий по умолчанию, таких как `list` и `create`.
 
 ---
 
 # API Reference
 
-# Ссылка на API
+# API Reference
 
 ## ViewSet
 
-## Viewset
+## ViewSet
 
 The `ViewSet` class inherits from `APIView`. You can use any of the standard attributes such as `permission_classes`, `authentication_classes` in order to control the API policy on the viewset.
 
-Класс `viewset` наследует от` apiview`.
-Вы можете использовать любой из стандартных атрибутов, таких как `rescision_classes`,` Authentication_classes`, чтобы управлять политикой API на сборе просмотра.
+Класс `ViewSet` наследуется от `APIView`. Вы можете использовать любые стандартные атрибуты, такие как `permission_classes`, `authentication_classes` для управления политикой API на наборе представлений.
 
 The `ViewSet` class does not provide any implementations of actions. In order to use a `ViewSet` class you'll override the class and define the action implementations explicitly.
 
-Класс `ViewSet` не предоставляет никаких реализаций действий.
-Чтобы использовать класс `viewset`, вы переопределяете класс и явно определите реализации действий.
+Класс `ViewSet` не предоставляет никаких реализаций действий. Чтобы использовать класс `ViewSet`, вы должны переопределить его и явно определить реализацию действий.
 
 ## GenericViewSet
 
-## genericviewset
+## GenericViewSet
 
 The `GenericViewSet` class inherits from `GenericAPIView`, and provides the default set of `get_object`, `get_queryset` methods and other generic view base behavior, but does not include any actions by default.
 
-Класс `genericViewSet` наследует от` genericApiview` и предоставляет набор по умолчанию `get_object`, методов` get_queryset` и другого базового поведения общего представления, но не включает никаких действий по умолчанию.
+Класс `GenericViewSet` наследуется от `GenericAPIView`, и предоставляет набор методов `get_object`, `get_queryset` и другое поведение базы generic view по умолчанию, но не включает никаких действий по умолчанию.
 
 In order to use a `GenericViewSet` class you'll override the class and either mixin the required mixin classes, or define the action implementations explicitly.
 
-Чтобы использовать класс `genericViewSet`, вы переопределите класс и либо смешивают требуемые классы микшина, либо явно определите реализации действий.
+Чтобы использовать класс `GenericViewSet`, вы должны переопределить его и либо смешать необходимые классы mixin, либо явно определить реализацию действий.
 
 ## ModelViewSet
 
-## modelviewset
+## ModelViewSet
 
 The `ModelViewSet` class inherits from `GenericAPIView` and includes implementations for various actions, by mixing in the behavior of the various mixin classes.
 
-Класс `modelviewset` наследуется от` genericapiview` и включает реализации для различных действий, смешивая поведение различных классов микшина.
+Класс `ModelViewSet` наследуется от `GenericAPIView` и включает в себя реализации различных действий, смешивая поведение различных классов mixin.
 
 The actions provided by the `ModelViewSet` class are `.list()`, `.retrieve()`, `.create()`, `.update()`, `.partial_update()`, and `.destroy()`.
 
-Действия, предусмотренные классом `modelViewSet`, являются` .list () `,` .retrieve () `,` .create () `,` .update () `,` .partial_update () `и` .destroy (
-) `.
+Действия, предоставляемые классом `ModelViewSet`: `.list()`, `.retrieve()`, `.create()`, `.update()`, `.partial_update()` и `.destroy()`.
 
 #### Example
 
@@ -397,8 +375,7 @@ The actions provided by the `ModelViewSet` class are `.list()`, `.retrieve()`, `
 
 Because `ModelViewSet` extends `GenericAPIView`, you'll normally need to provide at least the `queryset` and `serializer_class` attributes. For example:
 
-Поскольку `modelviewset` Extens` genericapiview`, как правило, вам нужно предоставить хотя бы атрибуты `Queryset` и` serializer_class`.
-Например:
+Поскольку `ModelViewSet` расширяет `GenericAPIView`, вам обычно необходимо предоставить как минимум атрибуты `queryset` и `serializer_class`. Например:
 
 ```
 class AccountViewSet(viewsets.ModelViewSet):
@@ -412,8 +389,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 Note that you can use any of the standard attributes or method overrides provided by `GenericAPIView`. For example, to use a `ViewSet` that dynamically determines the queryset it should operate on, you might do something like this:
 
-Обратите внимание, что вы можете использовать любой из стандартных атрибутов или переопределения метода, предоставленных `genericapiview`.
-Например, чтобы использовать `viewset`, который динамически определяет запрос, который он должен работать, вы можете сделать что -то вроде этого:
+Обратите внимание, что вы можете использовать любой из стандартных атрибутов или переопределений методов, предоставляемых `GenericAPIView`. Например, чтобы использовать `ViewSet`, который динамически определяет набор запросов, с которым он должен работать, вы можете поступить следующим образом:
 
 ```
 class AccountViewSet(viewsets.ModelViewSet):
@@ -430,21 +406,19 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 Note however that upon removal of the `queryset` property from your `ViewSet`, any associated [router](routers.md) will be unable to derive the basename of your Model automatically, and so you will have to specify the `basename` kwarg as part of your [router registration](routers.md).
 
-Однако обратите внимание, что после удаления свойства `Queryset` из вашего` viewset`, любой связанный [router] (routers.md) не сможет автоматически вывести базовое имя вашей модели, и поэтому вам придется указать «базовое название».
-Kwarg как часть вашей [Router Registration] (Routers.md).
+Однако обратите внимание, что после удаления свойства `queryset` из вашего `ViewSet`, любой связанный с ним [router](routers.md) не сможет автоматически вывести базовое имя вашей Модели, поэтому вам придется указать каргу `basename` как часть вашей регистрации [router](routers.md).
 
 Also note that although this class provides the complete set of create/list/retrieve/update/destroy actions by default, you can restrict the available operations by using the standard permission classes.
 
-Также обратите внимание, что, хотя этот класс предоставляет полный набор действий CREATE/LIST/RETIVE/UPDATE/Уничтожение по умолчанию, вы можете ограничить доступные операции, используя стандартные классы разрешений.
+Также обратите внимание, что хотя этот класс по умолчанию предоставляет полный набор действий create/list/retrieve/update/destroy, вы можете ограничить доступные операции с помощью стандартных классов разрешений.
 
 ## ReadOnlyModelViewSet
 
-## readonlymodelviewset
+## ReadOnlyModelViewSet
 
 The `ReadOnlyModelViewSet` class also inherits from `GenericAPIView`. As with `ModelViewSet` it also includes implementations for various actions, but unlike `ModelViewSet` only provides the 'read-only' actions, `.list()` and `.retrieve()`.
 
-Класс `readonlymodelviewset` также наследует от` genericapiview`.
-Как и в случае «ModelViewSet», он также включает реализации для различных действий, но в отличие от `modelViewSet` только предоставляет действия« только для чтения »,` .list () `и` .retrieve () `.
+Класс `ReadOnlyModelViewSet` также наследуется от `GenericAPIView`. Как и `ModelViewSet`, он также включает реализации различных действий, но в отличие от `ModelViewSet` предоставляет только действия "только для чтения", `.list()` и `.retrieve()`.
 
 #### Example
 
@@ -452,8 +426,7 @@ The `ReadOnlyModelViewSet` class also inherits from `GenericAPIView`. As with `M
 
 As with `ModelViewSet`, you'll normally need to provide at least the `queryset` and `serializer_class` attributes. For example:
 
-Как и в случае с `modelviewset`, вам обычно нужно предоставить хотя бы атрибуты` Queryset` и `serializer_class`.
-Например:
+Как и в случае с `ModelViewSet`, обычно требуется предоставить как минимум атрибуты `queryset` и `сериализатор_класса`. Например:
 
 ```
 class AccountViewSet(viewsets.ReadOnlyModelViewSet):
@@ -466,15 +439,15 @@ class AccountViewSet(viewsets.ReadOnlyModelViewSet):
 
 Again, as with `ModelViewSet`, you can use any of the standard attributes and method overrides available to `GenericAPIView`.
 
-Опять же, как и в случае `modelviewset`, вы можете использовать любой из стандартных атрибутов и переопределения методов, доступных для` genericapiview`.
+Опять же, как и в случае с `ModelViewSet`, вы можете использовать любые стандартные атрибуты и переопределения методов, доступные для `GenericAPIView`.
 
 # Custom ViewSet base classes
 
-# Пользовательские базовые классы видовых сетей
+# Пользовательские базовые классы ViewSet
 
 You may need to provide custom `ViewSet` classes that do not have the full set of `ModelViewSet` actions, or that customize the behavior in some other way.
 
-Возможно, вам потребуется предоставить пользовательские классы `viewset`, которые не имеют полного набора действий` modelViewSet` или которые настраивают поведение каким -либо другим способом.
+Вам может понадобиться предоставить пользовательские классы `ViewSet`, которые не имеют полного набора действий `ModelViewSet`, или которые настраивают поведение каким-либо другим способом.
 
 ## Example
 
@@ -482,7 +455,7 @@ You may need to provide custom `ViewSet` classes that do not have the full set o
 
 To create a base viewset class that provides `create`, `list` and `retrieve` operations, inherit from `GenericViewSet`, and mixin the required actions:
 
-Чтобы создать базовый класс ViewSet, который предоставляет операции `create`,` list` и `retive`, наследуя от` genericviewset` и смешивайте требуемые действия:
+Чтобы создать базовый класс набора представлений, обеспечивающий операции `create`, `list` и `retrieve`, наследуйте от `GenericViewSet` и добавьте необходимые действия:
 
 ```
 from rest_framework import mixins
@@ -502,4 +475,4 @@ class CreateListRetrieveViewSet(mixins.CreateModelMixin,
 
 By creating your own base `ViewSet` classes, you can provide common behavior that can be reused in multiple viewsets across your API.
 
-Создавая свои собственные базовые классы `viewset`, вы можете обеспечить общее поведение, которое можно повторно использоваться в нескольких видах по всему вашему API.
+Создавая свои собственные базовые классы `ViewSet`, вы можете обеспечить общее поведение, которое может быть повторно использовано в нескольких наборах представлений в вашем API.

@@ -19,38 +19,37 @@ source:
 >
 > — Doug Hellmann, [Python Exception Handling Techniques][cite]
 
-> Исключения ... позволяйте обработке ошибок быть организованной чистого в центральном или высоком уровне в структуре программы.
+> Исключения... позволяют чисто организовать обработку ошибок в центральном или высокоуровневом месте в структуре программы.
 >
-> - Даг Хеллманн, [Методы обработки исключений Python] [CITE]
+> - Даг Хеллманн, [Python Exception Handling Techniques][cite].
 
 ## Exception handling in REST framework views
 
-## Обработка исключений в видах Framework Framework
+## Обработка исключений в представлениях фреймворка REST
 
 REST framework's views handle various exceptions, and deal with returning appropriate error responses.
 
-Представления REST Framework обрабатывают различные исключения и имеют дело с возвращением соответствующих ответов на ошибку.
+Представления фреймворка REST обрабатывают различные исключения и возвращают соответствующие ответы на ошибки.
 
 The handled exceptions are:
 
-Обработанные исключения:
+Обрабатываемыми исключениями являются:
 
 * Subclasses of `APIException` raised inside REST framework.
 * Django's `Http404` exception.
 * Django's `PermissionDenied` exception.
 
-* Подклассы `apiexception` подняты внутри структуры REST.
-* Исключение Джанго `http404`.
-* Исключение Django `ormissised '.
+* Подклассы `APIException`, возникающие внутри фреймворка REST.
+* Исключение Django `Http404`.
+* Исключение Django `PermissionDenied`.
 
 In each case, REST framework will return a response with an appropriate status code and content-type. The body of the response will include any additional details regarding the nature of the error.
 
-В каждом случае Framework REST вернет ответ с соответствующим кодом состояния и типом контента.
-Тело ответа будет включать любую дополнительную информацию о природе ошибки.
+В каждом случае фреймворк REST вернет ответ с соответствующим кодом состояния и типом содержимого. В теле ответа будут содержаться любые дополнительные сведения о характере ошибки.
 
 Most error responses will include a key `detail` in the body of the response.
 
-Большинство ответов на ошибки будут включать ключ «деталь» в теле ответа.
+Большинство ответов на ошибки будут содержать ключ `detail` в теле ответа.
 
 For example, the following request:
 
@@ -63,7 +62,7 @@ Accept: application/json
 
 Might receive an error response indicating that the `DELETE` method is not allowed on that resource:
 
-Может получить ответ ошибки, указывающий, что метод `delete` не допускается на этот ресурс:
+Может быть получен ответ об ошибке, указывающий на то, что метод `DELETE` не разрешен для данного ресурса:
 
 ```
 HTTP/1.1 405 Method Not Allowed
@@ -75,12 +74,11 @@ Content-Length: 42
 
 Validation errors are handled slightly differently, and will include the field names as the keys in the response. If the validation error was not specific to a particular field then it will use the "non_field_errors" key, or whatever string value has been set for the `NON_FIELD_ERRORS_KEY` setting.
 
-Ошибки проверки обрабатываются немного по -разному и будут включать имена поля в качестве ключей в ответе.
-Если ошибка проверки не была определенной для конкретного поля, то она будет использовать клавишу «non_field_errors» или любое строковое значение, которое было установлено для настройки `non_field_errors_key`.
+Ошибки валидации обрабатываются несколько иначе, и в качестве ключей в ответе будут указаны имена полей. Если ошибка валидации не относится к конкретному полю, то будет использоваться ключ "non_field_errors", или любое строковое значение, установленное для параметра `NON_FIELD_ERRORS_KEY`.
 
 An example validation error might look like this:
 
-Пример ошибка проверки может выглядеть так:
+Пример ошибки валидации может выглядеть следующим образом:
 
 ```
 HTTP/1.1 400 Bad Request
@@ -96,18 +94,15 @@ Content-Length: 94
 
 You can implement custom exception handling by creating a handler function that converts exceptions raised in your API views into response objects. This allows you to control the style of error responses used by your API.
 
-Вы можете реализовать пользовательскую обработку исключений, создав функцию обработчика, которая преобразует исключения, поднятые в ваших представлениях API в объекты ответа.
-Это позволяет вам контролировать стиль ответов на ошибки, используемые вашим API.
+Вы можете реализовать пользовательскую обработку исключений, создав функцию-обработчик, которая преобразует исключения, возникающие в ваших представлениях API, в объекты ответа. Это позволяет вам контролировать стиль ответов на ошибки, используемый вашим API.
 
 The function must take a pair of arguments, the first is the exception to be handled, and the second is a dictionary containing any extra context such as the view currently being handled. The exception handler function should either return a `Response` object, or return `None` if the exception cannot be handled. If the handler returns `None` then the exception will be re-raised and Django will return a standard HTTP 500 'server error' response.
 
-Функция должна принимать пару аргументов, первым является исключение, которое нужно обрабатывать, а второй - это словарь, содержащий любой дополнительный контекст, такой как представление, которое в настоящее время обрабатывается.
-Функция обработчика исключений должна либо вернуть объект `recsess`, либо вернуть` none`, если исключение не может быть обработано.
-Если обработчик возвращает «нет», то исключение будет повторно повторно, и Django вернет стандартный ответ на сервер HTTP 500 «Ошибка».
+Функция должна принимать пару аргументов, первый из которых - обрабатываемое исключение, а второй - словарь, содержащий любой дополнительный контекст, например, обрабатываемое в данный момент представление. Функция обработчика исключения должна либо возвращать объект `Response`, либо возвращать `None`, если исключение не может быть обработано. Если обработчик возвращает `None`, то исключение будет повторно поднято, и Django вернет стандартный ответ HTTP 500 "ошибка сервера".
 
 For example, you might want to ensure that all error responses include the HTTP status code in the body of the response, like so:
 
-Например, вы можете убедиться, что все ответы по ошибкам включали код состояния HTTP в органе ответа, например, так:
+Например, вы можете захотеть убедиться, что все ответы на ошибки включают код состояния HTTP в теле ответа, например, так:
 
 ```
 HTTP/1.1 405 Method Not Allowed
@@ -138,12 +133,11 @@ def custom_exception_handler(exc, context):
 
 The context argument is not used by the default handler, but can be useful if the exception handler needs further information such as the view currently being handled, which can be accessed as `context['view']`.
 
-Аргумент контекста не используется обработчиком по умолчанию, но может быть полезен, если обработчик исключений нуждается в дополнительной информации, такой как обрабатывается в настоящее время представление, к которому можно получить доступ как `context ['view']`.
+Аргумент context не используется обработчиком по умолчанию, но может быть полезен, если обработчику исключений нужна дополнительная информация, например, обрабатываемое в данный момент представление, доступ к которому можно получить как `context['view']`.
 
 The exception handler must also be configured in your settings, using the `EXCEPTION_HANDLER` setting key. For example:
 
-Обработчик исключений также должен быть настроен в ваших настройках, используя ключ настройки `exception_handler`.
-Например:
+Обработчик исключений также должен быть настроен в ваших настройках, используя ключ настройки `EXCEPTION_HANDLER`. Например:
 
 ```
 REST_FRAMEWORK = {
@@ -153,7 +147,7 @@ REST_FRAMEWORK = {
 
 If not specified, the `'EXCEPTION_HANDLER'` setting defaults to the standard exception handler provided by REST framework:
 
-Если не указано, настройка `'exception_handler'`` по умолчанию в стандартный обработчик исключений, предоставленный Framework REST:
+Если параметр `'EXCEPTION_HANDLER'` не указан, по умолчанию используется стандартный обработчик исключений, предоставляемый фреймворком REST:
 
 ```
 REST_FRAMEWORK = {
@@ -163,35 +157,33 @@ REST_FRAMEWORK = {
 
 Note that the exception handler will only be called for responses generated by raised exceptions. It will not be used for any responses returned directly by the view, such as the `HTTP_400_BAD_REQUEST` responses that are returned by the generic views when serializer validation fails.
 
-Обратите внимание, что обработчик исключений будет вызвана только для ответов, сгенерированных поднятыми исключениями.
-Он не будет использоваться для каких -либо ответов, возвращаемых непосредственно с помощью представления, таких как ответы `http_400_bad_request
+Обратите внимание, что обработчик исключений будет вызываться только для ответов, сгенерированных поднятыми исключениями. Он не будет использоваться для ответов, возвращаемых непосредственно представлением, таких как ответы `HTTP_400_BAD_REQUEST`, которые возвращаются общими представлениями при неудачной проверке сериализатора.
 
 ---
 
 # API Reference
 
-# Ссылка на API
+# API Reference
 
 ## APIException
 
-## apiexception
+## APIException
 
 **Signature:** `APIException()`
 
-** Подпись: ** `apiexception ()`
+**Подпись:** `APIException()`.
 
 The **base class** for all exceptions raised inside an `APIView` class or `@api_view`.
 
-** базовый класс ** для всех исключений, поднятых в классе `apiview` или`@api_view`.
+**базовый класс** для всех исключений, возникающих внутри класса `APIView` или `@api_view`.
 
 To provide a custom exception, subclass `APIException` and set the `.status_code`, `.default_detail`, and `default_code` attributes on the class.
 
-Чтобы предоставить пользовательское исключение, подкласс `apiexception` и установил атрибуты` .status_code`, `.default_detail` и` default_code` в классе.
+Чтобы предоставить пользовательское исключение, подкласс `APIException` и установите атрибуты `.status_code`, `.default_detail` и `default_code` для класса.
 
 For example, if your API relies on a third party service that may sometimes be unreachable, you might want to implement an exception for the "503 Service Unavailable" HTTP response code. You could do this like so:
 
-Например, если ваш API опирается на стороннюю службу, которая иногда может быть недоступна, вы можете реализовать исключение для кода ответа «503 Service Navailable» HTTP.
-Вы могли бы сделать это так:
+Например, если ваш API полагается на сторонний сервис, который иногда может быть недоступен, вы можете захотеть реализовать исключение для кода ответа HTTP "503 Service Unavailable". Это можно сделать следующим образом:
 
 ```
 from rest_framework.exceptions import APIException
@@ -208,24 +200,23 @@ class ServiceUnavailable(APIException):
 
 There are a number of different properties available for inspecting the status of an API exception. You can use these to build custom exception handling for your project.
 
-Существует ряд различных свойств, доступных для проверки статуса исключения API.
-Вы можете использовать их для создания пользовательской обработки исключений для вашего проекта.
+Существует несколько различных свойств, доступных для проверки состояния исключения API. Вы можете использовать их для создания пользовательской обработки исключений в вашем проекте.
 
 The available attributes and methods are:
 
-Доступные атрибуты и методы:
+Доступными атрибутами и методами являются:
 
 * `.detail` - Return the textual description of the error.
 * `.get_codes()` - Return the code identifier of the error.
 * `.get_full_details()` - Return both the textual description and the code identifier.
 
-* `.detail` - вернуть текстовое описание ошибки.
-* `.get_codes ()` - вернуть идентификатор кода ошибки.
-* `.get_full_details ()` - вернуть как текстовое описание, так и идентификатор кода.
+* `.detail` - Возвращает текстовое описание ошибки.
+* `.get_codes()` - Возвращает идентификатор кода ошибки.
+* `.get_full_details()` - Возвращает как текстовое описание, так и идентификатор кода.
 
 In most cases the error detail will be a simple item:
 
-В большинстве случаев детализация ошибки будет простым элементом:
+В большинстве случаев деталь ошибки будет простым элементом:
 
 ```
 >>> print(exc.detail)
@@ -238,7 +229,7 @@ permission_denied
 
 In the case of validation errors the error detail will be either a list or dictionary of items:
 
-В случае ошибок проверки деталь ошибки будет либо списком, либо словарем элементов:
+В случае ошибок валидации деталь ошибки будет представлять собой список или словарь элементов:
 
 ```
 >>> print(exc.detail)
@@ -251,180 +242,171 @@ In the case of validation errors the error detail will be either a list or dicti
 
 ## ParseError
 
-## parseerror
+## ParseError
 
 **Signature:** `ParseError(detail=None, code=None)`
 
-** Подпись: ** `parseerror (detail = none, code = none)`
+**Описание:** `ParseError(detail=None, code=None)`.
 
 Raised if the request contains malformed data when accessing `request.data`.
 
-Поднят, если запрос содержит узолотые данные при доступе к `request.data`.
+Возникает, если запрос содержит неправильно сформированные данные при доступе к `request.data`.
 
 By default this exception results in a response with the HTTP status code "400 Bad Request".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «400 Bad Request».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "400 Bad Request".
 
 ## AuthenticationFailed
 
-## аутентификация
+## AuthenticationFailed
 
 **Signature:** `AuthenticationFailed(detail=None, code=None)`
 
-** Подпись: ** `AuthenticationFailed (detail = none, code = none)`
+**Подпись:** `AuthenticationFailed(detail=None, code=None)`.
 
 Raised when an incoming request includes incorrect authentication.
 
-Повышен, когда входящий запрос включает в себя неправильную аутентификацию.
+Возникает, когда входящий запрос содержит неправильную аутентификацию.
 
 By default this exception results in a response with the HTTP status code "401 Unauthenticated", but it may also result in a "403 Forbidden" response, depending on the authentication scheme in use. See the [authentication documentation](authentication.md) for more details.
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «401 unathenticated», но это также может привести к ответу «403 запрещенный», в зависимости от используемой схемы аутентификации.
-См. Документацию по аутентификации] (Authentication.md) для получения более подробной информации.
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "401 Unauthenticated", но оно также может привести к ответу "403 Forbidden", в зависимости от используемой схемы аутентификации. Более подробную информацию см. в документации [authentication documentation](authentication.md).
 
 ## NotAuthenticated
 
-## notauthenticated
+## NotAuthenticated
 
 **Signature:** `NotAuthenticated(detail=None, code=None)`
 
-** Подпись: ** `notauthenticated (detail = none, code = none)`
+**Подпись:** `NotAuthenticated(detail=None, code=None)`.
 
 Raised when an unauthenticated request fails the permission checks.
 
-Поднят, когда несаутентированный запрос не выполняет проверку разрешений.
+Возникает, когда неаутентифицированный запрос не прошел проверку на разрешение.
 
 By default this exception results in a response with the HTTP status code "401 Unauthenticated", but it may also result in a "403 Forbidden" response, depending on the authentication scheme in use. See the [authentication documentation](authentication.md) for more details.
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «401 unathenticated», но это также может привести к ответу «403 запрещенный», в зависимости от используемой схемы аутентификации.
-См. Документацию по аутентификации] (Authentication.md) для получения более подробной информации.
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "401 Unauthenticated", но оно также может привести к ответу "403 Forbidden", в зависимости от используемой схемы аутентификации. Более подробную информацию см. в документации [authentication documentation](authentication.md).
 
 ## PermissionDenied
 
-## В доступе отказано
+## PermissionDenied
 
 **Signature:** `PermissionDenied(detail=None, code=None)`
 
-** Подпись: ** `разрешение
+**Подпись:** `PermissionDenied(detail=None, code=None)`.
 
 Raised when an authenticated request fails the permission checks.
 
-Повышен, когда аутентифицированный запрос не выполняет проверку разрешений.
+Возникает, когда аутентифицированный запрос не прошел проверку на разрешение.
 
 By default this exception results in a response with the HTTP status code "403 Forbidden".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «403 FOBIDED».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "403 Forbidden".
 
 ## NotFound
 
-## Не обнаружена
+## NotFound
 
 **Signature:** `NotFound(detail=None, code=None)`
 
-** Подпись: ** `notfound (detail = none, code = none)`
+**Подпись:** `NotFound(detail=None, code=None)`.
 
 Raised when a resource does not exists at the given URL. This exception is equivalent to the standard `Http404` Django exception.
 
-Поднят, когда ресурс не существует при данном URL.
-Это исключение эквивалентно стандартному исключению `http404` django.
+Возникает, когда ресурс не существует по заданному URL. Это исключение эквивалентно стандартному исключению `Http404` Django.
 
 By default this exception results in a response with the HTTP status code "404 Not Found".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «404 не найден».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "404 Not Found".
 
 ## MethodNotAllowed
 
-## Метод не разрешен
+## MethodNotAllowed
 
 **Signature:** `MethodNotAllowed(method, detail=None, code=None)`
 
-** Подпись: ** `methodNotAllowed (метод, detail = none, code = none)`
+**Признак:** `MethodNotAllowed(method, detail=None, code=None)`.
 
 Raised when an incoming request occurs that does not map to a handler method on the view.
 
-Поднимается, когда возникает входящий запрос, который не сопоставляется с методом обработчика в представлении.
+Возникает, когда происходит входящий запрос, который не сопоставлен с методом-обработчиком на представлении.
 
 By default this exception results in a response with the HTTP status code "405 Method Not Allowed".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «Метод 405 не разрешен».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "405 Method Not Allowed".
 
 ## NotAcceptable
 
-## Неприемлимо
+## Неприемлемо
 
 **Signature:** `NotAcceptable(detail=None, code=None)`
 
-** Подпись: ** `notecpectable (detail = none, code = none)`
+**Подпись:** `NotAcceptable(detail=None, code=None)`.
 
 Raised when an incoming request occurs with an `Accept` header that cannot be satisfied by any of the available renderers.
 
-Поднят, когда входящий запрос возникает с заголовком «принять», который не может быть удовлетворен ни одним из доступных визуализаторов.
+Возникает, когда поступает запрос с заголовком `Accept`, который не может быть удовлетворен ни одним из доступных рендереров.
 
 By default this exception results in a response with the HTTP status code "406 Not Acceptable".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «406 недопустимо».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "406 Not Acceptable".
 
 ## UnsupportedMediaType
 
-## UnsupportedMediatype
+## UnsupportedMediaType
 
 **Signature:** `UnsupportedMediaType(media_type, detail=None, code=None)`
 
-** Подпись: ** `unsupportedMediatype (media_type, detail = none, code = none)`
+**Признак:** `UnsupportedMediaType(media_type, detail=None, code=None)`.
 
 Raised if there are no parsers that can handle the content type of the request data when accessing `request.data`.
 
-Повышен, если нет анализаторов, которые могут обрабатывать тип контента данных запроса при доступе к `request.data`.
+Возникает, если при обращении к `request.data` нет парсеров, способных обработать тип содержимого данных запроса.
 
 By default this exception results in a response with the HTTP status code "415 Unsupported Media Type".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «415 Неподдерживаемый тип носителя».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "415 Unsupported Media Type".
 
 ## Throttled
 
-## дроссель
+## Дроссель
 
 **Signature:** `Throttled(wait=None, detail=None, code=None)`
 
-** Подпись: ** `дроссельная (подожди = нет, detail = none, code = none)`
+**Подпись:** `Throttled(wait=None, detail=None, code=None)`.
 
 Raised when an incoming request fails the throttling checks.
 
-Повышен, когда входящий запрос не проходит проверку дросселирования.
+Возникает, когда входящий запрос не проходит проверку на дросселирование.
 
 By default this exception results in a response with the HTTP status code "429 Too Many Requests".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «429 Слишком много запросов».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "429 Too Many Requests".
 
 ## ValidationError
 
-## Ошибка проверки
+## ValidationError
 
 **Signature:** `ValidationError(detail, code=None)`
 
-** Подпись: ** `validationError (detail, code = none)`
+**Подпись:** `ValidationError(detail, code=None)`.
 
 The `ValidationError` exception is slightly different from the other `APIException` classes:
 
-Исключение `valyationError` немного отличается от других классов` apiexception`:
+Исключение `ValidationError` немного отличается от других классов `APIException`:
 
 * The `detail` argument is mandatory, not optional.
 * The `detail` argument may be a list or dictionary of error details, and may also be a nested data structure. By using a dictionary, you can specify field-level errors while performing object-level validation in the `validate()` method of a serializer. For example. `raise serializers.ValidationError({'name': 'Please enter a valid name.'})`
 * By convention you should import the serializers module and use a fully qualified `ValidationError` style, in order to differentiate it from Django's built-in validation error. For example. `raise serializers.ValidationError('This field must be an integer value.')`
 
-* Аргумент `detail` является обязательным, а не необязательным.
-* Аргумент `detail` может быть списком или словарем сведений об ошибках, а также может быть вложенной структурой данных.
-Используя словарь, вы можете указать ошибки на уровне поля при выполнении проверки на уровне объектов в методе `validate ()` сериализатора.
-Например.
-`Raise Serializers.validationError ({'name': 'Пожалуйста, введите действительное имя.'})`
-* По соглашению вы должны импортировать модуль Serializers и использовать полностью квалифицированный стиль `valyationError
-Например.
-`Raise Serializers.validationError (« Это поле должно быть целочисленным значением. »)`
+* Аргумент `detail` является обязательным, а не опциональным.
+* Аргумент `detail` может представлять собой список или словарь сведений об ошибке, а также может быть вложенной структурой данных. Используя словарь, вы можете указать ошибки на уровне полей при выполнении проверки на уровне объектов в методе `validate()` сериализатора. Например. `raise serializers.ValidationError({'name': 'Please enter a valid name.'})`.
+* По соглашению вы должны импортировать модуль serializers и использовать полностью квалифицированный стиль `ValidationError`, чтобы отличить его от встроенной ошибки валидации Django. Например. `raise serializers.ValidationError('Это поле должно быть целочисленным значением.')`.
 
 The `ValidationError` class should be used for serializer and field validation, and by validator classes. It is also raised when calling `serializer.is_valid` with the `raise_exception` keyword argument:
 
-Класс `valyationError 'должен использоваться для сериализатора и проверки поля, а также классами валидатора.
-Это также повышается при вызове `serializer.is_valid` с аргументом ключевого слова` rate_exception`:
+Класс `ValidationError` должен использоваться для сериализатора и валидации полей, а также классами валидаторов. Он также вызывается при вызове `serializer.is_valid` с аргументом ключевого слова `raise_exception`:
 
 ```
 serializer.is_valid(raise_exception=True)
@@ -432,27 +414,25 @@ serializer.is_valid(raise_exception=True)
 
 The generic views use the `raise_exception=True` flag, which means that you can override the style of validation error responses globally in your API. To do so, use a custom exception handler, as described above.
 
-Общие представления используют флаг `rate_exception = true`, что означает, что вы можете переопределить стиль ответов на ошибку проверки в мире в своем API.
-Для этого используйте пользовательский обработчик исключений, как описано выше.
+Общие представления используют флаг `raise_exception=True`, что означает, что вы можете переопределить стиль ответов на ошибки валидации глобально в вашем API. Для этого используйте пользовательский обработчик исключений, как описано выше.
 
 By default this exception results in a response with the HTTP status code "400 Bad Request".
 
-По умолчанию это исключение приводит к ответу с кодом состояния HTTP «400 Bad Request».
+По умолчанию это исключение приводит к ответу с кодом состояния HTTP "400 Bad Request".
 
 ---
 
 # Generic Error Views
 
-# Общие виды ошибок
+# Общие представления об ошибках
 
 Django REST Framework provides two error views suitable for providing generic JSON `500` Server Error and `400` Bad Request responses. (Django's default error views provide HTML responses, which may not be appropriate for an API-only application.)
 
-Django Rest Framework предоставляет два представления об ошибках, подходящие для предоставления общей ошибки сервера json `500` и ответов` 400` плохих запросов.
-(Представления ошибок по умолчанию Django предоставляют HTML-ответы, которые могут не подходить для приложения только для API.)
+Django REST Framework предоставляет два представления ошибок, подходящих для предоставления общих JSON ответов `500` Server Error и `400` Bad Request. (Стандартные представления ошибок Django предоставляют HTML-ответы, которые могут не подойти для приложения, использующего только API).
 
 Use these as per [Django's Customizing error views documentation](https://docs.djangoproject.com/en/dev/topics/http/views/#customizing-error-views).
 
-Используйте их в соответствии с [Документация по ошибке настройки Django.
+Используйте их согласно [Django's Customizing error views documentation](https://docs.djangoproject.com/en/dev/topics/http/views/#customizing-error-views).
 
 ## `rest_framework.exceptions.server_error`
 
@@ -460,11 +440,11 @@ Use these as per [Django's Customizing error views documentation](https://docs.d
 
 Returns a response with status code `500` and `application/json` content type.
 
-Возвращает ответ с кодом состояния `500` и` Приложение/JSON` Тип контента.
+Возвращает ответ с кодом состояния `500` и типом содержимого `application/json`.
 
 Set as `handler500`:
 
-Установить как `handler500`:
+Устанавливается как `handler500`:
 
 ```
 handler500 = 'rest_framework.exceptions.server_error'
@@ -476,11 +456,11 @@ handler500 = 'rest_framework.exceptions.server_error'
 
 Returns a response with status code `400` and `application/json` content type.
 
-Возвращает ответ с кодом состояния `400` и` Приложение/JSON` Тип контента.
+Возвращает ответ с кодом статуса `400` и типом содержимого `application/json`.
 
 Set as `handler400`:
 
-Установить как `handler400`:
+Устанавливается как `handler400`:
 
 ```
 handler400 = 'rest_framework.exceptions.bad_request'
@@ -488,18 +468,16 @@ handler400 = 'rest_framework.exceptions.bad_request'
 
 # Third party packages
 
-# Сторонние пакеты
+# Пакеты сторонних производителей
 
 The following third-party packages are also available.
 
-Следующие сторонние пакеты также доступны.
+Также доступны следующие пакеты сторонних производителей.
 
 ## DRF Standardized Errors
 
-## Стандартизированные ошибки DRF
+## Стандартизированные ошибки ДРФ
 
 The [drf-standardized-errors](https://github.com/ghazi-git/drf-standardized-errors) package provides an exception handler that generates the same format for all 4xx and 5xx responses. It is a drop-in replacement for the default exception handler and allows customizing the error response format without rewriting the whole exception handler. The standardized error response format is easier to document and easier to handle by API consumers.
 
-Пакет [https://github.com/ghazi-standardable-errors) (https://github.com/ghazi-git/drf-standardized-errors).
-Это замена для обработки исключений по умолчанию и позволяет настроить формат ответа ошибки без переписывания всего обработчика исключений.
-Стандартизированный формат ответа на ошибку легче документировать, и его легче обрабатывать потребителями API.
+Пакет [drf-standardized-errors](https://github.com/ghazi-git/drf-standardized-errors) предоставляет обработчик исключений, который генерирует одинаковый формат для всех ответов 4xx и 5xx. Он является заменой стандартного обработчика исключений и позволяет настраивать формат ответа на ошибку без переписывания всего обработчика исключений. Стандартизированный формат ответа на ошибку легче документировать и проще обрабатывать потребителям API.

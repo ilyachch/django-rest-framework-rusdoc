@@ -19,30 +19,25 @@ source:
 >
 > — [Django documentation][cite]
 
-> В отличие от основных объектов httpresponse, объекты TemplaterSponse сохраняют детали контекста, который был предоставлен представлением для вычисления ответа.
-Окончательный результат ответа не будет рассчитан до тех пор, пока он не будет необходим, позже в процессе отклика.
+> В отличие от базовых объектов HttpResponse, объекты TemplateResponse сохраняют детали контекста, который был предоставлен представлением для вычисления ответа. Окончательный результат ответа не вычисляется до тех пор, пока он не понадобится, позже в процессе ответа.
 >
-> - [документация Django] [цитирует]
+> - [Django documentation][cite]
 
 REST framework supports HTTP content negotiation by providing a `Response` class which allows you to return content that can be rendered into multiple content types, depending on the client request.
 
-Структура REST поддерживает согласование контента HTTP, предоставляя класс «ответа», который позволяет возвращать контент, который можно представить в несколько типов контента, в зависимости от запроса клиента.
+Фреймворк REST поддерживает согласование содержимого HTTP, предоставляя класс `Response`, который позволяет возвращать содержимое, которое может быть преобразовано в несколько типов содержимого, в зависимости от запроса клиента.
 
 The `Response` class subclasses Django's `SimpleTemplateResponse`. `Response` objects are initialised with data, which should consist of native Python primitives. REST framework then uses standard HTTP content negotiation to determine how it should render the final response content.
 
-Подкласс класса `ответы Django« SimpleTemplateReSponse ».
-`Объекты ответа инициализируются с помощью данных, которые должны состоять из нативных примитивов Python.
-Затем Framework REST использует стандартные переговоры о контенте HTTP, чтобы определить, как оно должно представить конечный контент ответа.
+Класс `Response` является подклассом Django `SimpleTemplateResponse`. Объекты `Response` инициализируются данными, которые должны состоять из собственных примитивов Python. Затем фреймворк REST использует стандартное согласование содержимого HTTP для определения того, как он должен отображать конечное содержимое ответа.
 
 There's no requirement for you to use the `Response` class, you can also return regular `HttpResponse` or `StreamingHttpResponse` objects from your views if required. Using the `Response` class simply provides a nicer interface for returning content-negotiated Web API responses, that can be rendered to multiple formats.
 
-Вам не требуется использовать класс `repless ', вы также можете вернуть регулярные объекты` httpresponse' или `streaminghttpresponse` из ваших представлений, если это необходимо.
-Использование класса `response` просто предоставляет более приятный интерфейс для возврата ответов на веб-API-отрицательных контента, который можно представить в нескольких форматах.
+Нет необходимости использовать класс `Response`, при необходимости вы можете возвращать обычные объекты `HttpResponse` или `StreamingHttpResponse` из ваших представлений. Использование класса `Response` просто предоставляет более удобный интерфейс для возврата ответов Web API, согласованных по содержанию, которые могут быть преобразованы в различные форматы.
 
 Unless you want to heavily customize REST framework for some reason, you should always use an `APIView` class or `@api_view` function for views that return `Response` objects. Doing so ensures that the view can perform content negotiation and select the appropriate renderer for the response, before it is returned from the view.
 
-Если вы не хотите сильно настраивать структуру REST по какой -то причине, вам всегда следует использовать класс `apiview` или функцию`@api_view` для представлений, которые возвращают объекты ответа.
-Это гарантирует, что представление может выполнять согласование контента и выбрать соответствующий рендеринг для ответа, прежде чем оно будет возвращено из представления.
+Если вы по каким-то причинам не хотите сильно настраивать REST-фреймворк, вы всегда должны использовать класс `APIView` или функцию `@api_view` для представлений, которые возвращают объекты `Response`. Это гарантирует, что представление сможет выполнить согласование содержимого и выбрать подходящий рендерер для ответа, прежде чем он будет возвращен из представления.
 
 ---
 
@@ -52,24 +47,23 @@ Unless you want to heavily customize REST framework for some reason, you should 
 
 ## Response()
 
-## Ответ()
+## Response()
 
 **Signature:** `Response(data, status=None, template_name=None, headers=None, content_type=None)`
 
-** Подпись: ** `response (data, status = none, template_name = none, headers = none, content_type = none)`
+**Подпись:** `Response(data, status=None, template_name=None, headers=None, content_type=None)`.
 
 Unlike regular `HttpResponse` objects, you do not instantiate `Response` objects with rendered content. Instead you pass in unrendered data, which may consist of any Python primitives.
 
-В отличие от регулярных объектов `httpresponse`, вы не создаете экземпляры объектов ответа` с визуализированным контентом.
-Вместо этого вы передаете непревзойденные данные, которые могут состоять из любых примитивов Python.
+В отличие от обычных объектов `HttpResponse`, вы не создаете объекты `Response` с отрисованным содержимым. Вместо этого вы передаете нерендерированные данные, которые могут состоять из любых примитивов Python.
 
 The renderers used by the `Response` class cannot natively handle complex datatypes such as Django model instances, so you need to serialize the data into primitive datatypes before creating the `Response` object.
 
-Рендеры, используемые классом «ответ», не могут быть изначально обрабатывать сложные данные дата, такие как экземпляры модели Django, поэтому вам необходимо сериализовать данные на примитивные данные дата, прежде чем создавать объект `replect`.
+Рендереры, используемые классом `Response`, не могут нативно обрабатывать сложные типы данных, такие как экземпляры моделей Django, поэтому вам необходимо сериализовать данные в примитивные типы данных перед созданием объекта `Response`.
 
 You can use REST framework's `Serializer` classes to perform this data serialization, or use your own custom serialization.
 
-Вы можете использовать классы REST Framework `serializer` для выполнения этой сериализации данных или использовать собственную пользовательскую сериализацию.
+Вы можете использовать классы `Serializer` фреймворка REST для выполнения этой сериализации данных или использовать свою собственную сериализацию.
 
 Arguments:
 
@@ -81,13 +75,11 @@ Arguments:
 * `headers`: A dictionary of HTTP headers to use in the response.
 * `content_type`: The content type of the response. Typically, this will be set automatically by the renderer as determined by content negotiation, but there may be some cases where you need to specify the content type explicitly.
 
-* `data`: сериализованные данные для ответа.
-* `status`: код состояния для ответа.
-По умолчанию до 200. См. Также [Коды статуса] (Status-codes.md).
-* `template_name`: имя шаблона для использования, если выбрано` htmlrenderer`.
-* `Headers`: словарь заголовков HTTP для использования в ответе.
-* `content_type`: тип контента ответа.
-Как правило, это будет автоматически установлено рендерером, определяемым в соответствии с согласованием контента, но могут быть некоторые случаи, когда вам необходимо явно указать тип контента.
+* `data`: Сериализованные данные для ответа.
+* `status`: Код статуса для ответа. По умолчанию 200. См. также [коды статуса](status-codes.md).
+* `template_name`: Имя шаблона, который будет использоваться, если выбран `HTMLRenderer`.
+* `headers`: Словарь заголовков HTTP для использования в ответе.
+* `content_type`: Тип содержимого ответа. Как правило, он устанавливается автоматически рендерером в результате согласования содержимого, но в некоторых случаях может потребоваться явное указание типа содержимого.
 
 ---
 
@@ -97,11 +89,11 @@ Arguments:
 
 ## .data
 
-## .данные
+## .data
 
 The unrendered, serialized data of the response.
 
-Несоблюдения, сериализованные данные ответа.
+Неотредактированные, сериализованные данные ответа.
 
 ## .status_code
 
@@ -109,25 +101,23 @@ The unrendered, serialized data of the response.
 
 The numeric status code of the HTTP response.
 
-Числовой код состояния ответа HTTP.
+Цифровой код состояния ответа HTTP.
 
 ## .content
 
-## .содержание
+## .content
 
 The rendered content of the response. The `.render()` method must have been called before `.content` can be accessed.
 
-Визуализированное содержание ответа.
-Метод `.render ()` должен быть вызван до `.content` можно получить доступ.
+Отрисованное содержимое ответа. Метод `.render()` должен быть вызван, прежде чем можно будет получить доступ к `.content`.
 
 ## .template_name
 
-## .Имя Шаблона
+## .template_name
 
 The `template_name`, if supplied. Only required if `HTMLRenderer` or some other custom template renderer is the accepted renderer for the response.
 
-`Template_name`, если он поставляется.
-Требуется только в том случае, если `htmlrenderer` или какой -либо другой пользовательский визуализатор шаблона является принятым визуализацией для ответа.
+Имя `шаблона`, если оно задано. Требуется, только если `HTMLRenderer` или другой пользовательский рендерер шаблона является принятым рендерером для ответа.
 
 ## .accepted_renderer
 
@@ -135,11 +125,11 @@ The `template_name`, if supplied. Only required if `HTMLRenderer` or some other 
 
 The renderer instance that will be used to render the response.
 
-Экземпляр рендерера, который будет использоваться для отображения ответа.
+Экземпляр рендерера, который будет использоваться для рендеринга ответа.
 
 Set automatically by the `APIView` or `@api_view` immediately before the response is returned from the view.
 
-Установите автоматически `apiview` или`@api_view` непосредственно перед возвращением ответа из представления.
+Устанавливается автоматически `APIView` или `@api_view` непосредственно перед возвратом ответа из представления.
 
 ## .accepted_media_type
 
@@ -147,11 +137,11 @@ Set automatically by the `APIView` or `@api_view` immediately before the respons
 
 The media type that was selected by the content negotiation stage.
 
-Тип СМИ, который был выбран на стадии переговоров по контенту.
+Тип носителя, который был выбран на этапе согласования содержимого.
 
 Set automatically by the `APIView` or `@api_view` immediately before the response is returned from the view.
 
-Установите автоматически `apiview` или`@api_view` непосредственно перед возвращением ответа из представления.
+Устанавливается автоматически `APIView` или `@api_view` непосредственно перед возвратом ответа из представления.
 
 ## .renderer_context
 
@@ -159,22 +149,21 @@ Set automatically by the `APIView` or `@api_view` immediately before the respons
 
 A dictionary of additional context information that will be passed to the renderer's `.render()` method.
 
-Словарь дополнительной контекстной информации, которая будет передана методу рендерера `.render ()`.
+Словарь дополнительной контекстной информации, которая будет передана в метод `.render()` рендерера.
 
 Set automatically by the `APIView` or `@api_view` immediately before the response is returned from the view.
 
-Установите автоматически `apiview` или`@api_view` непосредственно перед возвращением ответа из представления.
+Устанавливается автоматически `APIView` или `@api_view` непосредственно перед возвратом ответа из представления.
 
 ---
 
 # Standard HttpResponse attributes
 
-# Стандартные атрибуты httpresponse
+# Стандартные атрибуты HttpResponse
 
 The `Response` class extends `SimpleTemplateResponse`, and all the usual attributes and methods are also available on the response. For example you can set headers on the response in the standard way:
 
-Класс `replect 'расширяет` SimpleTemplaterSponse`, и все обычные атрибуты и методы также доступны в ответе.
-Например, вы можете установить заголовки на ответ стандартным способом:
+Класс `Response` расширяет `SimpleTemplateResponse`, и все обычные атрибуты и методы также доступны для ответа. Например, вы можете установить заголовки для ответа стандартным способом:
 
 ```
 response = Response()
@@ -183,17 +172,16 @@ response['Cache-Control'] = 'no-cache'
 
 ## .render()
 
-## .оказывать()
+## .render()
 
 **Signature:** `.render()`
 
-** Подпись: ** `.render ()`
+**Подпись:** `.render()`.
 
 As with any other `TemplateResponse`, this method is called to render the serialized data of the response into the final response content. When `.render()` is called, the response content will be set to the result of calling the `.render(data, accepted_media_type, renderer_context)` method on the `accepted_renderer` instance.
 
-Как и в случае любого другого «TemplaterSponse», этот метод вызывается для представления сериализованных данных ответа в конечный содержимое ответа.
-Когда называется `.render ()`, содержимое ответа будет установлено на результат вызова метода `.render (data, accomted_media_type, renderer_context)` на экземпляре `adcockted_renderer`.
+Как и любой другой `TemplateResponse`, этот метод вызывается для преобразования сериализованных данных ответа в конечное содержимое ответа. Когда вызывается `.render()`, содержимое ответа будет установлено в результат вызова метода `.render(data, accepted_media_type, renderer_context)` на экземпляре `accepted_renderer`.
 
 You won't typically need to call `.render()` yourself, as it's handled by Django's standard response cycle.
 
-Обычно вам не нужно будет вызывать `.render ()` сами, так как он обрабатывается стандартным циклом ответа Джанго.
+Обычно вам не нужно вызывать `.render()` самостоятельно, так как это обрабатывается стандартным циклом ответа Django.

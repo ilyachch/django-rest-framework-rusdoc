@@ -7,26 +7,23 @@
 >
 > * Lydia Davis
 
-> У определенной женщины было очень острое сознание, но почти не было воспоминания ... она помнила достаточно, чтобы работать, и она усердно работала.
+> У одной женщины было очень острое сознание, но почти не было памяти... Она помнила достаточно, чтобы работать, и она много работала.
 >
 > * Лидия Дэвис
 
 Caching in REST Framework works well with the cache utilities provided in Django.
 
-Кэширование в рамках REST хорошо работает с утилитами Cache, предоставленными в Django.
+Кэширование в REST Framework хорошо работает с утилитами кэширования, предоставляемыми в Django.
 
 ---
 
 ## Using cache with apiview and viewsets
 
-## Использование кэша с Apiview и Spearssets
+## Использование кэша с apiview и наборами представлений
 
 Django provides a [`method_decorator`](https://docs.djangoproject.com/en/dev/topics/class-based-views/intro/#decorating-the-class) to use decorators with class based views. This can be used with other cache decorators such as [`cache_page`](https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache), [`vary_on_cookie`](https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_cookie) and [`vary_on_headers`](https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_headers).
 
-Django предоставляет [`method_decorator`] (https://docs.djangoproject.com/en/dev/topics/class на основе Views/intro/#decorating-too-class) для использования декораторов с просмоткой на основе классов.
-Это можно использовать с другими декораторами кэша, такими как [`cache_page`] (https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache), [vary_on_cookie`] (
-https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_cookie) и [vary_on_headers`] (https://docs.djangoproject.com/en/headers
-Dev/Thepics/http/decerators/#django.views.decorators.vary.vary_on_headers).
+Django предоставляет [`method_decorator`](https://docs.djangoproject.com/en/dev/topics/class-based-views/intro/#decorating-the-class) для использования декораторов с представлениями, основанными на классах. Его можно использовать с другими декораторами кэша, такими как [`cache_page`](https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache), [`vary_on_cookie`](https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_cookie) и [`vary_on_headers`](https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_headers).
 
 ```python
 from django.utils.decorators import method_decorator
@@ -73,5 +70,4 @@ class PostView(APIView):
 
 **NOTE:** The [`cache_page`](https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache) decorator only caches the `GET` and `HEAD` responses with status 200.
 
-** Примечание: ** [`cache_page`] (https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache) Декоратор только кэширует` get` и `head
-`Ответы со статусом 200.
+**NOTE:** Декоратор [`cache_page`](https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache) кэширует только ответы `GET` и `HEAD` со статусом 200.

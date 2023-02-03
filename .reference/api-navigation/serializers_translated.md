@@ -19,28 +19,25 @@ source:
 >
 > — Russell Keith-Magee, [Django users group](https://groups.google.com/d/topic/django-users/sVFaOfQi4wY/discussion)
 
-> Расширение полезности сериалов - это то, что мы хотели бы обратиться.
-Тем не менее, это не тривиальная проблема, и это займет серьезную работу по дизайну.
+> Расширение полезности сериализаторов - это то, чем мы хотели бы заняться. Однако это не тривиальная проблема, и потребуется серьезная работа над дизайном.
 >
->-Рассел Кейт-Маги, [группа пользователей Django] (https://groups.google.com/d/topic/django-users/svfaofqi4wy/discussion)
+> - Russell Keith-Magee, [Django users group](https://groups.google.com/d/topic/django-users/sVFaOfQi4wY/discussion)
 
 Serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into `JSON`, `XML` or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data.
 
-Сериализаторы позволяют преобразовать сложные данные, такие как запросы и экземпляры модели, в нативные данные Python, которые затем можно легко отображать в `json`,` xml` или другие типы контента.
-Сериализаторы также обеспечивают десериализацию, позволяя конвертировать данные обратно в сложные типы после сначала проверки входящих данных.
+Сериализаторы позволяют преобразовывать сложные данные, такие как наборы запросов и экземпляры моделей, в собственные типы данных Python, которые затем могут быть легко преобразованы в `JSON`, `XML` или другие типы содержимого. Сериализаторы также обеспечивают десериализацию, позволяя преобразовывать разобранные данные обратно в сложные типы после предварительной проверки входящих данных.
 
 The serializers in REST framework work very similarly to Django's `Form` and `ModelForm` classes. We provide a `Serializer` class which gives you a powerful, generic way to control the output of your responses, as well as a `ModelSerializer` class which provides a useful shortcut for creating serializers that deal with model instances and querysets.
 
-Сериализаторы в рамках REST работают очень аналогично классам Джанго «Форма» и «Modelform».
-Мы предоставляем класс «Serializer», который дает вам мощный, общий способ управления выводами ваших ответов, а также класс «Modelerializer», который обеспечивает полезный ярлык для создания сериализаторов, которые имеют дело с экземплярами модели и запросами.
+Сериализаторы в REST framework работают очень похоже на классы Django `Form` и `ModelForm`. Мы предоставляем класс `Serializer`, который дает вам мощный, универсальный способ управления выводом ваших ответов, а также класс `ModelSerializer`, который предоставляет полезный ярлык для создания сериализаторов, работающих с экземплярами моделей и наборами запросов.
 
 ## Declaring Serializers
 
-## объявление сериалов
+## Объявление сериализаторов
 
 Let's start by creating a simple object we can use for example purposes:
 
-Давайте начнем с создания простого объекта, который мы можем использовать, например, цели:
+Давайте начнем с создания простого объекта, который мы можем использовать для примера:
 
 ```
 from datetime import datetime
@@ -56,11 +53,11 @@ comment = Comment(email='leila@example.com', content='foo bar')
 
 We'll declare a serializer that we can use to serialize and deserialize data that corresponds to `Comment` objects.
 
-Мы объявим сериализатор, который мы можем использовать для сериализации и десериализации данных, которые соответствуют объектам «Комментарий».
+Мы объявим сериализатор, который мы можем использовать для сериализации и десериализации данных, соответствующих объектам `Comment`.
 
 Declaring a serializer looks very similar to declaring a form:
 
-Объявление сериализатора выглядит очень похоже на объявление формы:
+Объявление сериализатора очень похоже на объявление формы:
 
 ```
 from rest_framework import serializers
@@ -73,12 +70,11 @@ class CommentSerializer(serializers.Serializer):
 
 ## Serializing objects
 
-## сериализация объектов
+## Сериализация объектов
 
 We can now use `CommentSerializer` to serialize a comment, or list of comments. Again, using the `Serializer` class looks a lot like using a `Form` class.
 
-Теперь мы можем использовать «Комментарии» для сериализации комментария или списка комментариев.
-Опять же, использование класса «Serializer» очень похоже на использование класса «форма».
+Теперь мы можем использовать `CommentSerializer` для сериализации комментария или списка комментариев. Опять же, использование класса `Serializer` очень похоже на использование класса `Form`.
 
 ```
 serializer = CommentSerializer(comment)
@@ -88,8 +84,7 @@ serializer.data
 
 At this point we've translated the model instance into Python native datatypes. To finalise the serialization process we render the data into `json`.
 
-На этом этапе мы перевели экземпляр модели в нативные данные Python.
-Чтобы завершить процесс сериализации, мы переводим данные в `json '.
+На данном этапе мы перевели экземпляр модели в собственные типы данных Python. Чтобы завершить процесс сериализации, мы преобразуем данные в `json`.
 
 ```
 from rest_framework.renderers import JSONRenderer
@@ -101,12 +96,11 @@ json
 
 ## Deserializing objects
 
-## deserialization объектов
+## Десериализация объектов
 
 Deserialization is similar. First we parse a stream into Python native datatypes...
 
-Десериализация похожа.
-Сначала мы проанализируем поток в народные дата дата Python ...
+Десериализация аналогична. Сначала мы разбираем поток на собственные типы данных Python...
 
 ```
 import io
@@ -118,7 +112,7 @@ data = JSONParser().parse(stream)
 
 ...then we restore those native datatypes into a dictionary of validated data.
 
-... Затем мы восстанавливаем эти собственные данные дата в словаре подтвержденных данных.
+затем мы восстанавливаем эти родные типы данных в словарь проверенных данных.
 
 ```
 serializer = CommentSerializer(data=data)
@@ -134,8 +128,7 @@ serializer.validated_data
 
 If we want to be able to return complete object instances based on the validated data we need to implement one or both of the `.create()` and `.update()` methods. For example:
 
-Если мы хотим иметь возможность вернуть полные экземпляры объектов на основе проверенных данных, нам необходимо реализовать один или оба метода `.create ()` и `.update ()`.
-Например:
+Если мы хотим иметь возможность возвращать полные экземпляры объектов на основе проверенных данных, нам необходимо реализовать один или оба метода `.create()` и `.update()`. Например:
 
 ```
 class CommentSerializer(serializers.Serializer):
@@ -155,8 +148,7 @@ class CommentSerializer(serializers.Serializer):
 
 If your object instances correspond to Django models you'll also want to ensure that these methods save the object to the database. For example, if `Comment` was a Django model, the methods might look like this:
 
-Если экземпляры вашего объекта соответствуют моделям Django, вы также захотите убедиться, что эти методы сохраняют объект в базе данных.
-Например, если «Комментарий» был моделью Джанго, методы могут выглядеть так:
+Если ваши экземпляры объектов соответствуют моделям Django, вы также захотите убедиться, что эти методы сохраняют объект в базе данных. Например, если `Comment` является моделью Django, методы могут выглядеть следующим образом:
 
 ```
 def create(self, validated_data):
@@ -172,7 +164,7 @@ def create(self, validated_data):
 
 Now when deserializing data, we can call `.save()` to return an object instance, based on the validated data.
 
-Теперь, когда десериализуйте данные, мы можем вызвать `.save ()`, чтобы вернуть экземпляр объекта на основе проверенных данных.
+Теперь при десериализации данных мы можем вызвать `.save()`, чтобы вернуть экземпляр объекта, основанный на проверенных данных.
 
 ```
 comment = serializer.save()
@@ -180,7 +172,7 @@ comment = serializer.save()
 
 Calling `.save()` will either create a new instance, or update an existing instance, depending on if an existing instance was passed when instantiating the serializer class:
 
-Вызов `.save ()` будет либо создать новый экземпляр, либо обновить существующий экземпляр, в зависимости от того, был ли существующий экземпляр пропускался при создании класса сериализатора:
+Вызов `.save()` либо создаст новый экземпляр, либо обновит существующий, в зависимости от того, был ли передан существующий экземпляр при инстанцировании класса сериализатора:
 
 ```
 # .save() will create a new instance.
@@ -192,22 +184,19 @@ serializer = CommentSerializer(comment, data=data)
 
 Both the `.create()` and `.update()` methods are optional. You can implement either none, one, or both of them, depending on the use-case for your serializer class.
 
-Оба метода `.create ()` и `.update ()` являются необязательными.
-Вы можете реализовать ни один, один или оба из них, в зависимости от использования валя для вашего класса Serializer.
+Методы `.create()` и `.update()` являются необязательными. Вы можете реализовать либо ни один из них, либо один, либо оба, в зависимости от условий использования вашего класса сериализатора.
 
 #### Passing additional attributes to `.save()`
 
-#### Передача дополнительных атрибутов `.save ()`
+#### Передача дополнительных атрибутов в `.save()`.
 
 Sometimes you'll want your view code to be able to inject additional data at the point of saving the instance. This additional data might include information like the current user, the current time, or anything else that is not part of the request data.
 
-Иногда вы захотите, чтобы ваш код представления имел возможность вводить дополнительные данные в точке сохранения экземпляра.
-Эти дополнительные данные могут включать информацию, такую как текущий пользователь, текущее время или что -либо еще, что не является частью данных запроса.
+Иногда вы хотите, чтобы код представления мог вводить дополнительные данные в момент сохранения экземпляра. Эти дополнительные данные могут включать информацию о текущем пользователе, текущем времени или что-нибудь еще, что не является частью данных запроса.
 
 You can do so by including additional keyword arguments when calling `.save()`. For example:
 
-Вы можете сделать это, включив дополнительные аргументы ключевых слов при вызове `.save ()`.
-Например:
+Вы можете сделать это, включив дополнительные аргументы ключевых слов при вызове `.save()`. Например:
 
 ```
 serializer.save(owner=request.user)
@@ -215,20 +204,19 @@ serializer.save(owner=request.user)
 
 Any additional keyword arguments will be included in the `validated_data` argument when `.create()` or `.update()` are called.
 
-Любые дополнительные аргументы ключевых слов будут включены в аргумент `valyated_data`, когда` .create () `или` .update () `вызываются.
+Любые дополнительные аргументы ключевых слов будут включены в аргумент `validated_data` при вызове `.create()` или `.update()`.
 
 #### Overriding `.save()` directly.
 
-#### переопределение `.save ()` напрямую.
+#### Переопределение `.save()` напрямую.
 
 In some cases the `.create()` and `.update()` method names may not be meaningful. For example, in a contact form we may not be creating new instances, but instead sending an email or other message.
 
-В некоторых случаях имена методов `.create ()` и `.update ()` не могут быть значимыми.
-Например, в контактной форме мы можем не создавать новые экземпляры, а отправлять электронное письмо или другое сообщение.
+В некоторых случаях имена методов `.create()` и `.update()` могут не иметь смысла. Например, в контактной форме мы можем не создавать новые экземпляры, а отправлять электронное письмо или другое сообщение.
 
 In these cases you might instead choose to override `.save()` directly, as being more readable and meaningful.
 
-В этих случаях вы можете вместо этого переопределить `.save ()` напрямую, как более читаемое и значимое.
+В этих случаях вы можете вместо этого переопределить `.save()` напрямую, как более читабельный и осмысленный.
 
 For example:
 
@@ -247,17 +235,15 @@ class ContactForm(serializers.Serializer):
 
 Note that in the case above we're now having to access the serializer `.validated_data` property directly.
 
-Обратите внимание, что в приведенном выше случае нам теперь приходится получить доступ к свойству. Validated_data` напрямую.
+Обратите внимание, что в приведенном выше случае нам приходится напрямую обращаться к свойству сериализатора `.validated_data`.
 
 ## Validation
 
-## Проверка
+## Валидация
 
 When deserializing data, you always need to call `is_valid()` before attempting to access the validated data, or save an object instance. If any validation errors occur, the `.errors` property will contain a dictionary representing the resulting error messages. For example:
 
-При десериализации данных вам всегда нужно вызовать `is_valid ()`, прежде чем пытаться получить доступ к проверенным данным или сохранить экземпляр объекта.
-Если возникают какие -либо ошибки проверки, свойство `.errors 'будет содержать словарь, представляющий полученные сообщения об ошибках.
-Например:
+При десериализации данных всегда нужно вызывать `is_valid()` перед попыткой получить доступ к проверенным данным или сохранить экземпляр объекта. Если возникнут ошибки валидации, свойство `.errors` будет содержать словарь, представляющий сообщения об ошибках. Например:
 
 ```
 serializer = CommentSerializer(data={'email': 'foobar', 'content': 'baz'})
@@ -269,9 +255,7 @@ serializer.errors
 
 Each key in the dictionary will be the field name, and the values will be lists of strings of any error messages corresponding to that field. The `non_field_errors` key may also be present, and will list any general validation errors. The name of the `non_field_errors` key may be customized using the `NON_FIELD_ERRORS_KEY` REST framework setting.
 
-Каждый ключ в словаре будет именем поля, а значения будут списками строк любых сообщений об ошибках, соответствующих этому поле.
-Ключ `non_field_errors
-Имя ключа `non_field_errors` может быть настроено с помощью настройки платформы non_field_errors_key`.
+Каждый ключ в словаре будет именем поля, а значения будут списками строк любых сообщений об ошибках, соответствующих этому полю. Также может присутствовать ключ `non_field_errors`, в котором будут перечислены все общие ошибки валидации. Имя ключа `non_field_errors` можно настроить с помощью параметра REST-фреймворка `NON_FIELD_ERRORS_KEY`.
 
 When deserializing a list of items, errors will be returned as a list of dictionaries representing each of the deserialized items.
 
@@ -279,15 +263,15 @@ When deserializing a list of items, errors will be returned as a list of diction
 
 #### Raising an exception on invalid data
 
-#### Поднимает исключение на недопустимых данных
+#### Возбуждение исключения при недопустимых данных
 
 The `.is_valid()` method takes an optional `raise_exception` flag that will cause it to raise a `serializers.ValidationError` exception if there are validation errors.
 
-Метод `.is_valid ()` принимает необязательный флаг `maus_exception`, который заставит его поднять исключение` serializers.validationError`, если есть ошибки проверки.
+Метод `.is_valid()` принимает необязательный флаг `raise_exception`, который заставит его поднять исключение `serializers.ValidationError`, если есть ошибки валидации.
 
 These exceptions are automatically dealt with by the default exception handler that REST framework provides, and will return `HTTP 400 Bad Request` responses by default.
 
-Эти исключения автоматически рассматриваются в обработчике исключений по умолчанию, который предоставляет Framework REST, и по умолчанию возвращает `http 400 Bad Request 'ответы.
+Эти исключения автоматически обрабатываются обработчиком исключений по умолчанию, который предоставляет REST framework, и по умолчанию будут возвращать ответы `HTTP 400 Bad Request`.
 
 ```
 # Return a 400 response if the data was invalid.
@@ -296,21 +280,19 @@ serializer.is_valid(raise_exception=True)
 
 #### Field-level validation
 
-#### проверка на уровне поля
+#### Валидация на полевом уровне
 
 You can specify custom field-level validation by adding `.validate_<field_name>` methods to your `Serializer` subclass. These are similar to the `.clean_<field_name>` methods on Django forms.
 
-Вы можете указать пользовательскую проверку на уровне поля, добавив `.validate_ <field_name>` методы в ваш подкласс `serializer`.
-Они похожи на методы `.clean_ <field_name>` на формах django.
+Вы можете задать пользовательскую валидацию на уровне полей, добавив методы `.validate_<имя_поля>` в подкласс `Serializer`. Они аналогичны методам `.clean_<имя_поля>` в формах Django.
 
 These methods take a single argument, which is the field value that requires validation.
 
-Эти методы принимают один аргумент, который является значением поля, требующим проверки.
+Эти методы принимают единственный аргумент, который является значением поля, требующего проверки.
 
 Your `validate_<field_name>` methods should return the validated value or raise a `serializers.ValidationError`. For example:
 
-Ваши методы `validate_ <field_name>` должны вернуть подтвержденное значение или повысить `serializers.validationError`.
-Например:
+Ваши методы `validate_<имя_поля>` должны возвращать проверенное значение или вызывать `serializers.ValidationError`. Например:
 
 ```
 from rest_framework import serializers
@@ -332,20 +314,17 @@ class BlogPostSerializer(serializers.Serializer):
 
 **Note:** If your `<field_name>` is declared on your serializer with the parameter `required=False` then this validation step will not take place if the field is not included.
 
-** ПРИМЕЧАНИЕ: ** Если ваш `<Field_Name>` объявлен на вашем сериализаторе с параметром `required = false`, то этот шаг проверки не будет состояться, если поле не будет включено.
+**Примечание:** Если ваше `<имя_поля>` объявлено в вашем сериализаторе с параметром `required=False`, то этот шаг валидации не будет выполняться, если поле не включено.
 
 ---
 
 #### Object-level validation
 
-#### Проверка на уровне объекта
+#### Валидация на уровне объекта
 
 To do any other validation that requires access to multiple fields, add a method called `.validate()` to your `Serializer` subclass. This method takes a single argument, which is a dictionary of field values. It should raise a `serializers.ValidationError` if necessary, or just return the validated values. For example:
 
-Чтобы выполнить любую другую проверку, которая требует доступа к нескольким полям, добавьте метод под названием `.validate ()` к вашему подклассу `serializer.
-Этот метод принимает один аргумент, который является словарем значений поля.
-Он должен поднять `serializers.validationError`, если это необходимо, или просто вернуть проверенные значения.
-Например:
+Чтобы выполнить любую другую проверку, требующую доступа к нескольким полям, добавьте метод `.validate()` к вашему подклассу `Serializer`. Этот метод принимает единственный аргумент, который является словарем значений полей. При необходимости он должен вызывать `serializers.ValidationError, или просто возвращать проверенные значения. Например:
 
 ```
 from rest_framework import serializers
@@ -366,11 +345,11 @@ class EventSerializer(serializers.Serializer):
 
 #### Validators
 
-#### Validators
+#### Валидаторы
 
 Individual fields on a serializer can include validators, by declaring them on the field instance, for example:
 
-Отдельные поля на сериализаторе могут включать валидаторы, объявив их в экземпляре поля, например:
+Отдельные поля сериализатора могут включать валидаторы, например, путем объявления их в экземпляре поля:
 
 ```
 def multiple_of_ten(value):
@@ -384,8 +363,7 @@ class GameRecord(serializers.Serializer):
 
 Serializer classes can also include reusable validators that are applied to the complete set of field data. These validators are included by declaring them on an inner `Meta` class, like so:
 
-Классы сериализатора также могут включать валидаторы многократного использования, которые применяются к полному набору полевых данных.
-Эти валидаторы включены, объявляя их на внутреннем классе «Мета», как и так:
+Классы сериализаторов могут также включать многократно используемые валидаторы, которые применяются к полному набору данных поля. Эти валидаторы включаются путем объявления их во внутреннем классе `Meta`, например, так:
 
 ```
 class EventSerializer(serializers.Serializer):
@@ -405,30 +383,27 @@ class EventSerializer(serializers.Serializer):
 
 For more information see the [validators documentation](validators.md).
 
-Для получения дополнительной информации см. Документацию [Validators] (validators.md).
+Для получения дополнительной информации см. документацию [validators](validators.md).
 
 ## Accessing the initial data and instance
 
-## Доступ к начальным данным и экземпляру
+## Доступ к исходным данным и экземпляру
 
 When passing an initial object or queryset to a serializer instance, the object will be made available as `.instance`. If no initial object is passed then the `.instance` attribute will be `None`.
 
-При передаче начального объекта или запроса на экземпляр сериализатора объект будет доступен как `.Instance`.
-Если начальный объект не пройден, то атрибут `.Instance` будет« нет ».
+При передаче исходного объекта или набора запросов экземпляру сериализатора, объект будет доступен как `.instance`. Если начальный объект не передан, то атрибут `.instance` будет иметь значение `None`.
 
 When passing data to a serializer instance, the unmodified data will be made available as `.initial_data`. If the `data` keyword argument is not passed then the `.initial_data` attribute will not exist.
 
-При передаче данных в экземпляр Serializer, немодифицированные данные будут доступны как `.initial_data`.
-Если аргумент ключевого слова «Data» не будет принят, то атрибут `.Initial_Data` не будет существовать.
+При передаче данных экземпляру сериализатора, немодифицированные данные будут доступны как `.initial_data`. Если аргумент ключевого слова `data` не передан, то атрибут `.initial_data` не будет существовать.
 
 ## Partial updates
 
-## частичные обновления
+## Частичные обновления
 
 By default, serializers must be passed values for all required fields or they will raise validation errors. You can use the `partial` argument in order to allow partial updates.
 
-По умолчанию сериализаторы должны быть переданы значения для всех требуемых полей, иначе они приведут к ошибкам проверки.
-Вы можете использовать аргумент «частичный», чтобы разрешить частичные обновления.
+По умолчанию сериализаторам должны передаваться значения для всех обязательных полей, иначе они будут выдавать ошибки валидации. Вы можете использовать аргумент `partial`, чтобы разрешить частичное обновление.
 
 ```
 # Update `comment` with partial data
@@ -437,15 +412,15 @@ serializer = CommentSerializer(comment, data={'content': 'foo bar'}, partial=Tru
 
 ## Dealing with nested objects
 
-## имеет дело с вложенными объектами
+## Работа с вложенными объектами
 
 The previous examples are fine for dealing with objects that only have simple datatypes, but sometimes we also need to be able to represent more complex objects, where some of the attributes of an object might not be simple datatypes such as strings, dates or integers.
 
-Предыдущие примеры подходят для работы с объектами, которые имеют только простые данные дата, но иногда нам также необходимо иметь возможность представлять более сложные объекты, где некоторые атрибуты объекта могут быть не простыми данными, такими как строки, даты или целые числа.
+Предыдущие примеры хорошо подходят для работы с объектами, которые имеют только простые типы данных, но иногда нам также необходимо иметь возможность представлять более сложные объекты, где некоторые атрибуты объекта могут не быть простыми типами данных, такими как строки, даты или целые числа.
 
 The `Serializer` class is itself a type of `Field`, and can be used to represent relationships where one object type is nested inside another.
 
-Класс `serializer 'сам по себе является типом` field' и может использоваться для представления отношений, когда один тип объекта вложен в другой.
+Класс `Serializer` сам является типом `Field` и может быть использован для представления отношений, в которых один тип объекта вложен в другой.
 
 ```
 class UserSerializer(serializers.Serializer):
@@ -460,7 +435,7 @@ class CommentSerializer(serializers.Serializer):
 
 If a nested representation may optionally accept the `None` value you should pass the `required=False` flag to the nested serializer.
 
-Если вложенное представление может примечательно принять значение «Нет», вы должны передать флаг `require = false` к вложенному сериализатору.
+Если вложенное представление может опционально принимать значение `None`, вы должны передать флаг `required=False` вложенному сериализатору.
 
 ```
 class CommentSerializer(serializers.Serializer):
@@ -471,7 +446,7 @@ class CommentSerializer(serializers.Serializer):
 
 Similarly if a nested representation should be a list of items, you should pass the `many=True` flag to the nested serializer.
 
-Точно так же, если вложенное представление должно быть списком элементов, вы должны передать флаг `myry = true` в вложенный сериализатор.
+Аналогично, если вложенное представление должно быть списком элементов, вы должны передать флаг `many=True` в сериализатор вложенных элементов.
 
 ```
 class CommentSerializer(serializers.Serializer):
@@ -483,11 +458,11 @@ class CommentSerializer(serializers.Serializer):
 
 ## Writable nested representations
 
-## Вложенные представления о записи
+## Записываемые вложенные представления
 
 When dealing with nested representations that support deserializing the data, any errors with nested objects will be nested under the field name of the nested object.
 
-При работе с вложенными представлениями, которые поддерживают десериализацию данных, любые ошибки с вложенными объектами будут вложены под полевым именем вложенного объекта.
+При работе с вложенными представлениями, поддерживающими десериализацию данных, любые ошибки с вложенными объектами будут вложены под именем поля вложенного объекта.
 
 ```
 serializer = CommentSerializer(data={'user': {'email': 'foobar', 'username': 'doe'}, 'content': 'baz'})
@@ -499,19 +474,19 @@ serializer.errors
 
 Similarly, the `.validated_data` property will include nested data structures.
 
-Точно так же свойство `.validated_data` будет включать вложенные структуры данных.
+Аналогично, свойство `.validated_data` будет включать в себя вложенные структуры данных.
 
 #### Writing `.create()` methods for nested representations
 
-#### Написание `.create ()` Методы для вложенных представлений
+#### Написание методов `.create()` для вложенных представлений
 
 If you're supporting writable nested representations you'll need to write `.create()` or `.update()` methods that handle saving multiple objects.
 
-Если вы поддерживаете вложенные представления о записи, вам нужно написать `.create ()` или `.update ()` методы, которые обрабатывают сохранение нескольких объектов.
+Если вы поддерживаете записываемые вложенные представления, вам нужно написать методы `.create()` или `.update()`, которые обрабатывают сохранение нескольких объектов.
 
 The following example demonstrates how you might handle creating a user with a nested profile object.
 
-Следующий пример демонстрирует, как вы можете справиться с созданием пользователя с вложенным объектом профиля.
+В следующем примере показано, как можно создать пользователя с вложенным объектом профиля.
 
 ```
 class UserSerializer(serializers.ModelSerializer):
@@ -530,26 +505,25 @@ class UserSerializer(serializers.ModelSerializer):
 
 #### Writing `.update()` methods for nested representations
 
-#### Написание `.update ()` Методы для вложенных представлений
+#### Написание методов `.update()` для вложенных представлений
 
 For updates you'll want to think carefully about how to handle updates to relationships. For example if the data for the relationship is `None`, or not provided, which of the following should occur?
 
-Для обновлений вы захотите тщательно подумать о том, как обрабатывать обновления к отношениям.
-Например, если данные для отношений являются «нет» или не предоставлены, что из следующего должно происходить?
+Для обновлений вам необходимо тщательно продумать, как обрабатывать обновления отношений. Например, если данные для отношения `None`, или не предоставлены, что из перечисленного ниже должно произойти?
 
 * Set the relationship to `NULL` in the database.
 * Delete the associated instance.
 * Ignore the data and leave the instance as it is.
 * Raise a validation error.
 
-* Установите отношение к `null` в базе данных.
-* Удалить связанный экземпляр.
-* Игнорируйте данные и оставьте экземпляр таким, какой он есть.
-* Установите ошибку проверки.
+* Установите для отношения значение `NULL` в базе данных.
+* Удалите связанный экземпляр.
+* Игнорировать данные и оставить экземпляр как есть.
+* Вызвать ошибку валидации.
 
 Here's an example for an `.update()` method on our previous `UserSerializer` class.
 
-Вот пример для метода.
+Вот пример метода `.update()` для нашего предыдущего класса `UserSerializer`.
 
 ```
 def update(self, instance, validated_data):
@@ -578,12 +552,11 @@ def update(self, instance, validated_data):
 
 Because the behavior of nested creates and updates can be ambiguous, and may require complex dependencies between related models, REST framework 3 requires you to always write these methods explicitly. The default `ModelSerializer` `.create()` and `.update()` methods do not include support for writable nested representations.
 
-Поскольку поведение вложенных создает и обновления может быть неоднозначным и может потребовать сложных зависимостей между родственными моделями, Framework REST 3 требует, чтобы вы всегда писали эти методы явно.
-По умолчанию `modelerializer`` .create () `и` .update () `Методы не включают поддержку вложенных записи для представлений.
+Поскольку поведение вложенных созданий и обновлений может быть неоднозначным и может требовать сложных зависимостей между связанными моделями, REST framework 3 требует, чтобы вы всегда писали эти методы явно. Методы `ModelSerializer` `.create()` и `.update()` по умолчанию не включают поддержку записываемых вложенных представлений.
 
 There are however, third-party packages available such as [DRF Writable Nested](serializers.md#drf-writable-nested) that support automatic writable nested representations.
 
-Однако существуют сторонние пакеты, такие как [DRF-записи, вложенные] (Serializers.md#DRF-Wrible-Tlear), которые поддерживают автоматические вложенные представления о записи.
+Однако существуют сторонние пакеты, такие как [DRF Writable Nested](serializers.md#drf-writable-nested), которые поддерживают автоматические записываемые вложенные представления.
 
 #### Handling saving related instances in model manager classes
 
@@ -591,12 +564,11 @@ There are however, third-party packages available such as [DRF Writable Nested](
 
 An alternative to saving multiple related instances in the serializer is to write custom model manager classes that handle creating the correct instances.
 
-Альтернативой сохранению нескольких связанных экземпляров в сериализаторе является написание пользовательских классов менеджера моделей, которые обрабатывают создание правильных экземпляров.
+Альтернативой сохранению нескольких связанных экземпляров в сериализаторе является написание пользовательских классов менеджера модели, которые занимаются созданием нужных экземпляров.
 
 For example, suppose we wanted to ensure that `User` instances and `Profile` instances are always created together as a pair. We might write a custom manager class that looks something like this:
 
-Например, предположим, что мы хотим убедиться, что экземпляры пользователя и экземпляры «профиль» всегда создаются вместе как пара.
-Мы могли бы написать класс пользовательского менеджера, который выглядит примерно так:
+Например, предположим, мы хотим убедиться, что экземпляры `User` и `Profile` всегда создаются вместе как пара. Мы можем написать пользовательский класс менеджера, который будет выглядеть примерно так:
 
 ```
 class UserManager(models.Manager):
@@ -616,8 +588,7 @@ class UserManager(models.Manager):
 
 This manager class now more nicely encapsulates that user instances and profile instances are always created at the same time. Our `.create()` method on the serializer class can now be re-written to use the new manager method.
 
-Этот класс менеджера теперь более хорошо инкапсулирует, что экземпляры пользователя и экземпляры профиля всегда создаются одновременно.
-Наш метод `.create ()` на классе сериализатора теперь можно переписать, чтобы использовать новый метод менеджера.
+Этот класс менеджера теперь более точно передает, что экземпляры пользователя и профиля всегда создаются одновременно. Наш метод `.create()` в классе сериализатора теперь может быть переписан для использования нового метода менеджера.
 
 ```
 def create(self, validated_data):
@@ -631,25 +602,23 @@ def create(self, validated_data):
 
 For more details on this approach see the Django documentation on [model managers](https://docs.djangoproject.com/en/stable/topics/db/managers/), and [this blogpost on using model and manager classes](https://www.dabapps.com/blog/django-models-and-encapsulation/).
 
-Для получения более подробной информации об этом подходе см. Документацию Django по [Managers] (https://docs.djangoproject.com/en/stable/topics/db/managers/) и [этот блог об использовании классов модели и менеджера] (
-https://www.dabapps.com/blog/django-models-and-capsulation/).
+Подробнее об этом подходе смотрите документацию Django по [менеджерам моделей] (https://docs.djangoproject.com/en/stable/topics/db/managers/), и [этот блогпост об использовании классов моделей и менеджеров] (https://www.dabapps.com/blog/django-models-and-encapsulation/).
 
 ## Dealing with multiple objects
 
-## имеет дело с несколькими объектами
+## Работа с несколькими объектами
 
 The `Serializer` class can also handle serializing or deserializing lists of objects.
 
-Класс `serializer 'также может обрабатывать сериализацию или десеризацию списков объектов.
+Класс `Serializer` также может обрабатывать сериализацию или десериализацию списков объектов.
 
 #### Serializing multiple objects
 
-#### сериализация нескольких объектов
+#### Сериализация нескольких объектов
 
 To serialize a queryset or list of objects instead of a single object instance, you should pass the `many=True` flag when instantiating the serializer. You can then pass a queryset or list of objects to be serialized.
 
-Чтобы сериализовать запрос или список объектов вместо одного экземпляра объекта, вы должны передать флаг `myry = true` при создании сериализатора.
-Затем вы можете передавать запрос или список объектов, которые будут сериализованы.
+Чтобы сериализовать кверисет или список объектов вместо одного экземпляра объекта, необходимо передать флаг `many=True` при инстанцировании сериализатора. Затем вы можете передать кверисет или список объектов для сериализации.
 
 ```
 queryset = Book.objects.all()
@@ -664,26 +633,23 @@ serializer.data
 
 #### Deserializing multiple objects
 
-#### deserialization несколько объектов
+#### Десериализация нескольких объектов
 
 The default behavior for deserializing multiple objects is to support multiple object creation, but not support multiple object updates. For more information on how to support or customize either of these cases, see the [ListSerializer](#listserializer) documentation below.
 
-Поведение по умолчанию для десеризации нескольких объектов заключается в поддержке создания нескольких объектов, но не поддержание нескольких обновлений объектов.
-Для получения дополнительной информации о том, как поддержать или настроить любой из этих случаев, см. Документацию [ListSerializer] (#ListSerializer) ниже.
+Поведение по умолчанию для десериализации нескольких объектов - это поддержка создания нескольких объектов, но не поддержка обновления нескольких объектов. Для получения дополнительной информации о том, как поддержать или настроить любой из этих случаев, см. документацию по [ListSerializer](#listserializer) ниже.
 
 ## Including extra context
 
-## включает в себя дополнительный контекст
+## Включение дополнительного контекста
 
 There are some cases where you need to provide extra context to the serializer in addition to the object being serialized. One common case is if you're using a serializer that includes hyperlinked relations, which requires the serializer to have access to the current request so that it can properly generate fully qualified URLs.
 
-Есть некоторые случаи, когда вам необходимо предоставить дополнительный контекст сериализатору в дополнение к сериализованному объекту.
-Одним из распространенных случаев является то, что вы используете сериализатор, который включает в себя гиперсвязанные отношения, которые требуют, чтобы сериализатор имел доступ к текущему запросу, чтобы он мог должным образом генерировать полностью квалифицированные URL -адреса.
+Бывают случаи, когда вам необходимо предоставить сериализатору дополнительный контекст в дополнение к сериализуемому объекту. Одним из распространенных случаев является использование сериализатора, который включает отношения с гиперссылками, что требует, чтобы сериализатор имел доступ к текущему запросу, чтобы он мог правильно генерировать полностью определенные URL.
 
 You can provide arbitrary additional context by passing a `context` argument when instantiating the serializer. For example:
 
-Вы можете предоставить произвольный дополнительный контекст, передавая аргумент «контекста» при создании сериализатора.
-Например:
+Вы можете предоставить произвольный дополнительный контекст, передав аргумент `context` при инстанцировании сериализатора. Например:
 
 ```
 serializer = AccountSerializer(account, context={'request': request})
@@ -693,37 +659,37 @@ serializer.data
 
 The context dictionary can be used within any serializer field logic, such as a custom `.to_representation()` method, by accessing the `self.context` attribute.
 
-Словарь контекста может использоваться в любой логике поля сериализатора, такой как пользовательский метод `.to_representation ()`, путем доступа к атрибуту `self.context`.
+Контекстный словарь можно использовать в любой логике поля сериализатора, например, в пользовательском методе `.to_representation()`, обращаясь к атрибуту `self.context`.
 
 ---
 
 # ModelSerializer
 
-# ModelseRializer
+# ModelSerializer
 
 Often you'll want serializer classes that map closely to Django model definitions.
 
-Часто вам понадобятся классы сериализатора, которые тесно связаны с определениями моделей Django.
+Часто вам понадобятся классы сериализаторов, которые близко сопоставляются с определениями моделей Django.
 
 The `ModelSerializer` class provides a shortcut that lets you automatically create a `Serializer` class with fields that correspond to the Model fields.
 
-Класс `modelseRializer обеспечивает ярлык, который позволяет автоматически создавать класс« сериализатора »с полями, которые соответствуют полям модели.
+Класс `ModelSerializer` предоставляет ярлык, позволяющий автоматически создать класс `Serializer` с полями, соответствующими полям модели.
 
 **The `ModelSerializer` class is the same as a regular `Serializer` class, except that**:
 
-** Класс `modelerializer 'такой же, как и обычный класс` serializer`, за исключением того, что **:
+**Класс `ModelSerializer` такой же, как и обычный класс `Serializer`, за исключением того, что**:
 
 * It will automatically generate a set of fields for you, based on the model.
 * It will automatically generate validators for the serializer, such as unique_together validators.
 * It includes simple default implementations of `.create()` and `.update()`.
 
-* Он автоматически генерирует набор полей для вас, в зависимости от модели.
-* Он будет автоматически генерировать валидаторы для сериализатора, таких как уникальные валидаторы.
-* Он включает в себя простые реализации по умолчанию `.create ()` и `.update ()`.
+* Он автоматически сгенерирует для вас набор полей на основе модели.
+* Он автоматически генерирует валидаторы для сериализатора, такие как валидаторы unique_together.
+* Он включает простые реализации по умолчанию `.create()` и `.update()`.
 
 Declaring a `ModelSerializer` looks like this:
 
-Объявление «моделиеализатор» выглядит так:
+Объявление `ModelSerializer` выглядит следующим образом:
 
 ```
 class AccountSerializer(serializers.ModelSerializer):
@@ -734,25 +700,23 @@ class AccountSerializer(serializers.ModelSerializer):
 
 By default, all the model fields on the class will be mapped to a corresponding serializer fields.
 
-По умолчанию все поля модели в классе будут сопоставлены с соответствующими полями сериализатора.
+По умолчанию все поля модели класса будут отображены на соответствующие поля сериализатора.
 
 Any relationships such as foreign keys on the model will be mapped to `PrimaryKeyRelatedField`. Reverse relationships are not included by default unless explicitly included as specified in the [serializer relations](relations.md) documentation.
 
-Любые отношения, такие как иностранные ключи на модели, будут сопоставлены с «PrimaryKeyRetatedField».
-Обратные отношения не включены по умолчанию, если только явно включено, как указано в документацию [Serializer Ontions] (untations.md).
+Любые отношения, такие как внешние ключи в модели, будут отображены на `PrimaryKeyRelatedField`. Обратные отношения не включаются по умолчанию, если они не включены явно, как указано в документации [serializer relations](relations.md).
 
 #### Inspecting a `ModelSerializer`
 
-#### Проверка `modelerializer
+#### Проверка `ModelSerializer`.
 
 Serializer classes generate helpful verbose representation strings, that allow you to fully inspect the state of their fields. This is particularly useful when working with `ModelSerializers` where you want to determine what set of fields and validators are being automatically created for you.
 
-Классы сериализатора генерируют полезные устные строки представления, которые позволяют полностью осмотреть состояние их полей.
-Это особенно полезно при работе с `moderializers`, где вы хотите определить, какой набор полей и валидаторов автоматически создается для вас.
+Классы сериализаторов генерируют полезные строки представления, которые позволяют полностью просмотреть состояние их полей. Это особенно полезно при работе с `ModelSerializers`, когда вы хотите определить, какой набор полей и валидаторов автоматически создается для вас.
 
 To do so, open the Django shell, using `python manage.py shell`, then import the serializer class, instantiate it, and print the object representation…
 
-Для этого откройте оболочку Django, используя `python Manage.py Shell`, затем импортируйте класс сериализатора, создайте его и распечатайте представление объекта…
+Для этого откройте оболочку Django, используя `python manage.py shell`, затем импортируйте класс сериализатора, инстанцируйте его и выведите представление объекта...
 
 ```
 >>> from myapp.serializers import AccountSerializer
@@ -766,13 +730,11 @@ AccountSerializer():
 
 ## Specifying which fields to include
 
-## указание, какие поля включать
+## Указание полей для включения
 
 If you only want a subset of the default fields to be used in a model serializer, you can do so using `fields` or `exclude` options, just as you would with a `ModelForm`. It is strongly recommended that you explicitly set all fields that should be serialized using the `fields` attribute. This will make it less likely to result in unintentionally exposing data when your models change.
 
-Если вы хотите, чтобы только подмножество полей по умолчанию использовалось в модельном сериализаторе, вы можете сделать это, используя параметры `fields` или` exklide
-Настоятельно рекомендуется, чтобы вы явно установили все поля, которые должны быть сериализованы с использованием атрибута «Поля».
-Это приведет к тому, что это приведет к непреднамеренно разоблачить данные при изменении ваших моделей.
+Если вы хотите, чтобы в сериализаторе модели использовалось только подмножество полей по умолчанию, вы можете сделать это с помощью опций `fields` или `exclude`, как и в случае с `ModelForm`. Настоятельно рекомендуется явно задавать все поля, которые должны быть сериализованы, с помощью атрибута `fields`. Это уменьшит вероятность непреднамеренного раскрытия данных при изменении ваших моделей.
 
 For example:
 
@@ -787,7 +749,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
 You can also set the `fields` attribute to the special value `'__all__'` to indicate that all fields in the model should be used.
 
-Вы также можете установить атрибут «Fields» на специальное значение `'__ll __'`, чтобы указать, что все поля в модели следует использовать.
+Вы также можете установить для атрибута `fields` специальное значение `'__all__'`, чтобы указать, что должны использоваться все поля в модели.
 
 For example:
 
@@ -802,7 +764,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
 You can set the `exclude` attribute to a list of fields to be excluded from the serializer.
 
-Вы можете установить атрибут `exklide` в список полей, которые будут исключены из сериализатора.
+Вы можете установить атрибут `exclude` в список полей, которые должны быть исключены из сериализатора.
 
 For example:
 
@@ -817,19 +779,19 @@ class AccountSerializer(serializers.ModelSerializer):
 
 In the example above, if the `Account` model had 3 fields `account_name`, `users`, and `created`, this will result in the fields `account_name` and `created` to be serialized.
 
-В приведенном выше примере, если модель `chounct` имела 3 поля` account_name`, `users` и` catence`, это приведет к полям `Account_Name` и« создан », чтобы быть сериализованными.
+В приведенном выше примере, если модель `Account` имеет 3 поля `account_name`, `users` и `created`, это приведет к тому, что поля `account_name` и `created` будут сериализованы.
 
 The names in the `fields` and `exclude` attributes will normally map to model fields on the model class.
 
-Имена в атрибутах `fields` и` exclude` обычно отображаются по полевым полям в классе модели.
+Имена в атрибутах `fields` и `exclude` обычно отображаются на поля модели в классе модели.
 
 Alternatively names in the `fields` options can map to properties or methods which take no arguments that exist on the model class.
 
-В качестве альтернативы имена в параметрах «Поля» могут сопоставить свойства или методы, которые не принимают аргументов, которые существуют в классе модели.
+Альтернативные имена в опциях `fields` могут отображаться на свойства или методы, не принимающие аргументов, которые существуют в классе модели.
 
 Since version 3.3.0, it is **mandatory** to provide one of the attributes `fields` or `exclude`.
 
-Со времени версии 3.3.0, ** обязательно ** предоставить один из атрибутов `fields` или` exklide`.
+Начиная с версии 3.3.0, **обязательным** является предоставление одного из атрибутов `fields` или `exclude`.
 
 ## Specifying nested serialization
 
@@ -837,7 +799,7 @@ Since version 3.3.0, it is **mandatory** to provide one of the attributes `field
 
 The default `ModelSerializer` uses primary keys for relationships, but you can also easily generate nested representations using the `depth` option:
 
-По умолчанию `modelerializer` использует первичные ключи для отношений, но вы также можете легко генерировать вложенные представления, используя опцию« глубины »:
+По умолчанию `ModelSerializer` использует первичные ключи для отношений, но вы также можете легко генерировать вложенные представления с помощью опции `depth`:
 
 ```
 class AccountSerializer(serializers.ModelSerializer):
@@ -849,19 +811,19 @@ class AccountSerializer(serializers.ModelSerializer):
 
 The `depth` option should be set to an integer value that indicates the depth of relationships that should be traversed before reverting to a flat representation.
 
-Опция «глубины» должна быть установлена на целочисленное значение, которое указывает на глубину отношений, которые следует пересекать, прежде чем вернуться к плоскому представлению.
+Параметр `depth` должен быть установлен в целочисленное значение, которое указывает глубину отношений, которые должны быть пройдены перед возвратом к плоскому представлению.
 
 If you want to customize the way the serialization is done you'll need to define the field yourself.
 
-Если вы хотите настроить способ выполнения сериализации, вам нужно определить поле самостоятельно.
+Если вы хотите настроить способ сериализации, вам нужно будет определить поле самостоятельно.
 
 ## Specifying fields explicitly
 
-## Определение полей явно
+## Указание полей в явном виде
 
 You can add extra fields to a `ModelSerializer` or override the default fields by declaring fields on the class, just as you would for a `Serializer` class.
 
-Вы можете добавить дополнительные поля в `modelerializer` или переопределить поля по умолчанию, объявив поля в классе, как и для класса« Serializer ».
+Вы можете добавить дополнительные поля в `ModelSerializer` или переопределить поля по умолчанию, объявив поля в классе, как и в классе `Serializer`.
 
 ```
 class AccountSerializer(serializers.ModelSerializer):
@@ -875,20 +837,19 @@ class AccountSerializer(serializers.ModelSerializer):
 
 Extra fields can correspond to any property or callable on the model.
 
-Дополнительные поля могут соответствовать любому свойству или вызовому на модели.
+Дополнительные поля могут соответствовать любому свойству или вызываемому объекту модели.
 
 ## Specifying read only fields
 
-## Указание только поля чтения
+## Указание полей, доступных только для чтения
 
 You may wish to specify multiple fields as read-only. Instead of adding each field explicitly with the `read_only=True` attribute, you may use the shortcut Meta option, `read_only_fields`.
 
-Вы можете указать несколько полей как только для чтения.
-Вместо того, чтобы явно добавлять каждое поле с атрибутом `read_only = true
+Вы можете указать несколько полей как доступные только для чтения. Вместо того чтобы добавлять каждое поле явно с атрибутом `read_only=True`, вы можете использовать сокращенную опцию Meta, `read_only_fields`.
 
 This option should be a list or tuple of field names, and is declared as follows:
 
-Эта опция должна быть списком или кортежом имен полевых имен и объявлен следующим образом:
+Этот параметр должен представлять собой список или кортеж имен полей и объявляется следующим образом:
 
 ```
 class AccountSerializer(serializers.ModelSerializer):
@@ -900,23 +861,21 @@ class AccountSerializer(serializers.ModelSerializer):
 
 Model fields which have `editable=False` set, and `AutoField` fields will be set to read-only by default, and do not need to be added to the `read_only_fields` option.
 
-Поля моделей, которые имеют edable = false` set, и поля `autofield` будут установлены только для чтения по умолчанию, и не нужно добавлять в опцию` read_only_fields.
+Поля модели, для которых установлено значение `editable=False`, и поля `AutoField` по умолчанию будут установлены в режим только для чтения, и их не нужно добавлять в опцию `read_only_fields`.
 
 ---
 
 **Note**: There is a special-case where a read-only field is part of a `unique_together` constraint at the model level. In this case the field is required by the serializer class in order to validate the constraint, but should also not be editable by the user.
 
-** ПРИМЕЧАНИЕ **: Существует специальная сторона, где поле только для чтения является частью ограничения `уникально_together` на уровне модели.
-В этом случае поле требуется классом Serializer для проверки ограничения, но также не должно быть редактировано пользователем.
+**Примечание**: Существует особый случай, когда поле, доступное только для чтения, является частью ограничения `unique_together` на уровне модели. В этом случае поле требуется классу сериализатора для проверки ограничения, но также не должно редактироваться пользователем.
 
 The right way to deal with this is to specify the field explicitly on the serializer, providing both the `read_only=True` and `default=…` keyword arguments.
 
-Правильный способ справиться с этим - явно указать поле на сериализаторе, предоставляя как `read_only = true`, так и` default =… `аргументы ключевых слов.
+Правильный способ справиться с этим - явно указать поле в сериализаторе, предоставив ключевые аргументы `read_only=True` и `default=...`.
 
 One example of this is a read-only relation to the currently authenticated `User` which is `unique_together` with another identifier. In this case you would declare the user field like so:
 
-Одним из примеров этого является связь только для чтения к нынешнему аутентифицированному «пользователю», который является `inistry_together` с другим идентификатором.
-В этом случае вы объявите поле пользователя так:
+Одним из примеров этого является отношение только для чтения к текущему аутентифицированному `User`, который является `unique_together` с другим идентификатором. В этом случае вы объявите поле пользователя следующим образом:
 
 ```
 user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
@@ -924,8 +883,7 @@ user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.Cu
 
 Please review the [Validators Documentation](/api-guide/validators/) for details on the [UniqueTogetherValidator](/api-guide/validators/#uniquetogethervalidator) and [CurrentUserDefault](/api-guide/validators/#currentuserdefault) classes.
 
-Пожалуйста, просмотрите [документацию Validators] (/API-Guide/Validators/) для получения подробной информации о [UniquetogetherSetherValidator] (/API-Guide/Validators/#UniqueTogetherSerDator) и [CurrentUserDefault] (/API-Guide/validators/#CurrentUserFault)
-Анкет
+Пожалуйста, ознакомьтесь с документацией [Validators Documentation](/api-guide/validators/) для получения подробной информации о классах [UniqueTogetherValidator](/api-guide/validators/#uniquetogethervalidator) и [CurrentUserDefault](/api-guide/validators/#currentuserdefault).
 
 ---
 
@@ -935,13 +893,11 @@ Please review the [Validators Documentation](/api-guide/validators/) for details
 
 There is also a shortcut allowing you to specify arbitrary additional keyword arguments on fields, using the `extra_kwargs` option. As in the case of `read_only_fields`, this means you do not need to explicitly declare the field on the serializer.
 
-Существует также ярлык, позволяющий указать произвольные дополнительные аргументы ключевых слов в полях, используя опцию aucepl_kwargs.
-Как и в случае с `read_only_fields`, это означает, что вам не нужно явно объявлять поле на сериализаторе.
+Существует также возможность указать произвольные дополнительные аргументы ключевых слов для полей, используя опцию `extra_kwargs`. Как и в случае с `read_only_fields`, это означает, что вам не нужно явно объявлять поле в сериализаторе.
 
 This option is a dictionary, mapping field names to a dictionary of keyword arguments. For example:
 
-Этот вариант является словарем, сопоставляющим имена поля в словарь аргументов ключевых слов.
-Например:
+Эта опция представляет собой словарь, отображающий имена полей на словарь аргументов ключевых слов. Например:
 
 ```
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -962,7 +918,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 Please keep in mind that, if the field has already been explicitly declared on the serializer class, then the `extra_kwargs` option will be ignored.
 
-Пожалуйста, имейте в виду, что, если поле уже было явно объявлено в классе сериализатора, то опция `extra_kwargs будет игнорирована.
+Следует помнить, что если поле уже было явно объявлено в классе сериализатора, то опция `extra_kwargs` будет проигнорирована.
 
 ## Relational fields
 
@@ -970,66 +926,63 @@ Please keep in mind that, if the field has already been explicitly declared on t
 
 When serializing model instances, there are a number of different ways you might choose to represent relationships. The default representation for `ModelSerializer` is to use the primary keys of the related instances.
 
-При сериализации модельных экземпляров есть ряд различных способов представления отношений.
-Представление по умолчанию для `modelerializer` - использовать основные ключи связанных экземпляров.
+При сериализации экземпляров модели существует несколько различных способов представления отношений. Представление по умолчанию для `ModelSerializer` заключается в использовании первичных ключей связанных экземпляров.
 
 Alternative representations include serializing using hyperlinks, serializing complete nested representations, or serializing with a custom representation.
 
-Альтернативные представления включают сериализацию с использованием гиперссылок, сериализацию полных вложенных представлений или сериализацию с пользовательским представлением.
+Альтернативные представления включают сериализацию с помощью гиперссылок, сериализацию полных вложенных представлений или сериализацию с помощью пользовательского представления.
 
 For full details see the [serializer relations](relations.md) documentation.
 
-Для получения полной информации см. Документацию [Serializer Relations] (Ontations.md).
+Более подробную информацию можно найти в документации [serializer relations](relations.md).
 
 ## Customizing field mappings
 
-## Настройка полевых отображений
+## Настройка сопоставлений полей
 
 The ModelSerializer class also exposes an API that you can override in order to alter how serializer fields are automatically determined when instantiating the serializer.
 
-Класс моделейализатора также обнаруживает API, который вы можете переопределить, чтобы изменить то, как поля сериализатора автоматически определяются при создании сериализатора.
+Класс ModelSerializer также предоставляет API, который вы можете переопределить, чтобы изменить способ автоматического определения полей сериализатора при инстанцировании сериализатора.
 
 Normally if a `ModelSerializer` does not generate the fields you need by default then you should either add them to the class explicitly, or simply use a regular `Serializer` class instead. However in some cases you may want to create a new base class that defines how the serializer fields are created for any given model.
 
-Обычно, если `modelerializer` не генерирует необходимые поля, которые вам нужны по умолчанию, вы должны либо явно добавить их в класс, либо просто использовать обычный класс` serializer 'вместо этого.
-Однако в некоторых случаях вы можете создать новый базовый класс, который определяет, как создаются поля сериализатора для любой данной модели.
+Обычно, если `ModelSerializer` не генерирует нужные вам поля по умолчанию, вы должны либо добавить их в класс явно, либо просто использовать вместо них обычный класс `Serializer`. Однако в некоторых случаях вы можете захотеть создать новый базовый класс, определяющий, как создаются поля сериализатора для любой конкретной модели.
 
 ### `serializer_field_mapping`
 
-### `serializer_field_mapping`
+### `serializer_field_mapping`.
 
 A mapping of Django model fields to REST framework serializer fields. You can override this mapping to alter the default serializer fields that should be used for each model field.
 
-Сопоставление поля модели Django с полями сериализатора REST.
-Вы можете переопределить это отображение, чтобы изменить поля сериализатора по умолчанию, которые следует использовать для каждого поля модели.
+Отображение полей модели Django на поля сериализатора фреймворка REST. Вы можете переопределить это отображение, чтобы изменить поля сериализатора по умолчанию, которые должны использоваться для каждого поля модели.
 
 ### `serializer_related_field`
 
-### `serializer_related_field`
+### `serializer_related_field`.
 
 This property should be the serializer field class, that is used for relational fields by default.
 
-Это свойство должно быть полевым классом сериализатора, который используется для реляционных полей по умолчанию.
+Это свойство должно быть классом поля сериализатора, который по умолчанию используется для реляционных полей.
 
 For `ModelSerializer` this defaults to `serializers.PrimaryKeyRelatedField`.
 
-Для `modelerializer` это по умолчанию« сериализаторам.primarykeyrelated ».
+Для `ModelSerializer` это значение по умолчанию равно `serializers.PrimaryKeyRelatedField`.
 
 For `HyperlinkedModelSerializer` this defaults to `serializers.HyperlinkedRelatedField`.
 
-Для `HyperlinkedModelserializer` это по умолчанию« serializers.hyperlinkedRelated ».
+Для `HyperlinkedModelSerializer` это значение по умолчанию равно `serializers.HyperlinkedRelatedField`.
 
 ### `serializer_url_field`
 
-### `serializer_url_field`
+### `serializer_url_field`.
 
 The serializer field class that should be used for any `url` field on the serializer.
 
-Класс поля сериализатора, который следует использовать для любого `url` поля на сериализаторе.
+Класс поля сериализатора, который должен использоваться для любого поля `url` в сериализаторе.
 
 Defaults to `serializers.HyperlinkedIdentityField`
 
-По умолчанию «serializers.hyperlinkedidentityfield»
+По умолчанию `serializers.HyperlinkedIdentityField`.
 
 ### `serializer_choice_field`
 
@@ -1037,120 +990,117 @@ Defaults to `serializers.HyperlinkedIdentityField`
 
 The serializer field class that should be used for any choice fields on the serializer.
 
-Класс поля сериализатора, который должен использоваться для любых полей выбора на сериализаторе.
+Класс поля сериализатора, который должен использоваться для любых полей выбора в сериализаторе.
 
 Defaults to `serializers.ChoiceField`
 
-По умолчанию в `serializers.choicefield`
+По умолчанию `serializers.ChoiceField`.
 
 ### The field_class and field_kwargs API
 
-### API Field_class и Field_kwargs
+### API field_class и field_kwargs
 
 The following methods are called to determine the class and keyword arguments for each field that should be automatically included on the serializer. Each of these methods should return a two tuple of `(field_class, field_kwargs)`.
 
-Следующие методы вызываются для определения аргументов класса и ключевых слов для каждого поля, которые должны быть автоматически включены в сериализатор.
-Каждый из этих методов должен вернуть два кортежа `(field_class, field_kwargs)`.
+Следующие методы вызываются для определения класса и аргументов ключевых слов для каждого поля, которое должно быть автоматически включено в сериализатор. Каждый из этих методов должен возвращать кортеж `(field_class, field_kwargs)`.
 
 ### `build_standard_field(self, field_name, model_field)`
 
-### `build_standard_field (self, field_name, model_field)`
+### `build_standard_field(self, field_name, model_field)`.
 
 Called to generate a serializer field that maps to a standard model field.
 
-Вызвано для создания поле сериализатора, которое отображает в стандартном поле модели.
+Вызывается для генерации поля сериализатора, которое сопоставляется со стандартным полем модели.
 
 The default implementation returns a serializer class based on the `serializer_field_mapping` attribute.
 
-Реализация по умолчанию возвращает класс Serializer на основе атрибута `serializer_field_mapping`.
+Реализация по умолчанию возвращает класс сериализатора на основе атрибута `serializer_field_mapping`.
 
 ### `build_relational_field(self, field_name, relation_info)`
 
-### `build_relational_field (self, field_name, nection_info)`
+### `build_relational_field(self, field_name, relation_info)`.
 
 Called to generate a serializer field that maps to a relational model field.
 
-Призван генерировать поле сериализатора, которое отображает в поле реляционной модели.
+Вызывается для генерации поля сериализатора, которое сопоставляется с полем реляционной модели.
 
 The default implementation returns a serializer class based on the `serializer_related_field` attribute.
 
-Реализация по умолчанию возвращает класс Serializer на основе атрибута `serializer_related_field`.
+Реализация по умолчанию возвращает класс сериализатора на основе атрибута `serializer_related_field`.
 
 The `relation_info` argument is a named tuple, that contains `model_field`, `related_model`, `to_many` and `has_through_model` properties.
 
-Аргумент `neacht_info` - это названный кортеж, который содержит` model_field`, `indive_model`,` to_many` и `Has_through_model` свойства.
+Аргумент `relation_info` представляет собой именованный кортеж, содержащий свойства `model_field`, `related_model`, `to_many` и `has_through_model`.
 
 ### `build_nested_field(self, field_name, relation_info, nested_depth)`
 
-### `build_nest_field (self, field_name, nection_info, nested_depth)`
+### `build_nested_field(self, field_name, relation_info, nested_depth)`.
 
 Called to generate a serializer field that maps to a relational model field, when the `depth` option has been set.
 
-Призван для создания поля сериализатора, которое отображает в поле реляционной модели, когда была установлена параметр «глубины».
+Вызывается для генерации поля сериализатора, которое сопоставляется с полем реляционной модели, если установлен параметр `depth`.
 
 The default implementation dynamically creates a nested serializer class based on either `ModelSerializer` or `HyperlinkedModelSerializer`.
 
-Реализация по умолчанию динамически создает вложенный класс сериализатора, основанный либо на `modelseRializer`, либо` HyperlinkedModelserializer '.
+Реализация по умолчанию динамически создает вложенный класс сериализатора на основе `ModelSerializer` или `HyperlinkedModelSerializer`.
 
 The `nested_depth` will be the value of the `depth` option, minus one.
 
-`Nested_depth` будет значением опции« глубины », минус один.
+Значение `nested_depth` будет равно значению опции `depth`, минус один.
 
 The `relation_info` argument is a named tuple, that contains `model_field`, `related_model`, `to_many` and `has_through_model` properties.
 
-Аргумент `neacht_info` - это названный кортеж, который содержит` model_field`, `indive_model`,` to_many` и `Has_through_model` свойства.
+Аргумент `relation_info` представляет собой именованный кортеж, содержащий свойства `model_field`, `related_model`, `to_many` и `has_through_model`.
 
 ### `build_property_field(self, field_name, model_class)`
 
-### `build_property_field (self, field_name, model_class)`
+### `build_property_field(self, field_name, model_class)`.
 
 Called to generate a serializer field that maps to a property or zero-argument method on the model class.
 
-Вызвано для генерации поля сериализатора, которое отображает свой свойство или метод нулевого аргумента в классе модели.
+Вызывается для генерации поля сериализатора, которое сопоставляется со свойством или методом с нулевым аргументом класса модели.
 
 The default implementation returns a `ReadOnlyField` class.
 
-Реализация по умолчанию возвращает класс `readonlyfield`.
+Реализация по умолчанию возвращает класс `ReadOnlyField`.
 
 ### `build_url_field(self, field_name, model_class)`
 
-### `build_url_field (self, field_name, model_class)`
+### `build_url_field(self, field_name, model_class)`.
 
 Called to generate a serializer field for the serializer's own `url` field. The default implementation returns a `HyperlinkedIdentityField` class.
 
-Призван генерировать поле сериализатора для собственного поля сериализатора.
-Реализация по умолчанию возвращает класс `HyperlinkedIdentityfield`.
+Вызывается для генерации поля сериализатора для собственного поля сериализатора `url`. Реализация по умолчанию возвращает класс `HyperlinkedIdentityField`.
 
 ### `build_unknown_field(self, field_name, model_class)`
 
-### `build_unknown_field (self, field_name, model_class)`
+### `build_unknown_field(self, field_name, model_class)`.
 
 Called when the field name did not map to any model field or model property. The default implementation raises an error, although subclasses may customize this behavior.
 
-Вызовов, когда имя поля не отображалось ни в каком поле модели или свойства модели.
-Реализация по умолчанию повышает ошибку, хотя подклассы могут настроить это поведение.
+Вызывается, когда имя поля не сопоставлено ни с одним полем модели или свойством модели. Реализация по умолчанию вызывает ошибку, хотя подклассы могут настраивать это поведение.
 
 ---
 
 # HyperlinkedModelSerializer
 
-# HyperlinkedModelserializer
+# HyperlinkedModelSerializer
 
 The `HyperlinkedModelSerializer` class is similar to the `ModelSerializer` class except that it uses hyperlinks to represent relationships, rather than primary keys.
 
-Класс `HyperlinkedModelserializer` аналогичен классу` modelerializer ', за исключением того, что он использует гиперссылки для представления отношений, а не первичных ключей.
+Класс `HyperlinkedModelSerializer` похож на класс `ModelSerializer`, за исключением того, что он использует гиперссылки для представления отношений, а не первичные ключи.
 
 By default the serializer will include a `url` field instead of a primary key field.
 
-По умолчанию сериализатор будет включать в себя поле `url 'вместо первичного поля ключа.
+По умолчанию сериализатор будет включать поле `url` вместо поля первичного ключа.
 
 The url field will be represented using a `HyperlinkedIdentityField` serializer field, and any relationships on the model will be represented using a `HyperlinkedRelatedField` serializer field.
 
-Поле URL будет представлено с использованием поля сериализатора «HyperlinkedIdentityfield», и любые отношения на модели будут представлены с использованием поля сериализатора `‘ HyperlinkedRelated`.
+Поле url будет представлено с помощью поля сериализатора `HyperlinkedIdentityField`, а любые отношения в модели будут представлены с помощью поля сериализатора `HyperlinkedRelatedField`.
 
 You can explicitly include the primary key by adding it to the `fields` option, for example:
 
-Вы можете явно включить первичный ключ, добавив его в опцию «Поля», например:
+Вы можете явно включить первичный ключ, добавив его, например, в опцию `fields`:
 
 ```
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
@@ -1161,11 +1111,11 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 ## Absolute and relative URLs
 
-## абсолютные и относительные URL -адреса
+## Абсолютные и относительные URL-адреса
 
 When instantiating a `HyperlinkedModelSerializer` you must include the current `request` in the serializer context, for example:
 
-При создании «гиперлинкедмоделериализатор» вы должны включить текущий «запрос» в контексте сериализатора, например:
+При инстанцировании `HyperlinkedModelSerializer` вы должны включить текущий `запрос` в контекст сериализатора, например:
 
 ```
 serializer = AccountSerializer(queryset, context={'request': request})
@@ -1173,7 +1123,7 @@ serializer = AccountSerializer(queryset, context={'request': request})
 
 Doing so will ensure that the hyperlinks can include an appropriate hostname, so that the resulting representation uses fully qualified URLs, such as:
 
-Это гарантирует, что гиперссылки могут включать подходящее имя хоста, так что полученное представление использует полностью квалифицированные URL, такие как:
+Это гарантирует, что гиперссылки могут включать соответствующее имя хоста, так что результирующее представление использует полные URL-адреса, такие как:
 
 ```
 http://api.example.com/accounts/1/
@@ -1181,7 +1131,7 @@ http://api.example.com/accounts/1/
 
 Rather than relative URLs, such as:
 
-А не относительные URL, такие как:
+Вместо относительных URL-адресов, таких как:
 
 ```
 /accounts/1/
@@ -1189,23 +1139,23 @@ Rather than relative URLs, such as:
 
 If you *do* want to use relative URLs, you should explicitly pass `{'request': None}` in the serializer context.
 
-Если вы * хотите * использовать относительные URL -адреса, вы должны явно передать `{'request': none}` в контексте сериализатора.
+Если вы *хотите* использовать относительные URL, вам следует явно передать `{'request': None}` в контексте сериализатора.
 
 ## How hyperlinked views are determined
 
-##, как определяются гиперссылки
+## Как определяются представления с гиперссылками
 
 There needs to be a way of determining which views should be used for hyperlinking to model instances.
 
-Должен быть способ определить, какие представления следует использовать для гиперлизма для модельных экземпляров.
+Необходимо определить, какие представления следует использовать для гиперссылок на экземпляры модели.
 
 By default hyperlinks are expected to correspond to a view name that matches the style `'{model_name}-detail'`, and looks up the instance by a `pk` keyword argument.
 
-Ожидается, что гиперссылки по умолчанию будут соответствовать имени представления, которое соответствует стилю `'{model_name} -detail'`' и поиск экземпляра с помощью аргумента ключевого слова` pk`.
+По умолчанию ожидается, что гиперссылки будут соответствовать имени представления, которое соответствует стилю `'{имя_модели}-detail'`, и ищет экземпляр по аргументу ключевого слова `pk`.
 
 You can override a URL field view name and lookup field by using either, or both of, the `view_name` and `lookup_field` options in the `extra_kwargs` setting, like so:
 
-Вы можете переопределить имя и поле зрения и поля поиска URL, используя варианты или оба из оба из параметров `view_name` и` lookup_field` в настройке euceple_kwargs`, например, так:
+Вы можете переопределить имя представления поля URL и поле поиска, используя один или оба параметра `view_name` и `lookup_field` в параметре `extra_kwargs`, как показано ниже:
 
 ```
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
@@ -1220,8 +1170,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 Alternatively you can set the fields on the serializer explicitly. For example:
 
-В качестве альтернативы вы можете явно установить поля на сериализатор.
-Например:
+В качестве альтернативы вы можете явно задать поля в сериализаторе. Например:
 
 ```
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
@@ -1245,8 +1194,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 **Tip**: Properly matching together hyperlinked representations and your URL conf can sometimes be a bit fiddly. Printing the `repr` of a `HyperlinkedModelSerializer` instance is a particularly useful way to inspect exactly which view names and lookup fields the relationships are expected to map too.
 
-** Совет **: Правильно сопоставить вместе гиперссыщенные представления, и ваш URL Conf иногда может быть немного неудобным.
-Печать `repr` экземпляра` ’HyperlinkedModelserializer` - особенно полезный способ точно проверить, какие имена и поля поиска и поля поиска, как ожидается, также будут отображаться.
+**Совет**: Правильное согласование гиперссылочных представлений и вашего URL conf иногда может быть немного сложным. Печать `repr` экземпляра `HyperlinkedModelSerializer` - особенно полезный способ проверить, какие именно имена представлений и поля поиска должны отображать отношения.
 
 ---
 
@@ -1256,8 +1204,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 The name of the URL field defaults to 'url'. You can override this globally, by using the `URL_FIELD_NAME` setting.
 
-Имя поля URL по умолчанию «URL».
-Вы можете переопределить это во всем мире, используя настройку `url_field_name`.
+Имя поля URL по умолчанию равно 'url'. Вы можете переопределить его глобально, используя параметр `URL_FIELD_NAME`.
 
 ---
 
@@ -1267,17 +1214,15 @@ The name of the URL field defaults to 'url'. You can override this globally, by 
 
 The `ListSerializer` class provides the behavior for serializing and validating multiple objects at once. You won't *typically* need to use `ListSerializer` directly, but should instead simply pass `many=True` when instantiating a serializer.
 
-Класс `listserializer 'обеспечивает поведение для сериализации и проверки нескольких объектов одновременно.
-Вам не нужно *, как правило, * необходимо использовать `listSerializer 'напрямую, но вместо этого следует просто пройти` mary = true` при создании сериализатора.
+Класс `ListSerializer` обеспечивает поведение для сериализации и валидации нескольких объектов одновременно. Обычно вам не нужно использовать `ListSerializer` напрямую, а следует просто передать `many=True` при инстанцировании сериализатора.
 
 When a serializer is instantiated and `many=True` is passed, a `ListSerializer` instance will be created. The serializer class then becomes a child of the parent `ListSerializer`
 
-Когда сериализатор создается и пройден `mary = true
-Затем класс сериализатора становится ребенком родителя `listserializer
+При инстанцировании сериализатора и передаче `many=True` будет создан экземпляр `ListSerializer`. Затем класс сериализатора становится дочерним классом родительского `ListSerializer`.
 
 The following argument can also be passed to a `ListSerializer` field or a serializer that is passed `many=True`:
 
-Следующий аргумент также может быть передан в поле «Listserializer» или сериализатор, который передается `mysome = true`:
+Следующий аргумент также может быть передан полю `ListSerializer` или сериализатору, которому передано `many=True`:
 
 ### `allow_empty`
 
@@ -1285,7 +1230,7 @@ The following argument can also be passed to a `ListSerializer` field or a seria
 
 This is `True` by default, but can be set to `False` if you want to disallow empty lists as valid input.
 
-Это «true» по умолчанию, но может быть установлено на `false`, если вы хотите запретить пустые списки как действительный ввод.
+По умолчанию это `True`, но может быть установлено в `False`, если вы хотите запретить пустые списки в качестве допустимого ввода.
 
 ### `max_length`
 
@@ -1293,7 +1238,7 @@ This is `True` by default, but can be set to `False` if you want to disallow emp
 
 This is `None` by default, but can be set to a positive integer if you want to validates that the list contains no more than this number of elements.
 
-Это «нет» по умолчанию, но может быть установлено на положительное целое число, если вы хотите подтвердить, что список содержит не больше этого количества элементов.
+По умолчанию это `None`, но может быть установлено в положительное целое число, если вы хотите проверить, что список содержит не более этого количества элементов.
 
 ### `min_length`
 
@@ -1301,26 +1246,25 @@ This is `None` by default, but can be set to a positive integer if you want to v
 
 This is `None` by default, but can be set to a positive integer if you want to validates that the list contains no fewer than this number of elements.
 
-Это «нет» по умолчанию, но может быть установлено на положительное целое число, если вы хотите подтвердить, что список содержит не меньше, чем это количество элементов.
+По умолчанию это `None`, но может быть установлено в положительное целое число, если вы хотите проверить, что список содержит не менее этого количества элементов.
 
 ### Customizing `ListSerializer` behavior
 
-### Настройка `listserializer` поведение
+### Настройка поведения `ListSerializer`.
 
 There *are* a few use cases when you might want to customize the `ListSerializer` behavior. For example:
 
-Есть * несколько вариантов использования, когда вы можете настроить поведение `listserializer.
-Например:
+Существует *несколько случаев, когда вы можете захотеть настроить поведение `ListSerializer`. Например:
 
 * You want to provide particular validation of the lists, such as checking that one element does not conflict with another element in a list.
 * You want to customize the create or update behavior of multiple objects.
 
-* Вы хотите предоставить особую проверку списков, например, проверка того, что один элемент не противоречит другому элементу в списке.
-* Вы хотите настроить поведение создать или обновить несколько объектов.
+* Вы хотите обеспечить определенную проверку списков, например, проверить, что один элемент не конфликтует с другим элементом списка.
+* Вы хотите настроить поведение создания или обновления нескольких объектов.
 
 For these cases you can modify the class that is used when `many=True` is passed, by using the `list_serializer_class` option on the serializer `Meta` class.
 
-Для этих случаев вы можете изменить класс, который используется, когда передается `mary = true`, используя опцию` list_serializer_class` в классе Serializer `meta`.
+Для этих случаев вы можете изменить класс, который используется при передаче `many=True`, используя опцию `list_serializer_class` для класса сериализатора `Meta`.
 
 For example:
 
@@ -1338,12 +1282,11 @@ class CustomSerializer(serializers.Serializer):
 
 #### Customizing multiple create
 
-#### Настройка нескольких созданий
+#### Настройка множественного создания
 
 The default implementation for multiple object creation is to simply call `.create()` for each item in the list. If you want to customize this behavior, you'll need to customize the `.create()` method on `ListSerializer` class that is used when `many=True` is passed.
 
-Реализация по умолчанию для создания нескольких объектов заключается в том, чтобы просто вызовать `.create ()` для каждого элемента в списке.
-Если вы хотите настроить это поведение, вам нужно настроить метод `.create ()` на классе `listserializer`, который используется, когда проходит` mary = true`.
+Реализация по умолчанию для создания нескольких объектов заключается в простом вызове `.create()` для каждого элемента списка. Если вы хотите настроить это поведение, вам нужно настроить метод `.create()` класса `ListSerializer`, который используется, когда передается `many=True`.
 
 For example:
 
@@ -1363,42 +1306,33 @@ class BookSerializer(serializers.Serializer):
 
 #### Customizing multiple update
 
-#### Настройка нескольких обновлений
+#### Настройка многократного обновления
 
 By default the `ListSerializer` class does not support multiple updates. This is because the behavior that should be expected for insertions and deletions is ambiguous.
 
-По умолчанию класс `ListSerializer 'не поддерживает несколько обновлений.
-Это связано с тем, что поведение, которое следует ожидать для вставки и удалений, является неоднозначным.
+По умолчанию класс `ListSerializer` не поддерживает множественные обновления. Это связано с тем, что поведение, которое следует ожидать для вставок и удалений, неоднозначно.
 
 To support multiple updates you'll need to do so explicitly. When writing your multiple update code make sure to keep the following in mind:
 
-Чтобы поддержать несколько обновлений, вам понадобится это явно.
-При написании вашего кода с несколькими обновлениями обязательно помните о следующем:
+Для поддержки нескольких обновлений необходимо сделать это явно. При написании кода множественных обновлений обязательно учитывайте следующее:
 
 * How do you determine which instance should be updated for each item in the list of data?
 * How should insertions be handled? Are they invalid, or do they create new objects?
 * How should removals be handled? Do they imply object deletion, or removing a relationship? Should they be silently ignored, or are they invalid?
 * How should ordering be handled? Does changing the position of two items imply any state change or is it ignored?
 
-* Как вы определяете, какой экземпляр должен быть обновлен для каждого элемента в списке данных?
-* Как следует обрабатывать вставки?
-Они недействительны, или они создают новые объекты?
-* Как следует обращаться с удалением?
-Они подразумевают удаление объекта или удаление отношений?
-Должны ли их молча игнорировать, или они недействительны?
-* Как следует обрабатывать заказа?
-Подразумевает ли изменение позиции двух элементов какое -либо изменение состояния или его игнорируют?
+* Как определить, какой экземпляр должен быть обновлен для каждого элемента в списке данных?
+* Как следует обрабатывать вставки? Являются ли они недействительными, или они создают новые объекты?
+* Как следует обрабатывать удаления? Означают ли они удаление объекта или удаление отношения? Следует ли их молча игнорировать, или они недействительны?
+* Как следует обрабатывать упорядочивание? Влечет ли изменение положения двух объектов изменение состояния или оно игнорируется?
 
 You will need to add an explicit `id` field to the instance serializer. The default implicitly-generated `id` field is marked as `read_only`. This causes it to be removed on updates. Once you declare it explicitly, it will be available in the list serializer's `update` method.
 
-Вам нужно будет добавить явное поле «id` в сериализатор экземпляра».
-Поле по умолчанию неявно сгенерированное `id` по поле помечено как` read_only`.
-Это приводит к удалению его в обновлениях.
-После того, как вы заявите это явно, он будет доступен в методе «Обновление» Serializer.
+Вам нужно будет добавить явное поле `id` в сериализатор экземпляра. По умолчанию неявно генерируемое поле `id` помечено как `read_only`. Это приводит к тому, что оно удаляется при обновлении. Как только вы объявите его явно, оно будет доступно в методе `update` сериализатора списка.
 
 Here's an example of how you might choose to implement multiple updates:
 
-Вот пример того, как вы можете внедрить несколько обновлений:
+Вот пример того, как можно реализовать несколько обновлений:
 
 ```
 class BookListSerializer(serializers.ListSerializer):
@@ -1435,7 +1369,7 @@ class BookSerializer(serializers.Serializer):
 
 It is possible that a third party package may be included alongside the 3.1 release that provides some automatic support for multiple update operations, similar to the `allow_add_remove` behavior that was present in REST framework 2.
 
-Вполне возможно, что сторонний пакет может быть включен вместе с выпуском 3.1, который обеспечивает некоторую автоматическую поддержку для нескольких операций обновления, аналогично поведению `alluct_add_remove`, которое присутствовало в Framework 2 REST 2.
+Возможно, в релиз 3.1 будет включен пакет сторонних разработчиков, обеспечивающий автоматическую поддержку нескольких операций обновления, подобно поведению `allow_add_remove`, которое присутствовало в REST framework 2.
 
 #### Customizing ListSerializer initialization
 
@@ -1443,17 +1377,15 @@ It is possible that a third party package may be included alongside the 3.1 rele
 
 When a serializer with `many=True` is instantiated, we need to determine which arguments and keyword arguments should be passed to the `.__init__()` method for both the child `Serializer` class, and for the parent `ListSerializer` class.
 
-Когда сериализатор с «многими = true» создан экземпляр, нам необходимо определить, какие аргументы и аргументы ключевых слов должны быть переданы методу `.__ __p __ ()` как для класса Serializer, так и для родителей `listserializer`
-Анкет
+Когда инстанцируется сериализатор с `many=True`, нам необходимо определить, какие аргументы и ключевые слова следует передать в метод `.__init__()` как для дочернего класса `Serializer`, так и для родительского класса `ListSerializer`.
 
 The default implementation is to pass all arguments to both classes, except for `validators`, and any custom keyword arguments, both of which are assumed to be intended for the child serializer class.
 
-Реализация по умолчанию состоит в том, чтобы передавать все аргументы в обоих классов, за исключением «валидаторов», и любые пользовательские аргументы ключевых слов, которые предполагаются для класса сериализатора детей.
+По умолчанию все аргументы передаются обоим классам, за исключением `validators` и любых пользовательских аргументов ключевых слов, которые, как предполагается, предназначены для дочернего класса сериализатора.
 
 Occasionally you might need to explicitly specify how the child and parent classes should be instantiated when `many=True` is passed. You can do so by using the `many_init` class method.
 
-Время от времени вам может придется явно указать, как должны быть созданы классы ребенка и родителя, когда проходит `mary = true.
-Вы можете сделать это, используя метод класса `many_init`.
+Иногда вам может понадобиться явно указать, как дочерний и родительский классы должны быть инстанцированы при передаче `many=True`. Вы можете сделать это с помощью метода класса `many_init`.
 
 ```
 @classmethod
@@ -1468,15 +1400,15 @@ Occasionally you might need to explicitly specify how the child and parent class
 
 # BaseSerializer
 
-# Baseserializer
+# BaseSerializer
 
 `BaseSerializer` class that can be used to easily support alternative serialization and deserialization styles.
 
-`Class класс BaseSerializer, который может быть использован для легкой поддержки альтернативной сериализации и стилей десериализации.
+Класс `BaseSerializer`, который можно использовать для простой поддержки альтернативных стилей сериализации и десериализации.
 
 This class implements the same basic API as the `Serializer` class:
 
-Этот класс реализует тот же базовый API, что и класс `serializer`:
+Этот класс реализует тот же базовый API, что и класс `Serializer`:
 
 * `.data` - Returns the outgoing primitive representation.
 * `.is_valid()` - Deserializes and validates incoming data.
@@ -1484,41 +1416,39 @@ This class implements the same basic API as the `Serializer` class:
 * `.errors` - Returns any errors during validation.
 * `.save()` - Persists the validated data into an object instance.
 
-* `.data` - возвращает исходящее примитивное представление.
-* `.is_valid ()` - десериализует и проверяет входящие данные.
+* `.data' - Возвращает исходящее примитивное представление.
+* `.is_valid()` - Десериализует и проверяет входящие данные.
 * `.validated_data` - Возвращает проверенные входящие данные.
-* `.errors` - возвращает любые ошибки во время проверки.
-* `.save ()` - сохраняет проверенные данные в экземпляр объекта.
+* `.errors` - Возвращает любые ошибки во время валидации.
+* `.save()` - Сохраняет проверенные данные в экземпляре объекта.
 
 There are four methods that can be overridden, depending on what functionality you want the serializer class to support:
 
-Есть четыре метода, которые можно переопределить, в зависимости от того, какую функциональность вы хотите, чтобы класс Serializer поддерживал:
+Есть четыре метода, которые могут быть переопределены, в зависимости от того, какую функциональность вы хотите, чтобы поддерживал класс сериализатора:
 
 * `.to_representation()` - Override this to support serialization, for read operations.
 * `.to_internal_value()` - Override this to support deserialization, for write operations.
 * `.create()` and `.update()` - Override either or both of these to support saving instances.
 
-* `.to_representation ()` - переопределить это, чтобы поддержать сериализацию, для операций чтения.
-* `.to_internal_value ()` - переопределить это, чтобы поддержать десериализацию, для операций записи.
-* `.create ()` и `.update ()` - переопределить один или оба из них для поддержки сохранения экземпляров.
+* `.to_representation()` - Переопределить это для поддержки сериализации, для операций чтения.
+* `.to_internal_value()` - Переопределить это для поддержки десериализации, для операций записи.
+* `.create()` и `.update()` - Переопределите один из этих параметров или оба для поддержки сохранения экземпляров.
 
 Because this class provides the same interface as the `Serializer` class, you can use it with the existing generic class-based views exactly as you would for a regular `Serializer` or `ModelSerializer`.
 
-Поскольку этот класс обеспечивает тот же интерфейс, что и класс `serializer ', вы можете использовать его с существующими общими представлениями на основе классов точно так же, как и для обычного` serializer' или `modelserializer '.
+Поскольку этот класс предоставляет тот же интерфейс, что и класс `Serializer`, вы можете использовать его с существующими представлениями на основе общих классов точно так же, как и обычный `Serializer` или `ModelSerializer`.
 
 The only difference you'll notice when doing so is the `BaseSerializer` classes will not generate HTML forms in the browsable API. This is because the data they return does not include all the field information that would allow each field to be rendered into a suitable HTML input.
 
-Единственная разница, которую вы заметите при этом, - это классы `baseserializer. Не генерируют HTML -формы в API -файлах.
-Это связано с тем, что данные, которые они возвращают, не включают всю информацию поля, которая позволила бы каждому полю быть отображенным в подходящий HTML -вход.
+Единственное отличие, которое вы заметите при этом - классы `BaseSerializer` не будут генерировать HTML-формы в просматриваемом API. Это происходит потому, что данные, которые они возвращают, не включают всю информацию о полях, которая позволила бы преобразовать каждое поле в подходящий HTML-ввод.
 
 #### Read-only `BaseSerializer` classes
 
-#### credt-only `caseserializer` классы
+#### Классы `BaseSerializer` только для чтения.
 
 To implement a read-only serializer using the `BaseSerializer` class, we just need to override the `.to_representation()` method. Let's take a look at an example using a simple Django model:
 
-Чтобы реализовать сериализатор только для чтения с использованием класса `baseerializer ', нам просто нужно переопределить метод .to_representation ()`.
-Давайте посмотрим на пример, используя простую модель Django:
+Чтобы реализовать сериализатор только для чтения, используя класс `BaseSerializer`, нам просто нужно переопределить метод `.to_representation()`. Давайте рассмотрим пример на примере простой модели Django:
 
 ```
 class HighScore(models.Model):
@@ -1529,7 +1459,7 @@ class HighScore(models.Model):
 
 It's simple to create a read-only serializer for converting `HighScore` instances into primitive data types.
 
-Это просто создать сериализатор только для чтения для преобразования экземпляров `Highscore в примитивные типы данных.
+Очень просто создать сериализатор только для чтения для преобразования экземпляров `HighScore` в примитивные типы данных.
 
 ```
 class HighScoreSerializer(serializers.BaseSerializer):
@@ -1542,7 +1472,7 @@ class HighScoreSerializer(serializers.BaseSerializer):
 
 We can now use this class to serialize single `HighScore` instances:
 
-Теперь мы можем использовать этот класс для сериализации одиночных экземпляров `Highscore`:
+Теперь мы можем использовать этот класс для сериализации отдельных экземпляров `HighScore`:
 
 ```
 @api_view(['GET'])
@@ -1566,24 +1496,23 @@ def all_high_scores(request):
 
 #### Read-write `BaseSerializer` classes
 
-#### Read-write `caseserializer` классы
+#### Классы `BaseSerializer` с функцией чтения-записи
 
 To create a read-write serializer we first need to implement a `.to_internal_value()` method. This method returns the validated values that will be used to construct the object instance, and may raise a `serializers.ValidationError` if the supplied data is in an incorrect format.
 
-Чтобы создать сериализатор для чтения-записи, нам сначала нужно реализовать метод `.to_internal_value ()`.
-Этот метод возвращает проверенные значения, которые будут использоваться для построения экземпляра объекта, и может повысить `serializers.validationError`, если предоставленные данные находятся в неправильном формате.
+Для создания сериализатора чтения-записи нам сначала нужно реализовать метод `.to_internal_value()`. Этот метод возвращает проверенные значения, которые будут использованы для создания экземпляра объекта, и может вызвать `serializers.ValidationError, если предоставленные данные имеют неправильный формат.
 
 Once you've implemented `.to_internal_value()`, the basic validation API will be available on the serializer, and you will be able to use `.is_valid()`, `.validated_data` and `.errors`.
 
-После реализации `.to_internal_value ()`, базовый API проверки будет доступен на сериализаторе, и вы сможете использовать `.is_valid ()`, `.validated_data` и` .errors`.
+Как только вы реализуете `.to_internal_value()`, базовый API валидации будет доступен в сериализаторе, и вы сможете использовать `.is_valid()`, `.validated_data` и `.errors`.
 
 If you want to also support `.save()` you'll need to also implement either or both of the `.create()` and `.update()` methods.
 
-Если вы хотите также поддержать `.save ()` вам также нужно также реализовать один или оба метода `.create ()` и `.update ()`.
+Если вы хотите также поддерживать `.save()`, вам необходимо также реализовать один или оба метода `.create()` и `.update()`.
 
 Here's a complete example of our previous `HighScoreSerializer`, that's been updated to support both read and write operations.
 
-Вот полный пример нашего предыдущего «Highscoreerializer», который был обновлен для поддержки как операций чтения, так и записи.
+Вот полный пример нашего предыдущего `HighScoreSerializer`, который был обновлен для поддержки операций чтения и записи.
 
 ```
 class HighScoreSerializer(serializers.BaseSerializer):
@@ -1628,11 +1557,11 @@ class HighScoreSerializer(serializers.BaseSerializer):
 
 The `BaseSerializer` class is also useful if you want to implement new generic serializer classes for dealing with particular serialization styles, or for integrating with alternative storage backends.
 
-Класс `baseerializer также полезен, если вы хотите внедрить новые классы Generic Serializer для борьбы с конкретными стилями сериализации или для интеграции с альтернативными бэкэндами хранения.
+Класс `BaseSerializer` также полезен, если вы хотите реализовать новые общие классы сериализаторов для работы с определенными стилями сериализации или для интеграции с альтернативными бэкендами хранения данных.
 
 The following class is an example of a generic serializer that can handle coercing arbitrary complex objects into primitive representations.
 
-Следующий класс является примером общего сериализатора, который может обрабатывать принудительные сложные объекты в примитивные представления.
+Следующий класс является примером общего сериализатора, который может обрабатывать принудительное преобразование произвольных сложных объектов в примитивные представления.
 
 ```
 class ObjectSerializer(serializers.BaseSerializer):
@@ -1674,27 +1603,27 @@ class ObjectSerializer(serializers.BaseSerializer):
 
 # Advanced serializer usage
 
-# Усовершенствованное использование сериализатора
+# Расширенное использование сериализатора
 
 ## Overriding serialization and deserialization behavior
 
-## Перепроячая поведение сериализации и десериализации
+## Переопределение поведения сериализации и десериализации
 
 If you need to alter the serialization or deserialization behavior of a serializer class, you can do so by overriding the `.to_representation()` or `.to_internal_value()` methods.
 
-Если вам необходимо изменить поведение сериализации или десериализации класса сериализатора, вы можете сделать это, переопределив методы `.to_representation ()` или `.to_internal_value ()`.
+Если вам нужно изменить поведение сериализации или десериализации класса сериализатора, вы можете сделать это, переопределив методы `.to_representation()` или `.to_internal_value()`.
 
 Some reasons this might be useful include...
 
-Некоторые причины, по которым это может быть полезно, включают ...
+Некоторые причины, по которым это может быть полезно, включают...
 
 * Adding new behavior for new serializer base classes.
 * Modifying the behavior slightly for an existing class.
 * Improving serialization performance for a frequently accessed API endpoint that returns lots of data.
 
-* Добавление нового поведения для новых классов базовых сериализаторов.
-* Слегка изменение поведения для существующего класса.
-* Улучшение производительности сериализации для часто доступной конечной точки API, которая возвращает много данных.
+* Добавление нового поведения для новых базовых классов сериализаторов.
+* Небольшое изменение поведения для существующего класса.
+* Улучшение производительности сериализации для часто используемой конечной точки API, которая возвращает много данных.
 
 The signatures for these methods are as follows:
 
@@ -1702,18 +1631,15 @@ The signatures for these methods are as follows:
 
 #### `to_representation(self, instance)`
 
-#### `to_representation (self, экземпляр)`
+#### `to_representation(self, instance)`.
 
 Takes the object instance that requires serialization, and should return a primitive representation. Typically this means returning a structure of built-in Python datatypes. The exact types that can be handled will depend on the render classes you have configured for your API.
 
-Принимает экземпляр объекта, который требует сериализации, и должен вернуть примитивное представление.
-Как правило, это означает возврат структуры встроенных данных Python.
-Точные типы, которые можно обрабатывать, будут зависеть от классов рендеринга, которые вы настроены для вашего API.
+Принимает экземпляр объекта, который требует сериализации, и должен вернуть примитивное представление. Обычно это означает возврат структуры встроенных в Python типов данных. Точные типы, которые могут быть обработаны, зависят от классов рендеринга, которые вы настроили для своего API.
 
 May be overridden in order to modify the representation style. For example:
 
-Может быть переопределен, чтобы изменить стиль представления.
-Например:
+Может быть переопределена для изменения стиля представления. Например:
 
 ```
 def to_representation(self, instance):
@@ -1725,32 +1651,27 @@ def to_representation(self, instance):
 
 #### `to_internal_value(self, data)`
 
-#### `to_internal_value (self, data)`
+#### `to_internal_value(self, data)`.
 
 Takes the unvalidated incoming data as input and should return the validated data that will be made available as `serializer.validated_data`. The return value will also be passed to the `.create()` or `.update()` methods if `.save()` is called on the serializer class.
 
-Принимает неиспользованные входящие данные в качестве входных данных и должен вернуть проверенные данные, которые будут доступны как `serializer.validated_data`.
-Возвратное значение также будет передано в методы `.create ()` или `.
+Принимает невалидированные входящие данные в качестве входных и должен вернуть валидированные данные, которые будут доступны как `serializer.validated_data`. Возвращаемое значение также будет передано методам `.create()` или `.update()`, если для класса сериализатора будет вызван `.save()`.
 
 If any of the validation fails, then the method should raise a `serializers.ValidationError(errors)`. The `errors` argument should be a dictionary mapping field names (or `settings.NON_FIELD_ERRORS_KEY`) to a list of error messages. If you don't need to alter deserialization behavior and instead want to provide object-level validation, it's recommended that you instead override the [`.validate()`](#object-level-validation) method.
 
-Если какая -либо из проверки не удается, то метод должен поднять `serializers.validationError (ошибки)`.
-Аргументом «ошибки» должен быть именами поля сопоставления словаря (или `futs.non_field_errors_key`) в список сообщений об ошибках.
-Если вам не нужно изменять поведение десериализации и вместо этого вы хотите обеспечить проверку на уровне объекта, рекомендуется вместо этого переопределить метод [`.validate ()`] (#validation).
+Если какая-либо из валидаций не прошла, то метод должен вызвать `serializers.ValidationError(errors)`. Аргумент `errors` должен представлять собой словарь, отображающий имена полей (или `settings.NON_FIELD_ERRORS_KEY`) на список сообщений об ошибках. Если вам не нужно изменять поведение десериализации и вместо этого вы хотите обеспечить проверку на уровне объекта, рекомендуется переопределить метод [`.validate()`](#object-level-validation).
 
 The `data` argument passed to this method will normally be the value of `request.data`, so the datatype it provides will depend on the parser classes you have configured for your API.
 
-Аргумент «Data», переданный этому методу, обычно будет значением `request.data`, поэтому предоставленный он датт, который он предоставляет, будет зависеть от классов анализатора, которые вы настроены для вашего API.
+Аргумент `data`, передаваемый этому методу, обычно является значением `request.data`, поэтому тип данных, который он предоставляет, будет зависеть от классов парсера, которые вы настроили для своего API.
 
 ## Serializer Inheritance
 
-## Наследство сериализатора
+## Наследование сериализатора
 
 Similar to Django forms, you can extend and reuse serializers through inheritance. This allows you to declare a common set of fields or methods on a parent class that can then be used in a number of serializers. For example,
 
-Подобно формам Django, вы можете расширить и повторно использовать сериализаторы через наследство.
-Это позволяет вам объявить общий набор полей или методов на родительском классе, которые затем можно использовать в ряде сериализаторов.
-Например,
+Подобно формам Django, вы можете расширять и повторно использовать сериализаторы с помощью наследования. Это позволяет вам объявить общий набор полей или методов в родительском классе, который затем может быть использован в нескольких сериализаторах. Например,
 
 ```
 class MyBaseSerializer(Serializer):
@@ -1765,9 +1686,7 @@ class MySerializer(MyBaseSerializer):
 
 Like Django's `Model` and `ModelForm` classes, the inner `Meta` class on serializers does not implicitly inherit from it's parents' inner `Meta` classes. If you want the `Meta` class to inherit from a parent class you must do so explicitly. For example:
 
-Как и классы Django «Model» и «Modelform», внутренний класс Meta` на сериалах неявно наследует от своих родителей.
-Если вы хотите, чтобы класс Meta` унаследовал от родительского класса, вы должны сделать это явно.
-Например:
+Как и классы `Model` и `ModelForm` в Django, внутренний класс `Meta` в сериализаторах не наследуется неявно от внутренних классов `Meta` своих родителей. Если вы хотите, чтобы класс `Meta` наследовался от родительского класса, вы должны сделать это явно. Например:
 
 ```
 class AccountSerializer(MyBaseSerializer):
@@ -1777,11 +1696,11 @@ class AccountSerializer(MyBaseSerializer):
 
 Typically we would recommend *not* using inheritance on inner Meta classes, but instead declaring all options explicitly.
 
-Как правило, мы рекомендуем * не * использовать наследование на внутренних классах мета, а вместо этого явно объявляя все варианты.
+Обычно мы рекомендуем *не* использовать наследование для внутренних классов Meta, а вместо этого объявлять все опции явно.
 
 Additionally, the following caveats apply to serializer inheritance:
 
-Кроме того, следующие предостережения применяются к наследованию сериализатора:
+Кроме того, следующие предостережения относятся к наследованию сериализаторов:
 
 * Normal Python name resolution rules apply. If you have multiple base classes that declare a `Meta` inner class, only the first one will be used. This means the child’s `Meta`, if it exists, otherwise the `Meta` of the first parent, etc.
 * It’s possible to declaratively remove a `Field` inherited from a parent class by setting the name to be `None` on the subclass.
@@ -1793,31 +1712,26 @@ Additionally, the following caveats apply to serializer inheritance:
           my_field = None
     ```However, you can only use this technique to opt out from a field defined declaratively by a parent class; it won’t prevent the `ModelSerializer` from generating a default field. To opt-out from default fields, see [Specifying which fields to include](#specifying-which-fields-to-include).
 
-* Применяются нормальные правила разрешения имени питона.
-Если у вас есть несколько базовых классов, которые объявляют внутренний класс «мета», будет использоваться только первый.
-Это означает, что ребенок «мета», если он существует, в противном случае «мета» первого родителя и т. Д.
-* Можно объявить «Поле», унаследованное от родительского класса, установив имя как «нет» на подкласс.
-`` `
-класс mybaseSerializer (ModelseRializer):
-my_field = serializers.charfield ()
-класс Myserializer (mybaseSerializer):
-my_field = нет
-`` `Однако вы можете использовать только эту технику, чтобы отказаться от поля, определенного декларативным образом родительским классом;
-Это не предотвратит создание поля по умолчанию.
-Чтобы отказаться от полей по умолчанию, см. [Указание того, какие поля включают] (#указание, которые будут в том, что в них включают).
+* Применяются обычные правила разрешения имен Python. Если у вас есть несколько базовых классов, которые объявляют внутренний класс `Meta`, будет использоваться только первый класс. Это означает дочерний `Meta`, если он существует, иначе `Meta` первого родителя и т.д.
+* Можно декларативно удалить `Field`, унаследованный от родительского класса, установив его имя в `None` в подклассе.
+```
+class MyBaseSerializer(ModelSerializer):
+my_field = serializers.CharField()
+class MySerializer(MyBaseSerializer):
+my_field = None
+Однако, вы можете использовать эту технику только для отказа от поля, определенного декларативно родительским классом; это не помешает `ModelSerializer` сгенерировать поле по умолчанию. Чтобы отказаться от полей по умолчанию, смотрите [Specifying what fields to include](#specifying-which-fields-to-include).
 
 ## Dynamically modifying fields
 
-## Динамически модифицирующие поля
+## Динамическое изменение полей
 
 Once a serializer has been initialized, the dictionary of fields that are set on the serializer may be accessed using the `.fields` attribute. Accessing and modifying this attribute allows you to dynamically modify the serializer.
 
-После того, как сериализатор был инициализирован, можно получить к словарю полей, установленных на сериализаторе с использованием атрибута .fields '.
-Доступ и изменение этого атрибута позволяет динамически модифицировать сериализатор.
+После инициализации сериализатора, к словарю полей, установленных в сериализаторе, можно получить доступ с помощью атрибута `.fields`. Доступ и изменение этого атрибута позволяет динамически модифицировать сериализатор.
 
 Modifying the `fields` argument directly allows you to do interesting things such as changing the arguments on serializer fields at runtime, rather than at the point of declaring the serializer.
 
-Изменение аргумента «полей» напрямую позволяет вам делать интересные вещи, такие как изменение аргументов на полях сериализатора во время выполнения, а не в точке объявления сериализатора.
+Изменение аргумента `fields` напрямую позволяет вам делать такие интересные вещи, как изменение аргументов полей сериализатора во время выполнения, а не в момент объявления сериализатора.
 
 ### Example
 
@@ -1825,7 +1739,7 @@ Modifying the `fields` argument directly allows you to do interesting things suc
 
 For example, if you wanted to be able to set which fields should be used by a serializer at the point of initializing it, you could create a serializer class like so:
 
-Например, если вы хотите иметь возможность установить, какие поля следует использовать сериализатором в точке его инициализации, вы можете создать класс сериализатора, как SO:
+Например, если вы хотите иметь возможность установить, какие поля должны использоваться сериализатором в момент его инициализации, вы можете создать класс сериализатора следующим образом:
 
 ```
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -1851,7 +1765,7 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 This would then allow you to do the following:
 
-Это позволило бы вам сделать следующее:
+Это позволит вам сделать следующее:
 
 ```
 >>> class UserSerializer(DynamicFieldsModelSerializer):
@@ -1872,36 +1786,33 @@ This would then allow you to do the following:
 
 REST framework 2 provided an API to allow developers to override how a `ModelSerializer` class would automatically generate the default set of fields.
 
-REST Framework 2 предоставил API, чтобы позволить разработчикам переопределить, как класс `modelerializer 'автоматически генерирует набор по умолчанию полей.
+REST framework 2 предоставил API, позволяющий разработчикам переопределять, как класс `ModelSerializer` будет автоматически генерировать набор полей по умолчанию.
 
 This API included the `.get_field()`, `.get_pk_field()` and other methods.
 
-Этот API включал `.get_field ()`, `.get_pk_field ()` и другие методы.
+Этот API включал методы `.get_field()`, `.get_pk_field()` и другие.
 
 Because the serializers have been fundamentally redesigned with 3.0 this API no longer exists. You can still modify the fields that get created but you'll need to refer to the source code, and be aware that if the changes you make are against private bits of API then they may be subject to change.
 
-Поскольку сериализаторы были в корне переработаны с 3,0, этот API больше не существует.
-Вы по -прежнему можете изменить созданные поля, но вам нужно обратиться к исходному коду и помнить, что если изменения, которые вы вносят, противостоят частным битам API, они могут быть изменены.
+Поскольку сериализаторы были кардинально переработаны в версии 3.0, этот API больше не существует. Вы все еще можете изменять создаваемые поля, но вам придется обратиться к исходному коду, и имейте в виду, что если изменения, которые вы делаете, направлены против частных частей API, то они могут быть изменены.
 
 ---
 
 # Third party packages
 
-# Сторонние пакеты
+# Пакеты сторонних производителей
 
 The following third party packages are also available.
 
-Следующие сторонние пакеты также доступны.
+Также доступны следующие пакеты сторонних производителей.
 
 ## Django REST marshmallow
 
-## Django Rest Marshmallow
+## Django REST marshmallow
 
 The [django-rest-marshmallow](https://marshmallow-code.github.io/django-rest-marshmallow/) package provides an alternative implementation for serializers, using the python [marshmallow](https://marshmallow.readthedocs.io/en/latest/) library. It exposes the same API as the REST framework serializers, and can be used as a drop-in replacement in some use-cases.
 
-[Django-rest-marshmallow] (https://marshmallow-code.github.io/django-rest-marshmallow/) предоставляет альтернативную реализацию для сериализаторов, используя Python [Marshmallow] (https: //marshmallow.readthedocs
-.io/en/last/) библиотека.
-Он обнажает тот же API, что и сериализаторы REST Framework, и может использоваться в качестве замены в некоторых случаях использования.
+Пакет [django-rest-marshmallow](https://marshmallow-code.github.io/django-rest-marshmallow/) предоставляет альтернативную реализацию сериализаторов, используя библиотеку python [marshmallow](https://marshmallow.readthedocs.io/en/latest/). Он предоставляет тот же API, что и сериализаторы фреймворка REST, и может быть использован в качестве замены в некоторых случаях.
 
 ## Serpy
 
@@ -1909,89 +1820,79 @@ The [django-rest-marshmallow](https://marshmallow-code.github.io/django-rest-mar
 
 The [serpy](https://github.com/clarkduvall/serpy) package is an alternative implementation for serializers that is built for speed. [Serpy](https://github.com/clarkduvall/serpy) serializes complex datatypes to simple native types. The native types can be easily converted to JSON or any other format needed.
 
-Пакет [serpy] (https://github.com/clarkduvall/serpy) является альтернативной реализацией для сериализаторов, которая создана для скорости.
-[Serpy] (https://github.com/clarkduvall/serpy) сериализует сложные данные дата на простые нативные типы.
-Нативные типы могут быть легко преобразованы в JSON или в любой другой необходимый формат.
+Пакет [serpy](https://github.com/clarkduvall/serpy) - это альтернативная реализация сериализаторов, созданная для скорости. [Serpy](https://github.com/clarkduvall/serpy) сериализует сложные типы данных в простые нативные типы. Родные типы могут быть легко преобразованы в JSON или любой другой необходимый формат.
 
 ## MongoengineModelSerializer
 
-## mongoenginemodelserializer
+## MongoengineModelSerializer
 
 The [django-rest-framework-mongoengine](https://github.com/umutbozkurt/django-rest-framework-mongoengine) package provides a `MongoEngineModelSerializer` serializer class that supports using MongoDB as the storage layer for Django REST framework.
 
-Пакет [https://github.com/umutbozkurt/django-rest-frame-mongoengine) предоставляет [django-rest-framework-mongoengine] (https://github.com/umutbozkurt/django-rest-framework-mongoengine).
+Пакет [django-rest-framework-mongoengine](https://github.com/umutbozkurt/django-rest-framework-mongoengine) предоставляет класс сериализатора `MongoEngineModelSerializer`, который поддерживает использование MongoDB в качестве уровня хранения данных для Django REST framework.
 
 ## GeoFeatureModelSerializer
 
-## geofeaturemodelserializer
+## GeoFeatureModelSerializer
 
 The [django-rest-framework-gis](https://github.com/djangonauts/django-rest-framework-gis) package provides a `GeoFeatureModelSerializer` serializer class that supports GeoJSON both for read and write operations.
 
-Пакет [django-rest-framework-gis] (https://github.com/djangonauts/django-rest-framework-gis) предоставляет класс сериализатора «Geofeaturemodelserializer», который поддерживает Geojson для чтения и записи.
+Пакет [django-rest-framework-gis](https://github.com/djangonauts/django-rest-framework-gis) предоставляет класс сериализатора `GeoFeatureModelSerializer`, который поддерживает GeoJSON как для операций чтения, так и для записи.
 
 ## HStoreSerializer
 
-## horsoreerializer
+## HStoreSerializer
 
 The [django-rest-framework-hstore](https://github.com/djangonauts/django-rest-framework-hstore) package provides an `HStoreSerializer` to support [django-hstore](https://github.com/djangonauts/django-hstore) `DictionaryField` model field and its `schema-mode` feature.
 
-В пакете [https://github.com/djangonauts/django-rest-framework) (https://github.com/djangonauts/django-rest-framework-hstore) предоставляет `hStoreSerializer` для поддержки [django-hstore] (https://github.com для поддержки
-/djangonauts/django-hstore) `Dictionaryfield's Model Field и его функция« режим схемы ».
+Пакет [django-rest-framework-hstore](https://github.com/djangonauts/django-rest-framework-hstore) предоставляет `HStoreSerializer` для поддержки поля модели [django-hstore](https://github.com/djangonauts/django-hstore) `DictionaryField` и его функции `chema-mode`.
 
 ## Dynamic REST
 
-## Динамический отдых
+## Динамический REST
 
 The [dynamic-rest](https://github.com/AltSchool/dynamic-rest) package extends the ModelSerializer and ModelViewSet interfaces, adding API query parameters for filtering, sorting, and including / excluding all fields and relationships defined by your serializers.
 
-Пакет [Dynamic-Rest] (https://github.com/altschool/dynamic-rest) расширяет интерфейсы моделейализатора и моделей.
-Анкет
+Пакет [dynamic-rest](https://github.com/AltSchool/dynamic-rest) расширяет интерфейсы ModelSerializer и ModelViewSet, добавляя параметры запроса API для фильтрации, сортировки, включения/исключения всех полей и отношений, определенных вашими сериализаторами.
 
 ## Dynamic Fields Mixin
 
-## Dynamic Fields Mixin
+## Миксин динамических полей
 
 The [drf-dynamic-fields](https://github.com/dbrgn/drf-dynamic-fields) package provides a mixin to dynamically limit the fields per serializer to a subset specified by an URL parameter.
 
-Пакет [https://github.com/dbrgn/drf-fields) (https://github.com/dbrgn/drf-dynamic) обеспечивает смесин для динамического ограничения поля на соответствие сериализатору подмножеством, указанным параметром URL.
+Пакет [drf-dynamic-fields](https://github.com/dbrgn/drf-dynamic-fields) предоставляет миксин для динамического ограничения полей для сериализатора подмножеством, заданным параметром URL.
 
 ## DRF FlexFields
 
-## DRF Flexfields
+## DRF FlexFields
 
 The [drf-flex-fields](https://github.com/rsinger86/drf-flex-fields) package extends the ModelSerializer and ModelViewSet to provide commonly used functionality for dynamically setting fields and expanding primitive fields to nested models, both from URL parameters and your serializer class definitions.
 
-Пакет [drf-flexfields] (https://github.com/rsinger86/drf-flex fields) расширяет модельные модели и модели для обеспечения широко используемых функциональности для поля динамического настройки и расширяющихся примитивных полей на заложенные модели, оба из
-Параметры URL и определения вашего класса сериализатора.
+Пакет [drf-flex-fields](https://github.com/rsinger86/drf-flex-fields) расширяет ModelSerializer и ModelViewSet для обеспечения широко используемой функциональности для динамической установки полей и расширения примитивных полей во вложенные модели, как из параметров URL, так и из определений класса вашего сериализатора.
 
 ## Serializer Extensions
 
-## расширения сериализатора
+## Расширения сериализатора
 
 The [django-rest-framework-serializer-extensions](https://github.com/evenicoulddoit/django-rest-framework-serializer-extensions) package provides a collection of tools to DRY up your serializers, by allowing fields to be defined on a per-view/request basis. Fields can be whitelisted, blacklisted and child serializers can be optionally expanded.
 
-Впарик
-определяется на основе просмотра/запроса.
-Поля могут быть в белом списке, в черном списке и сериализаторам для детей можно расширить.
+Пакет [django-rest-framework-serializer-extensions](https://github.com/evenicoulddoit/django-rest-framework-serializer-extensions) предоставляет набор инструментов для DRY up ваших сериализаторов, позволяя определять поля на основе каждого представления/запроса. Поля могут быть внесены в белый или черный список, а дочерние сериализаторы могут быть расширены по желанию.
 
 ## HTML JSON Forms
 
-## html json forms
+## HTML JSON Forms
 
 The [html-json-forms](https://github.com/wq/html-json-forms) package provides an algorithm and serializer for processing `<form>` submissions per the (inactive) [HTML JSON Form specification](https://www.w3.org/TR/html-json-forms/). The serializer facilitates processing of arbitrarily nested JSON structures within HTML. For example, `<input name="items[0][id]" value="5">` will be interpreted as `{"items": [{"id": "5"}]}`.
 
-Пакет [html-json-forms] (https://github.com/wq/html-json-forms) предоставляет алгоритм и сериализатор для обработки `<form>` Представки на (неактивную) [HTML JSON Specification]
-(https://www.w3.org/tr/html-json-forms/).
-Сериализатор облегчает обработку произвольно вложенных структур JSON в HTML.
-Например, `<input name =" items [0] [id] "value =" 5 ">` будет интерпретироваться как `{" элементы ": [{" id ":" 5 "}]}`.
+Пакет [html-json-forms](https://github.com/wq/html-json-forms) предоставляет алгоритм и сериализатор для обработки `<form>` представлений в соответствии с (неактивной) [HTML JSON Form specification](https://www.w3.org/TR/html-json-forms/). Сериализатор облегчает обработку произвольно вложенных структур JSON в HTML. Например, `<input name="items[0][id]" value="5">` будет интерпретирован как `{"items": [{"id": "5"}]}`.
 
 ## DRF-Base64
 
-## drf-base64
+## DRF-Base64
 
 [DRF-Base64](https://bitbucket.org/levit_scs/drf_base64) provides a set of field and model serializers that handles the upload of base64-encoded files.
 
-[Drf-base64] (https://bitbucket.org/levit_scs/drf_base64) предоставляет набор сериалеров поля и модели, которые обрабатывают загрузку файлов Base64-кодировки.
+[DRF-Base64](https://bitbucket.org/levit_scs/drf_base64) предоставляет набор сериализаторов полей и моделей, который обрабатывает загрузку файлов в base64-кодировке.
 
 ## QueryFields
 
@@ -1999,22 +1900,20 @@ The [html-json-forms](https://github.com/wq/html-json-forms) package provides an
 
 [djangorestframework-queryfields](https://djangorestframework-queryfields.readthedocs.io/) allows API clients to specify which fields will be sent in the response via inclusion/exclusion query parameters.
 
-[djangorestframework-queryfields] (https://djangorestframework-queryfields.readthedocs.io/) позволяет клиентам API указывать, какие поля будут отправлены в ответ через параметры включения/исключения.
+[djangorestframework-queryfields](https://djangorestframework-queryfields.readthedocs.io/) позволяет клиентам API указать, какие поля будут отправлены в ответе с помощью параметров запроса включения/исключения.
 
 ## DRF Writable Nested
 
-## DRF Записывается
+## DRF Записываемый вложенный
 
 The [drf-writable-nested](https://github.com/beda-software/drf-writable-nested) package provides writable nested model serializer which allows to create/update models with nested related data.
 
-В пакете [DRF-Wriable-nested] (https://github.com/beda-software/drf-wrable-nest) предоставляет сериализатор вложенного модели с записи, который позволяет создавать/обновлять модели с вложенными связанными данными.
+Пакет [drf-writable-nested](https://github.com/beda-software/drf-writable-nested) предоставляет записываемый сериализатор вложенных моделей, который позволяет создавать/обновлять модели с вложенными связанными данными.
 
 ## DRF Encrypt Content
 
-## DRF Encrypt Content
+## DRF Зашифровать содержимое
 
 The [drf-encrypt-content](https://github.com/oguzhancelikarslan/drf-encrypt-content) package helps you encrypt your data, serialized through ModelSerializer. It also contains some helper functions. Which helps you to encrypt your data.
 
-Пакет [https://github.com/oguzhancelikarslan/drf-encrypt-content) поможет вам зашифровать ваши данные, сериализованные через моделиализатор.
-Он также содержит некоторые вспомогательные функции.
-Что помогает вам зашифровать ваши данные.
+Пакет [drf-encrypt-content](https://github.com/oguzhancelikarslan/drf-encrypt-content) помогает вам шифровать данные, сериализованные через ModelSerializer. Он также содержит некоторые вспомогательные функции. Которые помогут вам зашифровать данные.

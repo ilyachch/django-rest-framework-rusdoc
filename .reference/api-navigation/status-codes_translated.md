@@ -13,21 +13,19 @@ source:
 
 # Status Codes
 
-# Коды статуса
+# Коды состояния
 
 > 418 I'm a teapot - Any attempt to brew coffee with a teapot should result in the error code "418 I'm a teapot". The resulting entity body MAY be short and stout.
 >
 > — [RFC 2324](https://www.ietf.org/rfc/rfc2324.txt), Hyper Text Coffee Pot Control Protocol
 
-> 418 Я чайник - любая попытка варить кофе с чайником должна привести к коду ошибки «418 Я чайник».
-Полученное тело сущности может быть коротким и прочным.
+> 418 Я чайник - Любая попытка сварить кофе с помощью чайника должна привести к коду ошибки "418 I'm a teapot". Результирующее тело сущности МОЖЕТ быть коротким и крепким.
 >
-> - [RFC 2324] (https://www.ietf.org/rfc/rfc2324.txt), гипер текстовый протокол контроля кофейного горшка
+> - [RFC 2324](https://www.ietf.org/rfc/rfc2324.txt), Hyper Text Coffee Pot Control Protocol
 
 Using bare status codes in your responses isn't recommended. REST framework includes a set of named constants that you can use to make your code more obvious and readable.
 
-Использование кодов статуса в ваших ответах не рекомендуется.
-Структура REST включает набор именованных констант, которые вы можете использовать, чтобы сделать ваш код более очевидным и читаемым.
+Не рекомендуется использовать в ответах "голые" коды состояния. Фреймворк REST включает набор именованных констант, которые вы можете использовать, чтобы сделать ваш код более очевидным и читаемым.
 
 ```
 from rest_framework import status
@@ -40,11 +38,11 @@ def empty_view(self):
 
 The full set of HTTP status codes included in the `status` module is listed below.
 
-Полный набор кодов состояния HTTP, включенных в модуль `Status`, указан ниже.
+Полный набор кодов состояния HTTP, включенных в модуль `status`, приведен ниже.
 
 The module also includes a set of helper functions for testing if a status code is in a given range.
 
-Модуль также включает набор вспомогательных функций для тестирования, если код состояния находится в данном диапазоне.
+Модуль также включает набор вспомогательных функций для проверки того, находится ли код состояния в заданном диапазоне.
 
 ```
 from rest_framework import status
@@ -59,8 +57,7 @@ class ExampleTestCase(APITestCase):
 
 For more information on proper usage of HTTP status codes see [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) and [RFC 6585](https://tools.ietf.org/html/rfc6585).
 
-Для получения дополнительной информации о правильном использовании кодов статуса HTTP см.
-org/html/rfc6585).
+Более подробную информацию о правильном использовании кодов состояния HTTP смотрите в [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) и [RFC 6585](https://tools.ietf.org/html/rfc6585).
 
 ## Informational - 1xx
 
@@ -68,8 +65,7 @@ org/html/rfc6585).
 
 This class of status code indicates a provisional response. There are no 1xx status codes used in REST framework by default.
 
-Этот класс кода состояния указывает на предварительный ответ.
-По умолчанию нет кодов состояния 1xx, используемых в структуре REST.
+Этот класс кода состояния указывает на предварительный ответ. По умолчанию в REST-фреймворке не используются коды состояния 1xx.
 
 ```
 HTTP_100_CONTINUE
@@ -80,7 +76,7 @@ HTTP_103_EARLY_HINTS
 
 ## Successful - 2xx
 
-## успешно - 2xx
+## Успешно - 2xx
 
 This class of status code indicates that the client's request was successfully received, understood, and accepted.
 
@@ -101,11 +97,11 @@ HTTP_226_IM_USED
 
 ## Redirection - 3xx
 
-## перенаправление - 3xx
+## Перенаправление - 3xx
 
 This class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request.
 
-Этот класс кода состояния указывает на то, что пользовательский агент должен предпринять дальнейшие действия для выполнения запроса.
+Этот класс кода состояния указывает на то, что агенту пользователя необходимо предпринять дополнительные действия для выполнения запроса.
 
 ```
 HTTP_300_MULTIPLE_CHOICES
@@ -121,12 +117,11 @@ HTTP_308_PERMANENT_REDIRECT
 
 ## Client Error - 4xx
 
-## Клиентская ошибка - 4xx
+## Ошибка клиента - 4xx
 
 The 4xx class of status code is intended for cases in which the client seems to have erred. Except when responding to a HEAD request, the server SHOULD include an entity containing an explanation of the error situation, and whether it is a temporary or permanent condition.
 
-Класс кода состояния 4xx предназначен для случаев, когда клиент, похоже, допустил ошибку.
-За исключением случаев, когда он отвечает на запрос на головы, сервер должен включать сущность, содержащую объяснение ситуации с ошибкой, и является ли это временным или постоянным условием.
+Код состояния класса 4xx предназначен для случаев, когда клиент, похоже, ошибся. За исключением ответа на запрос HEAD, сервер ДОЛЖЕН включать объект, содержащий объяснение ситуации с ошибкой, а также то, является ли она временной или постоянной.
 
 ```
 HTTP_400_BAD_REQUEST
@@ -165,8 +160,7 @@ HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS
 
 Response status codes beginning with the digit "5" indicate cases in which the server is aware that it has erred or is incapable of performing the request. Except when responding to a HEAD request, the server SHOULD include an entity containing an explanation of the error situation, and whether it is a temporary or permanent condition.
 
-Коды состояния ответа, начиная с цифры «5», указывают на случаи, когда сервер знает, что он ошибился или не способен выполнить запрос.
-За исключением случаев, когда он отвечает на запрос на головы, сервер должен включать сущность, содержащую объяснение ситуации с ошибкой, и является ли это временным или постоянным условием.
+Коды состояния ответа, начинающиеся с цифры "5", указывают на случаи, когда сервер знает, что он ошибся или не в состоянии выполнить запрос. За исключением ответа на запрос HEAD, сервер ДОЛЖЕН включать объект, содержащий объяснение ситуации с ошибкой, а также то, является ли она временной или постоянной.
 
 ```
 HTTP_500_INTERNAL_SERVER_ERROR
@@ -185,11 +179,11 @@ HTTP_511_NETWORK_AUTHENTICATION_REQUIRED
 
 ## Helper functions
 
-## вспомогательные функции
+## Вспомогательные функции
 
 The following helper functions are available for identifying the category of the response code.
 
-Следующие вспомогательные функции доступны для определения категории кода ответа.
+Для определения категории кода ответа доступны следующие вспомогательные функции.
 
 ```
 is_informational()  # 1xx

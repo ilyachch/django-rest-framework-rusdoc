@@ -1,35 +1,35 @@
 <!-- TRANSLATED by md-translate -->
 # Browser enhancements
 
-# Улучшения браузера
+# Улучшения в браузере
 
 > "There are two noncontroversial uses for overloaded POST. The first is to *simulate* HTTP's uniform interface for clients like web browsers that don't support PUT or DELETE"
 >
 > — [RESTful Web Services](https://www.amazon.com/RESTful-Web-Services-Leonard-Richardson/dp/0596529260), Leonard Richardson & Sam Ruby.
 
-> «Существует два неверных применения для перегруженного сообщения. Первое - это имитировать * единый интерфейс HTTP для клиентов, таких как веб -браузеры, которые не поддерживают или удаляют».
+> "Есть два не вызывающих споров варианта использования перегруженного POST. Первое - это *имитация* унифицированного интерфейса HTTP для клиентов, таких как веб-браузеры, которые не поддерживают PUT или DELETE".
 >
->-[Restful Web Services] (https://www.amazon.com/restful-web-services-leonard-richardson/dp/0596529260), Леонард Ричардсон и Сэм Руби.
+> - [RESTful Web Services](https://www.amazon.com/RESTful-Web-Services-Leonard-Richardson/dp/0596529260), Leonard Richardson & Sam Ruby.
 
 In order to allow the browsable API to function, there are a couple of browser enhancements that REST framework needs to provide.
 
-Чтобы позволить функционированию API, который можно просматривать, существует пара улучшений браузера, которые необходимо обеспечить структуре REST.
+Для того чтобы API с возможностью просмотра функционировал, есть несколько усовершенствований для браузеров, которые должны быть предоставлены REST-фреймворком.
 
 As of version 3.3.0 onwards these are enabled with javascript, using the [ajax-form](https://github.com/tomchristie/ajax-form) library.
 
-Начиная с версии 3.3.0, они включены с помощью JavaScript, используя библиотеку [ajax-form] (https://github.com/tomchristie/ajax-form).
+Начиная с версии 3.3.0 и далее они включаются с помощью javascript, используя библиотеку [ajax-form](https://github.com/tomchristie/ajax-form).
 
 ## Browser based PUT, DELETE, etc...
 
-## на основе браузера Put, Delete и т. Д.
+## PUT, DELETE и т.д. на основе браузера.
 
 The [AJAX form library](https://github.com/tomchristie/ajax-form) supports browser-based `PUT`, `DELETE` and other methods on HTML forms.
 
-[Ajax Form Library] (https://github.com/tomchristie/ajax-form) поддерживает на основе браузера `put`,` delete` и другие методы на HTML-формах.
+Библиотека [AJAX form library](https://github.com/tomchristie/ajax-form) поддерживает браузерные методы `PUT`, `DELETE` и другие методы на HTML формах.
 
 After including the library, use the `data-method` attribute on the form, like so:
 
-После включения библиотеки используйте атрибут «Data-Method» в форме, например, SO:
+После включения библиотеки используйте атрибут `data-method` на форме, как показано ниже:
 
 ```
 <form action="/" data-method="PUT">
@@ -40,18 +40,15 @@ After including the library, use the `data-method` attribute on the form, like s
 
 Note that prior to 3.3.0, this support was server-side rather than javascript based. The method overloading style (as used in [Ruby on Rails](https://guides.rubyonrails.org/form_helpers.html#how-do-forms-with-put-or-delete-methods-work)) is no longer supported due to subtle issues that it introduces in request parsing.
 
-Обратите внимание, что до 3.3.0 эта поддержка была на стороне сервера, а не на основе JavaScript.
-Стиль перегрузки метода (как используется в [Ruby on Rails] (https://guides.rubyonrails.org/form_helpers.html#how-do-forms-with-or-delete-methothods-pork))) больше не является))))))
-Поддерживается из -за тонких проблем, которые он вводит в анализе запросов.
+Обратите внимание, что до версии 3.3.0 эта поддержка осуществлялась на стороне сервера, а не на основе javascript. Стиль перегрузки методов (используемый в [Ruby on Rails](https://guides.rubyonrails.org/form_helpers.html#how-do-forms-with-put-or-delete-methods-work)) больше не поддерживается из-за тонких проблем, возникающих при разборе запросов.
 
 ## Browser based submission of non-form content
 
-## Основанный на основе браузера неформальный контент
+## Представление неформального контента с помощью браузера
 
 Browser-based submission of content types such as JSON are supported by the [AJAX form library](https://github.com/tomchristie/ajax-form), using form fields with `data-override='content-type'` and `data-override='content'` attributes.
 
-Основанная на браузерах представление типов контента, таких как JSON, поддерживается [библиотека AJAX Form] (https://github.com/tomchristie/ajax-form), используя поля формы с `data override = 'content-type'``
-и `data-override = 'content'' 'Атрибуты.
+Отправка через браузер таких типов содержимого, как JSON, поддерживается [библиотекой форм AJAX](https://github.com/tomchristie/ajax-form), используя поля формы с атрибутами `data-override='content-type'` и `data-override='content'`.
 
 For example:
 
@@ -67,28 +64,27 @@ For example:
 
 Note that prior to 3.3.0, this support was server-side rather than javascript based.
 
-Обратите внимание, что до 3.3.0 эта поддержка была на стороне сервера, а не на основе JavaScript.
+Обратите внимание, что до версии 3.3.0 эта поддержка осуществлялась на стороне сервера, а не на основе javascript.
 
 ## URL based format suffixes
 
-## Суффиксы на основе URL -адреса на основе URL
+## Суффиксы формата на основе URL
 
 REST framework can take `?format=json` style URL parameters, which can be a useful shortcut for determining which content type should be returned from the view.
 
-Структура REST может занять параметры URL -адреса json 'Format = JSON
+Фреймворк REST может принимать параметры URL в стиле `?format=json`, что может быть полезным сокращением для определения типа содержимого, которое должно быть возвращено из представления.
 
 This behavior is controlled using the `URL_FORMAT_OVERRIDE` setting.
 
-Это поведение контролируется с помощью настройки `url_format_override`.
+Это поведение контролируется с помощью параметра `URL_FORMAT_OVERRIDE`.
 
 ## HTTP header based method overriding
 
-## http -заголовок метод переоценки
+## Переопределение метода на основе заголовка HTTP
 
 Prior to version 3.3.0 the semi extension header `X-HTTP-Method-Override` was supported for overriding the request method. This behavior is no longer in core, but can be adding if needed using middleware.
 
-Перед версией 3.3.0 заголовок полувыхнет `x-http-method-override 'был поддержан для переоценки метода запроса.
-Такое поведение больше не находится в ядре, но может добавлять при необходимости с помощью промежуточного программного обеспечения.
+До версии 3.3.0 поддерживался полузаголовок расширения `X-HTTP-Method-Override` для переопределения метода запроса. Это поведение больше не используется в ядре, но может быть добавлено при необходимости с помощью промежуточного ПО.
 
 For example:
 
@@ -110,15 +106,15 @@ class MethodOverrideMiddleware:
 
 ## URL based accept headers
 
-## на основе URL -адресов заголовки принятия
+## Прием заголовков на основе URL
 
 Until version 3.3.0 REST framework included built-in support for `?accept=application/json` style URL parameters, which would allow the `Accept` header to be overridden.
 
-До версии 3.3.0 Структура REST не включала встроенную поддержку для параметров URL-адреса `? Accept = Application/JSON
+До версии 3.3.0 REST framework включал встроенную поддержку параметров URL в стиле `?accept=application/json`, что позволяло переопределять заголовок `Accept`.
 
 Since the introduction of the content negotiation API this behavior is no longer included in core, but may be added using a custom content negotiation class, if needed.
 
-Поскольку введение в API переговоров по контенту, это поведение больше не включено в ядро, но может быть добавлено с использованием пользовательского класса согласования контента, если это необходимо.
+После внедрения API согласования контента это поведение больше не включено в ядро, но может быть добавлено с помощью пользовательского класса согласования контента, если это необходимо.
 
 For example:
 
@@ -134,12 +130,8 @@ class AcceptQueryParamOverride()
 
 ## Doesn't HTML5 support PUT and DELETE forms?
 
-## Разве HTML5 поддерживает и удаляет формы?
+## Разве HTML5 не поддерживает формы PUT и DELETE?
 
 Nope. It was at one point intended to support `PUT` and `DELETE` forms, but was later [dropped from the spec](https://www.w3.org/TR/html5-diff/#changes-2010-06-24). There remains [ongoing discussion](http://amundsen.com/examples/put-delete-forms/) about adding support for `PUT` and `DELETE`, as well as how to support content types other than form-encoded data.
 
-Неа.
-В какой-то момент это было предназначено для поддержки форм `put` и` delete`, но позже было выброшено из Spec] (https://www.w3.org/tr/html5-diff/#changes-2010-06-
-24).
-Остается [продолжающееся обсуждение] (http://amundsen.com/examples/put-delete-forms/) о добавлении поддержки для `put` и` delete`, а также о том, как поддержать типы контента, отличные от кодируемых формами данных
-Анкет
+Нет. Одно время предполагалось, что он будет поддерживать формы `PUT` и `DELETE`, но позже он был [исключен из спецификации] (https://www.w3.org/TR/html5-diff/#changes-2010-06-24). Остается [продолжающееся обсуждение] (http://amundsen.com/examples/put-delete-forms/) добавления поддержки `PUT` и `DELETE`, а также того, как поддерживать типы содержимого, отличные от закодированных в форме данных.

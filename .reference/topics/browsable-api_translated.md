@@ -1,44 +1,35 @@
 <!-- TRANSLATED by md-translate -->
 # The Browsable API
 
-# API для просмотра
+# Browsable API
 
 > It is a profoundly erroneous truism... that we should cultivate the habit of thinking of what we are doing. The precise opposite is the case. Civilization advances by extending the number of important operations which we can perform without thinking about them.
 >
 > — [Alfred North Whitehead](https://en.wikiquote.org/wiki/Alfred_North_Whitehead), An Introduction to Mathematics (1911)
 
-> Это глубоко ошибочный трюизм ... что мы должны развивать привычку думать о том, что мы делаем.
-Точная противоположность имеет место.
-Цивилизация продвигается, расширяя количество важных операций, которые мы можем выполнить, не задумываясь о них.
+> Это глубоко ошибочный трюизм... что мы должны культивировать привычку думать о том, что мы делаем. Дело обстоит прямо противоположным образом. Цивилизация развивается благодаря расширению числа важных операций, которые мы можем выполнять, не задумываясь о них.
 >
-> - [Альфред Норт Уайтхед] (https://en.wikiquote.org/wiki/alfred_north_whitehead), введение в математику (1911)
+> - [Альфред Норт Уайтхед] (https://en.wikiquote.org/wiki/Alfred_North_Whitehead), Введение в математику (1911)
 
 API may stand for Application *Programming* Interface, but humans have to be able to read the APIs, too; someone has to do the programming. Django REST Framework supports generating human-friendly HTML output for each resource when the `HTML` format is requested. These pages allow for easy browsing of resources, as well as forms for submitting data to the resources using `POST`, `PUT`, and `DELETE`.
 
-API может соответствовать приложению * Программирование * интерфейс, но люди тоже должны читать API;
-Кто -то должен сделать программирование.
-Django Rest Framework поддерживает генерацию HTML-вывода для человека для каждого ресурса, когда запрошен формат `html`.
-Эти страницы позволяют легко просматривать ресурсы, а также формы для отправки данных в ресурсы с использованием «post», «put» и «Delete».
+API может означать интерфейс прикладного *программирования*, но люди тоже должны уметь читать API; кто-то должен заниматься программированием. Django REST Framework поддерживает генерацию удобного для человека HTML вывода для каждого ресурса, когда запрашивается формат `HTML`. Эти страницы позволяют легко просматривать ресурсы, а также формы для отправки данных на ресурсы с помощью `POST`, `PUT` и `DELETE`.
 
 ## URLs
 
-## URLS
+## URLs
 
 If you include fully-qualified URLs in your resource output, they will be 'urlized' and made clickable for easy browsing by humans. The `rest_framework` package includes a [`reverse`](../api-guide/reverse.md) helper for this purpose.
 
-Если вы включите полностью квалифицированные URL-адреса в свой вывод ресурса, они будут «наклейки» и сделаны кликбельными для легкого просмотра людьми.
-Пакет `rest_framework` включает в себя помощник [` reverse`] (../ api-guide/reample.md) для этой цели.
+Если вы включите полные URL-адреса в вывод ресурсов, они будут "урлизованы" и станут кликабельными для удобного просмотра людьми. Для этого в пакет `rest_framework` включен помощник [`reverse`](../api-guide/reverse.md).
 
 ## Formats
 
-## форматы
+## Форматы
 
 By default, the API will return the format specified by the headers, which in the case of the browser is HTML. The format can be specified using `?format=` in the request, so you can look at the raw JSON response in a browser by adding `?format=json` to the URL. There are helpful extensions for viewing JSON in [Firefox](https://addons.mozilla.org/en-US/firefox/addon/jsonview/) and [Chrome](https://chrome.google.com/webstore/detail/chklaanhfefbnpoihckbnefhakgolnmc).
 
-По умолчанию API вернет формат, указанный заголовками, который в случае браузера является HTML.
-Формат может быть указан с помощью `? Format =` в запросе, поэтому вы можете посмотреть на ответ Raw JSON в браузере, добавив `? Format = json` в URL.
-Есть полезные расширения для просмотра JSON в [Firefox] (https://addons.mozilla.org/en-us/firefox/addon/jsonview/) и [chrome] (https://chrome.google.com/webstore/
-Деталь/chklaanhfefbnpoihckbnefhakgolnmc).
+По умолчанию API возвращает формат, указанный в заголовках, который в случае браузера является HTML. Формат может быть указан с помощью `?format=` в запросе, поэтому вы можете просмотреть необработанный JSON-ответ в браузере, добавив `?format=json` к URL. Существуют полезные расширения для просмотра JSON в [Firefox](https://addons.mozilla.org/en-US/firefox/addon/jsonview/) и [Chrome](https://chrome.google.com/webstore/detail/chklaanhfefbnpoihckbnefhakgolnmc).
 
 ## Customizing
 
@@ -46,16 +37,15 @@ By default, the API will return the format specified by the headers, which in th
 
 The browsable API is built with [Twitter's Bootstrap](https://getbootstrap.com/) (v 3.4.1), making it easy to customize the look-and-feel.
 
-API Browsable создан с помощью Bootstrap [witter] (https://getbootstrap.com/) (v 3.4.1), что облегчает настройку внешнего вида.
+Просматриваемый API построен с использованием [Twitter's Bootstrap](https://getbootstrap.com/) (v 3.4.1), что позволяет легко настраивать внешний вид.
 
 To customize the default style, create a template called `rest_framework/api.html` that extends from `rest_framework/base.html`. For example:
 
-Чтобы настроить стиль по умолчанию, создайте шаблон под названием `rest_framework/api.html`, который простирается от` rest_framework/base.html`.
-Например:
+Чтобы настроить стиль по умолчанию, создайте шаблон `rest_framework/api.html`, который расширяется от `rest_framework/base.html`. Например:
 
 **templates/rest_framework/api.html**
 
-** шаблоны/rest_framework/api.html **
+**templates/rest_framework/api.html**
 
 ```
 {% extends "rest_framework/base.html" %}
@@ -65,12 +55,11 @@ To customize the default style, create a template called `rest_framework/api.htm
 
 ### Overriding the default theme
 
-### Переоценка тема по умолчанию
+### Переопределение темы по умолчанию
 
 To replace the default theme, add a `bootstrap_theme` block to your `api.html` and insert a `link` to the desired Bootstrap theme css file. This will completely replace the included theme.
 
-Чтобы заменить тему по умолчанию, добавьте блок `bootstrap_theme` в свой a api.html` и вставьте` ссылку в нужную файл CSS -файла Bootstrap.
-Это полностью заменит включенную тему.
+Чтобы заменить тему по умолчанию, добавьте блок `bootstrap_theme` в ваш `api.html` и вставьте `ссылку` на нужный css-файл темы Bootstrap. Это полностью заменит включенную тему.
 
 ```
 {% block bootstrap_theme %}
@@ -80,14 +69,11 @@ To replace the default theme, add a `bootstrap_theme` block to your `api.html` a
 
 Suitable pre-made replacement themes are available at [Bootswatch](https://bootswatch.com/). To use any of the Bootswatch themes, simply download the theme's `bootstrap.min.css` file, add it to your project, and replace the default one as described above. Make sure that the Bootstrap version of the new theme matches that of the default theme.
 
-Подходящие предварительные темы замены доступны по адресу [bootswatch] (https://bootswatch.com/).
-Чтобы использовать любую из тем Bootswatch, просто загрузите файл темы `bootstrap.min.css
-Убедитесь, что версия новой темы Bootstrap соответствует версии темы по умолчанию.
+Подходящие готовые темы для замены доступны на сайте [Bootswatch](https://bootswatch.com/). Чтобы использовать любую из тем Bootswatch, просто скачайте файл `bootstrap.min.css` этой темы, добавьте его в свой проект и замените тему по умолчанию, как описано выше. Убедитесь, что версия Bootstrap новой темы совпадает с версией темы по умолчанию.
 
 You can also change the navbar variant, which by default is `navbar-inverse`, using the `bootstrap_navbar_variant` block. The empty `{% block bootstrap_navbar_variant %}{% endblock %}` will use the original Bootstrap navbar style.
 
-Вы также можете изменить вариант Navbar, который по умолчанию является `navbar-enverse`, используя блок` bootstrap_navbar_variant`.
-Пустое `{ % block bootstrap_navbar_variant %} { % endblock %}` будет использовать оригинальный стиль Navbar Bootstrap.
+Вы также можете изменить вариант navbar, который по умолчанию является `navbar-inverse`, используя блок `bootstrap_navbar_variant`. Пустой блок `{% block bootstrap_navbar_variant %}{% endblock %}` будет использовать оригинальный стиль навигационной панели Bootstrap.
 
 Full example:
 
@@ -105,37 +91,37 @@ Full example:
 
 For more specific CSS tweaks than simply overriding the default bootstrap theme you can override the `style` block.
 
-Для более конкретных настроек CSS, чем просто переопределение темы начальной загрузки по умолчанию, вы можете переопределить блок `style '.
+Для более специфических настроек CSS, чем просто переопределение темы bootstrap по умолчанию, вы можете переопределить блок `style`.
 
 ---
 
 ![Cerulean theme](../img/cerulean.png)
 
-! [Церулеанская тема] (../ img/cerulean.png)
+![Cerulean theme](../img/cerulean.png)
 
 *Screenshot of the bootswatch 'Cerulean' theme*
 
-*Скриншот темы Bootswatch 'Cerulean'*
+*Скриншот загрузочной темы "Cerulean".
 
 ---
 
 ![Slate theme](../img/slate.png)
 
-! [Slate Theme] (../ img/slate.png)
+![Тема Slate](../img/slate.png)
 
 *Screenshot of the bootswatch 'Slate' theme*
 
-*Снимок экрана из темы Bootswatch 'Slate'*
+*Скриншот темы bootswatch 'Slate'*.
 
 ---
 
 ### Blocks
 
-### блоки
+### Блоки
 
 All of the blocks available in the browsable API base template that can be used in your `api.html`.
 
-Все блоки, доступные в базовом шаблоне API, которые можно использовать в вашем api.html`.
+Все блоки, доступные в просматриваемом базовом шаблоне API, которые можно использовать в вашем `api.html`.
 
 * `body` - The entire html `<body>`.
 * `bodyclass` - Class attribute for the `<body>` tag, empty by default.
@@ -148,35 +134,32 @@ All of the blocks available in the browsable API base template that can be used 
 * `title` - Title of the page.
 * `userlinks` - This is a list of links on the right of the header, by default containing login/logout links. To add links instead of replace, use `{{ block.super }}` to preserve the authentication links.
 
-* `body` - весь html` <body> `.
-* `bodyclass` - атрибут класса для` <<body> `Tag, по умолчанию пусто.
-* `bootstrap_theme` - CSS для темы начальной загрузки.
-* `bootstrap_navbar_variant` - css class для Navbar.
-* `Branding` - раздел брендинга Navbar, см.
-* `Shantcrumbs` - ссылки, показывающие всасывание ресурсов, что позволяет пользователю вернуть ресурсы.
-Рекомендуется сохранить их, но они могут быть переопределены с помощью блока хлебных крошек.
+* ``body`` - Весь html `<body>`.
+* `bodyclass` - Атрибут класса для тега `<body>`, по умолчанию пустой.
+* `bootstrap_theme` - CSS для темы Bootstrap.
+* `bootstrap_navbar_variant` - CSS класс для навигационной панели.
+* `branding` - Раздел брендинга navbar, см. [Bootstrap components](https://getbootstrap.com/2.3.2/components.html#navbar).
+* ``хлебные крошки`` - Ссылки, показывающие вложенность ресурсов, позволяющие пользователю вернуться назад по ресурсам. Рекомендуется сохранять их, но их можно переопределить с помощью блока хлебных крошек.
 * `script` - файлы JavaScript для страницы.
-* `style` - CSS StyleShips для страницы.
-* `title` - заголовок страницы.
-* `userLinks` - это список ссылок справа от заголовка, по умолчанию, содержащим ссылки в систему/вход в систему.
-Чтобы добавить ссылки вместо замены, используйте `{{block.super}}`, чтобы сохранить ссылки аутентификации.
+* `style` - Таблицы стилей CSS для страницы.
+* `title` - Заголовок страницы.
+* `userlinks` - Список ссылок справа от заголовка, по умолчанию содержит ссылки для входа/выхода. Чтобы добавить ссылки вместо замены, используйте `{{ block.super }}`, чтобы сохранить ссылки авторизации.
 
 #### Components
 
-#### Составные части
+#### Компоненты
 
 All of the standard [Bootstrap components](https://getbootstrap.com/2.3.2/components.html) are available.
 
-Все стандартные [Bootstrap Components] (https://getbootstrap.com/2.3.2/components.html) доступны.
+Доступны все стандартные [Bootstrap-компоненты](https://getbootstrap.com/2.3.2/components.html).
 
 #### Tooltips
 
-#### Потиски инструментов
+#### Всплывающие подсказки
 
 The browsable API makes use of the Bootstrap tooltips component. Any element with the `js-tooltip` class and a `title` attribute has that title content will display a tooltip on hover events.
 
-API Browsable использует компонент подсказки Bootstrap Tools.
-В любом элементе с классом `js-tooltip` и атрибутом« title »есть этот контент заголовка, отображает подсказку на событиях Hover.
+API с возможностью просмотра использует компонент всплывающих подсказок Bootstrap. Любой элемент с классом `js-tooltip` и атрибутом `title` имеет содержание заголовка, который будет отображать всплывающую подсказку при наведении.
 
 ### Login Template
 
@@ -184,8 +167,7 @@ API Browsable использует компонент подсказки Bootstr
 
 To add branding and customize the look-and-feel of the login template, create a template called `login.html` and add it to your project, eg: `templates/rest_framework/login.html`. The template should extend from `rest_framework/login_base.html`.
 
-Чтобы добавить брендинг и настроить внешний вид шаблона входа в систему, создайте шаблон под названием `Login.html` и добавьте его в свой проект, например:` Templates/REST_FRAMEWORD/LOGIN.HTML`.
-Шаблон должен простираться от `rest_framework/login_base.html`.
+Чтобы добавить брендинг и настроить внешний вид шаблона входа, создайте шаблон `login.html` и добавьте его в свой проект, например: `templates/rest_framework/login.html`. Шаблон должен расширяться от `rest_framework/login_base.html`.
 
 You can add your site name or branding by including the branding block:
 
@@ -201,11 +183,11 @@ You can add your site name or branding by including the branding block:
 
 You can also customize the style by adding the `bootstrap_theme` or `style` block similar to `api.html`.
 
-Вы также можете настроить стиль, добавив блок `bootstrap_theme` или` style`, похожий на `api.html`.
+Вы также можете настроить стиль, добавив блок `bootstrap_theme` или `style`, аналогичный `api.html`.
 
 ### Advanced Customization
 
-### расширенная настройка
+### Расширенная настройка
 
 #### Context
 
@@ -213,7 +195,7 @@ You can also customize the style by adding the `bootstrap_theme` or `style` bloc
 
 The context that's available to the template:
 
-Контекст, который доступен для шаблона:
+Контекст, доступный шаблону:
 
 * `allowed_methods` : A list of methods allowed by the resource
 * `api_settings` : The API settings
@@ -232,48 +214,46 @@ The context that's available to the template:
 * `FORMAT_PARAM` : The view can accept a format override
 * `METHOD_PARAM` : The view can accept a method override
 
-* `Alling_methods`: список методов, разрешенных ресурсом
-* `api_settings`: настройки API
-* `Доступно_FORMATS`: список форматов, разрешенных ресурсом
-* `Drancrumblist`: список ссылок, следуя цепочке вложенных ресурсов
-* `content`: содержание ответа API
-* `description`: описание ресурса, сгенерированное из его доктора
-* `name`: имя ресурса
-* `post_form`: экземпляр формы для использования в форме Post (если разрешено)
-* `put_form`: экземпляр формы для использования формой PUT (если разрешено)
-* `display_edit_forms`: булево, указывающая, будут ли отображаться формы публикации, положения и исправлений
-* `request`: объект запроса
-* `response`: объект ответа
-* `version`: версия Django Rest Framework
-* `view`: представление обрабатывает запрос
-* `Format_param`: представление может принять переопределение формата
-* `Method_param`: представление может принять переопределение метода
+* ``allowed_methods`` : Список методов, разрешенных ресурсу
+* `api_settings` : Настройки API
+* `available_formats` : Список форматов, разрешенных ресурсом
+* ``breadcrumblist`` : Список ссылок, следующих за цепочкой вложенных ресурсов.
+* ``content`` : Содержание ответа API
+* `description` : Описание ресурса, сгенерированное из его doc-строки.
+* `name` : Название ресурса
+* `post_form` : Экземпляр формы для использования POST-формой (если разрешено)
+* `put_form` : Экземпляр формы для использования формой PUT (если разрешено)
+* `display_edit_forms` : Булево значение, указывающее, будут ли отображаться формы POST, PUT и PATCH.
+* `request` : Объект запроса
+* `response` : Объект ответа
+* `version` : Версия Django REST Framework
+* `view` : Представление, обрабатывающее запрос.
+* `FORMAT_PARAM` : Представление может принимать переопределение формата
+* `METHOD_PARAM` : Представление может принимать переопределение метода
 
 You can override the `BrowsableAPIRenderer.get_context()` method to customise the context that gets passed to the template.
 
-Вы можете переопределить метод `browsableApirenderer.get_context ()` для настройки контекста, который передается в шаблон.
+Вы можете переопределить метод `BrowsableAPIRenderer.get_context()`, чтобы настроить контекст, передаваемый шаблону.
 
 #### Not using base.html
 
-#### не использует base.html
+#### Не используется файл base.html
 
 For more advanced customization, such as not having a Bootstrap basis or tighter integration with the rest of your site, you can simply choose not to have `api.html` extend `base.html`. Then the page content and capabilities are entirely up to you.
 
-Для более продвинутой настройки, такой как отсутствие начальной базы или более жесткой интеграции с остальной частью вашего сайта, вы можете просто выбрать, чтобы не иметь `api.html` Extend` base.html`.
-Тогда контент и возможности страницы полностью зависит от вас.
+Для более продвинутой настройки, например, без основы Bootstrap или более тесной интеграции с остальной частью вашего сайта, вы можете просто не использовать `api.html` и `base.html`. Тогда содержание и возможности страницы будут полностью зависеть от вас.
 
 #### Handling `ChoiceField` with large numbers of items.
 
-#### Обработка `Choicefield` с большим количеством предметов.
+#### Обработка `ChoiceField` с большим количеством элементов.
 
 When a relationship or `ChoiceField` has too many items, rendering the widget containing all the options can become very slow, and cause the browsable API rendering to perform poorly.
 
-Когда отношения или «Choicefield» имеют слишком много элементов, визуализация, содержащая все варианты, может стать очень медленным и привести к тому, что рендеринг API просмотра работает плохо.
+Когда отношения или `ChoiceField` имеют слишком много элементов, рендеринг виджета, содержащего все опции, может стать очень медленным и привести к плохой работе рендеринга API с возможностью просмотра.
 
 The simplest option in this case is to replace the select input with a standard text input. For example:
 
-Самый простой вариант в этом случае - заменить ввод выбора стандартным текстовым вводом.
-Например:
+Самый простой вариант в этом случае - заменить вход select на стандартный текстовый вход. Например:
 
 ```
 author = serializers.HyperlinkedRelatedField(
@@ -288,14 +268,10 @@ author = serializers.HyperlinkedRelatedField(
 
 An alternative, but more complex option would be to replace the input with an autocomplete widget, that only loads and renders a subset of the available options as needed. If you need to do this you'll need to do some work to build a custom autocomplete HTML template yourself.
 
-Альтернативой, но более сложным вариантом будет заменить вход на виджет автозаполнения, который загружает только и делает подмножество доступных параметров по мере необходимости.
-Если вам нужно это сделать, вам нужно сделать некоторую работу, чтобы самостоятельно создать пользовательский шаблон HTML автозаполнения.
+Альтернативным, но более сложным вариантом может быть замена ввода виджетом автозаполнения, который загружает и отображает только подмножество доступных вариантов по мере необходимости. Если вам нужно сделать это, вам придется поработать над созданием собственного HTML-шаблона автозаполнения.
 
 There are [a variety of packages for autocomplete widgets](https://www.djangopackages.com/grids/g/auto-complete/), such as [django-autocomplete-light](https://github.com/yourlabs/django-autocomplete-light), that you may want to refer to. Note that you will not be able to simply include these components as standard widgets, but will need to write the HTML template explicitly. This is because REST framework 3.0 no longer supports the `widget` keyword argument since it now uses templated HTML generation.
 
-Существует [различные пакеты для автоматических виджетов] (https://www.djangopackages.com/grids/g/auto-complete/), такие как [django-autocomplete-light] (https://github.com/
-yourlabs/django-autocoplete-light), на который вы можете обратиться.
-Обратите внимание, что вы не сможете просто включить эти компоненты в качестве стандартных виджетов, но вам нужно будет явно написать шаблон HTML.
-Это связано с тем, что Framework REST 3.0 больше не поддерживает аргумент ключевого слова «виджет», поскольку теперь он использует шаблонную HTML -генерацию.
+Существует [множество пакетов для виджетов автозаполнения](https://www.djangopackages.com/grids/g/auto-complete/), например [django-autocomplete-light](https://github.com/yourlabs/django-autocomplete-light), к которым вы можете обратиться. Обратите внимание, что вы не сможете просто включить эти компоненты в качестве стандартных виджетов, а должны будете написать HTML-шаблон в явном виде. Это связано с тем, что REST framework 3.0 больше не поддерживает аргумент ключевого слова `widget`, поскольку теперь он использует шаблонизированную генерацию HTML.
 
 ---

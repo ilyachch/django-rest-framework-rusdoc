@@ -3,31 +3,29 @@
 >
 > — [JSON API specification for Ember Data](http://jsonapi.org/format/#url-based-json-api).
 
-> Чтобы сохранить HTTP -запросы, может быть удобно отправлять связанные документы вместе с запросом.
+> Для экономии HTTP-запросов может быть удобно отправлять вместе с запросом сопутствующие документы.
 >
->-[JSON API-спецификация для данных Ember] (http://jsonapi.org/format/#url на основе json-api).
+> - [Спецификация JSON API для Ember Data](http://jsonapi.org/format/#url-based-json-api).
 
 # Writable nested serializers
 
-# Вложенные сериалы для записи
+# Вложенные сериализаторы с возможностью записи
 
 Although flat data structures serve to properly delineate between the individual entities in your service, there are cases where it may be more appropriate or convenient to use nested data structures.
 
-Хотя плоские структуры данных служат для правильного разграничения между отдельными объектами в вашей службе, есть случаи, когда может быть более подходящим или удобным для использования вложенных структур данных.
+Хотя плоские структуры данных служат для правильного разграничения отдельных сущностей в вашем сервисе, бывают случаи, когда более целесообразно или удобно использовать вложенные структуры данных.
 
 Nested data structures are easy enough to work with if they're read-only - simply nest your serializer classes and you're good to go. However, there are a few more subtleties to using writable nested serializers, due to the dependencies between the various model instances, and the need to save or delete multiple instances in a single action.
 
-Вложенные структуры данных достаточно просты для работы, если они только для чтения - просто гнездируйте классы сериализатора, и все готово.
-Тем не менее, есть еще несколько тонкостей использования вложенных сериалов с записи, из -за зависимостей между различными экземплярами модели и необходимостью сохранения или удаления нескольких экземпляров в одном действии.
+С вложенными структурами данных достаточно легко работать, если они доступны только для чтения - просто вложите классы сериализатора, и все готово. Однако при использовании вложенных сериализаторов с возможностью записи есть еще несколько тонкостей, связанных с зависимостями между различными экземплярами модели и необходимостью сохранения или удаления нескольких экземпляров одним действием.
 
 ## One-to-many data structures
 
-## Структуры данных One-More
+## Структуры данных "один ко многим
 
 *Example of a **read-only** nested serializer. Nothing complex to worry about here.*
 
-*Пример ** только для чтения ** вложенного сериализатора.
-Здесь не о чем беспокоиться.*
+*Пример вложенного сериализатора **только для чтения**. Здесь нет ничего сложного.*
 
 ```
 class ToDoItemSerializer(serializers.ModelSerializer):
@@ -45,7 +43,7 @@ class ToDoListSerializer(serializers.ModelSerializer):
 
 Some example output from our serializer.
 
-Некоторый пример вывода из нашего сериализатора.
+Некоторые примеры вывода нашего сериализатора.
 
 ```
 {
@@ -60,11 +58,11 @@ Some example output from our serializer.
 
 Let's take a look at updating our nested one-to-many data structure.
 
-Давайте посмотрим на обновление нашей вложенной структуры данных с одним ко многим.
+Давайте рассмотрим обновление нашей вложенной структуры данных "один ко многим".
 
 ### Validation errors
 
-### Ошибки проверки
+### Ошибки валидации
 
 ### Adding and removing items
 
@@ -72,4 +70,4 @@ Let's take a look at updating our nested one-to-many data structure.
 
 ### Making PATCH requests
 
-### Запросы на патч
+### Выполнение PATCH-запросов

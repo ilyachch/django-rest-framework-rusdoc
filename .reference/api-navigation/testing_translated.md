@@ -19,21 +19,21 @@ source:
 >
 > — [Jacob Kaplan-Moss][cite]
 
-> Код без тестов нарушается, как разработано.
+> Код без тестов сломан, как и было задумано.
 >
->-[Джейкоб Каплан-Мосс] [цитирует]
+> - [Джейкоб Каплан-Мосс][cite]
 
 REST framework includes a few helper classes that extend Django's existing test framework, and improve support for making API requests.
 
-Структура REST включает в себя несколько вспомогательных классов, которые расширяют существующую тестовую структуру Django, и улучшают поддержку для выполнения запросов API.
+Фреймворк REST включает несколько вспомогательных классов, которые расширяют существующую тестовую структуру Django и улучшают поддержку выполнения API-запросов.
 
 # APIRequestFactory
 
-# Apirequestfactory
+# APIRequestFactory
 
 Extends [Django's existing `RequestFactory` class][requestfactory].
 
-Extends [Django существующий `requestFactory` class] [requestFactory].
+Расширяет [существующий в Django класс `RequestFactory`][requestfactory].
 
 ## Creating test requests
 
@@ -41,9 +41,7 @@ Extends [Django существующий `requestFactory` class] [requestFactory
 
 The `APIRequestFactory` class supports an almost identical API to Django's standard `RequestFactory` class. This means that the standard `.get()`, `.post()`, `.put()`, `.patch()`, `.delete()`, `.head()` and `.options()` methods are all available.
 
-Класс `apirequestfactory 'поддерживает почти идентичный API для стандартного класса Django` requestFactory'.
-Это означает, что стандарт `.get ()`, `.post ()`, `.put ()`, `.patch ()`, `.delete ()`, `.head ()` и `.
-() `Методы доступны.
+Класс `APIRequestFactory` поддерживает почти такой же API, как и стандартный класс Django `RequestFactory`. Это означает, что все стандартные методы `.get()`, `.post()`, `.put()`, `.patch()`, `.delete()`, `.head()` и `.options()` доступны.
 
 ```
 from rest_framework.test import APIRequestFactory
@@ -55,12 +53,11 @@ request = factory.post('/notes/', {'title': 'new idea'})
 
 #### Using the `format` argument
 
-#### с помощью аргумента `format`
+#### Использование аргумента `формат`
 
 Methods which create a request body, such as `post`, `put` and `patch`, include a `format` argument, which make it easy to generate requests using a content type other than multipart form data. For example:
 
-Методы, которые создают корпус запроса, такие как «post», `put` и` patch ', включают аргумент «формат», который позволяет легко генерировать запросы с использованием типа контента, кроме как многочисленных данных формы.
-Например:
+Методы, создающие тело запроса, такие как `post`, `put` и `patch`, включают аргумент `формат`, что облегчает генерацию запросов, использующих тип содержимого, отличный от многокомпонентных данных формы. Например:
 
 ```
 # Create a JSON POST request
@@ -70,21 +67,19 @@ request = factory.post('/notes/', {'title': 'new idea'}, format='json')
 
 By default the available formats are `'multipart'` and `'json'`. For compatibility with Django's existing `RequestFactory` the default format is `'multipart'`.
 
-По умолчанию доступные форматы: `'Multipart'` и`' json' '.
-Для совместимости с существующим Django `requestFactory 'формат по умолчанию -`' Multipart '.
+По умолчанию доступны форматы `'multipart'' и `'json''. Для совместимости с существующей в Django `RequestFactory` по умолчанию используется формат `'multipart'`.
 
 To support a wider set of request formats, or change the default format, [see the configuration section](#configuration).
 
-Чтобы поддержать более широкий набор форматов запроса или изменить формат по умолчанию, [см. Раздел конфигурации] (#configuration).
+Чтобы поддерживать более широкий набор форматов запросов или изменить формат по умолчанию, [см. раздел конфигурации](#configuration).
 
 #### Explicitly encoding the request body
 
-#### явно кодируя корпус запроса
+#### Явное кодирование тела запроса
 
 If you need to explicitly encode the request body, you can do so by setting the `content_type` flag. For example:
 
-Если вам нужно явно кодировать тело запроса, вы можете сделать это, установив флаг `content_type`.
-Например:
+Если вам нужно явно закодировать тело запроса, вы можете сделать это, установив флаг `content_type`. Например:
 
 ```
 request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_type='application/json')
@@ -92,15 +87,15 @@ request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_typ
 
 #### PUT and PATCH with form data
 
-#### положить и исправить данные
+#### PUT и PATCH с данными формы
 
 One difference worth noting between Django's `RequestFactory` and REST framework's `APIRequestFactory` is that multipart form data will be encoded for methods other than just `.post()`.
 
-Одно отличие, которое стоит отметить между `QuequistFactory` и Framework's Framework Django, - это то, что многочисленные данные формы будут закодированы для других методов, отличных от` .post () `.
+Стоит отметить одно отличие между `RequestFactory` Django и `APIRequestFactory` фреймворка REST в том, что данные многочастной формы будут закодированы для методов, отличных от `.post()`.
 
 For example, using `APIRequestFactory`, you can make a form PUT request like so:
 
-Например, используя `apirequestfactory`, вы можете сделать запрос на форму, как SO:
+Например, используя `APIRequestFactory`, вы можете сделать запрос формы PUT следующим образом:
 
 ```
 factory = APIRequestFactory()
@@ -109,7 +104,7 @@ request = factory.put('/notes/547/', {'title': 'remember to email dave'})
 
 Using Django's `RequestFactory`, you'd need to explicitly encode the data yourself:
 
-Используя Django `requestFactory`, вам нужно явно кодировать данные самостоятельно:
+Используя `RequestFactory` от Django, вам придется явно кодировать данные самостоятельно:
 
 ```
 from django.test.client import encode_multipart, RequestFactory
@@ -123,15 +118,15 @@ request = factory.put('/notes/547/', content, content_type=content_type)
 
 ## Forcing authentication
 
-## принуждение аутентификации
+## Принудительная аутентификация
 
 When testing views directly using a request factory, it's often convenient to be able to directly authenticate the request, rather than having to construct the correct authentication credentials.
 
-При тестировании представлений непосредственно с использованием завода запроса часто удобно иметь возможность напрямую аутентифицировать запрос, а не создавать правильные учетные данные аутентификации.
+При тестировании представлений непосредственно с помощью фабрики запросов часто бывает удобно иметь возможность напрямую аутентифицировать запрос, а не создавать правильные учетные данные для аутентификации.
 
 To forcibly authenticate a request, use the `force_authenticate()` method.
 
-Чтобы насильно аутентифицировать запрос, используйте метод `force_authenticate ()`.
+Чтобы принудительно аутентифицировать запрос, используйте метод `force_authenticate()`.
 
 ```
 from rest_framework.test import force_authenticate
@@ -148,12 +143,11 @@ response = view(request)
 
 The signature for the method is `force_authenticate(request, user=None, token=None)`. When making the call, either or both of the user and token may be set.
 
-Подписью для метода является `force_authenticate (запрос, user = none, token = none)`.
-При совершении вызова может быть установлен один или оба пользователя и токена.
+Подпись для метода - `force_authenticate(request, user=None, token=None)`. При выполнении вызова может быть задан пользователь и токен или оба.
 
 For example, when forcibly authenticating using a token, you might do something like the following:
 
-Например, при насильственном аутентификации с использованием токена вы можете сделать что -то вроде следующего:
+Например, при принудительной аутентификации с помощью маркера вы можете сделать что-то вроде следующего:
 
 ```
 user = User.objects.get(username='olivia')
@@ -165,20 +159,17 @@ force_authenticate(request, user=user, token=user.auth_token)
 
 **Note**: `force_authenticate` directly sets `request.user` to the in-memory `user` instance. If you are re-using the same `user` instance across multiple tests that update the saved `user` state, you may need to call [`refresh_from_db()`](https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.refresh_from_db) between tests.
 
-** ПРИМЕЧАНИЕ **: `force_authenticate` напрямую устанавливает` request.user` экземпляру `user`’ in-memory.
-Если вы повторно используете один и тот же экземпляр `user` на нескольких тестах, которые обновляют сохраненное состояние` user`, вам может потребоваться позвонить [`refresh_from_db ()`] (https://docs.djangoproject.com/en/stable
-/ref/models/instances/#django.db.models.model.refresh_from_db) между тестами.
+**Примечание**: `force_authenticate` напрямую устанавливает `request.user` в экземпляр `user` в памяти. Если вы повторно используете один и тот же экземпляр `user` в нескольких тестах, которые обновляют сохраненное состояние `user`, вам может понадобиться вызывать [`refresh_from_db()`](https://docs.djangoproject.com/en/stable/ref/models/instances/#django.db.models.Model.refresh_from_db) между тестами.
 
 ---
 
 **Note**: When using `APIRequestFactory`, the object that is returned is Django's standard `HttpRequest`, and not REST framework's `Request` object, which is only generated once the view is called.
 
-** ПРИМЕЧАНИЕ **: При использовании `apirequestfactory` возвращаемый объект - это стандартный объект Django` httprequest`, а не объект REST Framework `request`, который генерируется только после того, как вид будет вызван.
+**Примечание**: При использовании `APIRequestFactory`, возвращаемый объект - это стандартный `HttpRequest` Django, а не объект `Request` фреймворка REST, который генерируется только после вызова представления.
 
 This means that setting attributes directly on the request object may not always have the effect you expect. For example, setting `.token` directly will have no effect, and setting `.user` directly will only work if session authentication is being used.
 
-Это означает, что настройка атрибутов непосредственно на объект запроса не всегда может иметь эффект, который вы ожидаете.
-Например, настройка `.token` напрямую не будет иметь эффекта, и настройка` .user` напрямую будет работать только в случае использования аутентификации сеанса.
+Это означает, что установка атрибутов непосредственно на объект запроса не всегда может иметь ожидаемый эффект. Например, установка `.token` напрямую не будет иметь никакого эффекта, а установка `.user` напрямую будет работать только при использовании сеансовой аутентификации.
 
 ```
 # Request will only authenticate if `SessionAuthentication` is in use.
@@ -191,12 +182,11 @@ response = view(request)
 
 ## Forcing CSRF validation
 
-## вынуждение проверки CSRF
+## Принудительная проверка CSRF
 
 By default, requests created with `APIRequestFactory` will not have CSRF validation applied when passed to a REST framework view. If you need to explicitly turn CSRF validation on, you can do so by setting the `enforce_csrf_checks` flag when instantiating the factory.
 
-По умолчанию запросы, созданные с помощью `apirequestfactory` не будут иметь проверку CSRF, применяются при передаче в представление структуры REST.
-Если вам нужно явно включить валидацию CSRF, вы можете сделать это, установив флаг `reforce_csrf_checks` при создании завода.
+По умолчанию запросы, созданные с помощью `APIRequestFactory`, не будут проходить проверку CSRF при передаче в представление REST-фреймворка. Если вам необходимо явно включить проверку CSRF, вы можете сделать это, установив флаг `enforce_csrf_checks` при инстанцировании фабрики.
 
 ```
 factory = APIRequestFactory(enforce_csrf_checks=True)
@@ -206,29 +196,25 @@ factory = APIRequestFactory(enforce_csrf_checks=True)
 
 **Note**: It's worth noting that Django's standard `RequestFactory` doesn't need to include this option, because when using regular Django the CSRF validation takes place in middleware, which is not run when testing views directly. When using REST framework, CSRF validation takes place inside the view, so the request factory needs to disable view-level CSRF checks.
 
-** ПРИМЕЧАНИЕ **: Стоит отметить, что стандартный `requestFactory 'Django не должен включать эту опцию, потому что при использовании обычного Django проверка CSRF происходит в промежуточном программном обеспечении, которое не выполняется при непосредственном тестировании видов.
-При использовании Framework REST, проверка CSRF происходит внутри представления, поэтому заводская фабрика необходимо отключить проверки CSRF на уровне представления.
+**Примечание**: Стоит отметить, что стандартная фабрика запросов Django `RequestFactory` не должна включать эту опцию, потому что при использовании обычного Django проверка CSRF происходит в промежуточном ПО, которое не запускается при тестировании представлений напрямую. При использовании фреймворка REST проверка CSRF происходит внутри представления, поэтому в фабрике запросов необходимо отключить проверку CSRF на уровне представления.
 
 ---
 
 # APIClient
 
-# Apiclient
+# APIClient
 
 Extends [Django's existing `Client` class](https://docs.djangoproject.com/en/stable/topics/testing/tools/#the-test-client).
 
-Extends [Django's существующий `client` class] (https://docs.djangoproject.com/en/stable/topics/testing/tools/#the-test-client).
+Расширяет [существующий в Django класс `Client`] (https://docs.djangoproject.com/en/stable/topics/testing/tools/#the-test-client).
 
 ## Making requests
 
-## Делать запросы
+## Выполнение запросов
 
 The `APIClient` class supports the same request interface as Django's standard `Client` class. This means that the standard `.get()`, `.post()`, `.put()`, `.patch()`, `.delete()`, `.head()` and `.options()` methods are all available. For example:
 
-Класс `apiclient` поддерживает тот же интерфейс запроса, что и стандартный класс Django` client`.
-Это означает, что стандарт `.get ()`, `.post ()`, `.put ()`, `.patch ()`, `.delete ()`, `.head ()` и `.
-() `Методы доступны.
-Например:
+Класс `APIClient` поддерживает тот же интерфейс запросов, что и стандартный класс Django `Client`. Это означает, что стандартные методы `.get()`, `.post()`, `.put()`, `.patch()`, `.delete()`, `.head()` и `.options()` доступны. Например:
 
 ```
 from rest_framework.test import APIClient
@@ -239,20 +225,19 @@ client.post('/notes/', {'title': 'new idea'}, format='json')
 
 To support a wider set of request formats, or change the default format, [see the configuration section](#configuration).
 
-Чтобы поддержать более широкий набор форматов запроса или изменить формат по умолчанию, [см. Раздел конфигурации] (#configuration).
+Чтобы поддерживать более широкий набор форматов запросов или изменить формат по умолчанию, [см. раздел конфигурации](#configuration).
 
 ## Authenticating
 
-## аутентификация
+## Аутентификация
 
 #### .login(**kwargs)
 
-#### .login (** kwargs)
+#### .login(**kwargs)
 
 The `login` method functions exactly as it does with Django's regular `Client` class. This allows you to authenticate requests against any views which include `SessionAuthentication`.
 
-Метод `login` функционирует точно так же, как и с обычным классом Django` client '.
-Это позволяет вам аутентифицировать запросы против любых представлений, которые включают «SessionAuthentication».
+Метод `login` функционирует точно так же, как и в обычном классе Django `Client`. Это позволяет вам аутентифицировать запросы к любым представлениям, которые включают `SessionAuthentication`.
 
 ```
 # Make all requests in the context of a logged in session.
@@ -262,7 +247,7 @@ client.login(username='lauren', password='secret')
 
 To logout, call the `logout` method as usual.
 
-Чтобы выходить из системы, вызовите метод `logout` как обычно.
+Чтобы выйти из системы, вызовите метод `logout`, как обычно.
 
 ```
 # Log out
@@ -271,15 +256,15 @@ client.logout()
 
 The `login` method is appropriate for testing APIs that use session authentication, for example web sites which include AJAX interaction with the API.
 
-Метод `login` подходит для тестирования API, которые используют аутентификацию сеанса, например, веб -сайты, которые включают взаимодействие AJAX с API.
+Метод `login` подходит для тестирования API, использующих сеансовую аутентификацию, например, веб-сайтов, включающих AJAX-взаимодействие с API.
 
 #### .credentials(**kwargs)
 
-#### .credentials (** kwargs)
+#### .credentials(**kwargs)
 
 The `credentials` method can be used to set headers that will then be included on all subsequent requests by the test client.
 
-Метод «учетных данных» можно использовать для установки заголовков, которые затем будут включены во все последующие запросы тестовым клиентом.
+Метод `credentials` можно использовать для установки заголовков, которые затем будут включены во все последующие запросы тестового клиента.
 
 ```
 from rest_framework.authtoken.models import Token
@@ -293,8 +278,7 @@ client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
 Note that calling `credentials` a second time overwrites any existing credentials. You can unset any existing credentials by calling the method with no arguments.
 
-Обратите внимание, что вызов «учетных данных» во второй раз перезаписывает любые существующие учетные данные.
-Вы можете не считать любые существующие учетные данные, вызывая метод без аргументов.
+Обратите внимание, что вызов `credentials` во второй раз перезаписывает все существующие учетные данные. Вы можете удалить все существующие учетные данные, вызвав метод без аргументов.
 
 ```
 # Stop including any credentials
@@ -303,19 +287,19 @@ client.credentials()
 
 The `credentials` method is appropriate for testing APIs that require authentication headers, such as basic authentication, OAuth1a and OAuth2 authentication, and simple token authentication schemes.
 
-Метод «учетных данных» подходит для тестирования API, которые требуют заголовков аутентификации, таких как базовая аутентификация, аутентификация OAuth1a и OAuth2 и простые схемы аутентификации токенов.
+Метод `credentials` подходит для тестирования API, требующих заголовков аутентификации, таких как базовая аутентификация, аутентификация OAuth1a и OAuth2, а также простые схемы аутентификации токенов.
 
 #### .force_authenticate(user=None, token=None)
 
-#### .force_authenticate (user = none, token = none)
+#### .force_authenticate(user=None, token=None)
 
 Sometimes you may want to bypass authentication entirely and force all requests by the test client to be automatically treated as authenticated.
 
-Иногда вы можете полностью обойти аутентификацию и заставлять все запросы тестовым клиентом автоматически рассматриваться как аутентификация.
+Иногда вы можете захотеть полностью обойти аутентификацию и заставить все запросы тестового клиента автоматически рассматриваться как аутентифицированные.
 
 This can be a useful shortcut if you're testing the API but don't want to have to construct valid authentication credentials in order to make test requests.
 
-Это может быть полезным ярлыком, если вы тестируете API, но не хотите создавать допустимые учетные данные аутентификации, чтобы выполнить тестовые запросы.
+Это может быть полезным сокращением, если вы тестируете API, но не хотите создавать действительные учетные данные аутентификации для выполнения тестовых запросов.
 
 ```
 user = User.objects.get(username='lauren')
@@ -325,7 +309,7 @@ client.force_authenticate(user=user)
 
 To unauthenticate subsequent requests, call `force_authenticate` setting the user and/or token to `None`.
 
-Чтобы не доставить последующие запросы, вызовите `force_authenticate` на установление пользователя и/или токена на` none`.
+Чтобы не аутентифицировать последующие запросы, вызовите `force_authenticate`, установив для пользователя и/или токена значение `None`.
 
 ```
 client.force_authenticate(user=None)
@@ -333,12 +317,11 @@ client.force_authenticate(user=None)
 
 ## CSRF validation
 
-## Validation
+## Проверка CSRF
 
 By default CSRF validation is not applied when using `APIClient`. If you need to explicitly enable CSRF validation, you can do so by setting the `enforce_csrf_checks` flag when instantiating the client.
 
-По умолчанию валидация CSRF не применяется при использовании `apiclient`.
-Если вам нужно явно включить проверку CSRF, вы можете сделать это, установив флаг `reforce_csrf_checks` при создании клиента.
+По умолчанию проверка CSRF не применяется при использовании `APIClient`. Если вам необходимо явно включить проверку CSRF, вы можете сделать это, установив флаг `enforce_csrf_checks` при инстанцировании клиента.
 
 ```
 client = APIClient(enforce_csrf_checks=True)
@@ -346,30 +329,27 @@ client = APIClient(enforce_csrf_checks=True)
 
 As usual CSRF validation will only apply to any session authenticated views. This means CSRF validation will only occur if the client has been logged in by calling `login()`.
 
-Как обычно, проверка CSRF будет применяться только к любым аутентированным представлениям сеанса.
-Это означает, что проверка CSRF будет происходить только в том случае, если клиент был вошел в систему, вызывая `login ()`.
+Как обычно, проверка CSRF будет применяться только к любым аутентифицированным в сеансе представлениям. Это означает, что проверка CSRF будет происходить только в том случае, если клиент вошел в систему, вызвав `login()`.
 
 ---
 
 # RequestsClient
 
-# Requestsclient
+# RequestsClient
 
 REST framework also includes a client for interacting with your application using the popular Python library, `requests`. This may be useful if:
 
-Framework REST также включает клиента для взаимодействия с вашим приложением с помощью популярной библиотеки Python, `запросы.
-Это может быть полезно, если:
+REST framework также включает клиент для взаимодействия с вашим приложением с помощью популярной библиотеки Python, `requests`. Это может быть полезно, если:
 
 * You are expecting to interface with the API primarily from another Python service, and want to test the service at the same level as the client will see.
 * You want to write tests in such a way that they can also be run against a staging or live environment. (See "Live tests" below.)
 
-* Вы ожидаете взаимодействовать с API в первую очередь из другой службы Python, и хотите проверить службу на том же уровне, что и клиент.
-* Вы хотите написать тесты таким образом, чтобы они также могли быть запущены против постановки или живой среды.
-(См. «Живые тесты» ниже.)
+* Вы предполагаете взаимодействовать с API в основном из другого сервиса Python и хотите протестировать сервис на том же уровне, который будет видеть клиент.
+* Вы хотите написать тесты таким образом, чтобы их можно было запускать в среде постановки или в реальном времени. (См. раздел "Живые тесты" ниже).
 
 This exposes exactly the same interface as if you were using a requests session directly.
 
-Это раскрывает точно тот же интерфейс, что и если вы использовали сеанс запросов напрямую.
+Это предоставляет точно такой же интерфейс, как если бы вы использовали сессию запросов напрямую.
 
 ```
 from rest_framework.test import RequestsClient
@@ -381,29 +361,27 @@ assert response.status_code == 200
 
 Note that the requests client requires you to pass fully qualified URLs.
 
-Обратите внимание, что клиент запроса требует, чтобы вы передали полностью квалифицированные URL -адреса.
+Обратите внимание, что клиент запросов требует передачи полностью определенных URL-адресов.
 
 ## RequestsClient and working with the database
 
-## RequestSclient и работа с базой данных
+## RequestsClient и работа с базой данных
 
 The `RequestsClient` class is useful if you want to write tests that solely interact with the service interface. This is a little stricter than using the standard Django test client, as it means that all interactions should be via the API.
 
-Класс `requestsClient` полезен, если вы хотите написать тесты, которые взаимодействуют исключительно с интерфейсом службы.
-Это немного строго, чем использование стандартного тестового клиента Django, поскольку это означает, что все взаимодействия должны быть через API.
+Класс `RequestsClient` полезен, если вы хотите написать тесты, которые взаимодействуют только с интерфейсом сервиса. Это немного строже, чем использование стандартного тестового клиента Django, поскольку это означает, что все взаимодействия должны осуществляться через API.
 
 If you're using `RequestsClient` you'll want to ensure that test setup, and results assertions are performed as regular API calls, rather than interacting with the database models directly. For example, rather than checking that `Customer.objects.count() == 3` you would list the customers endpoint, and ensure that it contains three records.
 
-Если вы используете `requestsClient`, вы захотите убедиться, что настройка теста, а утверждения результатов выполняются в виде регулярных вызовов API, а не взаимодействовать с моделями базы данных напрямую.
-Например, вместо того, чтобы проверять, что `customer.objects.count () == 3` вы перечислите конечную точку клиентов и убедитесь, что он содержит три записи.
+Если вы используете `RequestsClient`, вам нужно убедиться, что установка тестов и утверждения результатов выполняются как обычные вызовы API, а не взаимодействуют с моделями базы данных напрямую. Например, вместо того чтобы проверять, что `Customer.objects.count() == 3`, вы должны перечислить конечную точку customers и убедиться, что она содержит три записи.
 
 ## Headers & Authentication
 
-## заголовки и аутентификация
+## Заголовки и аутентификация
 
 Custom headers and authentication credentials can be provided in the same way as [when using a standard `requests.Session` instance](https://requests.readthedocs.io/en/master/user/advanced/#session-objects).
 
-Пользовательские заголовки и учетные данные аутентификации могут быть предоставлены так же, как [при использовании стандартного `requests.session` exante] (https://requests.readthedocs.io/en/master/user/advanced/#session-objects).
+Пользовательские заголовки и учетные данные аутентификации могут быть предоставлены так же, как и [при использовании стандартного экземпляра `requests.Session`] (https://requests.readthedocs.io/en/master/user/advanced/#session-objects).
 
 ```
 from requests.auth import HTTPBasicAuth
@@ -414,16 +392,15 @@ client.headers.update({'x-test': 'true'})
 
 ## CSRF
 
-## csrf
+## CSRF
 
 If you're using `SessionAuthentication` then you'll need to include a CSRF token for any `POST`, `PUT`, `PATCH` or `DELETE` requests.
 
-Если вы используете `sessionAuthentication`, вам нужно будет включить токен CSRF для любых запросов` post`, `put`,` patch` или `delete`.
+Если вы используете `SessionAuthentication`, то вам необходимо включить CSRF-токен для любых запросов `POST`, `PUT`, `PATCH` или `DELETE`.
 
 You can do so by following the same flow that a JavaScript based client would use. First, make a `GET` request in order to obtain a CSRF token, then present that token in the following request.
 
-Вы можете сделать это, следуя тому же потоку, который использовал клиент на основе JavaScript.
-Сначала сделайте запрос `get`, чтобы получить токен CSRF, а затем представьте этот токен в следующем запросе.
+Вы можете сделать это, следуя той же схеме, которую использует клиент на базе JavaScript. Сначала сделайте запрос `GET`, чтобы получить маркер CSRF, а затем представьте этот маркер в следующем запросе.
 
 For example...
 
@@ -451,22 +428,21 @@ assert response.status_code == 200
 
 With careful usage both the `RequestsClient` and the `CoreAPIClient` provide the ability to write test cases that can run either in development, or be run directly against your staging server or production environment.
 
-С помощью тщательного использования как `requestsclient, так и« CoreApiclient »предоставляют возможность писать тестовые примеры, которые могут работать либо в разработке, или работать непосредственно против вашего постановочного сервера или производственной среды.
+При тщательном использовании и `RequestsClient`, и `CoreAPIClient` дают возможность писать тестовые примеры, которые можно запускать как в процессе разработки, так и непосредственно на сервере постановки или в производственной среде.
 
 Using this style to create basic tests of a few core pieces of functionality is a powerful way to validate your live service. Doing so may require some careful attention to setup and teardown to ensure that the tests run in a way that they do not directly affect customer data.
 
-Использование этого стиля для создания основных тестов нескольких основных функций является мощным способом подтверждения вашего живого сервиса.
-Это может потребовать некоторого внимания к настройке и разрыв, чтобы гарантировать, что тесты работают таким образом, чтобы они напрямую не влияли на данные клиента.
+Использование этого стиля для создания базовых тестов нескольких основных частей функциональности является мощным способом проверки вашего живого сервиса. Это может потребовать некоторого внимания к настройке и демонтажу, чтобы убедиться, что тесты выполняются таким образом, что они не влияют непосредственно на данные клиента.
 
 ---
 
 # CoreAPIClient
 
-# Coreapiclient
+# CoreAPIClient
 
 The CoreAPIClient allows you to interact with your API using the Python `coreapi` client library.
 
-Coreapiclient позволяет вам взаимодействовать с вашим API с помощью клиентской библиотеки Python `coreapi`.
+CoreAPIClient позволяет вам взаимодействовать с API с помощью клиентской библиотеки Python `coreapi`.
 
 ```
 # Fetch the API schema
@@ -485,11 +461,11 @@ assert(data == [{'name': 'MegaCorp', 'status': 'active'}])
 
 ## Headers & Authentication
 
-## заголовки и аутентификация
+## Заголовки и аутентификация
 
 Custom headers and authentication may be used with `CoreAPIClient` in a similar way as with `RequestsClient`.
 
-Пользовательские заголовки и аутентификация могут использоваться с `coreapiclient` так же, как и с` requestsclient '.
+Пользовательские заголовки и аутентификация могут использоваться с `CoreAPIClient` так же, как и с `RequestsClient`.
 
 ```
 from requests.auth import HTTPBasicAuth
@@ -507,18 +483,17 @@ client.session.headers.update({'x-test': 'true'})
 
 REST framework includes the following test case classes, that mirror the existing [Django's test case classes](https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes), but use `APIClient` instead of Django's default `Client`.
 
-Структура REST включает в себя следующие классы тестового примера, которые отражают существующие [классы тестового примера Django] (https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes),
-Но используйте `apiclient` вместо по умолчанию Django` client '.
+Фреймворк REST включает следующие классы тестовых примеров, которые являются зеркальным отражением существующих [Django's test case classes](https://docs.djangoproject.com/en/stable/topics/testing/tools/#provided-test-case-classes), но используют `APIClient` вместо Django's default `Client`.
 
 * `APISimpleTestCase`
 * `APITransactionTestCase`
 * `APITestCase`
 * `APILiveServerTestCase`
 
-* `ApisimpleTestSact`
-* `ApitransactionTestCase`
-* `Apitestcase`
-* `ApiliveSerVertStAcke`
+* `APISimpleTestCase`.
+* `APITransactionTestCase`
+* `APITestCase`
+* `APILiveServerTestCase`
 
 ## Example
 
@@ -526,8 +501,7 @@ REST framework includes the following test case classes, that mirror the existin
 
 You can use any of REST framework's test case classes as you would for the regular Django test case classes. The `self.client` attribute will be an `APIClient` instance.
 
-Вы можете использовать любой из тестовых примеров REST Framework, как для обычных тестовых примеров Django.
-Атрибутом `self.client` будет экземпляром` apiclient '.
+Вы можете использовать любой из классов тестовых примеров фреймворка REST так же, как и обычные классы тестовых примеров Django. Атрибутом `self.client` будет экземпляр `APIClient`.
 
 ```
 from django.urls import reverse
@@ -552,12 +526,11 @@ class AccountTests(APITestCase):
 
 # URLPatternsTestCase
 
-# Urlpatternstestcase
+# URLPatternsTestCase
 
 REST framework also provides a test case class for isolating `urlpatterns` on a per-class basis. Note that this inherits from Django's `SimpleTestCase`, and will most likely need to be mixed with another test case class.
 
-Структура REST также предоставляет тестовый класс для изоляции `urlPatterns 'для каждого класса.
-Обратите внимание, что это наследует от «SimpleTestSteCase» Джанго, и, скорее всего, потребуется смешать с другим классом тестового примера.
+REST framework также предоставляет класс тестовых примеров для изоляции `urlpatterns` на основе каждого класса. Обратите внимание, что он наследуется от Django `SimpleTestCase`, и, скорее всего, его придется смешивать с другим классом тестовых примеров.
 
 ## Example
 
@@ -595,11 +568,11 @@ class AccountTests(APITestCase, URLPatternsTestCase):
 
 When checking the validity of test responses it's often more convenient to inspect the data that the response was created with, rather than inspecting the fully rendered response.
 
-При проверке достоверности испытательных ответов часто удобнее осмотреть данные, с которыми был создан ответ, а не осматривать полностью отображаемый ответ.
+При проверке достоверности тестовых ответов часто удобнее проверять данные, на основе которых был создан ответ, чем проверять полностью отрисованный ответ.
 
 For example, it's easier to inspect `response.data`:
 
-Например, легче проверить `recsom.data`:
+Например, проще проверить `response.data`:
 
 ```
 response = self.client.get('/users/4/')
@@ -608,7 +581,7 @@ self.assertEqual(response.data, {'id': 4, 'username': 'lauren'})
 
 Instead of inspecting the result of parsing `response.content`:
 
-Вместо проверки результата анализа `response.content`:
+Вместо того чтобы проверять результат разбора `response.content`:
 
 ```
 response = self.client.get('/users/4/')
@@ -617,12 +590,11 @@ self.assertEqual(json.loads(response.content), {'id': 4, 'username': 'lauren'})
 
 ## Rendering responses
 
-## redending ответы
+## Ответы на рендеринг
 
 If you're testing views directly using `APIRequestFactory`, the responses that are returned will not yet be rendered, as rendering of template responses is performed by Django's internal request-response cycle. In order to access `response.content`, you'll first need to render the response.
 
-Если вы тестируете представления непосредственно, используя `apirequestfactory`, возвращаемые ответы еще не будут отображаться, так как рендеринг ответов шаблонов выполняется в цикле внутреннего запроса-ответа Джанго.
-Чтобы получить доступ к `response.content`, вам сначала необходимо привести ответ.
+Если вы тестируете представления напрямую, используя `APIRequestFactory`, возвращаемые ответы еще не будут отрисованы, поскольку отрисовка ответов шаблона выполняется внутренним циклом запроса-ответа Django. Чтобы получить доступ к `response.content`, вам сначала нужно отрендерить ответ.
 
 ```
 view = UserDetail.as_view()
@@ -640,12 +612,11 @@ self.assertEqual(response.content, '{"username": "lauren", "id": 4}')
 
 ## Setting the default format
 
-## Настройка формата по умолчанию
+## Установка формата по умолчанию
 
 The default format used to make test requests may be set using the `TEST_REQUEST_DEFAULT_FORMAT` setting key. For example, to always use JSON for test requests by default instead of standard multipart form requests, set the following in your `settings.py` file:
 
-Формат по умолчанию, используемый для выполнения тестовых запросов, может быть установлен с использованием клавиши настройки `test_request_default_format`.
-Например, чтобы всегда использовать JSON для тестовых запросов по умолчанию вместо стандартных запросов формы Multipart, установите следующее в вашем файле `futs.py`:
+Формат по умолчанию, используемый для выполнения тестовых запросов, можно установить с помощью ключа настройки `TEST_REQUEST_DEFAULT_FORMAT`. Например, чтобы всегда использовать JSON для тестовых запросов по умолчанию вместо стандартных многочастных запросов, установите следующее в файле `settings.py`:
 
 ```
 REST_FRAMEWORK = {
@@ -660,11 +631,11 @@ REST_FRAMEWORK = {
 
 If you need to test requests using something other than multipart or json requests, you can do so by setting the `TEST_REQUEST_RENDERER_CLASSES` setting.
 
-Если вам нужно тестировать запросы, используя что -то другое, кроме запросов Multipart или JSON, вы можете сделать это, установив настройку `test_request_renderer_classes`.
+Если вам нужно протестировать запросы, использующие не многочастичные или json-запросы, вы можете сделать это, установив параметр `TEST_REQUEST_RENDERER_CLASSES`.
 
 For example, to add support for using `format='html'` in test requests, you might have something like this in your `settings.py` file.
 
-Например, чтобы добавить поддержку для использования `format = 'html'` в тестовых запросах, у вас может быть что -то подобное в вашем файле` futs.py.
+Например, чтобы добавить поддержку использования `format='html'` в тестовых запросах, в файле `settings.py` можно сделать что-то вроде этого.
 
 ```
 REST_FRAMEWORK = {
