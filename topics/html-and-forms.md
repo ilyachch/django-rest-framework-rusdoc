@@ -1,42 +1,23 @@
 <!-- TRANSLATED by md-translate -->
-
-# HTML & Forms
-
 # HTML и формы
 
-REST framework is suitable for returning both API style responses, and regular HTML pages. Additionally, serializers can be used as HTML forms and rendered in templates.
-
-REST-фреймворк подходит для возврата как ответов в стиле API, так и обычных HTML-страниц. Кроме того, сериализаторы могут использоваться в качестве HTML-форм и отображаться в шаблонах.
-
-## Rendering HTML
+REST framework подходит для возврата как ответов в стиле API, так и обычных HTML-страниц. Кроме того, сериализаторы могут использоваться в качестве HTML-форм и отображаться в шаблонах.
 
 ## Рендеринг HTML
 
-In order to return HTML responses you'll need to use either `TemplateHTMLRenderer`, or `StaticHTMLRenderer`.
-
 Для возврата HTML-ответов вам нужно использовать либо `TemplateHTMLRenderer`, либо `StaticHTMLRenderer`.
 
-The `TemplateHTMLRenderer` class expects the response to contain a dictionary of context data, and renders an HTML page based on a template that must be specified either in the view or on the response.
-
-Класс `TemplateHTMLRenderer` ожидает, что ответ будет содержать словарь контекстных данных, и создает HTML-страницу на основе шаблона, который должен быть указан либо в представлении, либо в ответе.
-
-The `StaticHTMLRender` class expects the response to contain a string of the pre-rendered HTML content.
+Класс `TemplateHTMLRenderer` ожидает, что ответ будет содержать словарь данных контекста, и создает HTML-страницу на основе шаблона, который должен быть указан либо в представлении, либо в ответе.
 
 Класс `StaticHTMLRender` ожидает, что ответ будет содержать строку предварительно отрендеренного HTML-содержимого.
 
-Because static HTML pages typically have different behavior from API responses you'll probably need to write any HTML views explicitly, rather than relying on the built-in generic views.
-
 Поскольку поведение статических HTML-страниц обычно отличается от поведения ответов API, вам, вероятно, придется писать любые HTML-представления явно, а не полагаться на встроенные типовые представления.
-
-Here's an example of a view that returns a list of "Profile" instances, rendered in an HTML template:
 
 Вот пример представления, которое возвращает список экземпляров "Profile", отображенный в шаблоне HTML:
 
 **views.py**:
 
-**views.py**:
-
-```
+```python
 from my_project.example.models import Profile
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -54,9 +35,7 @@ class ProfileList(APIView):
 
 **profile_list.html**:
 
-**profile_list.html**:
-
-```
+```html
 <html><body>
 <h1>Profiles</h1>
 <ul>
@@ -67,23 +46,15 @@ class ProfileList(APIView):
 </body></html>
 ```
 
-## Rendering Forms
-
-## Формы рендеринга
-
-Serializers may be rendered as forms by using the `render_form` template tag, and including the serializer instance as context to the template.
+## Рендеринг форм
 
 Сериализаторы можно отображать в виде форм, используя тег шаблона `render_form` и включая экземпляр сериализатора в качестве контекста в шаблон.
-
-The following view demonstrates an example of using a serializer in a template for viewing and updating a model instance:
 
 Следующее представление демонстрирует пример использования сериализатора в шаблоне для просмотра и обновления экземпляра модели:
 
 **views.py**:
 
-**views.py**:
-
-```
+```python
 from django.shortcuts import get_object_or_404
 from my_project.example.models import Profile
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -110,9 +81,7 @@ class ProfileDetail(APIView):
 
 **profile_detail.html**:
 
-**profile_detail.html**:
-
-```
+```html
 {% load rest_framework %}
 
 <html><body>
@@ -128,38 +97,26 @@ class ProfileDetail(APIView):
 </body></html>
 ```
 
-### Using template packs
-
 ### Использование пакетов шаблонов
-
-The `render_form` tag takes an optional `template_pack` argument, that specifies which template directory should be used for rendering the form and form fields.
 
 Тег `render_form` принимает необязательный аргумент `template_pack`, который указывает, какой каталог шаблонов должен использоваться для рендеринга формы и полей формы.
 
-REST framework includes three built-in template packs, all based on Bootstrap 3. The built-in styles are `horizontal`, `vertical`, and `inline`. The default style is `horizontal`. To use any of these template packs you'll want to also include the Bootstrap 3 CSS.
-
-Фреймворк REST включает три встроенных пакета шаблонов, все они основаны на Bootstrap 3. Встроенные стили: `горизонтальный`, `вертикальный` и `инлайн`. По умолчанию используется стиль `горизонтальный`. Чтобы использовать любой из этих пакетов шаблонов, вам необходимо также включить CSS Bootstrap 3.
-
-The following HTML will link to a CDN hosted version of the Bootstrap 3 CSS:
+REST framework включает три встроенных пакета шаблонов, все они основаны на Bootstrap 3. Встроенные стили: `horizontal`, `vertical` и `inline`. По умолчанию используется стиль `horizontal`. Чтобы использовать любой из этих пакетов шаблонов, вам необходимо также включить CSS Bootstrap 3.
 
 Следующий HTML будет ссылаться на версию CSS Bootstrap 3, размещенную в CDN:
 
-```
+```html
 <head>
     …
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 ```
 
-Third party packages may include alternate template packs, by bundling a template directory containing the necessary form and field templates.
-
-Пакеты сторонних производителей могут включать альтернативные пакеты шаблонов, в которые входит каталог шаблонов, содержащий необходимые шаблоны форм и полей.
-
-Let's take a look at how to render each of the three available template packs. For these examples we'll use a single serializer class to present a "Login" form.
+Сторонние пакеты могут включать альтернативные пакеты шаблонов, в которые входит каталог шаблонов, содержащий необходимые шаблоны форм и полей.
 
 Давайте рассмотрим, как визуализировать каждый из трех доступных пакетов шаблонов. В этих примерах мы будем использовать один класс сериализатора для представления формы "Вход в систему".
 
-```
+```python
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(
         max_length=100,
@@ -172,21 +129,15 @@ class LoginSerializer(serializers.Serializer):
     remember_me = serializers.BooleanField()
 ```
 
-______________________________________________________________________
-
-#### `rest_framework/vertical`
+---
 
 #### `rest_framework/vertical`.
 
-Presents form labels above their corresponding control inputs, using the standard Bootstrap layout.
-
-Представляет метки формы над соответствующими входами элементов управления, используя стандартный макет Bootstrap.
-
-*This is the default template pack.*
+Представляет ярлыки формы над соответствующими входами элементов управления, используя стандартный макет Bootstrap.
 
 *Это пакет шаблонов по умолчанию.*
 
-```
+```html
 {% load rest_framework %}
 
 ...
@@ -198,25 +149,17 @@ Presents form labels above their corresponding control inputs, using the standar
 </form>
 ```
 
-![Vertical form example](../img/vertical.png)
+![Пример вертикальной формы](https://github.com/encode/django-rest-framework/blob/master/docs/img/vertical.png?raw=true)
 
-![Пример вертикальной формы](../img/vertical.png)
-
-______________________________________________________________________
-
-#### `rest_framework/horizontal`
+---
 
 #### `rest_framework/horizontal`.
 
-Presents labels and controls alongside each other, using a 2/10 column split.
-
 Представляет ярлыки и элементы управления рядом друг с другом, используя разделение колонок 2/10.
-
-*This is the form style used in the browsable API and admin renderers.*
 
 *Это стиль формы, используемый в просматриваемых API и администраторских рендерах.*
 
-```
+```html
 {% load rest_framework %}
 
 ...
@@ -232,21 +175,15 @@ Presents labels and controls alongside each other, using a 2/10 column split.
 </form>
 ```
 
-![Horizontal form example](../img/horizontal.png)
+![Пример горизонтальной формы](https://github.com/encode/django-rest-framework/blob/master/docs/img/horizontal.png?raw=true)
 
-![Пример горизонтальной формы](../img/horizontal.png)
-
-______________________________________________________________________
-
-#### `rest_framework/inline`
+---
 
 #### `rest_framework/inline`.
 
-A compact form style that presents all the controls inline.
-
 Компактный стиль формы, который представляет все элементы управления в линию.
 
-```
+```html
 {% load rest_framework %}
 
 ...
@@ -258,74 +195,46 @@ A compact form style that presents all the controls inline.
 </form>
 ```
 
-![Inline form example](../img/inline.png)
-
-![Пример инлайн-формы](../img/inline.png)
-
-## Field styles
+![Пример инлайн-формы](https://github.com/encode/django-rest-framework/blob/master/docs/img/inline.png?raw=true)
 
 ## Стили полей
 
-Serializer fields can have their rendering style customized by using the `style` keyword argument. This argument is a dictionary of options that control the template and layout used.
-
 Поля сериализатора могут иметь свой стиль рендеринга, настроенный с помощью аргумента ключевого слова `style`. Этот аргумент представляет собой словарь опций, которые управляют используемым шаблоном и макетом.
-
-The most common way to customize the field style is to use the `base_template` style keyword argument to select which template in the template pack should be use.
 
 Наиболее распространенным способом настройки стиля поля является использование ключевого аргумента стиля `base_template`, чтобы выбрать, какой шаблон из пакета шаблонов следует использовать.
 
-For example, to render a `CharField` as an HTML textarea rather than the default HTML input, you would use something like this:
-
 Например, чтобы отобразить `CharField` как HTML textarea, а не как HTML input по умолчанию, вы должны использовать что-то вроде этого:
 
-```
+```python
 details = serializers.CharField(
     max_length=1000,
     style={'base_template': 'textarea.html'}
 )
 ```
 
-If you instead want a field to be rendered using a custom template that is *not part of an included template pack*, you can instead use the `template` style option, to fully specify a template name:
-
 Если вы хотите, чтобы поле отображалось с использованием пользовательского шаблона, который *не является частью включенного пакета шаблонов*, вы можете использовать опцию стиля `template`, чтобы полностью указать имя шаблона:
 
-```
+```python
 details = serializers.CharField(
     max_length=1000,
     style={'template': 'my-field-templates/custom-input.html'}
 )
 ```
 
-Field templates can also use additional style properties, depending on their type. For example, the `textarea.html` template also accepts a `rows` property that can be used to affect the sizing of the control.
-
 Шаблоны полей также могут использовать дополнительные свойства стиля, в зависимости от их типа. Например, шаблон `textarea.html` также принимает свойство `rows`, которое можно использовать для изменения размера элемента управления.
 
-```
+```python
 details = serializers.CharField(
     max_length=1000,
     style={'base_template': 'textarea.html', 'rows': 10}
 )
 ```
 
-The complete list of `base_template` options and their associated style options is listed below.
-
 Полный список опций `base_template` и связанных с ними опций стиля приведен ниже.
 
-| base_template          | Valid field types                                           | Additional style options                       |
-| ---------------------- | ----------------------------------------------------------- | ---------------------------------------------- |
-| input.html             | Any string, numeric or date/time field                      | input_type, placeholder, hide_label, autofocus |
-| textarea.html          | `CharField`                                                 | rows, placeholder, hide_label                  |
-| select.html            | `ChoiceField` or relational field types                     | hide_label                                     |
-| radio.html             | `ChoiceField` or relational field types                     | inline, hide_label                             |
-| select_multiple.html   | `MultipleChoiceField` or relational fields with `many=True` | hide_label                                     |
-| checkbox_multiple.html | `MultipleChoiceField` or relational fields with `many=True` | inline, hide_label                             |
-| checkbox.html          | `BooleanField`                                              | hide_label                                     |
-| fieldset.html          | Nested serializer                                           | hide_label                                     |
-| list_fieldset.html     | `ListField` or nested serializer with `many=True`           | hide_label                                     |
-
-| base_template          | Действительные типы полей                                | Дополнительные параметры стиля                   |
+| base_template          | Правильные типы полей                                    | Дополнительные параметры стиля                   |
 | ---------------------- | -------------------------------------------------------- | ------------------------------------------------ |
-| input.html             | Любое строковое, числовое или поле даты/времени          | тип_ввода, заполнитель, скрытая_метка, автофокус |
+| input.html             | Любое строковое, числовое или поле даты/времени          | input_type, placeholder, hide_label, autofocus   |
 | textarea.html          | `CharField`                                              | rows, placeholder, hide_label                    |
 | select.html            | `ChoiceField` или типы реляционных полей                 | hide_label                                       |
 | radio.html             | `ChoiceField` или реляционные типы поля                  | inline, hide_label                               |
