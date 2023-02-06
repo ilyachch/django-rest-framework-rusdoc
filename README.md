@@ -209,8 +209,6 @@ urlpatterns = [
 * [https://github.com/rufatpro](https://github.com/rufatpro)
 * [Dmitry Plaxunov](https://github.com/fojetin)
 
-Пожалуйста, открывая Pull Request, указывайте меня в качестве ревьюера, так я буду узнавать об этом моментально.
-
 Спасибо всем за помощь в переводе!
 
 Перевод производится с помощью утилиты [md_docs-trans-app](https://github.com/ilyachch/md_docs-trans-app)
