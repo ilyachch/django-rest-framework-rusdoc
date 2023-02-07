@@ -3,7 +3,7 @@
 
 ## Введение
 
-В этом уроке мы рассмотрим создание простого Web API с подсветкой кода для фрагментов кода. Попутно будут представлены различные компоненты, составляющие REST-фреймворк, и вы получите полное представление о том, как все это сочетается друг с другом.
+В этом уроке мы рассмотрим создание простого Web API с подсветкой кода для фрагментов кода. Попутно будут представлены различные компоненты, составляющие DRF, и вы получите полное представление о том, как все это сочетается друг с другом.
 
 Учебник довольно подробный, поэтому перед началом работы вам, вероятно, стоит взять печенье и выпить чашку любимого напитка. Если вам нужен лишь краткий обзор, лучше обратиться к документации [quickstart](../quick-start.md).
 
@@ -17,14 +17,14 @@
 
 Прежде чем делать что-либо еще, мы создадим новую виртуальную среду, используя [venv](https://docs.python.org/3/library/venv.html). Это позволит убедиться, что наша конфигурация пакетов будет изолирована от других проектов, над которыми мы работаем.
 
-```
+```bash
 python3 -m venv env
 source env/bin/activate
 ```
 
 Теперь, когда мы находимся в виртуальной среде, мы можем установить наши зависимости.
 
-```
+```bash
 pip install django
 pip install djangorestframework
 pip install pygments  # We'll be using this for the code highlighting
@@ -36,7 +36,7 @@ pip install pygments  # We'll be using this for the code highlighting
 
 Итак, мы готовы приступить к кодированию. Чтобы начать, давайте создадим новый проект для работы.
 
-```
+```bash
 cd ~
 django-admin startproject tutorial
 cd tutorial
@@ -44,13 +44,13 @@ cd tutorial
 
 После этого мы можем создать приложение, которое мы будем использовать для создания простого Web API.
 
-```
+```bash
 python manage.py startapp snippets
 ```
 
 Нам нужно добавить наше новое приложение `snippets` и приложение `rest_framework` в `INSTALLED_APPS`. Давайте отредактируем файл `tutorial/settings.py`:
 
-```
+```python
 INSTALLED_APPS = [
     ...
     'rest_framework',
@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 
 Для целей этого руководства мы начнем с создания простой модели `Snippet`, которая используется для хранения фрагментов кода. Перейдите к редактированию файла `snippets/models.py`. Примечание: Хорошая практика программирования включает комментарии. Хотя вы найдете их в нашей репозитарной версии этого учебного кода, здесь мы их опустили, чтобы сосредоточиться на самом коде.
 
-```
+```python
 from django.db import models
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
@@ -88,7 +88,7 @@ class Snippet(models.Model):
 
 Нам также потребуется создать начальную миграцию для нашей модели сниппетов и впервые синхронизировать базу данных.
 
-```
+```bash
 python manage.py makemigrations snippets
 python manage.py migrate snippets
 ```
@@ -97,7 +97,7 @@ python manage.py migrate snippets
 
 Первое, что нам нужно для начала работы над нашим Web API, это обеспечить способ сериализации и десериализации экземпляров сниппетов в такие форматы, как `json`. Мы можем сделать это, объявив сериализаторы, которые работают очень похоже на формы Django. Создайте файл в каталоге `snippets` с именем `serializers.py` и добавьте следующее.
 
-```
+```python
 from rest_framework import serializers
 from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 
@@ -141,13 +141,13 @@ class SnippetSerializer(serializers.Serializer):
 
 Прежде чем двигаться дальше, мы ознакомимся с использованием нашего нового класса Serializer. Давайте зайдем в оболочку Django.
 
-```
+```bash
 python manage.py shell
 ```
 
 Хорошо, когда мы разобрались с несколькими импортами, давайте создадим пару фрагментов кода для работы.
 
-```
+```python
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
 from rest_framework.renderers import JSONRenderer
@@ -162,7 +162,7 @@ snippet.save()
 
 Теперь у нас есть несколько экземпляров фрагментов, с которыми можно поиграть. Давайте посмотрим на сериализацию одного из этих экземпляров.
 
-```
+```python
 serializer = SnippetSerializer(snippet)
 serializer.data
 # {'id': 2, 'title': '', 'code': 'print("hello, world")\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}
@@ -170,7 +170,7 @@ serializer.data
 
 На данном этапе мы перевели экземпляр модели в собственные типы данных Python. Для завершения процесса сериализации мы преобразуем данные в `json`.
 
-```
+```python
 content = JSONRenderer().render(serializer.data)
 content
 # b'{"id": 2, "title": "", "code": "print(\\"hello, world\\")\\n", "linenos": false, "language": "python", "style": "friendly"}'
@@ -178,7 +178,7 @@ content
 
 Десериализация аналогична. Сначала мы разбираем поток на собственные типы данных Python...
 
-```
+```python
 import io
 
 stream = io.BytesIO(content)
@@ -187,7 +187,7 @@ data = JSONParser().parse(stream)
 
 ...затем мы восстанавливаем эти собственные типы данных в полностью заполненный экземпляр объекта.
 
-```
+```python
 serializer = SnippetSerializer(data=data)
 serializer.is_valid()
 # True
@@ -201,7 +201,7 @@ serializer.save()
 
 Мы также можем сериализовать наборы запросов вместо экземпляров моделей. Для этого мы просто добавим флаг `many=True` в аргументы сериализатора.
 
-```
+```python
 serializer = SnippetSerializer(Snippet.objects.all(), many=True)
 serializer.data
 # [OrderedDict([('id', 1), ('title', ''), ('code', 'foo = "bar"\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 2), ('title', ''), ('code', 'print("hello, world")\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 3), ('title', ''), ('code', 'print("hello, world")'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])]
@@ -211,11 +211,11 @@ serializer.data
 
 Наш класс `SnippetSerializer` повторяет много информации, которая также содержится в модели `Snippet`. Было бы неплохо, если бы мы могли сделать наш код более лаконичным.
 
-Подобно тому, как Django предоставляет классы `Form` и `ModelForm`, фреймворк REST включает классы `Serializer` и `ModelSerializer`.
+Подобно тому, как Django предоставляет классы `Form` и `ModelForm`, DRF включает классы `Serializer` и `ModelSerializer`.
 
 Давайте рассмотрим рефакторинг нашего сериализатора с помощью класса `ModelSerializer`. Снова откройте файл `snippets/serializers.py` и замените класс `SnippetSerializer` на следующий.
 
-```
+```python
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
@@ -224,7 +224,7 @@ class SnippetSerializer(serializers.ModelSerializer):
 
 Одним из приятных свойств сериализаторов является то, что вы можете просмотреть все поля экземпляра сериализатора, распечатав его представление. Откройте оболочку Django с помощью команды `python manage.py shell`, затем попробуйте выполнить следующее:
 
-```
+```python
 from snippets.serializers import SnippetSerializer
 serializer = SnippetSerializer()
 print(repr(serializer))
@@ -248,7 +248,7 @@ print(repr(serializer))
 
 Отредактируйте файл `snippets/views.py` и добавьте следующее.
 
-```
+```python
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -258,7 +258,7 @@ from snippets.serializers import SnippetSerializer
 
 Корнем нашего API будет представление, которое поддерживает вывод списка всех существующих сниппетов или создание нового сниппета.
 
-```
+```python
 @csrf_exempt
 def snippet_list(request):
     """
@@ -278,11 +278,11 @@ def snippet_list(request):
         return JsonResponse(serializer.errors, status=400)
 ```
 
-Обратите внимание, что, поскольку мы хотим иметь возможность делать POST запросы к этому представлению от клиентов, у которых не будет CSRF токена, мы должны пометить представление как `csrf_exempt`. Это не то, что вы обычно хотите сделать, и представления REST framework на самом деле используют более разумное поведение, чем это, но для наших целей сейчас это подойдет.
+Обратите внимание, что, поскольку мы хотим иметь возможность делать POST запросы к этому представлению от клиентов, у которых не будет CSRF токена, мы должны пометить представление как `csrf_exempt`. Это не то, что вы обычно хотите сделать, и представления DRF на самом деле используют более разумное поведение, чем это, но для наших целей сейчас это подойдет.
 
 Нам также понадобится представление, которое соответствует отдельному фрагменту и может быть использовано для получения, обновления или удаления фрагмента.
 
-```
+```python
 @csrf_exempt
 def snippet_detail(request, pk):
     """
@@ -312,7 +312,7 @@ def snippet_detail(request, pk):
 
 Наконец, нам нужно подключить эти представления. Создайте файл `snippets/urls.py`:
 
-```
+```python
 from django.urls import path
 from snippets import views
 
@@ -324,7 +324,7 @@ urlpatterns = [
 
 Нам также нужно настроить корневой urlconf в файле `tutorial/urls.py`, чтобы включить в нее URL нашего приложения-фрагмента.
 
-```
+```python
 from django.urls import path, include
 
 urlpatterns = [
@@ -342,13 +342,13 @@ Now we can start up a sample server that serves our snippets.
 
 Выйти из оболочки...
 
-```
+```python
 quit()
 ```
 
 ...и запустите сервер разработки Django.
 
-```
+```python
 python manage.py runserver
 
 Validating models...
@@ -365,13 +365,13 @@ Quit the server with CONTROL-C.
 
 Вы можете установить httpie с помощью pip:
 
-```
+```bash
 pip install httpie
 ```
 
 Наконец, мы можем получить список всех сниппетов:
 
-```
+```bash
 http http://127.0.0.1:8000/snippets/
 
 HTTP/1.1 200 OK
@@ -398,7 +398,7 @@ HTTP/1.1 200 OK
 
 Или мы можем получить конкретный фрагмент, обратившись к нему по id:
 
-```
+```bash
 http http://127.0.0.1:8000/snippets/2/
 
 HTTP/1.1 200 OK
