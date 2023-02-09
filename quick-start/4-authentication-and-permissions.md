@@ -14,7 +14,7 @@
 
 Добавьте следующие два поля к модели `Snippet` в `models.py`.
 
-```
+```python
 owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
 highlighted = models.TextField()
 ```
@@ -23,7 +23,7 @@ highlighted = models.TextField()
 
 Нам понадобятся дополнительные импорты:
 
-```
+```python
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
@@ -65,7 +65,7 @@ python manage.py createsuperuser
 
 Теперь, когда у нас есть несколько пользователей для работы, нам лучше добавить представления этих пользователей в наш API. Создать новый сериализатор очень просто. В `serializers.py` добавьте:
 
-```
+```python
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -242,7 +242,7 @@ http POST http://127.0.0.1:8000/snippets/ code="print(123)"
 
 Мы можем сделать успешный запрос, включив в него имя пользователя и пароль одного из пользователей, созданных нами ранее.
 
-```
+```bash
 http -a admin:password123 POST http://127.0.0.1:8000/snippets/ code="print(789)"
 
 {

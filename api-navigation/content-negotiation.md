@@ -16,7 +16,7 @@ DRF использует простой стиль согласования ко
 
 Например, при следующем заголовке `Accept`:
 
-```
+```http
 application/json; indent=4, application/json, application/yaml, text/html, */*
 ```
 

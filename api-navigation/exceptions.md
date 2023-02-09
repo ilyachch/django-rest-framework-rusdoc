@@ -28,7 +28,7 @@ Accept: application/json
 
 Может быть получен ответ об ошибке, указывающий на то, что метод `DELETE` не разрешен для данного ресурса:
 
-```
+```http
 HTTP/1.1 405 Method Not Allowed
 Content-Type: application/json
 Content-Length: 42
@@ -40,7 +40,7 @@ Content-Length: 42
 
 Пример ошибки валидации может выглядеть следующим образом:
 
-```
+```http
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
 Content-Length: 94
@@ -56,7 +56,7 @@ Content-Length: 94
 
 Например, вы можете захотеть убедиться, что все ответы на ошибки включают код состояния HTTP в теле ответа, например, так:
 
-```
+```http
 HTTP/1.1 405 Method Not Allowed
 Content-Type: application/json
 Content-Length: 62

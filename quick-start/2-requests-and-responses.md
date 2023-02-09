@@ -7,7 +7,7 @@
 
 DRF вводит объект `Request`, который расширяет обычный `HttpRequest` и обеспечивает более гибкий разбор запроса. Основной функциональностью объекта `Request` является атрибут `request.data`, который аналогичен `request.POST`, но более полезен для работы с Web API.
 
-```
+```python
 request.POST  # Only handles form data.  Only works for 'POST' method.
 request.data  # Handles arbitrary data.  Works for 'POST', 'PUT' and 'PATCH' methods.
 ```
@@ -16,7 +16,7 @@ request.data  # Handles arbitrary data.  Works for 'POST', 'PUT' and 'PATCH' met
 
 DRF также вводит объект `Response`, который является типом `TemplateResponse`, который принимает неотрендерреное содержимое и использует согласование содержимого для определения правильного типа содержимого для возврата клиенту.
 
-```
+```python
 return Response(data)  # Renders to content type as requested by the client.
 ```
 

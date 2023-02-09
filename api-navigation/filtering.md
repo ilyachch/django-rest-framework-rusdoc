@@ -123,7 +123,7 @@ class UserListView(generics.ListAPIView):
 
 Например, учитывая предыдущий пример и продукт с id `4675`, следующий URL либо вернет соответствующий объект, либо выдаст ответ 404, в зависимости от того, были ли выполнены условия фильтрации для данного экземпляра продукта:
 
-```
+```bash
 http://example.com/api/products/4675/?category=clothing&max_price=10.00
 ```
 
@@ -152,7 +152,7 @@ class PurchasedProductsList(generics.ListAPIView):
 
 ## DjangoFilterBackend
 
-Библиотека [`django-filter`](https://django-filter.readthedocs.io/en/latest/index.html) включает класс `DjangoFilterBackend`, который поддерживает высоконастраиваемую фильтрацию полей для REST-фреймворка.
+Библиотека [`django-filter`](https://django-filter.readthedocs.io/en/latest/index.html) включает класс `DjangoFilterBackend`, который поддерживает высоконастраиваемую фильтрацию полей для DRF.
 
 Чтобы использовать `DjangoFilterBackend`, сначала установите `django-filter`.
 
@@ -200,7 +200,7 @@ class ProductList(generics.ListAPIView):
 
 Это автоматически создаст класс `FilterSet` для заданных полей и позволит вам делать такие запросы, как:
 
-```
+```bash
 http://example.com/api/products?category=clothing&in_stock=True
 ```
 
@@ -228,7 +228,7 @@ class UserListView(generics.ListAPIView):
 
 Это позволит клиенту фильтровать элементы в списке, делая такие запросы, как:
 
-```
+```bash
 http://example.com/api/users?search=russell
 ```
 
@@ -283,23 +283,23 @@ class CustomSearchFilter(filters.SearchFilter):
 
 ![Ordering Filter](https://github.com/encode/django-rest-framework/raw/master/docs/img/ordering-filter.png)
 
-По умолчанию параметр запроса называется `'ordering'', но его можно переопределить с помощью параметра `ORDERING_PARAM'.
+По умолчанию параметр запроса называется `'ordering'`, но его можно переопределить с помощью параметра `ORDERING_PARAM`.
 
 Например, чтобы упорядочить пользователей по имени пользователя:
 
-```
+```bash
 http://example.com/api/users?ordering=username
 ```
 
 Клиент также может указать обратный порядок, добавив к имени поля префикс '-', как показано ниже:
 
-```
+```bash
 http://example.com/api/users?ordering=-username
 ```
 
 Также можно указать несколько порядков:
 
-```
+```bash
 http://example.com/api/users?ordering=account,username
 ```
 
@@ -383,15 +383,15 @@ class IsOwnerFilterBackend(filters.BaseFilterBackend):
 
 Следующие пакеты сторонних производителей предоставляют дополнительные реализации фильтров.
 
-## Пакет фильтров фреймворка Django REST
+## Django-rest-framework-filters
 
 Пакет [django-rest-framework-filters](https://github.com/philipn/django-rest-framework-filters) работает вместе с классом `DjangoFilterBackend` и позволяет вам легко создавать фильтры по отношениям или создавать несколько типов поиска фильтра для заданного поля.
 
-## Django REST framework поиск по словам
+## Djangorestframework-word-filter
 
 [djangorestframework-word-filter](https://github.com/trollknurr/django-rest-framework-word-search-filter) разработан как альтернатива `filters.SearchFilter`, который будет искать полное слово в тексте, или точное совпадение.
 
-## Django URL Filter
+## Django-url-filter
 
 [django-url-filter](https://github.com/miki725/django-url-filter) предоставляет безопасный способ фильтрации данных по удобным для человека URL. Он работает очень похоже на сериализаторы и поля DRF в том смысле, что они могут быть вложенными, за исключением того, что они называются filtersets и filters. Это обеспечивает простой способ фильтрации связанных данных. Также эта библиотека является универсальной, поэтому ее можно использовать для фильтрации других источников данных, а не только Django `QuerySet`.
 
