@@ -1,17 +1,19 @@
+<!-- TRANSLATED by md-translate -->
 # Маршрутизаторы
 
-> Роутинг ресурсов позволяет быстро объявлять все общие маршруты для заданного контроллера ресурса. Вместо объявления отдельных маршрутов... ресурсный маршрут объявляет их одной строчкой кода.
+> Маршрутизация ресурсов позволяет быстро объявить все общие маршруты для данного ресурсного контроллера. Вместо объявления отдельных маршрутов для вашего индекса... ресурсный маршрут объявляет их в одной строке кода.
 >
-> — Документация Ruby on Rails
+> - [Документация Ruby on Rails][https://guides.rubyonrails.org/routing.html]
 
-Некоторые веб фреймворки, как Rails, автоматически реализуют механизм логической свзяи URL'ов приложения с входящими запросами. REST framework добавляет поддержку автоматического роутинга для Джанго, тем самым предоставляя пользователю простой и надежный способ написания логики представлении для набора URL.
+Некоторые веб-фреймворки, такие как Rails, предоставляют функциональность для автоматического определения того, как URL-адреса приложения должны быть сопоставлены с логикой, которая занимается обработкой входящих запросов.
+
+DRF добавляет в Django поддержку автоматической маршрутизации URL и предоставляет вам простой, быстрый и последовательный способ подключения логики представления к набору URL.
 
 ## Использование
 
-Ниже приводится пример простого URL conf с использованием `SimpleRouter`.
+Вот пример простого URL conf, который использует `SimpleRouter`.
 
 ```python
-
 from rest_framework import routers
 
 router = routers.SimpleRouter()
@@ -20,39 +22,39 @@ router.register(r'accounts', AccountViewSet)
 urlpatterns = router.urls
 ```
 
-Метод `register()` должен включать два обязательных аргумента:
-* `prefix` - префикс URL, использующийся с данным набором роутеров.
-* `viewset` - класс viewset.
+У метода `register()` есть два обязательных аргумента:
 
-Опционально вы можете указать дополнительный аргумент:
+* `prefix` - Префикс URL, который будет использоваться для этого набора маршрутов.
+* `viewset` - Класс набора представлений.
 
-* `base_name` - основа для использования с URL именами. Елси аргумент не указан, то базовое имя будет автоматически сгенерировано на основе атрибута queryset из viewset, при наличии такого. Обратите внимание, что если viewset не включает атрибут `queryset`, то вы должны использовать  `base_name` при регистрации viewset.
+По желанию вы можете указать дополнительный аргумент:
 
-Пример выше генерирует следующие URL паттерны: 
+* `basename` - Основа, которую следует использовать для создаваемых имен URL. Если значение не задано, то базовое имя будет автоматически генерироваться на основе атрибута `queryset` набора представлений, если он есть. Обратите внимание, что если набор представлений не включает атрибут `queryset`, то вы должны установить `basename` при регистрации набора представлений.
 
-* URL pattern: `^users/$` Name: `'user-list'`
-* URL pattern: `^users/{pk}/$` Name: `'user-detail'`
-* URL pattern: `^accounts/$` Name: `'account-list'`
-* URL pattern: `^accounts/{pk}/$` Name: `'account-detail'`
+В приведенном выше примере будут сгенерированы следующие шаблоны URL:
+
+* Шаблон URL: `^users/$` Имя: `'user-list'`
+* Шаблон URL: `^users/{pk}/$` Имя: `'user-detail'`
+* Шаблон URL: `^accounts/$` Имя: `'account-list'`
+* Шаблон URL: `^accounts/{pk}/$` Имя: `'account-detail'`
 
 ---
 
-**Примечание:** аргумент `base_name` используется для того, чтобы указать исходную часть паттерна имени представления. В примере выше это часть `user` или `account`.
+**Примечание**: Аргумент `basename` используется для указания начальной части шаблона имени представления. В приведенном выше примере это часть `user` или `account`.
 
-Как правило вам не *требуется* указывать аргументы для `base_name`, но при наличии viewset, в котором вы кастомно определили метод `get_queryset`, viewset может не иметь списка атрибутов `.queryset`. Если вы попробуете зарегистрировать этот viewset, то увидите ошибку, наподобие этой.
+Обычно вам не нужно указывать аргумент `basename`, но если у вас есть набор представлений, в котором вы определили пользовательский метод `get_queryset`, то набор представлений может не иметь атрибута `.queryset`. Если вы попытаетесь зарегистрировать этот набор представлений, вы увидите ошибку, подобную этой:
 
-```python
-
-'base_name' argument not specified, and could not automatically determine the name from the viewset, as it does not have a '.queryset' attribute.
+```text
+'basename' argument not specified, and could not automatically determine the name from the viewset, as it does not have a '.queryset' attribute.
 ```
 
-Это значит, что вам необходимо однозначно указать аргумент `base_name` при регистрации viewset, так как он не может автоматически определяться исходя из имени модели.
+Это означает, что вам нужно будет явно задать аргумент `basename` при регистрации набора представлений, поскольку он не может быть автоматически определен из имени модели.
 
 ---
 
-# Использование `include` с маршрутизаторами
+### Использование `include` с маршрутизаторами
 
-Атрибут `.urls` экземпляра роутера всего навсего является стандартом списка URL паттернов. Существуют разные способы включения этих URL'ов.
+Атрибут `.urls` экземпляра маршрутизатора - это просто стандартный список шаблонов URL. Существует несколько различных стилей для включения этих URL.
 
 Например, вы можете добавить `router.urls` к списку существующих представлений...
 
@@ -62,168 +64,118 @@ router.register(r'users', UserViewSet)
 router.register(r'accounts', AccountViewSet)
 
 urlpatterns = [
-    url(r'^forgot-password/$', ForgotPasswordFormView.as_view()),
+    path('forgot-password/', ForgotPasswordFormView.as_view()),
 ]
 
 urlpatterns += router.urls
 ```
 
-Помимо этого вы можете использовать функцию `include` Django, например...
+В качестве альтернативы вы можете использовать функцию Django `include`, например, так...
 
 ```python
-
 urlpatterns = [
-    url(r'^forgot-password/$', ForgotPasswordFormView.as_view()),
-    url(r'^', include(router.urls)),
+    path('forgot-password', ForgotPasswordFormView.as_view()),
+    path('', include(router.urls)),
 ]
-
 ```
 
-Пространства имен могут быть URL паттернами роутера
+Вы можете использовать `include` с пространством имен приложения:
 
 ```python
-
 urlpatterns = [
-    url(r'^forgot-password/$', ForgotPasswordFormView.as_view()),
-    url(r'^api/', include(router.urls, namespace='api')),
+    path('forgot-password/', ForgotPasswordFormView.as_view()),
+    path('api/', include((router.urls, 'app_name'))),
 ]
-
 ```
 
-При использовании пространства имен с гиперссылочными сериализаторами, вам также нужно удостовериться, что любой параметр `view_name` сериализаторов корректно отражает пространство имен. В примере выше вам потребовалось бы включить параметр `view_name='api:user-detail` для полей сериализатора, которые связаны гиперссылкой с отдельными представлениями пользователя.
+Или как пространство имен приложения и экземпляра:
 
-## Дополнительные ссылки и действия
+```python
+urlpatterns = [
+    path('forgot-password/', ForgotPasswordFormView.as_view()),
+    path('api/', include((router.urls, 'app_name'), namespace='instance_name')),
+]
+```
 
-Любые методы viewset, используемые с декораторами `@detail_route` или `@list_route` также будут маршрутизированы. Например, при использовании данного метода на классе `UserViewSet`:
+Более подробную информацию смотрите в документации Django [URL namespaces docs](https://docs.djangoproject.com/en/4.0/topics/http/urls/#url-namespaces) и в [`include` API reference](https://docs.djangoproject.com/en/4.0/ref/urls/#include).
+
+---
+
+**Примечание**: При использовании пространства имен с гиперссылками в сериализаторах вам также необходимо убедиться, что любые параметры `view_name` в сериализаторах правильно отражают пространство имен. В примерах выше вам нужно будет включить параметр типа `view_name='app_name:user-detail'` для полей сериализатора, гиперссылка на представление подробных данных пользователя.
+
+Для автоматического создания `view_name` используется шаблон типа `%(имя_модели)-detail`. Если только имена ваших моделей не противоречат друг другу, вам, возможно, будет лучше ***не **расставлять имена в представлениях DRF при использовании сериализаторов с гиперссылками.
+
+---
+
+### Маршрутизация для дополнительных действий
+
+Набор представлений может [пометить дополнительные действия для маршрутизации](viewsets.md#marking-extra-actions-for-routing), украсив метод декоратором `@action`. Эти дополнительные действия будут включены в сгенерированные маршруты. Например, дан метод `set_password` для класса `UserViewSet`:
 
 ```python
 from myapp.permissions import IsAdminOrIsSelf
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 
 class UserViewSet(ModelViewSet):
     ...
 
-    @detail_route(methods=['post'], permission_classes=[IsAdminOrIsSelf])
+    @action(methods=['post'], detail=True, permission_classes=[IsAdminOrIsSelf])
     def set_password(self, request, pk=None):
         ...
 ```
 
-Дополнительно будет сгенерирован следующий URL паттерн:
-* URL паттерн: `^users/{pk}/set_password/$` Имя: `'user-set-password'`
+Будет создан следующий маршрут:
 
-Если вы не хотите использовать стандартную генерацию URL для ваших кастомных действий, то  используйте параметр `url_path` для настройки.
+* Шаблон URL: `^users/{pk}/set_password/$`
+* Имя URL: `'user-set-password'`.
 
-Например, если вы хотите изменить URL для вашего кастомного действия на `^users/{pk}/change-password/$`, то можете написать следующее: 
+По умолчанию шаблон URL основан на имени метода, а имя URL представляет собой комбинацию `ViewSet.basename` и имени метода через дефис. Если вы не хотите использовать значения по умолчанию, вы можете указать аргументы `url_path` и `url_name` в декораторе `@action`.
+
+Например, если вы хотите изменить URL для нашего пользовательского действия на `^users/{pk}/change-password/$`, вы можете написать:
 
 ```python
 from myapp.permissions import IsAdminOrIsSelf
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 
 class UserViewSet(ModelViewSet):
     ...
 
-    @detail_route(methods=['post'], permission_classes=[IsAdminOrIsSelf], url_path='change-password')
-    def set_password(self, request, pk=None):
-        ...
-```
-Этот пример сгенерирует следующий URL паттерн:
-
-* URL паттерн: `^users/{pk}/change-password/$` Имя: `'user-change-password'`
-
-Если вы не хотите использовать стандартные имена для ваших кастомных действий, то можете использовать параметр `url_name` для настройки.
-
-Например, если вы хотите изменить имя вашего кастомного действия на `'user-change-password'`, то можете написать следующее:
-
-```python 
-from myapp.permissions import IsAdminOrIsSelf
-from rest_framework.decorators import detail_route
-
-class UserViewSet(ModelViewSet):
-    ...
-
-    @detail_route(methods=['post'], permission_classes=[IsAdminOrIsSelf], url_name='change-password')
+    @action(methods=['post'], detail=True, permission_classes=[IsAdminOrIsSelf],
+            url_path='change-password', url_name='change_password')
     def set_password(self, request, pk=None):
         ...
 ```
 
-Этот пример сгенерирует следующий URL паттерн:
+Приведенный выше пример теперь будет генерировать следующий шаблон URL:
 
-* URL паттерн: `^users/{pk}/set_password/$` Имя: `'user-change-password'`
+* URL путь: `^users/{pk}/change-password/$`
+* Имя URL: `'user-change_password'`.
 
-Вы также можете использовать параметр `url_path` и `url_name` вместе, чтобы дополнительно контролировать генерирование URL для кастомных представлений.
-
-Для дополнительно информации смотри документацию viewset о создании [дополнительных действий для маршрутизатора](viewsets.md).
-
-# Руководство API
+# Руководство по API
 
 ## SimpleRouter
 
-Этот роутер включает маршруты для стандартного набора действий  `list`, `create`, `retrieve`, `update`, `partial_update` и `destroy`. Viewset также может выделить дополнительные методы для маршрутизации, использя декораторы `@detail_route` или `@list_route`.
+Этот маршрутизатор включает маршруты для стандартного набора действий `list`, `create`, `retrieve`, `update`, `partial_update` и `destroy`. Набор представлений также может отметить дополнительные методы для маршрутизации, используя декоратор `@action`.
 
-<style type="text/css">
-    .tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-    .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
-    .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
-    .tg .tg-yw4l{vertical-align:top}
-</style>
-<table class="tg">
-  <tr>
-    <th class="tg-yw4l">URL Style</th>
-    <th class="tg-yw4l">Метод HTTP </th>
-    <th class="tg-yw4l">Действие</th>
-    <th class="tg-yw4l">Имя URL</th>
-  </tr>
-  <tr>
-    <td class="tg-yw4l" rowspan="2">{prefix}/</td>
-    <td class="tg-yw4l">GET</td>
-    <td class="tg-yw4l">list</td>
-    <td class="tg-yw4l" rowspan="2">{basename}-list</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">POST</td>
-    <td class="tg-yw4l">create</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">{prefix}/{lookup}/</td>
-    <td class="tg-yw4l">GET, или как указано в аргументах `методов`</td>
-    <td class="tg-yw4l">метод декоратор `@list_route`</td>
-    <td class="tg-yw4l">{basename}-{methodname}</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l" rowspan="4">{prefix}/{lookup}/{methodname}/</td>
-    <td class="tg-yw4l">GET</td>
-    <td class="tg-yw4l">retrieve</td>
-    <td class="tg-yw4l" rowspan="4">{basename}-detail</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">PUT</td>
-    <td class="tg-yw4l">update</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">PATCH</td>
-    <td class="tg-yw4l">partial_update</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">DELETE</td>
-    <td class="tg-yw4l">destroy</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">{prefix}/{lookup}/{methodname}/</td>
-    <td class="tg-yw4l">GET, или как указано в аргументах `методов`</td>
-    <td class="tg-yw4l">метод декоратор `@detail_route`</td>
-    <td class="tg-yw4l">{basename}-{methodname}</td>
-  </tr>
-</table>
+| URL Style                     | HTTP Method                                | Action                                     | URL Name              |
+| ----------------------------- | ------------------------------------------ | ------------------------------------------ | --------------------- |
+| {prefix}/                     | GET                                        | list                                       | {basename}-list       |
+|                               | POST                                       | create                                     |                       |
+| {prefix}/{url_path}/          | GET, или как указано в аргументе `methods` | метод с декоратором `@action(detail=False)`| {basename}-{url_name} |
+| {prefix}/{lookup}/            | GET                                        | retrieve                                   | {basename}-detail     |
+|                               | PUT                                        | update                                     |                       |
+|                               | PATCH                                      | partial_update                             |                       |
+|                               | DELETE                                     | destroy                                    |                       |
+| {prefix}/{lookup}/{url_path}/ | GET, или как указано в аргументе `methods` | метод с декоратором `@action(detail=True)` | {basename}-{url_name} |
 
-По умолчанию URL'ы, созданные `SimpleRouter` замыкаются слешем. Это поведение можно изменить, поставив `False` в настройке аргумента `trailing_slash` при инициализации роутера. Например:
+По умолчанию URL, создаваемые `SimpleRouter`, дополняются косой чертой. Это поведение можно изменить, установив аргумент `trailing_slash` в `False` при инстанцировании маршрутизатора. Например:
 
 ```python
 router = SimpleRouter(trailing_slash=False)
 ```
 
-Замыкающие слеши очень удобны в Джанго, но они не используются по умолчанию в некоторых других фреймворка, таких как Rails. Что использовать - остается на ваше усмотрение, но некоторые javascript фреймоврки могут ожидать особого стиля роутеров.
+В Django косые черты являются традиционными, но не используются по умолчанию в некоторых других фреймворках, таких как Rails. Какой стиль использовать - это в основном вопрос предпочтений, хотя некоторые javascript-фреймворки могут ожидать определенного стиля маршрутизации.
 
-Роутер будет сопоставлять значения lookup, содержащие любые символы, кроме слешей и знаков препинания. Для более жетского (или наоборот, менее требовательного) паттерна поиска пропишите атбрибут `lookup_value_regex` в viewset. Например, вы можете ограничить поиски валидными UUID:
+Маршрутизатор будет сопоставлять значения поиска, содержащие любые символы, кроме косой черты и точки. Для более строгого (или мягкого) шаблона поиска установите атрибут `lookup_value_regex` для набора представлений. Например, вы можете ограничить поиск действительными UUID:
 
 ```python
 class MyModelViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -233,116 +185,67 @@ class MyModelViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
 ## DefaultRouter
 
-Этот роутер похож на `SimpleRouter`, который мы рассматривали выше, но помимо этого дополнительно включает корневое представление API, которое возвращает ответ, содержащий гиперссылки ко всем представлениям списка. Он также генерирует роутеры для опционального стиля в формате `.json`.
+Этот маршрутизатор похож на `SimpleRouter`, но дополнительно включает корневое представление API по умолчанию, которое возвращает ответ, содержащий гиперссылки на все представления списка. Он также генерирует маршруты для необязательных суффиксов формата `.json`.
 
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
-.tg .tg-yw4l{vertical-align:top}
-</style>
-<table class="tg">
-  <tr>
-    <th class="tg-yw4l">URL Style</th>
-    <th class="tg-yw4l">Метод HTTP </th>
-    <th class="tg-yw4l">Действие</th>
-    <th class="tg-yw4l">Имя URL</th>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">[.format]</td>
-    <td class="tg-yw4l">GET</td>
-    <td class="tg-yw4l">автоматически генерирует корневое представление</td>
-    <td class="tg-yw4l">api-root</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l" rowspan="2">{prefix}/[.format]</td>
-    <td class="tg-yw4l">GET</td>
-    <td class="tg-yw4l">list</td>
-    <td class="tg-yw4l" rowspan="2">{basename}-list</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">POST</td>
-    <td class="tg-yw4l">create</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">{prefix}/{methodname}/[.format]</td>
-    <td class="tg-yw4l">GET, или как указано в аргументах `методов`</td>
-    <td class="tg-yw4l">метод декоратор `@list_route`</td>
-    <td class="tg-yw4l">{basename}-{methodname}</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l" rowspan="4">{prefix}/{lookup}/[.format]</td>
-    <td class="tg-yw4l">GET</td>
-    <td class="tg-yw4l">retrieve</td>
-    <td class="tg-yw4l" rowspan="4">{basename}-detail</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">PUT</td>
-    <td class="tg-yw4l">update</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">PATCH</td>
-    <td class="tg-yw4l">partial_update</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">DELETE</td>
-    <td class="tg-yw4l">destroy</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">{prefix}/{lookup}/{methodname}/[.format]</td>
-    <td class="tg-yw4l">GET, или как указано в аргументах `методов`</td>
-    <td class="tg-yw4l">метод декоратор `@detail_route`</td>
-    <td class="tg-yw4l">{basename}-{methodname}</td>
-  </tr>
-</table>
+| URL Style                              | HTTP Method                                | Action                                               | URL Name              |
+| -------------------------------------- | ------------------------------------------ | ---------------------------------------------------- | --------------------- |
+| [.format]                              | GET                                        | автоматически сгенерированное корневое представление | api-root              |
+| {prefix}/[.format]                     | GET                                        | list                                                 | {basename}-list       |
+|                                        | POST                                       | create                                               |                       |
+| {prefix}/{url_path}/[.format]          | GET, или как указано в аргументе `methods` | метод с декоратором `@action(detail=False)`          | {basename}-{url_name} |
+| {prefix}/{lookup}/[.format]            | GET                                        | retrieve                                             | {basename}-detail     |
+|                                        | PUT                                        | update                                               |                       |
+|                                        | PATCH                                      | partial_update                                       |                       |
+|                                        | DELETE                                     | destroy                                              |                       |
+| {prefix}/{lookup}/{url_path}/[.format] | GET, или как указано в аргументе `methods` | метод с декоратором `@action(detail=True)`           | {basename}-{url_name} |
 
-Как и в случае с `SimpleRouter`, закрывающие слеши путей URL можно удалить, установив значение `False` в настройке `trailing_slash` при инициализации роутера.
+Как и в `SimpleRouter`, косые черты в маршрутах URL могут быть удалены путем установки аргумента `trailing_slash` в `False` при инстанцировании маршрутизатора.
 
 ```python
 router = DefaultRouter(trailing_slash=False)
 ```
 
-# Кастомные роутеры
+# Пользовательские маршрутизаторы
 
-Вам редко понадобится применять кастомный роутер, но он может быть полезен, если у вас есть особые требования к структуре URL вашего API. Это позволит вам инкапсулировать структуру URL для повтороного использования, т.е. вам не придется отдельно писать URL паттерны для каждого нового представления.
+Реализация пользовательского маршрутизатора - это не то, что вам нужно делать очень часто, но это может быть полезно, если у вас есть особые требования к структуре URL для вашего API. Это позволит вам инкапсулировать структуру URL в многократно используемый способ, который гарантирует, что вам не придется писать шаблоны URL в явном виде для каждого нового представления.
 
-Самый простой способ применения кастомного роутера это образовать подласс от одного из существующих классов роутера. Атрибут `.routes ` используется для шаблонизирования URL паттернов, которые будут отображаться для каждого viewset. Атрибут `.routes` это список, который содержит именованные кортежи (namedtuple) `Route`.
+Самый простой способ реализации пользовательского маршрутизатора - это подкласс одного из существующих классов маршрутизаторов. Атрибут `.routes` используется для шаблонизации шаблонов URL, которые будут сопоставлены с каждым набором представлений. Атрибут `.routes` представляет собой список кортежей с именем `Route`.
 
-Аргументы именованных кортежей `Route`:
+Аргументами кортежа с именем `Route` являются:
 
-**url:** Строка, которая представляет URL для маршрутизации. Может включать следующие форматирующие строки:
+**url**: Строка, представляющая URL, который должен быть маршрутизирован. Может включать следующие строки формата:
 
-* `{prefix}` - префикс URL, который будет использоваться с набором путей.
-* `{lookup}` - поле поиска, которое используется для сопоставления с единичным экземпляром.
-* `{trailing_slash}` - либо '/' или пустая строка, в зависимости от аргумента `trailing_slash`.
+* `{prefix}` - Префикс URL, который будет использоваться для этого набора маршрутов.
+* `{lookup}` - Поле поиска, используемое для сопоставления с одним экземпляром.
+* `{trailing_slash}` - Либо '/', либо пустая строка, в зависимости от аргумента `trailing_slash`.
 
-**mapping:** отображение имен методов HTTP для методов представления
+**mapping**: Сопоставление имен методов HTTP с методами представления
 
-**name:** Имя URL, используемое в `reverse` вызовах. Может включать следующую форматирующую строку:
+**name**: Имя URL, используемое в вызовах `reverse`. Может включать следующую строку формата:
 
-* `{basename}` - основа, которая используется с создающимися URL именами.
+* `{basename}` - Основа, которую следует использовать для создаваемых имен URL.
 
-**initkwargs:** Словарь любого дополнительного аргумена, который должен передаваться при инициализации представления. Заметьте, что аргумент `suffix` зарезервирован для определения типа viewset и используется при создании имени представления и навигационных цепочек.
+**initkwargs**: Словарь дополнительных аргументов, которые должны быть переданы при инстанцировании представления. Обратите внимание, что аргументы `detail`, `basename` и `suffix` зарезервированы для интроспекции набора представлений и также используются API просмотра для генерации имени представления и ссылок на хлебные крошки.
 
-# Кастомизация динамических путей
+## Настройка динамических маршрутов
 
-Вы также можете кастомизировать маршрутизацию декораторов `@list_route` и `@detail_route`. Чтобы маршрутизировать их внесите именованные кортежи`DynamicListRoute` и/или `DynamicDetailRoute` в списке `.routes list.`.
+Вы также можете настроить способ маршрутизации декоратора `@action`. Включите кортеж с именем `DynamicRoute` в список `.routes`, установив аргумент `detail` в соответствии с требованиями для маршрутов на основе списка и на основе деталей. В дополнение к `detail`, аргументами `DynamicRoute` являются:
 
-Аргументы `DynamicListRoute` и `DynamicDetailRoute`:
+**url**: Строка, представляющая URL, который должен быть маршрутизирован. Может включать те же строки формата, что и `Route`, и дополнительно принимает строку формата `{url_path}`.
 
-**url:** Строка, которая представляет URL для маршрутизации. Может включать те же форматирующие строки, как и `Route` и дополнительно принимает форматирующие строки `{methodname}` и `{methodnamehyphen}`.
+**name**: Имя URL, используемое в вызовах `reverse`. Может включать следующие строки формата:
 
-**name:**  Имя URL, используемое в `reverse` вызовах. Может включать следующие форматирующие строки: `{basename}`, `{methodname}` и `{methodnamehyphen}`.
+* `{basename}` - Основа, которую следует использовать для создаваемых имен URL.
+* `{url_name}` - `имя URL`, предоставляемое `@action`.
 
-**initkwargs:**  Словарь любого дополнительного аргумена, который должен передаваться при инициализации представления.
+**initkwargs**: Словарь любых дополнительных аргументов, которые должны быть переданы при инстанцировании представления.
 
 ## Пример
 
-Слеюущий пример будет маршрутизировать только действия `list` и `retrieve` и не использует закрывающие слеши.
+Следующий пример маршрутизирует только действия `list` и `retrieve` и не использует соглашение о косой черте.
 
 ```python
-
-from rest_framework.routers import Route, DynamicDetailRoute, SimpleRouter
+from rest_framework.routers import Route, DynamicRoute, SimpleRouter
 
 class CustomReadOnlyRouter(SimpleRouter):
     """
@@ -353,26 +256,30 @@ class CustomReadOnlyRouter(SimpleRouter):
             url=r'^{prefix}$',
             mapping={'get': 'list'},
             name='{basename}-list',
+            detail=False,
             initkwargs={'suffix': 'List'}
         ),
         Route(
             url=r'^{prefix}/{lookup}$',
             mapping={'get': 'retrieve'},
             name='{basename}-detail',
+            detail=True,
             initkwargs={'suffix': 'Detail'}
         ),
-        DynamicDetailRoute(
-            url=r'^{prefix}/{lookup}/{methodnamehyphen}$',
-            name='{basename}-{methodnamehyphen}',
+        DynamicRoute(
+            url=r'^{prefix}/{lookup}/{url_path}$',
+            name='{basename}-{url_name}',
+            detail=True,
             initkwargs={}
         )
     ]
 ```
 
-Давайте посмотрим на пути, которые наш `CustomReadOnlyRouter` сгенерирует для простого viewset.
+Давайте посмотрим на маршруты, которые наш `CustomReadOnlyRouter` будет генерировать для простого набора представлений.
+
+`views.py`:
 
 ```python
-# views.py
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     A viewset that provides the standard actions
@@ -381,7 +288,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
     lookup_field = 'username'
 
-    @detail_route()
+    @action(detail=True)
     def group_names(self, request, pk=None):
         """
         Returns a list of all the group names that the given
@@ -390,51 +297,51 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         user = self.get_object()
         groups = user.groups.all()
         return Response([group.name for group in groups])
+```
 
-# urls.py
+`urls.py`:
 
+```python
 router = CustomReadOnlyRouter()
 router.register('users', UserViewSet)
 urlpatterns = router.urls
 ```
 
-Будет сгенерирован следующий маппинг...
+Будут созданы следующие отображения...
 
 | URL                           | HTTP Method | Action      | URL Name         |
-|-------------------------------|-------------|-------------|------------------|
+| ----------------------------- | ----------- | ----------- | ---------------- |
 | /users                        | GET         | list        | user-list        |
 | /users/{username}             | GET         | retrieve    | user-detail      |
-| /users/{username}/group-names | GET         | group_names | user-group-names |
+| /users/{username}/group_names | GET         | group_names | user-group-names |
 
+Другой пример установки атрибута `.routes` приведен в исходном коде класса `SimpleRouter`.
 
-Для другого примера настроек атрибута `.routes` см код источника класса `SimpleRouter`.
+## Расширенные пользовательские маршрутизаторы
 
-## Продвинутые кастомные роутеры
+Если вы хотите обеспечить полностью пользовательское поведение, вы можете переопределить `BaseRouter` и переопределить метод `get_urls(self)`. Метод должен проверить зарегистрированные наборы представлений и вернуть список шаблонов URL. Зарегистрированные кортежи префикса, набора представлений и базового имени можно проверить, обратившись к атрибуту `self.registry`.
 
-Если вы хотите обеспечить полностью настраивомое поведение, то можете переписать `BaseRouter` и метод `get_urls(self)`. Метод должен инспетировать зарегистрированные viewsets и вернуть список URL паттернов. К зарегистрированным кортежам базовых имен, префиксов и viewset можно получить доступ через атрибут `self.registry`.
-
-Также вы можете переписать метод `get_default_base_name(self, viewset)` или же всегда явно прописывать аргумент `base_name` при регистрации viewsets в роутере.
+Вы также можете переопределить метод `get_default_basename(self, viewset)` или всегда явно задавать аргумент `basename` при регистрации ваших наборов представлений в маршрутизаторе.
 
 # Сторонние пакеты
 
-Также доступны следующие пакеты.
+Также доступны следующие пакеты сторонних производителей.
 
 ## DRF Nested Routers
 
-Пакет [drf-nested-routers](https://github.com/alanjds/drf-nested-routers) активирует вложенные ресурсы в роутере и связанных полях.
+Пакет [drf-nested-routers](https://github.com/alanjds/drf-nested-routers) предоставляет маршрутизаторы и поля отношений для работы с вложенными ресурсами.
 
 ## ModelRouter (wq.db.rest)
 
-Пакет [wq.db](https://wq.io/wq.db) предоставляет продвинутый класс `ModelRouter` (и экземпляр singelton), который добавляет API `register_model()` к `DefaultRouter`. Как и в `admin.site.register`, единственный обязательный аргумент для `rest.router.register_model` это класс модели. Разумные значения по умолчанию для префикса URL, сериализатора и представлений будут получены из модели и глобальной конфигурации.
+Пакет [wq.db](https://wq.io/wq.db) предоставляет расширенный класс [ModelRouter](https://wq.io/docs/router) (и экземпляр синглтона), который расширяет `DefaultRouter` с API `register_model()`. Подобно Django's `admin.site.register`, единственным необходимым аргументом для `rest.router.register_model` является класс модели. Разумные значения по умолчанию для префикса url, сериализатора и набора представлений будут определяться из модели и глобальной конфигурации.
 
 ```python
-
 from wq.db import rest
 from myapp.models import MyModel
 
 rest.router.register_model(MyModel)
 ```
 
-## DRF-расширения
+## DRF-extensions
 
-Пакет [DRF-расширений](http://chibisov.github.io/drf-extensions/docs/) предоставляет маршруты для создания вложенных viewsets, контроллеров уровня сбора данных и настраиваемых имен конечных точек.
+Пакет [`DRF-extensions`](https://chibisov.github.io/drf-extensions/docs/) предоставляет [маршрутизаторы](https://chibisov.github.io/drf-extensions/docs/#routers) для создания [вложенных наборов представлений](https://chibisov.github.io/drf-extensions/docs/#nested-routes), [контроллеров уровня коллекции](https://chibisov.github.io/drf-extensions/docs/#collection-level-controllers) с [настраиваемыми именами конечных точек](https://chibisov.github.io/drf-extensions/docs/#controller-endpoint-name).
