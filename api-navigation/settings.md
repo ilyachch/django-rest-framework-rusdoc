@@ -422,7 +422,7 @@ view_description(self, html=False)
 
 Строка, представляющая глобальную настройку для `html_cutoff_text`.
 
-По умолчанию: `"More than {count} items..."`.
+По умолчанию: `'More than {count} items...'`.
 
 ---
 
