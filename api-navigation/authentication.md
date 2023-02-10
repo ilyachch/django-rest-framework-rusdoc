@@ -3,7 +3,7 @@
 
 > Аутентификация должна быть подключаемой.
 >
-> - Джейкоб Каплан-Мосс, ["Худшие практики REST"] (https://jacobian.org/writing/rest-worst-practices/)
+> - Джейкоб Каплан-Мосс, ["Худшие практики REST"](https://jacobian.org/writing/rest-worst-practices/)
 
 Аутентификация - это механизм связывания входящего запроса с набором идентификационных данных, таких как пользователь, от которого пришел запрос, или токен, которым он был подписан. Политики [permission](permissions.md) и [throttling](throttling.md) могут затем использовать эти учетные данные, чтобы определить, должен ли запрос быть разрешен.
 
@@ -447,7 +447,7 @@ JSON Web Token - это довольно новый стандарт, котор
 
 ## Аутентификация посредством подписи HTTP
 
-HTTP Signature (в настоящее время [проект IETF] (https://datatracker.ietf.org/doc/draft-cavage-http-signatures/)) предоставляет способ аутентификации происхождения и проверки целостности сообщений HTTP. Подобно схеме [Amazon's HTTP Signature scheme](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html), используемой многими сервисами компании, она допускает аутентификацию по каждому запросу без хранения состояния. [Elvio Toccalino](https://github.com/etoccalino/) поддерживает пакет [djangorestframework-httpsignature](https://github.com/etoccalino/django-rest-framework-httpsignature) (устаревший), который предоставляет простой в использовании механизм аутентификации HTTP Signature. Вы можете использовать обновленную версию-форк [djangorestframework-httpsignature](https://github.com/etoccalino/django-rest-framework-httpsignature), которой является [drf-httpsig](https://github.com/ahknight/drf-httpsig).
+HTTP Signature (в настоящее время [проект IETF](https://datatracker.ietf.org/doc/draft-cavage-http-signatures/)) предоставляет способ аутентификации происхождения и проверки целостности сообщений HTTP. Подобно схеме [Amazon's HTTP Signature scheme](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html), используемой многими сервисами компании, она допускает аутентификацию по каждому запросу без хранения состояния. [Elvio Toccalino](https://github.com/etoccalino/) поддерживает пакет [djangorestframework-httpsignature](https://github.com/etoccalino/django-rest-framework-httpsignature) (устаревший), который предоставляет простой в использовании механизм аутентификации HTTP Signature. Вы можете использовать обновленную версию-форк [djangorestframework-httpsignature](https://github.com/etoccalino/django-rest-framework-httpsignature), которой является [drf-httpsig](https://github.com/ahknight/drf-httpsig).
 
 ## Djoser
 

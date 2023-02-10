@@ -200,9 +200,9 @@ def perform_create(self, serializer):
 
 Обычно вам не нужно переопределять следующие методы, хотя вам может понадобиться обращаться к ним, если вы пишете пользовательские представления, используя `GenericAPIView`.
 
-* ``get_serializer_context(self)`` - Возвращает словарь, содержащий любой дополнительный контекст, который должен быть предоставлен сериализатору. По умолчанию включает ключи `'request'`, `'view'` и `'format'`.
-* ``get_serializer(self, instance=None, data=None, many=False, partial=False)`` - Возвращает экземпляр сериализатора.
-* ``get_paginated_response(self, data)`` - Возвращает объект `Response` в стиле paginated.
+* `get_serializer_context(self)` - Возвращает словарь, содержащий любой дополнительный контекст, который должен быть предоставлен сериализатору. По умолчанию включает ключи `'request'`, `'view'` и `'format'`.
+* `get_serializer(self, instance=None, data=None, many=False, partial=False)` - Возвращает экземпляр сериализатора.
+* `get_paginated_response(self, data)` - Возвращает объект `Response` в стиле paginated.
 * `paginate_queryset(self, queryset)` - Пагинация набора запросов, если требуется, возвращает либо объект страницы, либо `None`, если пагинация не настроена для этого представления.
 * `filter_queryset(self, queryset)` - Получив набор запросов, отфильтровать его с помощью используемых бэкендов фильтрации, возвращая новый набор запросов.
 

@@ -22,13 +22,13 @@ application/json; indent=4, application/json, application/yaml, text/html, */*
 
 Приоритеты для каждого из указанных типов носителей будут следующими:
 
-* ``application/json; indent=4``
-* ``application/json``, ``application/yaml`` и ``text/html``
+* `'application/json; indent=4'`
+* `'application/json'`, `'application/yaml'` и `'text/html'`
 * `*/*`
 
 Если запрашиваемое представление было настроено только с рендерерами для `YAML` и `HTML`, то DRF будет выбирать тот рендерер, который указан первым в списке `renderer_classes` или настройке `DEFAULT_RENDERER_CLASSES`.
 
-Более подробную информацию о заголовке `HTTP Accept` смотрите в [RFC 2616] (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+Более подробную информацию о заголовке `HTTP Accept` смотрите в [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 
 ---
 

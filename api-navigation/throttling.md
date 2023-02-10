@@ -92,7 +92,7 @@ HTTP-заголовок `X-Forwarded-For` и WSGI-переменная `REMOTE_A
 
 Важно понимать, что если вы настроите параметр `NUM_PROXIES`, то все клиенты за уникальным [NAT-ом](https://en.wikipedia.org/wiki/Network_address_translation) шлюзом будут рассматриваться как один клиент.
 
-Дополнительную информацию о том, как работает заголовок `X-Forwarded-For` и как определить IP удаленного клиента, можно найти [здесь] (http://oxpedia.org/wiki/index.php?title=AppSuite:Grizzly#Multiple_Proxies_in_front_of_the_cluster).
+Дополнительную информацию о том, как работает заголовок `X-Forwarded-For` и как определить IP удаленного клиента, можно найти [здесь](http://oxpedia.org/wiki/index.php?title=AppSuite:Grizzly#Multiple_Proxies_in_front_of_the_cluster).
 
 ## Настройка кэша
 

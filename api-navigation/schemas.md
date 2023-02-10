@@ -288,7 +288,7 @@ class CustomView(APIView):
 
 ```python
 class CustomSchema(AutoSchema):
-    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+    """Extension of `AutoSchema` to add support for custom field schemas."""
 
     def map_field(self, field):
         # Handle SerializerMethodFields or custom fields here...
