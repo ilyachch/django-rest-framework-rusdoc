@@ -1,156 +1,140 @@
+<!-- TRANSLATED by md-translate -->
 # Django REST framework
 
-Django REST framework \(DRF\) - мощный и гибкий инструмент для построения Web API.
+![Logo by Jake 'Sid' Smith](https://github.com/encode/django-rest-framework/raw/master/docs/img/logo.png)
 
-Вот несколько причин, чтобы использовать DRF:
+Django REST framework - это мощный и гибкий набор инструментов для создания Web API.
 
-* Крайне удобная для разработчиков [браузерная версия API](http://restframework.herokuapp.com/);
-* Наличие пакетов для OAuth1a и OAuth2 авторизации;
-* Сериализация, поддерживающая ORM и не-ORM источники данных;
-* Возможность полной и детальной настройки - можно использовать обычные представления-функции, если вы не нуждаетесь в мощном функционале;
-* Расширенная документация и [отличная поддержка сообщества](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework);
-* Используется и пользуется уважением таких узнаваемых компаний, как [Mozilla](http://www.mozilla.org/en-US/about/), [Red Hat](https://www.redhat.com/), [Heroku](https://www.heroku.com/), [Eventbrite](https://www.eventbrite.co.uk/about/).
+Некоторые причины, по которым вы можете захотеть использовать REST framework:
 
-Существует пример API для тестирования, который доступен здесь [доступно здесь][sandbox].
+* [Просматриваемый API](https://restframework.herokuapp.com/) - огромный выигрыш в удобстве использования для ваших разработчиков.
+* [Политики аутентификации](api-guide/authentication.md), включая пакеты для [OAuth1a](api-guide/authentication.md#django-rest-framework-oauth) и [OAuth2](api-guide/authentication.md#django-oauth-toolkit).
+* [Сериализация](api-guide/serializers.md), поддерживающая как [ORM](api-guide/serializers.md#modelserializer), так и [non-ORM](api-guide/serializers.md#сериализаторы) источники данных.
+* Настраивается все - просто используйте [обычные представления на основе функций](api-guide/views#Представления-на-основе-функций), если вам не нужны [более](api-guide/generic-views.md) [мощные](api-guide/viewsets.md) [возможности](api-guide/routers.md).
+* Обширная документация и [отличная поддержка сообщества](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework).
+* Используется и пользуется доверием всемирно известных компаний, включая [Mozilla](https://www.mozilla.org/en-us/about/), [Red Hat](https://www.redhat.com/), [Heroku](https://www.heroku.com/) и [Eventbrite](https://www.eventbrite.co.uk/about/).
 
-## Зависимости
+---
 
-У DRF следующие требования:
+## Требования
 
-* Python \(3.5, 3.6, 3.7\)
-* Django \(1.11, 2.0, 2.1, 2.2\)
+REST framework требует следующего:
 
-Мы **настоятельно рекомендуем** и официально поддерживаем только последние версии патчей для каждой серии Python и Django.
+* Python (3.6, 3.7, 3.8, 3.9, 3.10, 3.11)
+* Django (2.2, 3.0, 3.1, 3.2, 4.0, 4.1)
+
+Мы **настоятельно рекомендуем** и официально поддерживаем только последние выпуски патчей каждой версии Python и Django.
+
+Следующие пакеты являются необязательными:
+
+* [PyYAML](https://pypi.org/project/pyyaml/), [uritemplate](https://pypi.org/project/uritemplate/) (5.1+, 3.0.0+) - Поддержка генерации схем.
+* [Markdown](https://pypi.org/project/markdown/) (3.0.0+) - Поддержка Markdown для просматриваемого API.
+* [Pygments](https://pypi.org/project/pygments/) (2.4.0+) - Добавление подсветки синтаксиса в обработку Markdown.
+* [django-filter](https://pypi.org/project/django-filter/) (1.0.1+) - Поддержка фильтрации.
+* [django-guardian](https://github.com/django-guardian/django-guardian) (1.1.1+) - Поддержка разрешений на уровне объектов.
 
 ## Установка
 
-Установите с помощью `pip`
+Установите с помощью `pip`, включая все дополнительные пакеты, которые вы хотите...
 
 ```bash
-    pip install djangorestframework
-```
-
-Добавьте `'rest_framework'` в `INSTALLED_APPS`  в настройках:
-
-```python
-    INSTALLED_APPS = (
-        ...
-        'rest_framework',
-    )
-```
-
-## Пример
-
-Давайте рассмотрим краткий пример использования инфраструктуры REST для создания простого API на основе модели для доступа к пользователям и группам.
-
-Создайте новый проект:
-
-```bash
-pip install django
 pip install djangorestframework
-django-admin startproject example .
-./manage.py migrate
-./manage.py createsuperuser
+pip install markdown       # Markdown support for the browsable API.
+pip install django-filter  # Filtering support
 ```
 
-Теперь отредактируйте модуль `example/urls.py` в вашем проекте:
+...или клонируйте проект с github.
 
-```python
-from django.conf.urls import url, include
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
-
-# Сериализаторы описывают представление данных.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'is_staff']
-
-# Наборы представлений описывают поведение представлений.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-# Роутеры позволяют быстро и просто сконфигурировать адреса.
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-
-# Привяжите конфигурацию URL, используя роутеры.
-# Так же мы предоставляем URL для авторизации в браузере.
-urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
+```bash
+git clone https://github.com/encode/django-rest-framework
 ```
 
-Мы также хотели бы настроить несколько параметров для нашего API.
-
-Добавьте следующее к вашему `settings.py` модулю:
+Добавьте `'rest_framework'` в настройку `INSTALLED_APPS`.
 
 ```python
 INSTALLED_APPS = [
-    ...  # Убедитесь, что здесь включены установленные по умолчанию приложения.
+    ...
     'rest_framework',
 ]
+```
 
+Если вы планируете использовать просматриваемый API, вы, вероятно, также захотите добавить представления входа и выхода из системы REST framework. Добавьте следующее в ваш корневой файл `urls.py`.
+
+```python
+urlpatterns = [
+    ...
+    path('api-auth/', include('rest_framework.urls'))
+]
+```
+
+Обратите внимание, что путь URL может быть любым, какой вы захотите.
+
+## Пример
+
+Давайте рассмотрим быстрый пример использования REST-фреймворка для создания простого API с поддержкой модели.
+
+Мы создадим API с функцией чтения-записи для доступа к информации о пользователях нашего проекта.
+
+Все глобальные настройки для API REST-фреймворка хранятся в одном конфигурационном словаре с именем `REST_FRAMEWORK`. Начните с добавления следующих параметров в модуль `settings.py`:
+
+```python
 REST_FRAMEWORK = {
-    # Используйте стандартные Django  `django.contrib.auth` разрешения,
-    # или разрешите доступ только для чтения для неаутентифицированных пользователей.
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
 ```
 
-Вот и все, мы закончили!
+Не забудьте убедиться, что вы также добавили `rest_framework` в `INSTALLED_APPS`.
 
-```bash
-./manage.py runserver
-```
+Теперь мы готовы к созданию нашего API. Вот корневой модуль нашего проекта `urls.py`:
 
-Теперь можно открыть API в вашем браузере по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/), и увидеть ваше API `'users'`. Так же, если вы воспользуетесь кнопкой `'Login'` в верхнем правом углу и авторизуетесь, вы сможете добавлять, изменять и удалять пользователей из системы.
+```python
+from django.urls import path, include
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
 
-Вы также можете взаимодействовать с API с помощью инструментов командной строки, таких как curl. Например, чтобы вывести конечную точку пользователей:
+# Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']
 
-```bash
-$ curl -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
-[
-    {
-        "url": "http://127.0.0.1:8000/users/1/",
-        "username": "admin",
-        "email": "admin@example.com",
-        "is_staff": true,
-    }
+# ViewSets define the view behavior.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
+urlpatterns = [
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 ```
 
-Или создать нового пользователя:
-
-```bash
-$ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Accept: application/json; indent=4' -u admin:password http://127.0.0.1:8000/users/
-{
-    "url": "http://127.0.0.1:8000/users/2/",
-    "username": "new",
-    "email": "new@example.com",
-    "is_staff": false,
-}
-```
+Теперь вы можете открыть API в браузере по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/) и просмотреть новых "пользователей" API. Если вы используете элемент управления входом в систему в правом верхнем углу, вы также сможете добавлять, создавать и удалять пользователей из системы.
 
 ## Быстрый старт
 
-Не можете дождаться, чтобы начать? Руководство по [быстрому старту](quick-start.md) - быстрейший способ.
+Не можете дождаться начала работы? Руководство [quickstart](quickstart.md) - это самый быстрый способ начать работу и создавать API с помощью REST framework.
 
 ## Руководство
 
 Руководство проведет вас через все этапы настройки DRF. Это займет не очень много времени, однако вы получите полное понимание того, как все компоненты работают друг с другом и данное руководство крайне рекомендовано к прочтению.
 
-1. [Сериализация](quick-start/serialization.md)
-2. [Запросы-ответы](quick-start/request-response.md)
-3. [Представления-классы](quick-start/class-based-views.md)
-4. [Аутентификация/права доступа](quick-start/auth-and-perm.md)
-5. [Отношения и связи](quick-start/relations-and-hyperlinks.md)
-6. [Наборы представлений и роутеры](quick-start/viewsets-and-routers.md)
-7. [Схемы и клиентские библиотеки](quick-start/schemas-and-client-libs.md)
+* [Сериализация](tutorial/1-serialization.md)
+* [Запросы-ответы](tutorial/2-requests-and-responses.md)
+* [Представления-классы](tutorial/3-class-based-views.md)
+* [Аутентификация/права доступа](tutorial/4-authentication-and-permissions.md)
+* [Отношения и связи](tutorial/5-relationships-and-hyperlinked-apis.md)
+* [Наборы представлений и роутеры](tutorial/6-viewsets-and-routers.md)
 
 Так же есть пример работающего API законченного руководства для тестовых целей, [доступен здесь](http://restframework.herokuapp.com/).
 
@@ -158,68 +142,67 @@ $ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Ac
 
 Навигатор по API - исчерпывающее руководство по всему функционалу, предоставляемому DRF.
 
-* [Запросы](api-navigation/requests.md)
-* [Ответы](api-navigation/responses.md)
-* [Представления](api-navigation/views.md)
-* [Общие представления](api-navigation/generic-views.md)
-* [Viewsets](api-navigation/viewsets.md)
-* [Маршрутизаторы](api-navigation/routers.md)
-* [Парсеры](api-navigation/parsers.md)
-* [Рендеры](api-navigation/renders.md)
-* [Cериализаторы](api-navigation/serializers.md)
-* [Поля сериализатора](api-navigation/fields.md)
-* [Отношения сериализатора](api-navigation/relations.md)
-* [Валидаторы](api-navigation/validators.md)
-* [Аутентификация](api-navigation/authentication.md)
-* [Разрешения](api-navigation/permissions.md)
-* [Кэширование](api-navigation/caching.md)
-* [Дросселирование (Регулирование)](api-navigation/throttling.md)
-* [Filtering](http://www.django-rest-framework.org/api-guide/filtering/)
-* [Pagination](http://www.django-rest-framework.org/api-guide/pagination/)
-* [Versioning](http://www.django-rest-framework.org/api-guide/versioning/)
-* [Content negotiation](http://www.django-rest-framework.org/api-guide/content-negotiation/)
-* [Metadata](http://www.django-rest-framework.org/api-guide/metadata/)
-* [Schemas](http://www.django-rest-framework.org/api-guide/schemas/)
-* [Format suffixes](http://www.django-rest-framework.org/api-guide/format-suffixes/)
-* [Returning URLs](http://www.django-rest-framework.org/api-guide/reverse/)
-* [Exceptions](http://www.django-rest-framework.org/api-guide/exceptions/)
-* [Status codes](http://www.django-rest-framework.org/api-guide/status-codes/)
-* [Testing](http://www.django-rest-framework.org/api-guide/testing/)
-* [Settings](http://www.django-rest-framework.org/api-guide/settings/)
+* [Запросы](api-guide/requests.md)
+* [Ответы](api-guide/responses.md)
+* [Представления](api-guide/views.md)
+* [Общие представления](api-guide/generic-views.md)
+* [Viewsets](api-guide/viewsets.md)
+* [Маршрутизаторы](api-guide/routers.md)
+* [Парсеры](api-guide/parsers.md)
+* [Рендереры](api-guide/renderers.md)
+* [Сериализаторы](api-guide/serializers.md)
+* [Поля сериализатора](api-guide/fields.md)
+* [Отношения сериализаторов](api-guide/relations.md)
+* [Валидаторы](api-guide/validators.md)
+* [Аутентификация](api-guide/authentication.md)
+* [Разрешения](api-guide/permissions.md)
+* [Кэширование](api-guide/caching.md)
+* [Дросселирование](api-guide/throttling.md)
+* [Фильтрация](api-guide/filtering.md)
+* [Пагинация](api-guide/pagination.md)
+* [Версионирование](api-guide/versioning.md)
+* [Согласование контента](api-guide/content-negotiation.md)
+* [Метаданные](api-guide/metadata.md)
+* [Schemas](api-guide/schemas.md)
+* [Cуффиксы формата](api-guide/format-suffixes.md)
+* [Возвращение URL-адресов](api-guide/reverse.md)
+* [Исключения](api-guide/exceptions.md)
+* [Коды состояния](api-guide/status-codes.md)
+* [Тестирование](api-guide/testing.md)
+* [Настройки](api-guide/settings.md)
 
 ## Статьи
 
 Основные руководства для использующих DRF.
 
-* [Documenting your API](https://www.django-rest-framework.org/topics/documenting-your-api/)
-* [API Clients](http://www.django-rest-framework.org/topics/api-clients/)
-* [Internationalization](http://www.django-rest-framework.org/topics/internationalization/)
-* [AJAX, CSRF & CORS](http://www.django-rest-framework.org/topics/ajax-csrf-cors/)
-* [HTML & Forms](http://www.django-rest-framework.org/topics/html-and-forms/)
-* [Browser enhancements](http://www.django-rest-framework.org/topics/browser-enhancements/)
-* [The Browsable API](http://www.django-rest-framework.org/topics/browsable-api/)
-* [REST, Hypermedia & HATEOAS](http://www.django-rest-framework.org/topics/rest-hypermedia-hateoas/)
-* [Third Party Packages](http://www.django-rest-framework.org/topics/third-party-packages/)
-* [Tutorials and Resources](http://www.django-rest-framework.org/topics/tutorials-and-resources/)
-* [Contributing to REST framework](http://www.django-rest-framework.org/topics/contributing/)
+* [AJAX, CSRF & CORS](topics/ajax-csrf-cors.md)
+* [The Browsable API](topics/browsable-api.md)
+* [Улучшения в браузере](topics/browser-enhancements.md)
+* [Документирование вашего API](topics/documenting-your-api.md)
+* [HTML и формы](topics/html-and-forms.md)
+* [Интернационализация](topics/internationalization.md)
+* [REST, гипермедиа и HATEOAS](topics/rest-hypermedia-hateoas.md)
+* [Вложенные сериализаторы с возможностью записи](topics/writable-nested-serializers.md)
 
 ## Разработка
 
-Прочтите [руководство для разработчиков](http://www.django-rest-framework.org/topics/contributing/) для получения информации о том, как склонировать репозиторий, запустить набор тестов и отправить изменения обратно в DRF.
+Смотрите [руководство для разработчиков](https://www.django-rest-framework.org/community/contributing/) для получения информации о том, как клонировать репозиторий, запустить набор тестов и внести изменения в REST Framework.
 
 ## Поддержка
 
-Для поддержки обратитесь в [группу обсуждения DRF](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework) или создайте вопрос на StackOverflow с указанием тэга ['django-rest-framework'](http://stackoverflow.com/questions/tagged/django-rest-framework).
+За поддержкой обращайтесь в [REST framework discussion group](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework), попробуйте использовать канал `#restframework` на `irc.libera.chat`, или задайте вопрос на [Stack Overflow](https://stackoverflow.com/), обязательно указав тег ['django-rest-framework'](https://stackoverflow.com/questions/tagged/django-rest-framework).
 
-Для уведомления об обновлениях, подпишитесь на нас в [Twitter](https://twitter.com/_tomchristie).
+Для получения приоритетной поддержки подпишитесь на [профессиональный или премиум спонсорский план](https://fund.django-rest-framework.org/topics/funding/).
 
 ## Безопасность
 
-Если вы уверены, что нашли пробел в безопасности, пожалуйста, **не создавайте публичный баг-репорт!**
+Вопросы безопасности решаются под руководством [Django security team](https://www.djangoproject.com/foundation/teams/#security-team).
 
-Отправьте описание проблемы по почте [rest-framework-security@googlegroups.com](mailto:rest-framework-security@googlegroups.com). Руководители проекта будут работать с вами для решения любых подобных проблем.
+**Пожалуйста, сообщайте о проблемах безопасности по электронной почте security@djangoproject.com**.
 
--------------------
+После этого сопровождающие проекта будут работать с вами над решением любых вопросов, если потребуется, до обнародования информации.
+
+---
 ## Авторы перевода
 
 * [Ilya Chichak](https://github.com/ilyachch/)
@@ -229,10 +212,6 @@ $ curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Ac
 * [https://github.com/rufatpro](https://github.com/rufatpro)
 * [Dmitry Plaxunov](https://github.com/fojetin)
 
-Пожалуйста, открывая Pull Request, указывайте меня в качестве ревьюера, так я буду узнавать об этом моментально.
-
 Спасибо всем за помощь в переводе!
 
 Перевод производится с помощью утилиты [md_docs-trans-app](https://github.com/ilyachch/md_docs-trans-app)
-
-[sandbox]: https://restframework.herokuapp.com/
