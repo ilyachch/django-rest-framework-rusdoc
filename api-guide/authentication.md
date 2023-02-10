@@ -135,7 +135,7 @@ WWW-Authenticate: Basic realm="api"
 
 Эта схема аутентификации использует простую схему аутентификации HTTP на основе токенов. Токен-аутентификация подходит для клиент-серверных установок, таких как собственные настольные и мобильные клиенты.
 
-Для использования схемы `TokenAuthentication` вам необходимо [настроить классы аутентификации](#setting-the-authentication-scheme), чтобы включить `TokenAuthentication`, и дополнительно включить `rest_framework.authtoken` в настройку `INSTALLED_APPS`:
+Для использования схемы `TokenAuthentication` вам необходимо [настроить классы аутентификации](#установка-схемы-аутентификации), чтобы включить `TokenAuthentication`, и дополнительно включить `rest_framework.authtoken` в настройку `INSTALLED_APPS`:
 
 ```python
 INSTALLED_APPS = [

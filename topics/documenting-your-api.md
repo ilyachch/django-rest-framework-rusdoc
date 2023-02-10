@@ -23,7 +23,7 @@ DRF предоставляет ряд различных вариантов до
 
 Это также воплощается в очень полезном интерактивном средстве просмотра документации в виде `swagger-ui`:
 
-![Скриншот - drf-yasg](https://github.com/encode/django-rest-framework/blob/master/docs/img/drf-yasg.png?raw=true)
+![Скриншот - drf-yasg](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-yasg.png)
 
 ---
 
@@ -149,7 +149,7 @@ urlpatterns = [
 
 Просматриваемый API, который предоставляет DRF, позволяет вашему API быть полностью самоописывающимся. Документация для каждой конечной точки API может быть предоставлена просто при посещении URL-адреса в браузере.
 
-![Скриншот - API самоописания](https://github.com/encode/django-rest-framework/blob/master/docs/img/self-describing.png?raw=true)
+![Скриншот - API самоописания](https://github.com/encode/django-rest-framework/raw/master/docs/img/self-describing.png)
 
 ---
 
@@ -178,7 +178,7 @@ class AccountListView(views.APIView):
     """
 ```
 
-Обратите внимание, что при использовании наборов представлений базовая строка документа используется для всех создаваемых представлений. Чтобы предоставить описания для каждого представления, например, для представлений list и retrieve, используйте секции docstring, как описано в [Schemas as documentation: Examples](../api-guide/schemas.md#examples).
+Обратите внимание, что при использовании наборов представлений базовая строка документа используется для всех создаваемых представлений. Чтобы предоставить описания для каждого представления, например, для представлений list и retrieve, используйте секции docstring, как описано в [Schemas as documentation](../api-guide/schemas.md).
 
 #### Метод `OPTIONS`.
 

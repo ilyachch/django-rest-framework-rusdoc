@@ -3,7 +3,7 @@
 
 > Исключения... позволяют чисто организовать обработку ошибок в центральном или высокоуровневом месте в структуре программы.
 >
-> - Даг Хеллманн, [Python Exception Handling Techniques][https://doughellmann.com/blog/2009/06/19/python-exception-handling-techniques/].
+> - Даг Хеллманн, [Python Exception Handling Techniques](https://doughellmann.com/blog/2009/06/19/python-exception-handling-techniques/).
 
 ## Обработка исключений в представлениях DRF
 

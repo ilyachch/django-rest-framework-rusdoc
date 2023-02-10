@@ -8,9 +8,9 @@ Django REST framework - это мощный и гибкий набор инст�
 Некоторые причины, по которым вы можете захотеть использовать REST framework:
 
 * [Просматриваемый API](https://restframework.herokuapp.com/) - огромный выигрыш в удобстве использования для ваших разработчиков.
-* [Политики аутентификации](api-guide/authentication.md), включая пакеты для [OAuth1a][oauth1-section] и [OAuth2][oauth2-section].
-* [Сериализация](api-guide/serializers.md), поддерживающая как [ORM][modelserializer-section], так и [non-ORM][api-guide/serializers#serializers] источники данных.
-* Настраивается все - просто используйте [обычные представления на основе функций](api-guide/views#function-based-views), если вам не нужны [более](api-guide/generic-views.md) [мощные][viewsets][features][routers].
+* [Политики аутентификации](api-guide/authentication.md), включая пакеты для [OAuth1a](api-guide/authentication.md#django-rest-framework-oauth) и [OAuth2](api-guide/authentication.md#django-oauth-toolkit).
+* [Сериализация](api-guide/serializers.md), поддерживающая как [ORM](api-guide/serializers.md#modelserializer), так и [non-ORM](api-guide/serializers.md#сериализаторы) источники данных.
+* Настраивается все - просто используйте [обычные представления на основе функций](api-guide/views#Представления-на-основе-функций), если вам не нужны [более](api-guide/generic-views.md) [мощные](api-guide/viewsets.md) [возможности](api-guide/routers.md).
 * Обширная документация и [отличная поддержка сообщества](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework).
 * Используется и пользуется доверием всемирно известных компаний, включая [Mozilla](https://www.mozilla.org/en-us/about/), [Red Hat](https://www.redhat.com/), [Heroku](https://www.heroku.com/) и [Eventbrite](https://www.eventbrite.co.uk/about/).
 
@@ -123,19 +123,18 @@ urlpatterns = [
 
 ## Быстрый старт
 
-Не можете дождаться начала работы? Руководство [quickstart](quick-start.md) - это самый быстрый способ начать работу и создавать API с помощью REST framework.
+Не можете дождаться начала работы? Руководство [quickstart](quickstart.md) - это самый быстрый способ начать работу и создавать API с помощью REST framework.
 
 ## Руководство
 
 Руководство проведет вас через все этапы настройки DRF. Это займет не очень много времени, однако вы получите полное понимание того, как все компоненты работают друг с другом и данное руководство крайне рекомендовано к прочтению.
 
-1. [Сериализация](quick-start/serialization.md)
-2. [Запросы-ответы](quick-start/request-response.md)
-3. [Представления-классы](quick-start/class-based-views.md)
-4. [Аутентификация/права доступа](quick-start/auth-and-perm.md)
-5. [Отношения и связи](quick-start/relations-and-hyperlinks.md)
-6. [Наборы представлений и роутеры](quick-start/viewsets-and-routers.md)
-7. [Схемы и клиентские библиотеки](quick-start/schemas-and-client-libs.md)
+* [Сериализация](tutorial/1-serialization.md)
+* [Запросы-ответы](tutorial/2-requests-and-responses.md)
+* [Представления-классы](tutorial/3-class-based-views.md)
+* [Аутентификация/права доступа](tutorial/4-authentication-and-permissions.md)
+* [Отношения и связи](tutorial/5-relationships-and-hyperlinked-apis.md)
+* [Наборы представлений и роутеры](tutorial/6-viewsets-and-routers.md)
 
 Так же есть пример работающего API законченного руководства для тестовых целей, [доступен здесь](http://restframework.herokuapp.com/).
 
@@ -143,54 +142,51 @@ urlpatterns = [
 
 Навигатор по API - исчерпывающее руководство по всему функционалу, предоставляемому DRF.
 
-* [Запросы](api-navigation/requests.md)
-* [Ответы](api-navigation/responses.md)
-* [Представления](api-navigation/views.md)
-* [Общие представления](api-navigation/generic-views.md)
-* [Viewsets](api-navigation/viewsets.md)
-* [Маршрутизаторы](api-navigation/routers.md)
-* [Парсеры](api-navigation/parsers.md)
-* [Рендеры](api-navigation/renders.md)
-* [Cериализаторы](api-navigation/serializers.md)
-* [Поля сериализатора](api-navigation/fields.md)
-* [Отношения сериализатора](api-navigation/relations.md)
-* [Валидаторы](api-navigation/validators.md)
-* [Аутентификация](api-navigation/authentication.md)
-* [Разрешения](api-navigation/permissions.md)
-* [Кэширование](api-navigation/caching.md)
-* [Дросселирование (Регулирование)](api-navigation/throttling.md)
-* [Filtering](http://www.django-rest-framework.org/api-guide/filtering/)
-* [Pagination](http://www.django-rest-framework.org/api-guide/pagination/)
-* [Versioning](http://www.django-rest-framework.org/api-guide/versioning/)
-* [Content negotiation](http://www.django-rest-framework.org/api-guide/content-negotiation/)
-* [Metadata](http://www.django-rest-framework.org/api-guide/metadata/)
-* [Schemas](http://www.django-rest-framework.org/api-guide/schemas/)
-* [Format suffixes](http://www.django-rest-framework.org/api-guide/format-suffixes/)
-* [Returning URLs](http://www.django-rest-framework.org/api-guide/reverse/)
-* [Exceptions](http://www.django-rest-framework.org/api-guide/exceptions/)
-* [Status codes](http://www.django-rest-framework.org/api-guide/status-codes/)
-* [Testing](http://www.django-rest-framework.org/api-guide/testing/)
-* [Settings](http://www.django-rest-framework.org/api-guide/settings/)
+* [Запросы](api-guide/requests.md)
+* [Ответы](api-guide/responses.md)
+* [Представления](api-guide/views.md)
+* [Общие представления](api-guide/generic-views.md)
+* [Viewsets](api-guide/viewsets.md)
+* [Маршрутизаторы](api-guide/routers.md)
+* [Парсеры](api-guide/parsers.md)
+* [Рендереры](api-guide/renderers.md)
+* [Сериализаторы](api-guide/serializers.md)
+* [Поля сериализатора](api-guide/fields.md)
+* [Отношения сериализаторов](api-guide/relations.md)
+* [Валидаторы](api-guide/validators.md)
+* [Аутентификация](api-guide/authentication.md)
+* [Разрешения](api-guide/permissions.md)
+* [Кэширование](api-guide/caching.md)
+* [Дросселирование](api-guide/throttling.md)
+* [Фильтрация](api-guide/filtering.md)
+* [Пагинация](api-guide/pagination.md)
+* [Версионирование](api-guide/versioning.md)
+* [Согласование контента](api-guide/content-negotiation.md)
+* [Метаданные](api-guide/metadata.md)
+* [Schemas](api-guide/schemas.md)
+* [Cуффиксы формата](api-guide/format-suffixes.md)
+* [Возвращение URL-адресов](api-guide/reverse.md)
+* [Исключения](api-guide/exceptions.md)
+* [Коды состояния](api-guide/status-codes.md)
+* [Тестирование](api-guide/testing.md)
+* [Настройки](api-guide/settings.md)
 
 ## Статьи
 
 Основные руководства для использующих DRF.
 
-* [Documenting your API](https://www.django-rest-framework.org/topics/documenting-your-api/)
-* [API Clients](http://www.django-rest-framework.org/topics/api-clients/)
-* [Internationalization](http://www.django-rest-framework.org/topics/internationalization/)
-* [AJAX, CSRF & CORS](http://www.django-rest-framework.org/topics/ajax-csrf-cors/)
-* [HTML & Forms](http://www.django-rest-framework.org/topics/html-and-forms/)
-* [Browser enhancements](http://www.django-rest-framework.org/topics/browser-enhancements/)
-* [The Browsable API](http://www.django-rest-framework.org/topics/browsable-api/)
-* [REST, Hypermedia & HATEOAS](http://www.django-rest-framework.org/topics/rest-hypermedia-hateoas/)
-* [Third Party Packages](http://www.django-rest-framework.org/topics/third-party-packages/)
-* [Tutorials and Resources](http://www.django-rest-framework.org/topics/tutorials-and-resources/)
-* [Contributing to REST framework](http://www.django-rest-framework.org/topics/contributing/)
+* [AJAX, CSRF & CORS](topics/ajax-csrf-cors.md)
+* [The Browsable API](topics/browsable-api.md)
+* [Улучшения в браузере](topics/browser-enhancements.md)
+* [Документирование вашего API](topics/documenting-your-api.md)
+* [HTML и формы](topics/html-and-forms.md)
+* [Интернационализация](topics/internationalization.md)
+* [REST, гипермедиа и HATEOAS](topics/rest-hypermedia-hateoas.md)
+* [Вложенные сериализаторы с возможностью записи](topics/writable-nested-serializers.md)
 
 ## Разработка
 
-Смотрите [руководство для разработчиков][https://www.django-rest-framework.org/community/contributing/] для получения информации о том, как клонировать репозиторий, запустить набор тестов и внести изменения в REST Framework.
+Смотрите [руководство для разработчиков](https://www.django-rest-framework.org/community/contributing/) для получения информации о том, как клонировать репозиторий, запустить набор тестов и внести изменения в REST Framework.
 
 ## Поддержка
 

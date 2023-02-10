@@ -122,7 +122,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 #### DEFAULT_PAGINATION_CLASS
 
-Класс по умолчанию, используемый для пагинации наборов запросов. Если установлено значение `None`, пагинация по умолчанию отключена. Дополнительное руководство по [установке](pagination.md#setting-the-pagination-style) и [изменению](pagination.md#modifying-the-pagination-style) стиля пагинации см. в документации по пагинации.
+Класс по умолчанию, используемый для пагинации наборов запросов. Если установлено значение `None`, пагинация по умолчанию отключена. Дополнительное руководство по [установке](pagination.md#установка-стиля-пагинации) и [изменению](pagination.md#изменение-стиля-пагинации) стиля пагинации см. в документации по пагинации.
 
 По умолчанию: `None`
 
@@ -410,7 +410,7 @@ view_description(self, html=False)
 
 ## HTML Select Field cutoffs
 
-Глобальные настройки для [select field cutoffs for rendering relational fields](relations.md#select-field-cutoffs) в browsable API.
+Глобальные настройки для [выбора отсечений полей для визуализации реляционных полей](relations.md#выберите-отсечение-полей) в просматриваемом API.
 
 #### HTML_SELECT_CUTOFF
 

@@ -59,13 +59,13 @@ API может означать интерфейс прикладного *пр�
 
 ---
 
-![Cerulean theme](https://github.com/encode/django-rest-framework/blob/master/docs/img/cerulean.png?raw=true)
+![Cerulean theme](https://github.com/encode/django-rest-framework/raw/master/docs/img/cerulean.png)
 
 *Скриншот загрузочной темы "Cerulean"*
 
 ---
 
-![Slate theme](https://github.com/encode/django-rest-framework/blob/master/docs/img/slate.png?raw=true)
+![Slate theme](https://github.com/encode/django-rest-framework/raw/master/docs/img/slate.png)
 
 *Скриншот темы bootswatch 'Slate'*.
 

@@ -622,7 +622,7 @@ class AccountSerializer(serializers.ModelSerializer):
 user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
 ```
 
-Пожалуйста, ознакомьтесь с документацией [Validators Documentation](/api-guide/validators/) для получения подробной информации о классах [UniqueTogetherValidator](/api-guide/validators/#uniquetogethervalidator) и [CurrentUserDefault](/api-guide/validators/#currentuserdefault).
+Пожалуйста, ознакомьтесь с документацией [Validators Documentation](validators.md) для получения подробной информации о классах [UniqueTogetherValidator](validators.md#uniquetogethervalidator) и [CurrentUserDefault](validators.md#currentuserdefault).
 
 ---
 
@@ -1138,7 +1138,7 @@ def to_representation(self, instance):
 
 Принимает невалидированные входящие данные в качестве входных и должен вернуть валидированные данные, которые будут доступны как `serializer.validated_data`. Возвращаемое значение также будет передано методам `.create()` или `.update()`, если для класса сериализатора будет вызван `.save()`.
 
-Если какая-либо из валидаций не прошла, то метод должен вызвать `serializers.ValidationError(errors)`. Аргумент `errors` должен представлять собой словарь, отображающий имена полей (или `settings.NON_FIELD_ERRORS_KEY`) на список сообщений об ошибках. Если вам не нужно изменять поведение десериализации и вместо этого вы хотите обеспечить проверку на уровне объекта, рекомендуется переопределить метод [`.validate()`](#object-level-validation).
+Если какая-либо из валидаций не прошла, то метод должен вызвать `serializers.ValidationError(errors)`. Аргумент `errors` должен представлять собой словарь, отображающий имена полей (или `settings.NON_FIELD_ERRORS_KEY`) на список сообщений об ошибках. Если вам не нужно изменять поведение десериализации и вместо этого вы хотите обеспечить проверку на уровне объекта, рекомендуется переопределить метод [`.validate()`](#валидация-на-уровне-объекта).
 
 Аргумент `data`, передаваемый этому методу, обычно является значением `request.data`, поэтому тип данных, который он предоставляет, будет зависеть от классов парсера, которые вы настроили для своего API.
 
@@ -1178,7 +1178,7 @@ class AccountSerializer(MyBaseSerializer):
     class MySerializer(MyBaseSerializer):
         my_field = None
     ```
-    Однако, вы можете использовать эту технику только для отказа от поля, определенного декларативно родительским классом; это не помешает `ModelSerializer` сгенерировать поле по умолчанию. Чтобы отказаться от полей по умолчанию, смотрите [Specifying what fields to include](#specifying-which-fields-to-include).
+    Однако, вы можете использовать эту технику только для отказа от поля, определенного декларативно родительским классом; это не помешает `ModelSerializer` сгенерировать поле по умолчанию. Чтобы отказаться от полей по умолчанию, смотрите [Указание полей для включения](#указание-полей-для-включения).
 
 ## Динамическое изменение полей
 
