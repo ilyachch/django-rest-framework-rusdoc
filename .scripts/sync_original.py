@@ -1,12 +1,11 @@
+import argparse
 import hashlib
 import logging
-import os
 import subprocess
-import sys
 import tempfile
+from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Tuple, Optional
-import argparse
+from typing import List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -26,47 +25,50 @@ class MdFile(type(Path())):
         return self.with_name(self.name + '.hash')
 
 
+@dataclass
+class DataMap:
+    source: Path
+    target: Path
+
+    def update_source_with_base(self, base: Path) -> None:
+        self.source = base / self.source
+
+    def source_is_dir(self) -> bool:
+        return self.source.is_dir()
+
+    def __iter__(self):
+        if self.source_is_dir():
+            for file in self.source.iterdir():
+                if file.suffix == '.md':
+                    yield file
+        else:
+            yield self.source
+
+
 class Tool:
     ORIGINAL_URL = 'https://github.com/encode/django-rest-framework.git'
     BASE_DIR = Path(__file__).resolve().parent.parent
 
-    DATA_TO_WATCH: List[Tuple[List[Path], Path]] = [
-        (
-            [
-                Path('docs/api-guide/'),
-            ],
-            BASE_DIR / Path('.reference/api-navigation/'),
-        ),
-        (
-            [
-                Path('docs/tutorial/'),
-                Path('docs/coreapi/'),
-            ],
-            BASE_DIR / Path('.reference/quick-start/'),
-        ),
-        (
-            [
-                Path('docs/topics/'),
-            ],
-            BASE_DIR / Path('.reference/topics/'),
-        ),
-        (
-            [
-                Path('docs/index.md'),
-            ],
-            BASE_DIR / Path('.reference/README.md'),
-        ),
+    DATA_TO_WATCH: List[DataMap] = [
+        DataMap(Path('docs/api-guide/'), BASE_DIR / Path('.reference/api-guide/')),
+        DataMap(Path('docs/tutorial/'), BASE_DIR / Path('.reference/tutorial/')),
+        DataMap(Path('docs/coreapi/'), BASE_DIR / Path('.reference/tutorial/')),
+        DataMap(Path('docs/topics/'), BASE_DIR / Path('.reference/topics/')),
+        DataMap(Path('docs/index.md'), BASE_DIR / Path('.reference/README.md')),
     ]
 
-    def __init__(self, temp_folder: Optional[str] = None, save: bool = False) -> None:
-        self._temp_dir: Path = Path(temp_folder) if temp_folder else Path(tempfile.mkdtemp())
-        self._save = save
+    def __init__(self, tmp_folder: Optional[str] = None, tmp_save: bool = False, dry_run: bool = False) -> None:
+        self._temp_dir: Path = Path(tmp_folder) if tmp_folder else Path(tempfile.mkdtemp())
+        self._save = tmp_save
+        self._dry_run = dry_run
+        for data_map in self.DATA_TO_WATCH:
+            data_map.update_source_with_base(self._temp_dir)
 
     def get_latest_original(self) -> None:
         self._temp_dir.mkdir(parents=True, exist_ok=True)
         logger.info(self._temp_dir.resolve())
         logger.debug('folder exists: %s', self._temp_dir.exists())
-        logger.debug('folder contents: %s', list(self._temp_dir.iterdir()))
+        logger.debug('folder contents: %s', ', '.join(str(x) for x in self._temp_dir.iterdir()))
         if self._temp_dir.exists() and self._temp_dir / '.git' in self._temp_dir.iterdir():
             logger.info('Updating original')
             subprocess.run(['git', 'pull'], cwd=self._temp_dir, check=True, capture_output=True)
@@ -76,39 +78,19 @@ class Tool:
 
     def make_list_of_files_to_copy(self) -> List[Tuple[MdFile, MdFile]]:
         files_to_copy = []
-        for sources, target in self.DATA_TO_WATCH:
-            for source in sources:
-                updated_source = self._temp_dir / source
-                if not updated_source.exists():
-                    logger.warning('Path %s does not exist', updated_source.resolve())
-                    continue
-
-                if updated_source.is_dir():
-                    files_in_source = list(updated_source.glob('*.md'))
-                    for source_file in files_in_source:
-                        if target.is_dir():
-                            target_file = target / source_file.name
-                        else:
-                            target_file = target
-                        logger.debug('source_file: %s', source_file)
-                        logger.debug('target_file: %s', target_file)
-                        files_to_copy.append((MdFile(source_file), MdFile(target_file)))
-                elif updated_source.is_file():
-                    source_file = updated_source
-                    if target.is_dir():
-                        target_file = target / updated_source.name
-                    else:
-                        target_file = target
+        for data_map in self.DATA_TO_WATCH:
+            if not data_map.source.exists():
+                logger.warning('Path %s does not exist', data_map.source.resolve())
+                continue
+            if data_map.source_is_dir():
+                for source_file in data_map:
+                    target = data_map.target / source_file.name
                     logger.debug('source_file: %s', source_file)
-                    logger.debug('target_file: %s', target_file)
-                    files_to_copy.append((MdFile(source_file), MdFile(target_file)))
-                else:
-                    raise ValueError('Unknown type of path: %s', updated_source)
-        logger.info(
-            f'Found %d files to copy: %s',
-            len(files_to_copy),
-            ', '.join([f'{source} -> {target}' for source, target in files_to_copy]),
-        )
+                    logger.debug('target_file: %s', target)
+                    files_to_copy.append((MdFile(source_file), MdFile(target)))
+        logger.info('Found %d files to copy', len(files_to_copy))
+        for source, target in files_to_copy:
+            logger.info('%s -> %s', source, target)
         return files_to_copy
 
     def copy_file(self, source: MdFile, target: MdFile) -> None:
@@ -123,8 +105,10 @@ class Tool:
                 logger.info('File %s is up to date', target)
                 return
         logger.info('Updating file %s', target)
-        target.write_text(source.read_text())
-        target.hash_file.write_text(source.hash)
+        if not self._dry_run:
+            target.write_text(source.read_text())
+            target.hash_file.write_text(source.hash)
+        print(target.relative_to(self.BASE_DIR))
 
     def clean(self) -> None:
         self.delete_folder(self._temp_dir)
@@ -144,7 +128,8 @@ class Tool:
         for source, target in files_to_copy:
             self.copy_file(source, target)
         if self._save:
-            print(f'Files are saved in: {self._temp_dir.resolve()}')
+            pass
+            # print(f'Files are saved in: {self._temp_dir.resolve()}')
         else:
             self.clean()
         logger.info('Finished sync')
@@ -155,7 +140,8 @@ if __name__ == '__main__':
     parser.add_argument('temp_folder', nargs='?', default=None)
     parser.add_argument('-s', '--save', action='store_true', default=False)
     parser.add_argument('-v', '--verbose', action='count', default=0)
+    parser.add_argument('--dry-run', action='store_true', default=False)
     args = parser.parse_args()
-    verbose, save, temp_folder = args.verbose, args.save, args.temp_folder
+    verbose, save, temp_folder, dry_run = args.verbose, args.save, args.temp_folder, args.dry_run
     logging.basicConfig(level=(5 - verbose) * 10)
-    Tool(temp_folder=temp_folder, save=save).run()
+    Tool(tmp_folder=temp_folder, tmp_save=save, dry_run=dry_run).run()
