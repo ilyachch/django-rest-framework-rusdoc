@@ -28,7 +28,7 @@ jobs:
           echo "New files:"
           echo "${{ steps.check.outputs.new_files }}"
       - name: Check if branch already exists
-        if: steps.check.outputs.new_files != '' && steps.dry_run.outputs != 'true'
+        if: steps.check.outputs.new_files != '' && !inputs.dry_run
         run: |
           git fetch
           if git branch -r | grep -q "origin/sync-with-original"; then
@@ -36,7 +36,7 @@ jobs:
             exit 1
           fi
       - name: Open PR
-        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs != '1' && steps.dry_run.outputs != 'true'
+        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs != '1' && !inputs.dry_run
         uses: peter-evans/create-pull-request@v4
         with:
           title: Sync with original
