@@ -3,6 +3,12 @@ on:
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -16,9 +22,13 @@ jobs:
         uses: actions/checkout@v3
       - name: Check for changes
         id: check
-        run: echo "::set-output name=new_files::$(python3 ./.scripts/sync_original.py)"
+        run: echo "new_files=$(python3 ./.scripts/sync_original.py)" >> $GITHUB_OUTPUT
+      - name: Report
+        run: |
+          echo "New files:"
+          echo "${{ steps.check.outputs.new_files }}"
       - name: Check if branch already exists
-        if: steps.check.outputs.new_files != ''
+        if: steps.check.outputs.new_files != '' && !inputs.dry_run
         run: |
           git fetch
           if git branch -r | grep -q "origin/sync-with-original"; then
@@ -26,7 +36,7 @@ jobs:
             exit 1
           fi
       - name: Open PR
-        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs != '1'
+        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs != '1' && !inputs.dry_run
         uses: peter-evans/create-pull-request@v4
         with:
           title: Sync with original
