@@ -11,6 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Check no temp files left
-        run: find .reference -name '*.tmp' && exit 1 || exit 0
-      - name: Check no md files left
-        run: find .reference -name '*.md' && exit 1 || exit 0
+        run: |
+          if [[ $(find .reference -type f -name "*.temp" -o -name "*.tmp" -o -name "*.md" | wc -l) -gt 0 ]]; then
+            exit 1
+          fi
