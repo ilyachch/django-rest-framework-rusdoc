@@ -32,7 +32,8 @@ jobs:
         run: |
           git fetch
           if git branch -r | grep -q "origin/sync-with-original"; then
-            echo "::set-output name=branch_exists::1"
+          echo
+            echo "branch_exists=1" >> $GITHUB_OUTPUT
             exit 1
           fi
       - name: Open PR
