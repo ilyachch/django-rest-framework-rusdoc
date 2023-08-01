@@ -393,15 +393,15 @@ class IsOwnerFilterBackend(filters.BaseFilterBackend):
 
 Следующие пакеты сторонних производителей предоставляют дополнительные реализации фильтров.
 
-## Пакет фильтров фреймворка DRF
+## Django-rest-framework-filters
 
 [django-rest-framework-filters](https://github.com/philipn/django-rest-framework-filters) работает совместно с классом `DjangoFilterBackend` и позволяет легко создавать фильтры по отношениям, а также создавать несколько типов фильтров для поиска по заданному полю.
 
-## DRF полный фильтр поиска слов
+## Djangorestframework-word-filter
 
 [djangorestframework-word-filter](https://github.com/trollknurr/django-rest-framework-word-search-filter) разработан как альтернатива `filters.SearchFilter`, который будет искать полное слово в тексте, либо точное совпадение.
 
-## Django URL Filter
+## Django-url-filter
 
 [django-url-filter](https://github.com/miki725/django-url-filter) предоставляет безопасный способ фильтрации данных по удобным для человека URL-адресам. Он работает очень похоже на сериализаторы и поля DRF в том смысле, что они могут быть вложенными, за исключением того, что они называются `filtersets` и `filters`. Это обеспечивает простой способ фильтрации связанных данных. Кроме того, эта библиотека является универсальной, поэтому ее можно использовать для фильтрации других источников данных, а не только Django `QuerySet`.
 
