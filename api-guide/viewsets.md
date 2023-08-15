@@ -187,6 +187,16 @@ def unset_password(self, request, pk=None):
     ...
 ```
 
+Аргумент `methods` также поддерживает методы HTTP, определенные как [HTTPMethod](https://docs.python.org/3/library/http.html#http.HTTPMethod). Приведенный ниже пример идентичен приведенному выше:
+
+```python
+from http import HTTPMethod
+
+@action(detail=True, methods=[HTTPMethod.POST, HTTPMethod.DELETE])
+def unset_password(self, request, pk=None):
+```
+
+
 Декоратор позволяет переопределить любую конфигурацию уровня набора представлений, такую как `permission_classes`, `serializer_class`, `filter_backends`...:
 
 ```python
