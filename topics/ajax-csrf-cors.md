@@ -24,7 +24,7 @@ AJAX-запросы, которые выполняются на сайте, от
 
 Если вы используете `SessionAuthentication`, вам необходимо включить действительные CSRF-токены для любых операций `POST`, `PUT`, `PATCH` или `DELETE`.
 
-Чтобы выполнять AJAX-запросы, необходимо включить CSRF-токен в HTTP-заголовок, как [описано в документации Django](https://docs.djangoproject.com/en/stable/ref/csrf/#ajax).
+Чтобы выполнять AJAX-запросы, необходимо включить CSRF-токен в HTTP-заголовок, как [описано в документации Django](https://docs.djangoproject.com/en/stable/howto/csrf/#using-csrf-protection-with-ajax).
 
 ## CORS
 
