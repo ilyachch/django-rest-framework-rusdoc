@@ -316,7 +316,7 @@ Generated token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b for user user1
 
 Ответы без аутентификации, которым отказано в разрешении, приведут к ответу `HTTP 403 Forbidden`.
 
-Если вы используете API в стиле AJAX с `SessionAuthentication`, вам нужно убедиться, что вы включаете действительный CSRF токен для любых "небезопасных" вызовов HTTP методов, таких как `PUT`, `PATCH`, `POST` или `DELETE` запросы. Более подробную информацию смотрите в [Django CSRF documentation](https://docs.djangoproject.com/en/stable/ref/csrf/#ajax).
+Если вы используете API в стиле AJAX с `SessionAuthentication`, вам нужно убедиться, что вы включаете действительный CSRF токен для любых "небезопасных" вызовов HTTP методов, таких как `PUT`, `PATCH`, `POST` или `DELETE` запросы. Более подробную информацию смотрите в [Django CSRF documentation](https://docs.djangoproject.com/en/stable/howto/csrf/#using-csrf-protection-with-ajax).
 
 **Предупреждение**: Всегда используйте стандартное представление входа Django при создании страниц входа. Это обеспечит надлежащую защиту ваших представлений входа.
 
