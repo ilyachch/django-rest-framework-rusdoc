@@ -214,10 +214,11 @@ def set_password(self, request, pk=None):
 Дополнительные действия могут отображать дополнительные методы HTTP на отдельные методы `ViewSet`. Например, описанные выше методы установки/снятия пароля могут быть объединены в один маршрут. Обратите внимание, что дополнительные сопоставления не принимают аргументов.
 
 ```python
-@action(detail=True, methods=['put'], name='Change Password')
+@action(detail=True, methods=["put"], name="Change Password")
 def password(self, request, pk=None):
     """Update the user's password."""
     ...
+
 
 @password.mapping.delete
 def delete_password(self, request, pk=None):
@@ -233,14 +234,14 @@ def delete_password(self, request, pk=None):
 
 Используя пример из предыдущего раздела:
 
-```python
->>> view.reverse_action('set-password', args=['1'])
+```pycon
+>>> view.reverse_action("set-password", args=["1"])
 'http://localhost:8000/api/users/1/set_password'
 ```
 
 В качестве альтернативы можно использовать атрибут `url_name`, установленный декоратором `@action`.
 
-```python
+```pycon
 >>> view.reverse_action(view.set_password.url_name, args=['1'])
 'http://localhost:8000/api/users/1/set_password'
 ```

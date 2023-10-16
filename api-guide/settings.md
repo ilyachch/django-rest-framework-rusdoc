@@ -166,6 +166,12 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 По умолчанию: `'version'`.
 
+#### DEFAULT_VERSIONING_CLASS
+
+Схема версионирования, используемая по умолчанию.
+
+По умолчанию: `None`
+
 ---
 
 ## Настройки аутентификации
