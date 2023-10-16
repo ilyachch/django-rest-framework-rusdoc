@@ -70,11 +70,13 @@ urlpatterns = [
     # Use the `get_schema_view()` helper to add a `SchemaView` to project URLs.
     #   * `title` and `description` parameters are passed to `SchemaGenerator`.
     #   * Provide view name for use with `reverse()`.
-    path('openapi', get_schema_view(
-        title="Your Project",
-        description="API for all things …",
-        version="1.0.0"
-    ), name='openapi-schema'),
+    path(
+        "openapi",
+        get_schema_view(
+            title="Your Project", description="API for all things …", version="1.0.0"
+        ),
+        name="openapi-schema",
+    ),
     # ...
 ]
 ```
@@ -210,11 +212,13 @@ class CustomSchema(AutoSchema):
     """
     AutoSchema subclass using schema_extra_info on the view.
     """
+
     ...
+
 
 class CustomView(APIView):
     schema = CustomSchema()
-    schema_extra_info = ... some extra info ...
+    schema_extra_info = ...  # some extra info
 ```
 
 Здесь подкласс `AutoSchema` ищет `schema_extra_info` в представлении. Это *OK* (на самом деле это не вредит), но это означает, что в итоге вы получите логику схемы, разбросанную по разным местам.
@@ -226,10 +230,13 @@ class BaseSchema(AutoSchema):
     """
     AutoSchema subclass that knows how to use extra_info.
     """
+
     ...
 
+
 class CustomSchema(BaseSchema):
-    extra_info = ... some extra info ...
+    extra_info = ...  # some extra info
+
 
 class CustomView(APIView):
     schema = CustomSchema()
@@ -246,10 +253,9 @@ class CustomSchema(BaseSchema):
         self.extra_info = kwargs.pop("extra_info")
         super().__init__(**kwargs)
 
+
 class CustomView(APIView):
-    schema = CustomSchema(
-        extra_info=... some extra info ...
-    )
+    schema = CustomSchema(extra_info=...)  # some extra info
 ```
 
 Это избавит вас от необходимости создавать собственный подкласс для каждого вида для часто используемой опции.
@@ -288,7 +294,7 @@ class CustomView(APIView):
 
 ```python
 class CustomSchema(AutoSchema):
-    """Extension of `AutoSchema` to add support for custom field schemas."""
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
         # Handle SerializerMethodFields or custom fields here...
