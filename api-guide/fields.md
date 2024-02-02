@@ -785,8 +785,8 @@ class DataPointSerializer(serializers.ModelSerializer):
     True
     >>> in_serializer.validated_data
     OrderedDict([('label', 'Second Example'),
-                    ('y_coordinate', 4),
-                    ('x_coordinate', 3)])
+                ('y_coordinate', 4),
+                ('x_coordinate', 3)])
     ```
 
 Для полноты картины повторим то же самое, но с использованием вложенного сериализатора, предложенного выше:
