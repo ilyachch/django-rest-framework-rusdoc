@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Check no temp files left
         run: |
           if [[ $(find .reference -type f -name "*.temp" -o -name "*.tmp" -o -name "*.md" | wc -l) -gt 0 ]]; then
