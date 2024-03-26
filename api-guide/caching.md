@@ -56,4 +56,26 @@ class PostView(APIView):
         return Response(content)
 ```
 
+## Использование кэша с декоратором @api_view
+
+При использовании декоратора `@api_view` декораторы кэша, основанные на методах, такие как [`cache_page`](https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache), [`vary_on_cookie`](https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_cookie) и [`vary_on_headers`](https://docs.djangoproject.com/en/dev/topics/http/decorators/#django.views.decorators.vary.vary_on_headers) могут быть вызваны напрямую.
+
+```python
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
+@cache_page(60 * 15)
+@vary_on_cookie
+@api_view(['GET'])
+def get_user_list(request):
+    content = {
+        'user_feed': request.user.get_user_feed()
+    }
+    return Response(content)
+```
+
 **NOTE:** Декоратор [`cache_page`](https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache) кэширует только ответы `GET` и `HEAD` со статусом 200.
