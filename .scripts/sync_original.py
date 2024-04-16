@@ -88,6 +88,8 @@ class Tool:
                     logger.debug('source_file: %s', source_file)
                     logger.debug('target_file: %s', target)
                     files_to_copy.append((MdFile(source_file), MdFile(target)))
+            else:
+                files_to_copy.append((MdFile(data_map.source), MdFile(data_map.target),) )
         logger.info('Found %d files to copy', len(files_to_copy))
         for source, target in files_to_copy:
             logger.info('%s -> %s', source, target)

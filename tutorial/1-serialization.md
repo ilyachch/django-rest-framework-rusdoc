@@ -9,7 +9,7 @@
 
 ---
 
-**Примечание**: Код для этого руководства доступен в репозитории [encode/rest-framework-tutorial](https://github.com/encode/rest-framework-tutorial) на GitHub. Завершенная реализация также доступна онлайн в виде версии песочницы для тестирования, [доступно здесь](https://restframework.herokuapp.com/).
+**Примечание**: Код для этого руководства доступен в репозитории [encode/rest-framework-tutorial](https://github.com/encode/rest-framework-tutorial) на GitHub. Не стесняйтесь клонировать репозиторий и посмотреть код в действии.
 
 ---
 
@@ -133,7 +133,7 @@ class SnippetSerializer(serializers.Serializer):
 
 Класс сериализатора очень похож на класс Django `Form` и включает аналогичные флаги проверки различных полей, такие как `required`, `max_length` и `default`.
 
-Флаги полей также могут управлять тем, как сериализатор должен отображаться в определенных обстоятельствах, например, при рендеринге в HTML. Флаг `{'base_template': 'textarea.html'}` выше эквивалентен использованию `widget=widgets.Textarea` в классе Django `Form`. Это особенно полезно для управления отображением просматриваемого API, как мы увидим далее в учебнике.
+Флаги полей также могут управлять тем, как сериализатор должен отображаться в определенных обстоятельствах, например, при рендеринге в HTML. Флаг `{'base_template': 'textarea.html'}` выше эквивалентен использованию `widget=widgets.Textarea` в классе Django `Form`. Это особенно полезно для управления отображением Web-интерфейса API, как мы увидим далее в учебнике.
 
 Мы также можем сэкономить время, используя класс `ModelSerializer`, как мы увидим позже, но пока мы сохраним определение нашего сериализатора явным.
 
@@ -352,7 +352,7 @@ python manage.py runserver
 Validating models...
 
 0 errors found
-Django version 4.0, using settings 'tutorial.settings'
+Django version 5.0, using settings 'tutorial.settings'
 Starting Development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```

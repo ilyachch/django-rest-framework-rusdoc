@@ -5,7 +5,7 @@
 >
 > - [RESTful Web Services](https://www.amazon.com/RESTful-Web-Services-Leonard-Richardson/dp/0596529260), Leonard Richardson & Sam Ruby.
 
-Для того чтобы просматриваемый API функционировал, есть несколько усовершенствований для браузеров, которые должны быть предоставлены REST-фреймворком.
+Для того чтобы Web-интерфейс API функционировал, есть несколько усовершенствований для браузеров, которые должны быть предоставлены REST-фреймворком.
 
 Начиная с версии 3.3.0 и далее они включаются с помощью javascript, используя библиотеку [ajax-form](https://github.com/tomchristie/ajax-form).
 
