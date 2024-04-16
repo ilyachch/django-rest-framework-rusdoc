@@ -217,7 +217,7 @@ http://example.com/api/products?category=clothing&in_stock=True
 
 Класс `SearchFilter` поддерживает простой поиск по одному параметру запроса и основан на функциональности [поиска в админ-панели Django](https://docs.djangoproject.com/en/stable/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields).
 
-При использовании в состав Web-версии API будет входить элемент управления `SearchFilter`:
+При использовании в состав Web-интерфейса API будет входить элемент управления `SearchFilter`:
 
 ![Фильтр поиска](https://github.com/encode/django-rest-framework/raw/master/docs/img/search-filter.png)
 
@@ -383,7 +383,7 @@ class IsOwnerFilterBackend(filters.BaseFilterBackend):
 
 ## Настройка интерфейса
 
-Общие фильтры также могут представлять интерфейс в Web-версии API. Для этого необходимо реализовать метод `to_html()`, который возвращает отрендеренное HTML-представление фильтра. Этот метод должен иметь следующую сигнатуру:
+Общие фильтры также могут представлять интерфейс в Web-интерфейсе API. Для этого необходимо реализовать метод `to_html()`, который возвращает отрендеренное HTML-представление фильтра. Этот метод должен иметь следующую сигнатуру:
 
 `to_html(self, request, queryset, view)`.
 
