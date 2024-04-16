@@ -297,7 +297,7 @@ class AccountSerializer(serializers.ModelSerializer):
 Ниже приведен пример рендеринга обычного текста, который вернет ответ с параметром `data` в качестве содержимого ответа.
 
 ```python
-from django.utils.encoding import smart_text
+from django.utils.encoding import smart_str
 from rest_framework import renderers
 
 
@@ -306,7 +306,7 @@ class PlainTextRenderer(renderers.BaseRenderer):
     format = 'txt'
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
-        return smart_text(data, encoding=self.charset)
+        return smart_str(data, encoding=self.charset)
 ```
 
 ## Установка набора символов
