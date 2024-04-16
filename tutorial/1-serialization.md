@@ -9,7 +9,7 @@
 
 ---
 
-**Примечание**: Код для этого руководства доступен в репозитории [encode/rest-framework-tutorial](https://github.com/encode/rest-framework-tutorial) на GitHub. Завершенная реализация также доступна онлайн в виде версии песочницы для тестирования, [доступно здесь](https://restframework.herokuapp.com/).
+**Примечание**: Код для этого руководства доступен в репозитории [encode/rest-framework-tutorial](https://github.com/encode/rest-framework-tutorial) на GitHub. Не стесняйтесь клонировать репозиторий и посмотреть код в действии.
 
 ---
 
@@ -352,7 +352,7 @@ python manage.py runserver
 Validating models...
 
 0 errors found
-Django version 4.0, using settings 'tutorial.settings'
+Django version 5.0, using settings 'tutorial.settings'
 Starting Development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
