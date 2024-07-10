@@ -113,11 +113,13 @@ class GitRepository:
             subprocess.run(
                 ['git', 'clone', config.repo_url, dir],
                 check=True,
+                capture_output=True,
             )
             subprocess.run(
                 ['git', 'checkout', config.repo_branch],
                 cwd=dir,
                 check=True,
+                capture_output=True,
             )
             return cls(config, dir)
 
@@ -139,11 +141,13 @@ class GitRepository:
             ['git', 'checkout', config.repo_branch],
             cwd=dir,
             check=True,
+            capture_output=True,
         )
         subprocess.run(
             ['git', 'pull'],
             cwd=dir,
             check=True,
+            capture_output=True,
         )
         return cls(config, dir)
 
