@@ -173,7 +173,7 @@ serializer.data
 ```python
 content = JSONRenderer().render(serializer.data)
 content
-# b'{"id": 2, "title": "", "code": "print(\\"hello, world\\")\\n", "linenos": false, "language": "python", "style": "friendly"}'
+# b'{"id":2,"title":"","code":"print(\\"hello, world\\")\\n","linenos":false,"language":"python","style":"friendly"}'
 ```
 
 Десериализация аналогична. Сначала мы разбираем поток на собственные типы данных Python...
@@ -192,7 +192,7 @@ serializer = SnippetSerializer(data=data)
 serializer.is_valid()
 # True
 serializer.validated_data
-# OrderedDict([('title', ''), ('code', 'print("hello, world")\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])
+# {'title': '', 'code': 'print("hello, world")', 'linenos': False, 'language': 'python', 'style': 'friendly'}
 serializer.save()
 # <Snippet: Snippet object>
 ```
@@ -204,7 +204,7 @@ serializer.save()
 ```python
 serializer = SnippetSerializer(Snippet.objects.all(), many=True)
 serializer.data
-# [OrderedDict([('id', 1), ('title', ''), ('code', 'foo = "bar"\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 2), ('title', ''), ('code', 'print("hello, world")\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 3), ('title', ''), ('code', 'print("hello, world")'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])]
+# [{'id': 1, 'title': '', 'code': 'foo = "bar"\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}, {'id': 2, 'title': '', 'code': 'print("hello, world")\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}, {'id': 3, 'title': '', 'code': 'print("hello, world")', 'linenos': False, 'language': 'python', 'style': 'friendly'}]
 ```
 
 ## Использование сериализаторов моделей
@@ -370,44 +370,52 @@ pip install httpie
 Наконец, мы можем получить список всех сниппетов:
 
 ```bash
-http http://127.0.0.1:8000/snippets/
+http http http://127.0.0.1:8000/snippets/ --unsorted
 
 HTTP/1.1 200 OK
 ...
 [
-  {
-    "id": 1,
-    "title": "",
-    "code": "foo = \"bar\"\n",
-    "linenos": false,
-    "language": "python",
-    "style": "friendly"
-  },
-  {
-    "id": 2,
-    "title": "",
-    "code": "print(\"hello, world\")\n",
-    "linenos": false,
-    "language": "python",
-    "style": "friendly"
-  }
+    {
+        "id": 1,
+        "title": "",
+        "code": "foo = \"bar\"\n",
+        "linenos": false,
+        "language": "python",
+        "style": "friendly"
+    },
+    {
+        "id": 2,
+        "title": "",
+        "code": "print(\"hello, world\")\n",
+        "linenos": false,
+        "language": "python",
+        "style": "friendly"
+    },
+    {
+        "id": 3,
+        "title": "",
+        "code": "print(\"hello, world\")",
+        "linenos": false,
+        "language": "python",
+        "style": "friendly"
+    }
 ]
 ```
 
 Или мы можем получить конкретный фрагмент, обратившись к нему по id:
 
 ```bash
-http http://127.0.0.1:8000/snippets/2/
+http http://127.0.0.1:8000/snippets/2/ --unsorted
 
 HTTP/1.1 200 OK
 ...
 {
-  "id": 2,
-  "title": "",
-  "code": "print(\"hello, world\")\n",
-  "linenos": false,
-  "language": "python",
-  "style": "friendly"
+    "id": 2,
+    "title": "",
+    "code": "print(\"hello, world\")\n",
+    "linenos": false,
+    "language": "python",
+    "style": "friendly"
 }
 ```
 
