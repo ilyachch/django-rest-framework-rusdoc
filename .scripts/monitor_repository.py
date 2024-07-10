@@ -14,6 +14,7 @@ from pathlib import Path
 class Config:
     repo_url: str
     repo_branch: str
+    original_link: str
     paths: list[tuple[str, str]]
     cache_file: Path
 
@@ -25,6 +26,7 @@ class Config:
         return cls(
             repo_url=raw_config['repository']['repo_url'],
             repo_branch=raw_config['repository']['repo_branch'],
+            original_link=raw_config['repository']['original_link'],
             paths=raw_config['repository']['paths'],
             cache_file=Path(raw_config['repository']['cache_file']),
         )
@@ -64,6 +66,9 @@ class FileInfo:
 
     _repo: 'GitRepository'
 
+    def __hash__(self):
+        return hash(f'{self.src}{self.dst}')
+
     @cached_property
     def file_hash(self) -> str:
         return hashlib.md5(self.src.read_bytes()).hexdigest()
@@ -91,7 +96,10 @@ class FileInfo:
             text=True,
             check=True,
         )
-        return result.stdout.strip()
+        clear_result = result.stdout.strip()
+        clear_result = '\n'.join(clear_result.split('\n')[4:])
+        clear_result = f'{old_commit} -> {self.commit_hash}\n{clear_result}'
+        return clear_result
 
     def copy(self) -> None:
         self.dst.parent.mkdir(parents=True, exist_ok=True)
@@ -235,10 +243,12 @@ def process_repository(
     if not dry_run:
         write_files_json(cache_file, new_files_cache)
 
-    for file, change in changed_files.items():
-        print(f'- {file}\n')
-        print(change if change != 'New file' else 'New file')
-        print()
+    if changed_files:
+        print(f'Sync with [original]({config.original_link})')
+        for file, change in changed_files.items():
+            change_message = change if change != 'New file' else 'New file'
+            print(f' - `{file}`\n')
+            print(f'```\n{change_message}\n```\n')
 
     if not save:
         repo.delete()
@@ -248,14 +258,14 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--config',
-        default='config.toml',
+        default='monitoring_config.toml',
         required=False,
         help='Path to the configuration file',
         type=Path,
     )
     parser.add_argument(
         '--cache',
-        default='files_cache.json',
+        default='.files_cache.json',
         required=False,
         help='Path to the cache file',
         type=Path,

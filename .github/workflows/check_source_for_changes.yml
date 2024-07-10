@@ -24,15 +24,15 @@ jobs:
         id: check
         run: |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "new_files<<$EOF" >> "$GITHUB_OUTPUT"
-          python3 ./.scripts/sync_original.py >> "$GITHUB_OUTPUT"
+          echo "changes<<$EOF" >> "$GITHUB_OUTPUT"
+          python3 ./.scripts/monitor_repository.py >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
       - name: Report
         run: |
-          echo "New files:"
-          echo "${{ steps.check.outputs.new_files }}"
+          echo "Changes:"
+          echo "${{ steps.check.outputs.changes }}"
       - name: Check if branch already exists
-        if: steps.check.outputs.new_files != '' && !inputs.dry_run
+        if: steps.check.outputs.changes != '' && !inputs.dry_run
         run: |
           git fetch
           if git branch -r | grep -q "origin/sync-with-original"; then
@@ -41,13 +41,13 @@ jobs:
             exit 1
           fi
       - name: Open PR
-        if: steps.check.outputs.new_files != '' && steps.branch_exists.outputs != '1' && !inputs.dry_run
-        uses: peter-evans/create-pull-request@v4
+        if: steps.check.outputs.changes != '' && steps.branch_exists.outputs != '1' && !inputs.dry_run
+        uses: peter-evans/create-pull-request@v6.1.0
         with:
           title: Sync with original
           body: |
             Sync with [original](https://github.com/encode/django-rest-framework/tree/master/docs)
-            ${{ steps.check.outputs.new_files }}
+            ${{ steps.check.outputs.changes }}
           labels: sync
           branch: sync-with-original
           branch-suffix: random
