@@ -1,0 +1,12 @@
+[repository]
+repo_url = 'https://github.com/encode/django-rest-framework.git'
+repo_branch = 'master'
+original_link = 'https://github.com/encode/django-rest-framework/tree/master/docs'
+paths = [
+    ['docs/api-guide/', '.reference/api-guide/'],
+    ['docs/tutorial/', '.reference/tutorial/'],
+    ['docs/coreapi/', '.reference/tutorial/'],
+    ['docs/topics/', '.reference/topics/'],
+    ['docs/index.md', '.reference/README.md'],
+]
+cache_file = '.files_cache.json'

@@ -1,0 +1,178 @@
+{
+  ".reference/README.md": {
+    "commit_hash": "ccfe0a963799f52c137a7ed555648e7bbffa0d93",
+    "file_hash": "7300818b1c9e104a6867e23917b78f0f"
+  },
+  ".reference/api-guide/authentication.md": {
+    "commit_hash": "605cc4f7367f58002056453d9befd3c1918f6a38",
+    "file_hash": "86bf7e63a8c9a9d35de4e24777e201d1"
+  },
+  ".reference/api-guide/caching.md": {
+    "commit_hash": "085b7e166ba80aa973645e5249b441f2dbdc0c96",
+    "file_hash": "be7f6fa6f51df4d8403f96958c4ee7e7"
+  },
+  ".reference/api-guide/content-negotiation.md": {
+    "commit_hash": "20d347a806baa0dd481b31a7f847386574882d5b",
+    "file_hash": "42bdb842998742794fd4f685b6edb67e"
+  },
+  ".reference/api-guide/exceptions.md": {
+    "commit_hash": "6ebe6f26003df8f21fec83336da00565a0ee8f5b",
+    "file_hash": "ad8eeeb32447a575e08fad537353de2c"
+  },
+  ".reference/api-guide/fields.md": {
+    "commit_hash": "4ef3aaf0ad0e31efe13d3c503a7099915a7c8875",
+    "file_hash": "78299ed17d3ad7a87d704f6e1c93c261"
+  },
+  ".reference/api-guide/filtering.md": {
+    "commit_hash": "b99df0cf780adc3d65362a4425f9bb6d85410bcb",
+    "file_hash": "f1c464034ca99276f618c793881a672b"
+  },
+  ".reference/api-guide/format-suffixes.md": {
+    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
+    "file_hash": "60ea26c1f58e88b82b31b49e524316e6"
+  },
+  ".reference/api-guide/generic-views.md": {
+    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
+    "file_hash": "6bd0806c260c4c10774ba9ebe855beda"
+  },
+  ".reference/api-guide/metadata.md": {
+    "commit_hash": "46be2ffd34e2118e905fa3f0cbcab918d482134f",
+    "file_hash": "50a8b09188992727ef200526cb734810"
+  },
+  ".reference/api-guide/pagination.md": {
+    "commit_hash": "c9e7b68a4c1db1ac60e962053380acda549609f3",
+    "file_hash": "a82fe091943c2fac195d3d3809874f04"
+  },
+  ".reference/api-guide/parsers.md": {
+    "commit_hash": "c9e7b68a4c1db1ac60e962053380acda549609f3",
+    "file_hash": "25bfccc85415e43f974520d45ef058a7"
+  },
+  ".reference/api-guide/permissions.md": {
+    "commit_hash": "4f10c4e43ee57f4a2e387e0c8d44d28d21a3621c",
+    "file_hash": "2511b2e0ebb19d92133d6d525a5347d5"
+  },
+  ".reference/api-guide/relations.md": {
+    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
+    "file_hash": "c94a4e6243ca4bb7b871bdf8ff9b718f"
+  },
+  ".reference/api-guide/renderers.md": {
+    "commit_hash": "63063da0820e23ef0edbf92a3031103a6c2ce254",
+    "file_hash": "edb83d78676375835234a7a230b18b75"
+  },
+  ".reference/api-guide/requests.md": {
+    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
+    "file_hash": "240faaa79ccc4276506f251a54585e6b"
+  },
+  ".reference/api-guide/responses.md": {
+    "commit_hash": "5e8fe6edf0b25506c5bc3ce749c5b9d5cb9e7e7e",
+    "file_hash": "8d38269ad049dc9a7779fa7c30377b31"
+  },
+  ".reference/api-guide/reverse.md": {
+    "commit_hash": "332e9560ab0b3a1b8c0ab8f68e95c09bc2d8999f",
+    "file_hash": "df00e0304464472fda1e97c804e1c9f9"
+  },
+  ".reference/api-guide/routers.md": {
+    "commit_hash": "2d19f233ab36805264ec6d4655a0105d8b37f989",
+    "file_hash": "9694dde557a734d8c9f25209a5c59dcd"
+  },
+  ".reference/api-guide/schemas.md": {
+    "commit_hash": "2f66c294e364b1ddaceb9b4422dcf74d7bc3803a",
+    "file_hash": "be9b1f72104730f593a07804417b88dd"
+  },
+  ".reference/api-guide/serializers.md": {
+    "commit_hash": "7900778fbeec79a1994d577ed33e13b0ef2e51f3",
+    "file_hash": "4c70fe640c6588dd719d3cf48118fd9f"
+  },
+  ".reference/api-guide/settings.md": {
+    "commit_hash": "18b02ce00e4c911719297149406cb3c0f054cf22",
+    "file_hash": "c0891d38895ea09cb6d064ce391c5772"
+  },
+  ".reference/api-guide/status-codes.md": {
+    "commit_hash": "3e052376ace520135d42dcf52f35a51b7dcc5ac2",
+    "file_hash": "2c87ce34b589a196dc98c77eb3490884"
+  },
+  ".reference/api-guide/testing.md": {
+    "commit_hash": "4464ce7270e6242fec212a4257aa1277d023ff1b",
+    "file_hash": "0445b130006708c68b7acc77624323dd"
+  },
+  ".reference/api-guide/throttling.md": {
+    "commit_hash": "20d347a806baa0dd481b31a7f847386574882d5b",
+    "file_hash": "1792343582605748c281f76b610857be"
+  },
+  ".reference/api-guide/validators.md": {
+    "commit_hash": "5ad467aa2c76a7cfb6218f6dbe22e314131bde3c",
+    "file_hash": "15b4945ab7371cfc9c8f1ca885f2169b"
+  },
+  ".reference/api-guide/versioning.md": {
+    "commit_hash": "0d6589cf45940bb67ace74a06b2c5b053f1c31ef",
+    "file_hash": "ff8cfbbbe7d70ab6bd0eac5300989be1"
+  },
+  ".reference/api-guide/views.md": {
+    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
+    "file_hash": "df99fcf81c70d6d77e55cff4db4e08f8"
+  },
+  ".reference/api-guide/viewsets.md": {
+    "commit_hash": "2797c0f216288bd7ca82e9e32e5f7d699bac74df",
+    "file_hash": "acb148dc8507e9f421d43be58d5c1c96"
+  },
+  ".reference/topics/ajax-csrf-cors.md": {
+    "commit_hash": "605cc4f7367f58002056453d9befd3c1918f6a38",
+    "file_hash": "6122ed56c57770bb7d15175a6f99a598"
+  },
+  ".reference/topics/browsable-api.md": {
+    "commit_hash": "f85d8cb81a87eba525396ad944861a86914cce20",
+    "file_hash": "a95585672369a5c5986ebaddea4ea20a"
+  },
+  ".reference/topics/browser-enhancements.md": {
+    "commit_hash": "f5470ab9e292c7321377ae1f43f85e311d94975f",
+    "file_hash": "8cfe1ff6085397161e067af7bd694a6e"
+  },
+  ".reference/topics/documenting-your-api.md": {
+    "commit_hash": "e794e5e5e43d6838d9ffb8eb0a505b5f531b261f",
+    "file_hash": "85ce53b26dbb566993378b57614a2eb2"
+  },
+  ".reference/topics/html-and-forms.md": {
+    "commit_hash": "9d4ed054bf8acfac6209b7e7f837fc97517affcc",
+    "file_hash": "d74c3a05790e8a201b4a373d54f01267"
+  },
+  ".reference/topics/internationalization.md": {
+    "commit_hash": "02eeb6fa003b5cbe3851ac18392f129d31a1a6bd",
+    "file_hash": "e2a95d864025664d2b188dae27118e9c"
+  },
+  ".reference/topics/rest-hypermedia-hateoas.md": {
+    "commit_hash": "e354331743dd6e8999371b0055d61967c78da859",
+    "file_hash": "1f7dc3f59d2b8ebffc06062c4bdc0568"
+  },
+  ".reference/topics/writable-nested-serializers.md": {
+    "commit_hash": "f0dbf0a264677f2a53faab402ff49f442fc4383a",
+    "file_hash": "ae7df9cb54197166d97df23d51bdda26"
+  },
+  ".reference/tutorial/1-serialization.md": {
+    "commit_hash": "fbdab09c776d5ceef041793a7acd1c9e91695e5d",
+    "file_hash": "70a28ff6150a2becf4704b2853e329a8"
+  },
+  ".reference/tutorial/2-requests-and-responses.md": {
+    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
+    "file_hash": "610b65f6b96711f634ef953efb9a42a1"
+  },
+  ".reference/tutorial/3-class-based-views.md": {
+    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
+    "file_hash": "2eed111f5bfc3b62a308a50d08160de0"
+  },
+  ".reference/tutorial/4-authentication-and-permissions.md": {
+    "commit_hash": "380ac8e79dd85e6798eb00a730b7d4c4c4a86ebd",
+    "file_hash": "c04a523956279a2270b4749ec74ecee7"
+  },
+  ".reference/tutorial/5-relationships-and-hyperlinked-apis.md": {
+    "commit_hash": "cdd53c7de912d5868c96f4e3883df248a3e6341d",
+    "file_hash": "5ba58630588f2c3f00727bd093f2f4fa"
+  },
+  ".reference/tutorial/6-viewsets-and-routers.md": {
+    "commit_hash": "4c231d5b97bcc1769ba5a6f41c16f011200300b8",
+    "file_hash": "75f6b0221ad9d07faaf442294247c9d1"
+  },
+  ".reference/tutorial/quickstart.md": {
+    "commit_hash": "f4daa98f48f9a25079531058fba4387949a4b54f",
+    "file_hash": "deff76b3585cbec82721dd0a289df2e4"
+  }
+}
