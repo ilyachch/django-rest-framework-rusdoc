@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5.2.0
         with:
           python-version: '3.12'
       - name: Check for changes
@@ -45,7 +45,7 @@ jobs:
             exit 1
           fi
       - name: Open PR
-        if: steps.check.outputs.changes != '' && steps.branch_exists.outputs != '1' && !inputs.dry_run
+        if: steps.check.outputs.changes != '' && steps.check_branch_exists.outputs != '1' && !inputs.dry_run
         uses: peter-evans/create-pull-request@v6.1.0
         with:
           title: Sync with original
