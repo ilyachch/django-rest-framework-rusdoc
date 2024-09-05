@@ -248,11 +248,11 @@ def process_repository(
         write_files_json(cache_file, files_cache)
 
     if changed_files:
-        print(f'Sync with [original]({config.original_link})')
+        print(f'Sync with [original]({config.original_link})\n')
         for file, change in changed_files.items():
             change_message = change if change != 'New file' else 'New file'
             print(f' - `{file}`\n')
-            print(f'```\n{change_message}\n```\n')
+            print(f'```\n{change_message}\n```\n\n\n')
 
     if not save:
         logger.info('Deleting temporary folder %s', repo.path)

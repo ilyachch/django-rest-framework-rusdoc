@@ -51,7 +51,6 @@ jobs:
         with:
           title: Sync with original
           body: |
-            Sync with [original](https://github.com/encode/django-rest-framework/tree/master/docs)
             ${{ steps.check.outputs.changes }}
           labels: sync
           branch: sync-with-original
