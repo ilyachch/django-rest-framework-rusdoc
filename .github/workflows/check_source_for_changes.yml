@@ -36,6 +36,7 @@ jobs:
           echo "Changes:"
           echo "${{ steps.check.outputs.changes }}"
       - name: Check if branch already exists
+        id: check_branch_exists
         if: steps.check.outputs.changes != '' && !inputs.dry_run
         run: |
           git fetch
