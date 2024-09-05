@@ -20,9 +20,11 @@ API может означать интерфейс прикладного _пр�
 Чтобы быстро добавить аутентификацию в Web-интерфейсе API, добавьте маршруты с именами `"login"` и `"logout"` в пространстве имен `"rest_framework"`. DRF предоставляет для этого маршруты по умолчанию, которые вы можете добавить в свой urlconf:
 
 ```python
+from django.urls import include, path
+
 urlpatterns = [
     # ...
-    url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework"))
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework"))
 ]
 ```
 
