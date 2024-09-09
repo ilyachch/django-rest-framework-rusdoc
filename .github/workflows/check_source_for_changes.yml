@@ -32,9 +32,11 @@ jobs:
           python3 ./.scripts/monitor_repository.py >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
       - name: Report
+        env:
+          CHANGES: ${{ steps.check.outputs.changes }}
         run: |
           echo "Changes:"
-          echo "${{ steps.check.outputs.changes }}"
+          echo "$CHANGES"
       - name: Check if branch already exists
         id: check_branch_exists
         if: steps.check.outputs.changes != '' && !inputs.dry_run
