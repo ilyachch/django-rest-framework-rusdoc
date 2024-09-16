@@ -157,6 +157,28 @@ class UserViewSet(ModelViewSet):
 * URL путь: `^users/{pk}/change-password/$`
 * Имя URL: `'user-change_password'`.
 
+### Использование Django `path()` с маршрутизаторами
+
+По умолчанию URL, создаваемые маршрутизаторами, используют регулярные выражения. Это поведение можно изменить, установив аргумент `use_regex_path` в `False` при инстанцировании маршрутизатора, в этом случае будут использоваться [преобразователи путей](https://docs.djangoproject.com/en/2.0/releases/2.0/#simplified-url-routing-syntax). Например:
+
+```python
+router = SimpleRouter(use_regex_path=False)
+```
+
+Маршрутизатор будет соответствовать значениям поиска, содержащим любые символы, кроме косой черты и точки. Чтобы получить более строгий (или более мягкий) шаблон поиска, установите атрибут `lookup_value_regex` в наборе представлений или `lookup_value_converter` при использовании конвертеров путей. Например, вы можете ограничить поиск допустимыми UUID:
+
+```python
+class MyModelViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    lookup_field = 'my_model_id'
+    lookup_value_regex = '[0-9a-f]{32}'
+
+class MyPathModelViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    lookup_field = 'my_model_uuid'
+    lookup_value_converter = 'uuid'
+```
+
+Обратите внимание, что преобразователи путей будут использоваться для всех URL, зарегистрированных в маршрутизаторе, включая действия набора представлений.
+
 # Руководство по API
 
 ## SimpleRouter
@@ -178,28 +200,6 @@ class UserViewSet(ModelViewSet):
 
 ```python
 router = SimpleRouter(trailing_slash=False)
-```
-
-В Django косые черты являются традиционными, но не используются по умолчанию в некоторых других фреймворках, таких как Rails. Какой стиль использовать - это в основном вопрос предпочтений, хотя некоторые javascript-фреймворки могут ожидать определенного стиля маршрутизации.
-
-По умолчанию URL, создаваемые `SimpleRouter`, используют регулярные выражения. Это поведение можно изменить, установив аргумент `use_regex_path` в `False` при инстанцировании маршрутизатора, в этом случае используются [преобразователи путей](https://docs.djangoproject.com/en/2.0/topics/http/urls/#path-converters). Например:
-
-```python
-router = SimpleRouter(use_regex_path=False)
-```
-
-**Примечание**: `use_regex_path=False` работает только с Django 2.x или выше, поскольку эта функция была введена в 2.0.0. Смотрите [release note](https://docs.djangoproject.com/en/2.0/releases/2.0/#simplified-url-routing-syntax)
-
-Маршрутизатор будет сопоставлять значения поиска, содержащие любые символы, кроме косой черты и точки. Чтобы получить более строгий (или мягкий) шаблон поиска, установите атрибут `lookup_value_regex` для набора представлений или `lookup_value_converter` при использовании конвертеров путей. Например, вы можете ограничить поиск действительными UUID:
-
-```python
-class MyModelViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    lookup_field = 'my_model_id'
-    lookup_value_regex = '[0-9a-f]{32}'
-
-class MyPathModelViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    lookup_field = 'my_model_uuid'
-    lookup_value_converter = 'uuid'
 ```
 
 ## DefaultRouter
