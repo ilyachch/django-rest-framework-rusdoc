@@ -136,8 +136,8 @@
     "file_hash": "d74c3a05790e8a201b4a373d54f01267"
   },
   ".reference/topics/internationalization.md": {
-    "commit_hash": "02eeb6fa003b5cbe3851ac18392f129d31a1a6bd",
-    "file_hash": "e2a95d864025664d2b188dae27118e9c"
+    "commit_hash": "9921c7554f3d8ce435e45bafd27f4b241beb66f1",
+    "file_hash": "0aa4b09a1e1d6d1eded629d85dbeeeee"
   },
   ".reference/topics/rest-hypermedia-hateoas.md": {
     "commit_hash": "e354331743dd6e8999371b0055d61967c78da859",
