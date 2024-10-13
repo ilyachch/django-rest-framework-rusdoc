@@ -148,8 +148,8 @@
     "file_hash": "ae7df9cb54197166d97df23d51bdda26"
   },
   ".reference/tutorial/1-serialization.md": {
-    "commit_hash": "fbdab09c776d5ceef041793a7acd1c9e91695e5d",
-    "file_hash": "70a28ff6150a2becf4704b2853e329a8"
+    "commit_hash": "d3dd45b3f48856c3513ab1eb5354194fa9898f39",
+    "file_hash": "946c93f827f0cd119f0b54cd91037ee7"
   },
   ".reference/tutorial/2-requests-and-responses.md": {
     "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
