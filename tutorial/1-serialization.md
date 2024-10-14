@@ -370,7 +370,7 @@ pip install httpie
 Наконец, мы можем получить список всех сниппетов:
 
 ```bash
-http http http://127.0.0.1:8000/snippets/ --unsorted
+http GET http://127.0.0.1:8000/snippets/ --unsorted
 
 HTTP/1.1 200 OK
 ...
@@ -405,7 +405,7 @@ HTTP/1.1 200 OK
 Или мы можем получить конкретный фрагмент, обратившись к нему по id:
 
 ```bash
-http http://127.0.0.1:8000/snippets/2/ --unsorted
+http GET http://127.0.0.1:8000/snippets/2/ --unsorted
 
 HTTP/1.1 200 OK
 ...
