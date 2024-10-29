@@ -269,7 +269,7 @@ class GameRecord(serializers.Serializer):
 ```python
 class EventSerializer(serializers.Serializer):
     name = serializers.CharField()
-    room_number = serializers.IntegerField(choices=[101, 102, 103, 201])
+    room_number = serializers.ChoiceField(choices=[101, 102, 103, 201])
     date = serializers.DateField()
 
     class Meta:
