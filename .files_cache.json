@@ -100,8 +100,8 @@
     "file_hash": "1792343582605748c281f76b610857be"
   },
   ".reference/api-guide/validators.md": {
-    "commit_hash": "5ad467aa2c76a7cfb6218f6dbe22e314131bde3c",
-    "file_hash": "15b4945ab7371cfc9c8f1ca885f2169b"
+    "commit_hash": "dbac145638758413b966c3418fa5f3f651e3e02a",
+    "file_hash": "ff372b985059581f279174aba33be8dd"
   },
   ".reference/api-guide/versioning.md": {
     "commit_hash": "0d6589cf45940bb67ace74a06b2c5b053f1c31ef",
