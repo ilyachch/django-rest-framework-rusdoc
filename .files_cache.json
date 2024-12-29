@@ -92,8 +92,8 @@
     "file_hash": "2c87ce34b589a196dc98c77eb3490884"
   },
   ".reference/api-guide/testing.md": {
-    "commit_hash": "4464ce7270e6242fec212a4257aa1277d023ff1b",
-    "file_hash": "0445b130006708c68b7acc77624323dd"
+    "commit_hash": "089f6a697445af20f52832db99f2ab94baea4ece",
+    "file_hash": "e93966f342670554fb0b6d44e2cd0f34"
   },
   ".reference/api-guide/throttling.md": {
     "commit_hash": "20d347a806baa0dd481b31a7f847386574882d5b",
