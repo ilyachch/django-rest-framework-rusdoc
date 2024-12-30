@@ -21,11 +21,14 @@ from rest_framework.test import APIRequestFactory
 # Using the standard RequestFactory API to create a form POST request
 factory = APIRequestFactory()
 request = factory.post('/notes/', {'title': 'new idea'})
+
+# Using the standard RequestFactory API to encode JSON data
+request = factory.post('/notes/', {'title': 'new idea'}, content_type='application/json')
 ```
 
 #### Использование аргумента `format`
 
-Методы, создающие тело запроса, такие как `post`, `put` и `patch`, включают аргумент `format`, что облегчает генерацию запросов, использующих тип содержимого, отличный от многокомпонентных данных формы. Например:
+Методы, создающие тело запроса, такие как `post`, `put` и `patch`, включают аргумент `format`, который позволяет легко генерировать запросы с использованием широкого набора форматов запросов.  При использовании этого аргумента фабрика выберет соответствующий рендерер и его сконфигурированный `content_type`.  Например:
 
 ```python
 # Create a JSON POST request
@@ -42,7 +45,7 @@ request = factory.post('/notes/', {'title': 'new idea'}, format='json')
 Если вам нужно явно закодировать тело запроса, вы можете сделать это, установив флаг `content_type`. Например:
 
 ```python
-request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_type='application/json')
+request = factory.post('/notes/', yaml.dump({'title': 'new idea'}), content_type='application/yaml')
 ```
 
 #### PUT и PATCH с данными формы
