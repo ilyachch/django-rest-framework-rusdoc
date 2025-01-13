@@ -565,4 +565,4 @@ class MyExampleViewSet(XLSXFileMixin, ReadOnlyModelViewSet):
 
 ## LaTeX
 
-[Rest Framework Latex](https://github.com/mypebble/rest-framework-latex) предоставляет рендерер, который выводит PDF-файлы с использованием Laulatex. Он поддерживается [Pebble (S/F Software)](https://github.com/mypebble).
+[Rest Framework Latex](https://github.com/mypebble/rest-framework-latex) предоставляет рендерер, который выводит PDF-файлы с использованием Lualatex. Он поддерживается [Pebble (S/F Software)](https://github.com/mypebble).
