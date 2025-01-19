@@ -84,8 +84,8 @@
     "file_hash": "688b27ac93878775fb60359c028e9af1"
   },
   ".reference/api-guide/settings.md": {
-    "commit_hash": "18b02ce00e4c911719297149406cb3c0f054cf22",
-    "file_hash": "c0891d38895ea09cb6d064ce391c5772"
+    "commit_hash": "b483179b93ade3ffbec7f1a7569a1c1c516666d4",
+    "file_hash": "dd71502a20decb19c6c778f542a256ba"
   },
   ".reference/api-guide/status-codes.md": {
     "commit_hash": "3e052376ace520135d42dcf52f35a51b7dcc5ac2",
