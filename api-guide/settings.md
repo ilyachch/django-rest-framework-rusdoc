@@ -267,7 +267,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 Строка формата, которая должна использоваться по умолчанию для вывода полей сериализатора `DateTimeField`. Если `None`, то поля сериализатора `DateTimeField` будут возвращать объекты Python `datetime`, а кодировка времени будет определяться рендерером.
 
-Может быть любым из `None`, `'iso-8601'` или строкой Python [strftime format](https://docs.python.org/3/library/time.html#time.strftime).
+Может быть любым из `None`, `'iso-8601'` или строкой Python [strftime format](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes).
 
 По умолчанию: `'iso-8601'`.
 
@@ -275,7 +275,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 Список форматных строк, которые должны использоваться по умолчанию при разборе входных данных для полей сериализатора `DateTimeField`.
 
-Может быть списком, включающим строку `'iso-8601'` или строки Python [strftime format](https://docs.python.org/3/library/time.html#time.strftime).
+Может быть списком, включающим строку `'iso-8601'` или строки Python [strftime format](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes).
 
 По умолчанию: `['iso-8601']`.
 
@@ -283,7 +283,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 Строка формата, которая должна использоваться по умолчанию для вывода полей сериализатора `DateField`. Если `None`, то поля сериализатора `DateField` будут возвращать объекты Python `date`, а кодировка даты будет определяться рендерером.
 
-Может быть любым из `None`, `'iso-8601'` или строкой Python [strftime format](https://docs.python.org/3/library/time.html#time.strftime).
+Может быть любым из `None`, `'iso-8601'` или строкой Python [strftime format](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes).
 
 По умолчанию: `'iso-8601'`.
 
@@ -291,7 +291,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 Список форматных строк, которые должны использоваться по умолчанию при разборе входных данных для полей сериализатора `DateField`.
 
-Может быть списком, включающим строку `'iso-8601'` или строки Python [strftime format](https://docs.python.org/3/library/time.html#time.strftime).
+Может быть списком, включающим строку `'iso-8601'` или строки Python [strftime format](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes).
 
 По умолчанию: `['iso-8601']`.
 
@@ -299,7 +299,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 Строка формата, которая должна использоваться по умолчанию для вывода полей сериализатора `TimeField`. Если `None`, то поля сериализатора `TimeField` будут возвращать объекты Python `time`, а кодировка времени будет определяться рендерером.
 
-Может быть любым из `None`, `'iso-8601'` или строкой Python [strftime format](https://docs.python.org/3/library/time.html#time.strftime).
+Может быть любым из `None`, `'iso-8601'` или строкой Python [strftime format](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes).
 
 По умолчанию: `'iso-8601'`.
 
@@ -307,7 +307,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 Список форматных строк, которые должны использоваться по умолчанию при разборе входных данных для полей сериализатора `TimeField`.
 
-Может быть списком, включающим строку `'iso-8601'` или строки Python [strftime format](https://docs.python.org/3/library/time.html#time.strftime).
+Может быть списком, включающим строку `'iso-8601'` или строки Python [strftime format](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes).
 
 По умолчанию: `['iso-8601']`.
 
