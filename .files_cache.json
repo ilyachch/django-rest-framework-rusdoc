@@ -1,7 +1,7 @@
 {
   ".reference/README.md": {
-    "commit_hash": "b25028ac8f46984459f9d9e28069b797986ae476",
-    "file_hash": "fc939c0ae6167283934cd9458e37943f"
+    "commit_hash": "f30c0e2eedda410a7e6a0d1b351377a9084361b4",
+    "file_hash": "d9a03113e1be37887fef98bc7c78d9d7"
   },
   ".reference/api-guide/authentication.md": {
     "commit_hash": "2ede857de0bbcc8863fadd6acdb1f8d5570d87dc",
@@ -96,8 +96,8 @@
     "file_hash": "e93966f342670554fb0b6d44e2cd0f34"
   },
   ".reference/api-guide/throttling.md": {
-    "commit_hash": "20d347a806baa0dd481b31a7f847386574882d5b",
-    "file_hash": "1792343582605748c281f76b610857be"
+    "commit_hash": "8637b3d62406204c586867b3bd60594c287c5cd6",
+    "file_hash": "85d445636c28acea51d1ce5ac61a261f"
   },
   ".reference/api-guide/validators.md": {
     "commit_hash": "dbac145638758413b966c3418fa5f3f651e3e02a",
@@ -112,8 +112,8 @@
     "file_hash": "df99fcf81c70d6d77e55cff4db4e08f8"
   },
   ".reference/api-guide/viewsets.md": {
-    "commit_hash": "2797c0f216288bd7ca82e9e32e5f7d699bac74df",
-    "file_hash": "acb148dc8507e9f421d43be58d5c1c96"
+    "commit_hash": "f8dbea1a4559dd8635ac877a9bffb3599d336132",
+    "file_hash": "dd73e34527b66bb65f374293827d73bf"
   },
   ".reference/topics/ajax-csrf-cors.md": {
     "commit_hash": "605cc4f7367f58002056453d9befd3c1918f6a38",
