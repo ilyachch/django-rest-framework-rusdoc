@@ -1,11 +1,11 @@
 {
   ".reference/README.md": {
-    "commit_hash": "f30c0e2eedda410a7e6a0d1b351377a9084361b4",
-    "file_hash": "d9a03113e1be37887fef98bc7c78d9d7"
+    "commit_hash": "e96b8e49cd0a3392cfc67615d91b4914c2f65599",
+    "file_hash": "e4b2d964713866665ab292477c425b1f"
   },
   ".reference/api-guide/authentication.md": {
-    "commit_hash": "2ede857de0bbcc8863fadd6acdb1f8d5570d87dc",
-    "file_hash": "fa22178d3fb6622de7d6a9fbd734a261"
+    "commit_hash": "32dbd3525dc16bf51883be23f5fba129acdcf1c1",
+    "file_hash": "276e6ec182c011667738ccf12a027762"
   },
   ".reference/api-guide/caching.md": {
     "commit_hash": "085b7e166ba80aa973645e5249b441f2dbdc0c96",
