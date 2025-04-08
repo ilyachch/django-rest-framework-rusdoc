@@ -564,7 +564,7 @@ modified = serializers.HiddenField(default=timezone.now)
 
 ---
 
-**Примечание:** `HiddenField()` не появляется в сериализаторе `partial=True` (при выполнении запроса `PATCH`). Это поведение может измениться в будущем, следите за обновлениями на [github discussion](https://github.com/encode/django-rest-framework/discussions/8259).
+**Примечание:** `HiddenField()` не появляется в сериализаторе `partial=True` (при выполнении запроса `PATCH`).
 
 ---
 
