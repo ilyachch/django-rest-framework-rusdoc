@@ -86,22 +86,41 @@ Web-интерфейс API построен с использованием [Twi
 
 ### Пакеты сторонних разработчиков для настройки
 
-Вы можете использовать сторонние пакеты для кастомизации, а не делать это самостоятельно. Вот 2 пакета для настройки API:
+Вы можете использовать сторонние пакеты для кастомизации, а не делать это самостоятельно. Вот 3 пакета для настройки API:
 
-* [rest-framework-redesign](https://github.com/youzarsiph/rest-framework-redesign) - Пакет для настройки API с помощью Bootstrap 5. Современный и элегантный дизайн, поддержка темного режима.
-* [rest-framework-material](https://github.com/youzarsiph/rest-framework-material) - Материальный дизайн для Django REST Framework.
-
----
-
-![Django REST Framework Redesign](https://github.com/encode/django-rest-framework/raw/master/docs/img/rfr.png)
-
-*Скриншот темы rest-framework-redesign*
+* [drf-restwind](https://github.com/youzarsiph/drf-restwind) - Современное переосмысление REST-фреймворка Django использует TailwindCSS и DaisyUI для создания гибких и настраиваемых решений пользовательского интерфейса с минимальными усилиями по кодированию.
+* [drf-redesign](https://github.com/youzarsiph/drf-redesign) - Пакет для настройки API с помощью Bootstrap 5. Современный и элегантный дизайн, поддержка темного режима.
+* [drf-material](https://github.com/youzarsiph/drf-material) - Материальный дизайн для Django REST Framework.
 
 ---
 
-![Django REST Framework Material](https://github.com/encode/django-rest-framework/raw/master/docs/img/rfm.png)
+![API Root](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-rw-api-root.png)
 
-*Скриншот темы rest-framework-material*
+![List View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-rw-list-view.png)
+
+![Detail View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-rw-detail-view.png)
+
+*Скриншоты drf-restwind*
+
+---
+
+![API Root](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-r-api-root.png)
+
+![List View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-r-list-view.png)
+
+![Detail View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-r-detail-view.png)
+
+*Скриншоты drf-redesign*
+
+---
+
+![API Root](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-m-api-root.png)
+
+![List View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-m-list-view.png)
+
+![Detail View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-m-detail-view.png)
+
+*Скриншоты drf-material*
 
 ---
 
