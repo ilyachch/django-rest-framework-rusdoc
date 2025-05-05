@@ -76,8 +76,8 @@
     "file_hash": "55c7d2ceb72af3884009e83a8ec65397"
   },
   ".reference/api-guide/schemas.md": {
-    "commit_hash": "2f66c294e364b1ddaceb9b4422dcf74d7bc3803a",
-    "file_hash": "be9b1f72104730f593a07804417b88dd"
+    "commit_hash": "985dd732e058644f6e875de76205a392ce4241dd",
+    "file_hash": "10b00d9d4194db16b80ad46462f3c0e0"
   },
   ".reference/api-guide/serializers.md": {
     "commit_hash": "9016efe3fc412488df92912c619f8f24fed2937c",
