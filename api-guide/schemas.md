@@ -3,7 +3,7 @@
 
 > Машиночитаемая \[схема\] описывает, какие ресурсы доступны через API, каковы их URL, как они представлены и какие операции они поддерживают.
 >
-> - Heroku, [JSON Schema for the Heroku Platform API](https://blog.heroku.com/archives/2014/1/8/json_schema_for_heroku_platform_api)
+> - Heroku, [JSON Schema for the Heroku Platform API](https://www.heroku.com/blog/json_schema_for_heroku_platform_api/)
 
 ---
 
