@@ -101,7 +101,7 @@ def get_queryset(self):
 
 ---
 
-**Примечание:** Если класс `serializer_class`, используемый в общем представлении, охватывает несколько отношений, что приводит к проблеме n+1, вы можете оптимизировать ваш набор запросов в этом методе, используя `select_related` и `prefetch_related`. Для получения дополнительной информации о проблеме n+1 и случаях использования упомянутых методов обратитесь к разделу related в [документации django](https://docs.djangoproject.com/en/3.1/ref/models/querysets/#django.db.models.query.QuerySet.select_related).
+**Примечание:** Если класс `serializer_class`, используемый в общем представлении, охватывает несколько отношений, что приводит к проблеме n+1, вы можете оптимизировать ваш набор запросов в этом методе, используя `select_related` и `prefetch_related`. Для получения дополнительной информации о проблеме n+1 и случаях использования упомянутых методов обратитесь к разделу related в [документации django](https://docs.djangoproject.com/en/stable/ref/models/querysets/#django.db.models.query.QuerySet.select_related).
 
 ---
 
