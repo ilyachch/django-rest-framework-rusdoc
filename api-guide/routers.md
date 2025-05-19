@@ -104,7 +104,7 @@ urlpatterns = [
 ]
 ```
 
-Более подробную информацию смотрите в документации Django [URL namespaces docs](https://docs.djangoproject.com/en/4.0/topics/http/urls/#url-namespaces) и в [`include` API reference](https://docs.djangoproject.com/en/4.0/ref/urls/#include).
+Более подробную информацию смотрите в документации Django [URL namespaces docs](https://docs.djangoproject.com/en/stable/topics/http/urls/#url-namespaces) и в [`include` API reference](https://docs.djangoproject.com/en/stable/ref/urls/#include).
 
 ---
 
@@ -159,7 +159,7 @@ class UserViewSet(ModelViewSet):
 
 ### Использование Django `path()` с маршрутизаторами
 
-По умолчанию URL, создаваемые маршрутизаторами, используют регулярные выражения. Это поведение можно изменить, установив аргумент `use_regex_path` в `False` при инстанцировании маршрутизатора, в этом случае будут использоваться [преобразователи путей](https://docs.djangoproject.com/en/2.0/releases/2.0/#simplified-url-routing-syntax). Например:
+По умолчанию URL, создаваемые маршрутизаторами, используют регулярные выражения. Это поведение можно изменить, установив аргумент `use_regex_path` в `False` при инстанцировании маршрутизатора, в этом случае будут использоваться [преобразователи путей](https://docs.djangoproject.com/en/stable/topics/http/urls/#path-converters). Например:
 
 ```python
 router = SimpleRouter(use_regex_path=False)
