@@ -253,7 +253,7 @@ serializer.is_valid(raise_exception=True)
 
 DRF предоставляет два представления ошибок, подходящих для предоставления общих JSON ответов `500` Server Error и `400` Bad Request. (Стандартные представления ошибок Django предоставляют HTML-ответы, которые могут не подойти для приложения, использующего только API).
 
-Используйте их согласно [Django's Customizing error views documentation](https://docs.djangoproject.com/en/dev/topics/http/views/#customizing-error-views).
+Используйте их согласно [Django's Customizing error views documentation](https://docs.djangoproject.com/en/stable/topics/http/views/#customizing-error-views).
 
 ## `rest_framework.exceptions.server_error`
 
