@@ -245,7 +245,7 @@ http://example.com/api/users?search=russell
 search_fields = ['username', 'email', 'profile__profession']
 ```
 
-Для полей [JSONField](https://docs.djangoproject.com/en/3.0/ref/contrib/postgres/fields/#jsonfield) и [HStoreField](https://docs.djangoproject.com/en/3.0/ref/contrib/postgres/fields/#hstorefield) можно осуществлять фильтрацию по вложенным значениям внутри структуры данных, используя ту же нотацию двойного подчеркивания:
+Для полей [JSONField](https://docs.djangoproject.com/en/stable/ref/models/fields/#django.db.models.JSONField) и [HStoreField](https://docs.djangoproject.com/en/stable/ref/contrib/postgres/fields/#hstorefield) можно осуществлять фильтрацию по вложенным значениям внутри структуры данных, используя ту же нотацию двойного подчеркивания:
 
 ```python
 search_fields = ['data__breed', 'data__owner__other_pets__0__name']
