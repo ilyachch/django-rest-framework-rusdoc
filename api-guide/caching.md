@@ -76,4 +76,4 @@ def get_user_list(request):
     return Response(content)
 ```
 
-**NOTE:** Декоратор [`cache_page`](https://docs.djangoproject.com/en/stable/topics/cache/#the-per-view-cache) кэширует только ответы `GET` и `HEAD` со статусом 200.
+**Обратите внимание:** Декоратор [`cache_page`](https://docs.djangoproject.com/en/stable/topics/cache/#the-per-view-cache) кэширует только ответы `GET` и `HEAD` со статусом 200.
