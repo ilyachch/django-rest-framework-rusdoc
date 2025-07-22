@@ -8,32 +8,32 @@
     "file_hash": "276e6ec182c011667738ccf12a027762"
   },
   ".reference/api-guide/caching.md": {
-    "commit_hash": "085b7e166ba80aa973645e5249b441f2dbdc0c96",
-    "file_hash": "be7f6fa6f51df4d8403f96958c4ee7e7"
+    "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
+    "file_hash": "c71925c0e67a5e5fd648d6ad70258788"
   },
   ".reference/api-guide/content-negotiation.md": {
     "commit_hash": "20d347a806baa0dd481b31a7f847386574882d5b",
     "file_hash": "42bdb842998742794fd4f685b6edb67e"
   },
   ".reference/api-guide/exceptions.md": {
-    "commit_hash": "6ebe6f26003df8f21fec83336da00565a0ee8f5b",
-    "file_hash": "ad8eeeb32447a575e08fad537353de2c"
+    "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
+    "file_hash": "659b7ca76f8efccef817591fef9d13fd"
   },
   ".reference/api-guide/fields.md": {
-    "commit_hash": "ffadde930ef23983f123477964d201c278f107e9",
-    "file_hash": "34553abf5fd3d344bd43c385460796a1"
+    "commit_hash": "30384947053b1f2b2c9e82cafd1da934d3442a61",
+    "file_hash": "d4657f2d7f2dc17a58a4303a0d12604e"
   },
   ".reference/api-guide/filtering.md": {
-    "commit_hash": "b99df0cf780adc3d65362a4425f9bb6d85410bcb",
-    "file_hash": "f1c464034ca99276f618c793881a672b"
+    "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
+    "file_hash": "27786925f83d3a655d8e4d3aa8a9b38e"
   },
   ".reference/api-guide/format-suffixes.md": {
     "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
     "file_hash": "60ea26c1f58e88b82b31b49e524316e6"
   },
   ".reference/api-guide/generic-views.md": {
-    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
-    "file_hash": "6bd0806c260c4c10774ba9ebe855beda"
+    "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
+    "file_hash": "e9fb71365401dd5d8722fee9f61f726c"
   },
   ".reference/api-guide/metadata.md": {
     "commit_hash": "46be2ffd34e2118e905fa3f0cbcab918d482134f",
@@ -48,8 +48,8 @@
     "file_hash": "25bfccc85415e43f974520d45ef058a7"
   },
   ".reference/api-guide/permissions.md": {
-    "commit_hash": "4f10c4e43ee57f4a2e387e0c8d44d28d21a3621c",
-    "file_hash": "2511b2e0ebb19d92133d6d525a5347d5"
+    "commit_hash": "70e54f45add6a96f92bbadbcff30fc211f2ce0c3",
+    "file_hash": "dff16073dedef12b66e6138e56aabb59"
   },
   ".reference/api-guide/relations.md": {
     "commit_hash": "fc98d3598d9c0762e0cb999992e954643e6dc091",
@@ -72,8 +72,8 @@
     "file_hash": "df00e0304464472fda1e97c804e1c9f9"
   },
   ".reference/api-guide/routers.md": {
-    "commit_hash": "61e33761ebf04a5ce795dac38b7ebe75405385b6",
-    "file_hash": "55c7d2ceb72af3884009e83a8ec65397"
+    "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
+    "file_hash": "15de71531dcb93d7f83062ecab8dddb5"
   },
   ".reference/api-guide/schemas.md": {
     "commit_hash": "985dd732e058644f6e875de76205a392ce4241dd",
@@ -164,8 +164,8 @@
     "file_hash": "c04a523956279a2270b4749ec74ecee7"
   },
   ".reference/tutorial/5-relationships-and-hyperlinked-apis.md": {
-    "commit_hash": "cdd53c7de912d5868c96f4e3883df248a3e6341d",
-    "file_hash": "5ba58630588f2c3f00727bd093f2f4fa"
+    "commit_hash": "2ae8c117dae5d7912760492a1df397e2fcd8c7a4",
+    "file_hash": "3686cb11edf5a4c5a0c14381d59b4322"
   },
   ".reference/tutorial/6-viewsets-and-routers.md": {
     "commit_hash": "4c231d5b97bcc1769ba5a6f41c16f011200300b8",
