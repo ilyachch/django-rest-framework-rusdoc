@@ -20,8 +20,8 @@
     "file_hash": "659b7ca76f8efccef817591fef9d13fd"
   },
   ".reference/api-guide/fields.md": {
-    "commit_hash": "30384947053b1f2b2c9e82cafd1da934d3442a61",
-    "file_hash": "d4657f2d7f2dc17a58a4303a0d12604e"
+    "commit_hash": "c8b6d3dcdf0a9fe04eb914e29e18efa42fe59a6c",
+    "file_hash": "e457bf084d729e4bfe121c8e3e40f4d3"
   },
   ".reference/api-guide/filtering.md": {
     "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
@@ -32,8 +32,8 @@
     "file_hash": "60ea26c1f58e88b82b31b49e524316e6"
   },
   ".reference/api-guide/generic-views.md": {
-    "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
-    "file_hash": "e9fb71365401dd5d8722fee9f61f726c"
+    "commit_hash": "f0ba88776162630ebd2d8c4b61eed320e8301a6d",
+    "file_hash": "bdf8d025a745dedd8f44eee3bee6f0c3"
   },
   ".reference/api-guide/metadata.md": {
     "commit_hash": "46be2ffd34e2118e905fa3f0cbcab918d482134f",
@@ -76,40 +76,40 @@
     "file_hash": "15de71531dcb93d7f83062ecab8dddb5"
   },
   ".reference/api-guide/schemas.md": {
-    "commit_hash": "985dd732e058644f6e875de76205a392ce4241dd",
-    "file_hash": "10b00d9d4194db16b80ad46462f3c0e0"
+    "commit_hash": "0d0be8467d184fd503c10d5335d0aba1a2694205",
+    "file_hash": "56646755a9f7c6ade2bd33222fcbd491"
   },
   ".reference/api-guide/serializers.md": {
-    "commit_hash": "9016efe3fc412488df92912c619f8f24fed2937c",
-    "file_hash": "688b27ac93878775fb60359c028e9af1"
+    "commit_hash": "92a2c4d3cbff9dc5878941e47e534718d967cb0f",
+    "file_hash": "e8545f642a9f3c48b33185c93a016207"
   },
   ".reference/api-guide/settings.md": {
-    "commit_hash": "b483179b93ade3ffbec7f1a7569a1c1c516666d4",
-    "file_hash": "dd71502a20decb19c6c778f542a256ba"
+    "commit_hash": "c8b6d3dcdf0a9fe04eb914e29e18efa42fe59a6c",
+    "file_hash": "7c612d71bda27b43cb9de7982bd8b905"
   },
   ".reference/api-guide/status-codes.md": {
     "commit_hash": "3e052376ace520135d42dcf52f35a51b7dcc5ac2",
     "file_hash": "2c87ce34b589a196dc98c77eb3490884"
   },
   ".reference/api-guide/testing.md": {
-    "commit_hash": "089f6a697445af20f52832db99f2ab94baea4ece",
-    "file_hash": "e93966f342670554fb0b6d44e2cd0f34"
+    "commit_hash": "503f0603e6e1c75177f6fb5a00513e5f60e40be2",
+    "file_hash": "dbcee6e447cf6904bc810a36b2b19e0a"
   },
   ".reference/api-guide/throttling.md": {
-    "commit_hash": "ffadde930ef23983f123477964d201c278f107e9",
-    "file_hash": "b0984a51db7154f8c7907463cf77ee80"
+    "commit_hash": "64c3d9ef63bc073d01063934ab952cd1b990ecf2",
+    "file_hash": "85d445636c28acea51d1ce5ac61a261f"
   },
   ".reference/api-guide/validators.md": {
-    "commit_hash": "ffadde930ef23983f123477964d201c278f107e9",
-    "file_hash": "2659636862f0a505534d13ba6ac97e78"
+    "commit_hash": "64c3d9ef63bc073d01063934ab952cd1b990ecf2",
+    "file_hash": "f9eb818507dfe94dcbdaf252acaf3487"
   },
   ".reference/api-guide/versioning.md": {
     "commit_hash": "0d6589cf45940bb67ace74a06b2c5b053f1c31ef",
     "file_hash": "ff8cfbbbe7d70ab6bd0eac5300989be1"
   },
   ".reference/api-guide/views.md": {
-    "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
-    "file_hash": "df99fcf81c70d6d77e55cff4db4e08f8"
+    "commit_hash": "cf923511e7bbd1d05b6919af9af4e5edd81f5b71",
+    "file_hash": "ab251a8e60ee8f237743333eddbe3445"
   },
   ".reference/api-guide/viewsets.md": {
     "commit_hash": "f8dbea1a4559dd8635ac877a9bffb3599d336132",
@@ -136,8 +136,8 @@
     "file_hash": "d74c3a05790e8a201b4a373d54f01267"
   },
   ".reference/topics/internationalization.md": {
-    "commit_hash": "9921c7554f3d8ce435e45bafd27f4b241beb66f1",
-    "file_hash": "0aa4b09a1e1d6d1eded629d85dbeeeee"
+    "commit_hash": "0d0be8467d184fd503c10d5335d0aba1a2694205",
+    "file_hash": "bab35e5ecfd84547506673ba0e96239b"
   },
   ".reference/topics/rest-hypermedia-hateoas.md": {
     "commit_hash": "e354331743dd6e8999371b0055d61967c78da859",
