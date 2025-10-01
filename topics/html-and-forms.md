@@ -149,7 +149,7 @@ class LoginSerializer(serializers.Serializer):
 </form>
 ```
 
-![Пример вертикальной формы](https://github.com/encode/django-rest-framework/raw/master/docs/img/vertical.png)
+![Пример вертикальной формы](https://github.com/encode/django-rest-framework/raw/main/docs/img/vertical.png)
 
 ---
 
@@ -175,7 +175,7 @@ class LoginSerializer(serializers.Serializer):
 </form>
 ```
 
-![Пример горизонтальной формы](https://github.com/encode/django-rest-framework/raw/master/docs/img/horizontal.png)
+![Пример горизонтальной формы](https://github.com/encode/django-rest-framework/raw/main/docs/img/horizontal.png)
 
 ---
 
@@ -195,7 +195,7 @@ class LoginSerializer(serializers.Serializer):
 </form>
 ```
 
-![Пример инлайн-формы](https://github.com/encode/django-rest-framework/raw/master/docs/img/inline.png)
+![Пример инлайн-формы](https://github.com/encode/django-rest-framework/raw/main/docs/img/inline.png)
 
 ## Стили полей
 

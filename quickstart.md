@@ -231,7 +231,7 @@ $HTTP/1.1 200 OK
 
 Или непосредственно через браузер, перейдя по URL-адресу `http://127.0.0.1:8000/users/`...
 
-![Изображение быстрого запуска](https://github.com/encode/django-rest-framework/raw/master/docs/img/quickstart.png)
+![Изображение быстрого запуска](https://github.com/encode/django-rest-framework/raw/main/docs/img/quickstart.png)
 
 Если вы работаете через браузер, обязательно войдите в систему, используя элемент управления в правом верхнем углу.
 

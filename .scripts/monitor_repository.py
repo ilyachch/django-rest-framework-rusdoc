@@ -121,8 +121,7 @@ class GitRepository:
     def get(cls, config: 'Config', temp_dir: Path | None) -> 'GitRepository':
         if temp_dir is None:
             logger.info('Creating temporary directory')
-            temp_dir = tempfile.mkdtemp()
-            temp_dir = Path(temp_dir)
+            temp_dir = Path(tempfile.mkdtemp())
 
         logger.debug('Temporary directory: %s', temp_dir)
 

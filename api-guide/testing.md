@@ -251,7 +251,7 @@ assert response.status_code == 200
 
 ## Заголовки и аутентификация
 
-Пользовательские заголовки и учетные данные аутентификации могут быть предоставлены так же, как и [при использовании стандартного экземпляра `requests.Session`](https://requests.readthedocs.io/en/master/user/advanced/#session-objects).
+Пользовательские заголовки и учетные данные аутентификации могут быть предоставлены так же, как и [при использовании стандартного экземпляра `requests.Session`](https://requests.readthedocs.io/en/latest/user/advanced/#session-objects).
 
 ```python
 from requests.auth import HTTPBasicAuth

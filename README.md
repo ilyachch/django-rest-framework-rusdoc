@@ -1,7 +1,7 @@
 <!-- TRANSLATED by md-translate -->
 # Django REST framework
 
-![Logo by Jake 'Sid' Smith](https://github.com/encode/django-rest-framework/raw/master/docs/img/logo.png)
+![Logo by Jake 'Sid' Smith](https://github.com/encode/django-rest-framework/raw/main/docs/img/logo.png)
 
 Django REST framework - это мощный и гибкий набор инструментов для создания Web API.
 

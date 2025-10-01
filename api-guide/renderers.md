@@ -180,7 +180,7 @@ def simple_html_view(request):
 
 Рендерит данные в HTML для Browsable API:
 
-![The BrowsableAPIRenderer](https://github.com/encode/django-rest-framework/raw/master/docs/img/quickstart.png)
+![The BrowsableAPIRenderer](https://github.com/encode/django-rest-framework/raw/main/docs/img/quickstart.png)
 
 Этот рендерер определяет, какой другой рендерер имел бы наивысший приоритет, и использует его для отображения ответа в стиле API на HTML-странице.
 
@@ -206,7 +206,7 @@ class CustomBrowsableAPIRenderer(BrowsableAPIRenderer):
 
 Рендерит данные в HTML для отображения в стиле администратора:
 
-![Вид AdminRender](https://github.com/encode/django-rest-framework/raw/master/docs/img/quickstart.png)
+![Вид AdminRender](https://github.com/encode/django-rest-framework/raw/main/docs/img/quickstart.png)
 
 Этот рендерер подходит для веб-интерфейсов в стиле CRUD, которые также должны представлять удобный интерфейс для управления данными.
 

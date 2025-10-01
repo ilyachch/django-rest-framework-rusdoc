@@ -288,7 +288,7 @@ REST_FRAMEWORK = {
 
 Ответы API для конечных точек списка теперь будут включать заголовок `Link`, вместо того чтобы, например, включать ссылки пагинации как часть тела ответа:
 
-![](https://github.com/encode/django-rest-framework/raw/master/docs/img/link-header-pagination.png)
+![](https://github.com/encode/django-rest-framework/raw/main/docs/img/link-header-pagination.png)
 
 *Настраиваемый стиль пагинации с использованием заголовка `Link`.*
 

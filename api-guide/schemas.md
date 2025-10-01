@@ -189,8 +189,8 @@ auto_schema = some_view.schema
 
 `AutoSchema` предоставляет элементы OpenAPI, необходимые для каждого представления, метода запроса и пути:
 
-* Список [компонентов OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#componentsObject). В терминах DRF это отображения сериализаторов, которые описывают тела запроса и ответа.
-* Соответствующий [объект операции OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#operationObject), описывающий конечную точку, включая путь и параметры запроса для пагинации, фильтрации и так далее.
+* Список [компонентов OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#componentsObject). В терминах DRF это отображения сериализаторов, которые описывают тела запроса и ответа.
+* Соответствующий [объект операции OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#operationObject), описывающий конечную точку, включая путь и параметры запроса для пагинации, фильтрации и так далее.
 
 ```python
 components = auto_schema.get_components(...)
@@ -314,7 +314,7 @@ OpenAPI группирует операции по тегам. По умолча
 
 #### `get_operation()`.
 
-Возвращает [объект операции OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#operationObject), описывающий конечную точку, включая путь и параметры запроса для пагинации, фильтрации и так далее.
+Возвращает [объект операции OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#operationObject), описывающий конечную точку, включая путь и параметры запроса для пагинации, фильтрации и так далее.
 
 Вместе с `get_components()` это основная точка входа в интроспекцию представления.
 

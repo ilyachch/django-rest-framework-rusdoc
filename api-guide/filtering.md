@@ -98,7 +98,7 @@ class PurchaseList(generics.ListAPIView):
 
 Общие фильтры также могут быть представлены в виде элементов управления HTML в API просмотра и API администрирования.
 
-![Пример фильтра](https://github.com/encode/django-rest-framework/raw/master/docs/img/filter-controls.png)
+![Пример фильтра](https://github.com/encode/django-rest-framework/raw/main/docs/img/filter-controls.png)
 
 ## Настройка бэкендов фильтров
 
@@ -219,7 +219,7 @@ http://example.com/api/products?category=clothing&in_stock=True
 
 При использовании в состав Web-интерфейса API будет входить элемент управления `SearchFilter`:
 
-![Фильтр поиска](https://github.com/encode/django-rest-framework/raw/master/docs/img/search-filter.png)
+![Фильтр поиска](https://github.com/encode/django-rest-framework/raw/main/docs/img/search-filter.png)
 
 Класс `SearchFilter` будет применяться только в том случае, если у представления установлен атрибут `search_fields`. Атрибут `search_fields` должен представлять собой список имен полей текстового типа в модели, например `CharField` или `TextField`.
 
@@ -291,7 +291,7 @@ class CustomSearchFilter(filters.SearchFilter):
 
 Класс `OrderingFilter` поддерживает простое упорядочивание результатов, управляемое параметрами запроса.
 
-![Ordering Filter](https://github.com/encode/django-rest-framework/raw/master/docs/img/ordering-filter.png)
+![Ordering Filter](https://github.com/encode/django-rest-framework/raw/main/docs/img/ordering-filter.png)
 
 По умолчанию параметр запроса называется `'ordering'`, но это можно переопределить с помощью параметра `ORDERING_PARAM`.
 

@@ -72,13 +72,13 @@ Web-интерфейс API построен с использованием [Twi
 
 ---
 
-![Cerulean theme](https://github.com/encode/django-rest-framework/raw/master/docs/img/cerulean.png)
+![Cerulean theme](https://github.com/encode/django-rest-framework/raw/main/docs/img/cerulean.png)
 
 *Скриншот темы "Cerulean"*
 
 ---
 
-![Slate theme](https://github.com/encode/django-rest-framework/raw/master/docs/img/slate.png)
+![Slate theme](https://github.com/encode/django-rest-framework/raw/main/docs/img/slate.png)
 
 *Скриншот темы "Slate"*
 
@@ -94,31 +94,31 @@ Web-интерфейс API построен с использованием [Twi
 
 ---
 
-![API Root](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-rw-api-root.png)
+![API Root](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-rw-api-root.png)
 
-![List View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-rw-list-view.png)
+![List View](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-rw-list-view.png)
 
-![Detail View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-rw-detail-view.png)
+![Detail View](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-rw-detail-view.png)
 
 *Скриншоты drf-restwind*
 
 ---
 
-![API Root](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-r-api-root.png)
+![API Root](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-r-api-root.png)
 
-![List View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-r-list-view.png)
+![List View](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-r-list-view.png)
 
-![Detail View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-r-detail-view.png)
+![Detail View](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-r-detail-view.png)
 
 *Скриншоты drf-redesign*
 
 ---
 
-![API Root](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-m-api-root.png)
+![API Root](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-m-api-root.png)
 
-![List View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-m-list-view.png)
+![List View](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-m-list-view.png)
 
-![Detail View](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-m-detail-view.png)
+![Detail View](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-m-detail-view.png)
 
 *Скриншоты drf-material*
 

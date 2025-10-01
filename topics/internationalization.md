@@ -89,7 +89,7 @@ LANGUAGES = [
 
 1. Создайте новую папку, в которой вы хотите хранить ресурсы интернационализации. Добавьте этот путь в настройку [`LOCALE_PATHS`](https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-LOCALE_PATHS).
 2. Теперь создайте подпапку для языка, на который вы хотите перевести. Папка должна быть названа с использованием нотации [имя локали](https://docs.djangoproject.com/en/stable/topics/i18n/#term-locale-name). Например: `de`, `pt_BR`, `es_AR`.
-3. Теперь скопируйте файл [base translations file](https://raw.githubusercontent.com/encode/django-rest-framework/master/rest_framework/locale/en_US/LC_MESSAGES/django.po) из исходного кода DRF в папку translations.
+3. Теперь скопируйте файл [base translations file](https://raw.githubusercontent.com/encode/django-rest-framework/main/rest_framework/locale/en_US/LC_MESSAGES/django.po) из исходного кода DRF в папку translations.
 4. Отредактируйте только что скопированный файл `django.po`, переведя все сообщения об ошибках.
 5. Запустите `manage.py compilemessages -l pt_BR`, чтобы сделать переводы доступными для использования Django. Вы должны увидеть сообщение типа `processing file django.po in <...>/locale/pt_BR/LC_MESSAGES`.
 6. Перезапустите ваш сервер разработки, чтобы увидеть, что изменения вступили в силу.

@@ -23,7 +23,7 @@ DRF предоставляет ряд различных вариантов до
 
 Это также воплощается в очень полезном интерактивном средстве просмотра документации в виде `swagger-ui`:
 
-![Скриншот - drf-yasg](https://github.com/encode/django-rest-framework/raw/master/docs/img/drf-yasg.png)
+![Скриншот - drf-yasg](https://github.com/encode/django-rest-framework/raw/main/docs/img/drf-yasg.png)
 
 ---
 
@@ -156,7 +156,7 @@ urlpatterns = [
 
 Web-интерфейс API, который предоставляет DRF, позволяет вашему API быть полностью самоописывающимся. Документация для каждой конечной точки API может быть предоставлена просто при посещении URL-адреса в браузере.
 
-![Скриншот - API самоописания](https://github.com/encode/django-rest-framework/raw/master/docs/img/self-describing.png)
+![Скриншот - API самоописания](https://github.com/encode/django-rest-framework/raw/main/docs/img/self-describing.png)
 
 ---
 
