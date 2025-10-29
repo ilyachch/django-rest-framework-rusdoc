@@ -40,8 +40,7 @@ jobs:
       - name: Add Changes as txt
         if: steps.check.outputs.changes != '' && !inputs.dry_run
         run: |
-          echo "${{ steps.check.outputs.changes }}" > CHANGES.md
-          cat CHANGES.md
+          echo -e "${{ steps.check.outputs.changes }}" > CHANGES.md
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add CHANGES.md
