@@ -37,6 +37,16 @@ jobs:
         run: |
           echo "Changes:"
           echo "$CHANGES"
+      - name: Add Changes as txt
+        if: steps.check.outputs.changes != '' && inputs.dry_run
+        run: |
+          echo "${{ steps.check.outputs.changes }}" > CHANGES.md
+          cat CHANGES.md
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add CHANGES.md
+          git commit -m "Add CHANGES.md with detected changes"
+          git push
       - name: Check if branch already exists
         id: check_branch_exists
         if: steps.check.outputs.changes != '' && !inputs.dry_run
