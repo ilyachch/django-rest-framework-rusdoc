@@ -20,10 +20,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v5.2.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Check for changes
         id: check
         run: |
@@ -31,40 +33,27 @@ jobs:
           echo "changes<<$EOF" >> "$GITHUB_OUTPUT"
           python3 ./.scripts/monitor_repository.py >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
+
       - name: Report
         env:
           CHANGES: ${{ steps.check.outputs.changes }}
         run: |
           echo "Changes:"
           echo "$CHANGES"
-      - name: Add Changes as a file and commit
+
+      - name: Write CHANGES.md to workspace
         if: steps.check.outputs.changes != '' && !inputs.dry_run
         env:
           CHANGES: ${{ steps.check.outputs.changes }}
         run: |
           printf "%s" "$CHANGES" > CHANGES.md
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add CHANGES.md
-          git commit -m "Add CHANGES.md with detected changes"
-          git push
-      - name: Check if branch already exists
-        id: check_branch_exists
-        if: steps.check.outputs.changes != '' && !inputs.dry_run
-        run: |
-          git fetch
-          if git branch -r | grep -q "origin/sync-with-original"; then
-          echo
-            echo "branch_exists=1" >> $GITHUB_OUTPUT
-            exit 1
-          fi
+
       - name: Open PR
         if: steps.check.outputs.changes != '' && steps.check_branch_exists.outputs != '1' && !inputs.dry_run
         uses: peter-evans/create-pull-request@v6.1.0
         with:
           title: Sync with original
-          body: |
-            ${{ steps.check.outputs.changes }}
+          body: ${{ steps.check.outputs.changes }}
           labels: sync
           branch: sync-with-original
           branch-suffix: random
