@@ -90,6 +90,23 @@ force_authenticate(request, user=user)
 response = view(request)
 ```
 
+Если вы хотите протестировать запрос, связанный с объектом «Request» фреймворка REST, вам необходимо сначала вручную преобразовать его:
+
+```python
+class DummyView(APIView):
+    ...
+
+factory = APIRequestFactory()
+request = factory.get('/', {'demo': 'test'})
+drf_request = DummyView().initialize_request(request)
+assert drf_request.query_params == {'demo': ['test']}
+
+request = factory.post('/', {'example': 'test'})
+drf_request = DummyView().initialize_request(request)
+assert drf_request.data.get('example') == 'test'
+
+```
+
 Сигнатура для метода - `force_authenticate(request, user=None, token=None)`. При выполнении вызова может быть задан пользователь и токен или оба.
 
 Например, при принудительной аутентификации с помощью токена вы можете сделать что-то вроде следующего:
@@ -277,7 +294,7 @@ assert response.status_code == 200
 csrftoken = response.cookies['csrftoken']
 
 # Interact with the API.
-response = client.post('http://testserver/organisations/', json={
+response = client.post('http://testserver/organizations/', json={
     'name': 'MegaCorp',
     'status': 'active'
 }, headers={'X-CSRFToken': csrftoken})
@@ -301,12 +318,12 @@ assert response.status_code == 200
 client = CoreAPIClient()
 schema = client.get('http://testserver/schema/')
 
-# Create a new organisation
+# Create a new organization
 params = {'name': 'MegaCorp', 'status': 'active'}
-client.action(schema, ['organisations', 'create'], params)
+client.action(schema, ['organizations', 'create'], params)
 
-# Ensure that the organisation exists in the listing
-data = client.action(schema, ['organisations', 'list'])
+# Ensure that the organization exists in the listing
+data = client.action(schema, ['organizations', 'list'])
 assert(len(data) == 1)
 assert(data == [{'name': 'MegaCorp', 'status': 'active'}])
 ```
