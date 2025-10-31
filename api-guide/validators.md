@@ -102,7 +102,7 @@ class ExampleSerializer(serializers.Serializer):
     # ...
     class Meta:
         # ToDo items belong to a parent list, and have an ordering defined
-        # by the 'position' field. No two items in a given list may share
+        # by the 'position' field. No two items in a given list may share
         # the same position.
         validators = [
             UniqueTogetherValidator(
@@ -189,7 +189,7 @@ published = serializers.HiddenField(default=timezone.now)
 
 Валидаторы, применяемые к нескольким полям в сериализаторе, иногда могут потребовать ввода поля, которое не должно предоставляться клиентом API, но которое _доступно_ в качестве входных данных для валидатора. Для этих целей используйте `HiddenField`. Это поле будет присутствовать в `validated_data`, но _не_ будет использоваться в выходном представлении сериализатора.
 
-**Примечание:** Использование поля `read_only=True` исключается из записываемых полей, поэтому оно не будет использовать аргумент `default=...`. Смотрите [3.8 объявление](https://www.django-rest-framework.org/community/3.8-announcement/#altered-the-behaviour-of-read_only-plus-default-on-field).
+**Примечание:** Использование поля `read_only=True` исключается из записываемых полей, поэтому оно не будет использовать аргумент `default=...`. Смотрите [3.8 объявление](https://www.django-rest-framework.org/community/3.8-announcement/#altered-the-behavior-of-read_only-plus-default-on-field).
 
 DRF включает в себя несколько параметров по умолчанию, которые могут быть полезны в данном контексте.
 
