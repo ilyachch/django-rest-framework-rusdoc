@@ -76,25 +76,22 @@ from rest_framework import renderers
 
 from snippets.views import api_root, SnippetViewSet, UserViewSet
 
-snippet_list = SnippetViewSet.as_view({
-    'get': 'list',
-    'post': 'create'
-})
-snippet_detail = SnippetViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-})
-snippet_highlight = SnippetViewSet.as_view({
-    'get': 'highlight'
-}, renderer_classes=[renderers.StaticHTMLRenderer])
-user_list = UserViewSet.as_view({
-    'get': 'list'
-})
-user_detail = UserViewSet.as_view({
-    'get': 'retrieve'
-})
+snippet_list = SnippetViewSet.as_view(
+    {'get': 'list', 'post': 'create'}
+)
+snippet_detail = SnippetViewSet.as_view(
+    {'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}
+)
+snippet_highlight = SnippetViewSet.as_view(
+    {'get': 'highlight'},
+    renderer_classes=[renderers.StaticHTMLRenderer]
+)
+user_list = UserViewSet.as_view(
+    {'get': 'list'}
+)
+user_detail = UserViewSet.as_view(
+    {'get': 'retrieve'}
+)
 ```
 
 Обратите внимание, как мы создаем несколько представлений из каждого класса `ViewSet`, привязывая HTTP-методы к требуемым действиям для каждого представления.
