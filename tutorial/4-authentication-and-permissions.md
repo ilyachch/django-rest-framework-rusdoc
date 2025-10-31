@@ -210,8 +210,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 Теперь мы можем добавить это пользовательское разрешение в конечную точку экземпляра сниппета, отредактировав свойство `permission_classes` в классе представления `SnippetDetail`:
 
 ```python
-permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                      IsOwnerOrReadOnly]
+permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 ```
 
 Не забудьте также импортировать класс `IsOwnerOrReadOnly`.
