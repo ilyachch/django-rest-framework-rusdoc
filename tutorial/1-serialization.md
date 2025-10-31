@@ -147,64 +147,63 @@ python manage.py shell
 
 Хорошо, когда мы разобрались с несколькими импортами, давайте создадим пару фрагментов кода для работы.
 
-```python
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+```pycon
+>>> from snippets.models import Snippet
+>>> from snippets.serializers import SnippetSerializer
+>>> from rest_framework.renderers import JSONRenderer
+>>> from rest_framework.parsers import JSONParser
 
-snippet = Snippet(code='foo = "bar"\n')
-snippet.save()
+>>> snippet = Snippet(code='foo = "bar"\n')
+>>> snippet.save()
 
-snippet = Snippet(code='print("hello, world")\n')
-snippet.save()
+>>> snippet = Snippet(code='print("hello, world")\n')
+>>> snippet.save()
 ```
 
 Теперь у нас есть несколько экземпляров фрагментов, с которыми можно поиграть. Давайте посмотрим на сериализацию одного из этих экземпляров.
 
-```python
-serializer = SnippetSerializer(snippet)
-serializer.data
-# {'id': 2, 'title': '', 'code': 'print("hello, world")\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}
+```pycon
+>>> serializer = SnippetSerializer(snippet)
+>>> serializer.data
+{'id': 2, 'title': '', 'code': 'print("hello, world")\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}
 ```
 
 На данном этапе мы перевели экземпляр модели в собственные типы данных Python. Для завершения процесса сериализации мы преобразуем данные в `json`.
 
-```python
-content = JSONRenderer().render(serializer.data)
-content
-# b'{"id":2,"title":"","code":"print(\\"hello, world\\")\\n","linenos":false,"language":"python","style":"friendly"}'
+```pycon
+>>> content = JSONRenderer().render(serializer.data)
+>>> content
+b'{'id':2,'title':'','code':'print(\\"hello, world\\")\\n','linenos':false,'language':'python','style':'friendly'}'
 ```
 
 Десериализация аналогична. Сначала мы разбираем поток на собственные типы данных Python...
 
-```python
-import io
-
-stream = io.BytesIO(content)
-data = JSONParser().parse(stream)
+```pycon
+>>> import io
+>>> stream = io.BytesIO(content)
+>>> data = JSONParser().parse(stream)
 ```
 
 ...затем мы восстанавливаем эти собственные типы данных в полностью заполненный экземпляр объекта.
 
-```python
-serializer = SnippetSerializer(data=data)
-serializer.is_valid()
-# True
-serializer.validated_data
-# {'title': '', 'code': 'print("hello, world")', 'linenos': False, 'language': 'python', 'style': 'friendly'}
-serializer.save()
-# <Snippet: Snippet object>
+```pycon
+>>> serializer = SnippetSerializer(data=data)
+>>> serializer.is_valid()
+True
+>>> serializer.validated_data
+{'title': '', 'code': 'print("hello, world")', 'linenos': False, 'language': 'python', 'style': 'friendly'}
+>>> serializer.save()
+<Snippet: Snippet object>
 ```
 
 Обратите внимание, насколько API похож на работу с формами. Сходство должно стать еще более очевидным, когда мы начнем писать представления, использующие наш сериализатор.
 
 Мы также можем сериализовать наборы запросов вместо экземпляров моделей. Для этого мы просто добавим флаг `many=True` в аргументы сериализатора.
 
-```python
-serializer = SnippetSerializer(Snippet.objects.all(), many=True)
-serializer.data
-# [{'id': 1, 'title': '', 'code': 'foo = "bar"\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}, {'id': 2, 'title': '', 'code': 'print("hello, world")\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}, {'id': 3, 'title': '', 'code': 'print("hello, world")', 'linenos': False, 'language': 'python', 'style': 'friendly'}]
+```pycon
+>>> serializer = SnippetSerializer(Snippet.objects.all(), many=True)
+>>> serializer.data
+[{'id': 1, 'title': '', 'code': 'foo = "bar"\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}, {'id': 2, 'title': '', 'code': 'print("hello, world")\n', 'linenos': False, 'language': 'python', 'style': 'friendly'}, {'id': 3, 'title': '', 'code': 'print("hello, world")', 'linenos': False, 'language': 'python', 'style': 'friendly'}]
 ```
 
 ## Использование сериализаторов моделей
@@ -224,17 +223,17 @@ class SnippetSerializer(serializers.ModelSerializer):
 
 Одним из приятных свойств сериализаторов является то, что вы можете просмотреть все поля экземпляра сериализатора, распечатав его представление. Откройте оболочку Django с помощью команды `python manage.py shell`, затем попробуйте выполнить следующее:
 
-```python
-from snippets.serializers import SnippetSerializer
-serializer = SnippetSerializer()
-print(repr(serializer))
-# SnippetSerializer():
-#    id = IntegerField(label='ID', read_only=True)
-#    title = CharField(allow_blank=True, max_length=100, required=False)
-#    code = CharField(style={'base_template': 'textarea.html'})
-#    linenos = BooleanField(required=False)
-#    language = ChoiceField(choices=[('Clipper', 'FoxPro'), ('Cucumber', 'Gherkin'), ('RobotFramework', 'RobotFramework'), ('abap', 'ABAP'), ('ada', 'Ada')...
-#    style = ChoiceField(choices=[('autumn', 'autumn'), ('borland', 'borland'), ('bw', 'bw'), ('colorful', 'colorful')...
+```pycon
+>>> from snippets.serializers import SnippetSerializer
+>>> serializer = SnippetSerializer()
+>>> print(repr(serializer))
+SnippetSerializer():
+    id = IntegerField(label='ID', read_only=True)
+    title = CharField(allow_blank=True, max_length=100, required=False)
+    code = CharField(style={'base_template': 'textarea.html'})
+    linenos = BooleanField(required=False)
+    language = ChoiceField(choices=[('Clipper', 'FoxPro'), ('Cucumber', 'Gherkin'), ('RobotFramework', 'RobotFramework'), ('abap', 'ABAP'), ('ada', 'Ada')...
+    style = ChoiceField(choices=[('autumn', 'autumn'), ('borland', 'borland'), ('bw', 'bw'), ('colorful', 'colorful')...
 ```
 
 Важно помнить, что классы `ModelSerializer` не делают ничего особенно волшебного, они просто являются синтаксическим сахаром для создания классов сериализаторов:
@@ -340,13 +339,13 @@ urlpatterns = [
 
 Выйти из оболочки...
 
-```python
-quit()
+```pycon
+>>> quit()
 ```
 
 ...и запустите сервер разработки Django.
 
-```python
+```bash
 python manage.py runserver
 
 Validating models...

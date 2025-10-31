@@ -116,10 +116,12 @@ class SnippetList(mixins.ListModelMixin,
 Базовый класс обеспечивает основную функциональность, а классы-миксины предоставляют действия `.list()` и `.create()`. Затем мы явно привязываем методы `get` и `post` к соответствующим действиям. Пока все достаточно просто.
 
 ```python
-class SnippetDetail(mixins.RetrieveModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
-                    generics.GenericAPIView):
+class SnippetDetail(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    generics.GenericAPIView
+):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
 

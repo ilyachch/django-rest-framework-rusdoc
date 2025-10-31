@@ -269,7 +269,7 @@ search_fields = ['data__breed', 'data__owner__other_pets__0__name']
 search_fields = ['=username', '=email']
 ```
 
-По умолчанию параметр поиска называется `'search'`, но это можно переопределить с помощью параметра `SEARCH_PARAM`.
+По умолчанию параметр поиска называется `'search'`, но это можно переопределить с помощью параметра `SEARCH_PARAM` в секции настроек `REST_FRAMEWORK`.
 
 Для динамического изменения полей поиска в зависимости от содержимого запроса можно подклассифицировать `SearchFilter` и переопределить функцию `get_search_fields()`. Например, следующий подкласс будет искать по `title`, только если в запросе присутствует параметр запроса `title_only`:
 
@@ -293,7 +293,7 @@ class CustomSearchFilter(filters.SearchFilter):
 
 ![Ordering Filter](https://github.com/encode/django-rest-framework/raw/main/docs/img/ordering-filter.png)
 
-По умолчанию параметр запроса называется `'ordering'`, но это можно переопределить с помощью параметра `ORDERING_PARAM`.
+По умолчанию параметр запроса называется `'ordering'`, но это можно переопределить с помощью параметра `ORDERING_PARAM` в секции настроек `REST_FRAMEWORK`.
 
 Например, чтобы упорядочить пользователей по имени пользователя:
 

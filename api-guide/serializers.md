@@ -181,7 +181,7 @@ serializer = CommentSerializer(data={'email': 'foobar', 'content': 'baz'})
 serializer.is_valid()
 # False
 serializer.errors
-# {'email': ['Enter a valid e-mail address.'], 'created': ['This field is required.']}
+# {'email': ['Enter a valid email address.'], 'created': ['This field is required.']}
 ```
 
 Каждый ключ в словаре будет именем поля, а значения будут списками строк любых сообщений об ошибках, соответствующих этому полю. Также может присутствовать ключ `non_field_errors`, в котором будут перечислены все общие ошибки валидации. Имя ключа `non_field_errors` можно настроить с помощью параметра DRF `NON_FIELD_ERRORS_KEY`.
@@ -344,7 +344,7 @@ serializer = CommentSerializer(data={'user': {'email': 'foobar', 'username': 'do
 serializer.is_valid()
 # False
 serializer.errors
-# {'user': {'email': ['Enter a valid e-mail address.']}, 'created': ['This field is required.']}
+# {'user': {'email': ['Enter a valid email address.']}, 'created': ['This field is required.']}
 ```
 
 Аналогично, свойство `.validated_data` будет включать в себя вложенные структуры данных.
@@ -1303,3 +1303,7 @@ REST framework 2 предоставил API, позволяющий разраб
 ## DRF Encrypt Content
 
 Пакет [drf-encrypt-content](https://github.com/oguzhancelikarslan/drf-encrypt-content) помогает вам шифровать данные, сериализованные через `ModelSerializer`. Он также содержит некоторые вспомогательные функции. Это поможет вам зашифровать ваши данные.
+
+## Shapeless Serializers
+
+Пакет [drf-shapeless-serializers](https://github.com/khaledsukkar2/drf-shapeless-serializers) предоставляет возможности динамической настройки сериализатора, позволяя выбирать поля во время выполнения, переименовывать их, изменять атрибуты и настраивать вложенные отношения без создания нескольких классов сериализатора. Это помогает устранить шаблонные коды сериализатора и обеспечивает гибкие ответы API.

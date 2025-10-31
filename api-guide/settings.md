@@ -311,6 +311,15 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 По умолчанию: `['iso-8601']`.
 
+
+#### DURATION_FORMAT
+
+Указывает формат по умолчанию, который следует использовать для рендеринга вывода полей сериализатора `DurationField`.  Если `None`, то поля сериализатора `DurationField` будут возвращать объекты Python `timedelta`, а кодировка продолжительности будет определяться рендерером.
+
+Может быть любым из `None`, `'iso-8601'` или `'django'` (формат, принимаемый `django.utils.dateparse.parse_duration`).
+
+По умолчанию: `'django'`
+
 ---
 
 ## Кодировки

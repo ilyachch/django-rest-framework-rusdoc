@@ -244,7 +244,7 @@ from http import HTTPMethod
 В качестве альтернативы можно использовать атрибут `url_name`, установленный декоратором `@action`.
 
 ```pycon
->>> view.reverse_action(view.set_password.url_name, args=['1'])
+>>> view.reverse_action(view.set_password.url_name, args=["1"])
 'http://localhost:8000/api/users/1/set_password'
 ```
 

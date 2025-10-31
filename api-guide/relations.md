@@ -322,7 +322,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 Сериализуется во вложенное представление следующим образом:
 
 ```python
->>> album = Album.objects.create(album_name="The Grey Album", artist='Danger Mouse')
+>>> album = Album.objects.create(album_name="The Gray Album", artist='Danger Mouse')
 >>> Track.objects.create(album=album, order=1, title='Public Service Announcement', duration=245)
 <Track: Track object>
 >>> Track.objects.create(album=album, order=2, title='What More Can I Say', duration=264)
@@ -332,7 +332,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 >>> serializer = AlbumSerializer(instance=album)
 >>> serializer.data
 {
-    'album_name': 'The Grey Album',
+    'album_name': 'The Gray Album',
     'artist': 'Danger Mouse',
     'tracks': [
         {'order': 1, 'title': 'Public Service Announcement', 'duration': 245},
@@ -368,7 +368,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         return album
 
 >>> data = {
-    'album_name': 'The Grey Album',
+    'album_name': 'The Gray Album',
     'artist': 'Danger Mouse',
     'tracks': [
         {'order': 1, 'title': 'Public Service Announcement', 'duration': 245},

@@ -15,10 +15,12 @@ from rest_framework.reverse import reverse
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'snippets': reverse('snippet-list', request=request, format=format)
-    })
+    return Response(
+        {
+            'users': reverse('user-list', request=request, format=format),
+            'snippets': reverse('snippet-list', request=request, format=format)
+        }
+    )
 ```
 
 Здесь следует отметить два момента. Во-первых, мы используем функцию DRF `reverse`, чтобы вернуть полностью квалифицированные URL; во-вторых, шаблоны URL идентифицируются удобными именами, которые мы объявим позже в нашем `snippets/urls.py`.
@@ -87,8 +89,17 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Snippet
-        fields = ['url', 'id', 'highlight', 'owner',
-                  'title', 'code', 'linenos', 'language', 'style']
+        fields = [
+            'url',
+            'id',
+            'highlight',
+            'owner',
+            'title',
+            'code',
+            'linenos',
+            'language',
+            'style',
+        ]
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -96,7 +107,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['url', 'id', 'username', 'snippets']
+        fields = [
+            'url',
+            'id',
+            'username',
+            'snippets',
+        ]
 ```
 
 Обратите внимание, что мы также добавили новое поле `'highlight'`. Это поле того же типа, что и поле `url`, за исключением того, что оно указывает на шаблон url `'snippet-highlight'`, а не на шаблон url `'snippet-detail'`.
@@ -141,22 +157,35 @@ from snippets import views
 
 # API endpoints
 urlpatterns = format_suffix_patterns([
-    path('', views.api_root),
-    path('snippets/',
+    path(
+        '',
+        views.api_root,
+    ),
+    path(
+        'snippets/',
         views.SnippetList.as_view(),
-        name='snippet-list'),
-    path('snippets/<int:pk>/',
+        name='snippet-list',
+        ),
+    path(
+        'snippets/<int:pk>/',
         views.SnippetDetail.as_view(),
-        name='snippet-detail'),
-    path('snippets/<int:pk>/highlight/',
+        name='snippet-detail',
+    ),
+    path(
+        'snippets/<int:pk>/highlight/',
         views.SnippetHighlight.as_view(),
-        name='snippet-highlight'),
-    path('users/',
+        name='snippet-highlight',
+    ),
+    path(
+        'users/',
         views.UserList.as_view(),
-        name='user-list'),
-    path('users/<int:pk>/',
+        name='user-list',
+    ),
+    path(
+        'users/<int:pk>/',
         views.UserDetail.as_view(),
-        name='user-detail')
+        name='user-detail',
+    )
 ])
 ```
 
