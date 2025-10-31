@@ -320,7 +320,7 @@ OpenAPI группирует операции по тегам. По умолча
 
 #### `get_operation_id()`.
 
-Для каждой операции должен быть уникальный `operationid`. По умолчанию `operationId` выводится из имени модели, имени сериализатора или имени представления. OperationId выглядит как "listItems", "retrieveItem", "updateItem" и т.д. По соглашению `operationId` используется camelCase.
+Для каждой операции должен быть уникальный [`operationid`](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.2.md#fixed-fields-17). По умолчанию `operationId` выводится из имени модели, имени сериализатора или имени представления. `operationId` выглядит как "listItems", "retrieveItem", "updateItem" и т.д. По соглашению `operationId` используется camelCase.
 
 #### `get_operation_id_base()`.
 
