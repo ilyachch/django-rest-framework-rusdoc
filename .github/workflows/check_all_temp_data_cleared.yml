@@ -15,3 +15,8 @@ jobs:
           if [[ $(find .reference -type f -name "*.temp" -o -name "*.tmp" -o -name "*.md" | wc -l) -gt 0 ]]; then
             exit 1
           fi
+      - name: Check CHANGES.md cleared
+        run: |
+          if [[ $(find -name "CHANGES.md" | wc -l) -gt 0 ]]; then
+            exit 1
+          fi
