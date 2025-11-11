@@ -384,6 +384,7 @@ DRF также предоставляет класс тестов для изо�
 
 ```python
 from django.urls import include, path, reverse
+from rest_framework import status
 from rest_framework.test import APITestCase, URLPatternsTestCase
 
 
