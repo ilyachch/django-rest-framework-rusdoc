@@ -1,11 +1,11 @@
 {
   ".reference/README.md": {
-    "commit_hash": "ade172e1d5db87dc86bc616cbb4df7ccd2eb2fd3",
-    "file_hash": "e3f52cdb42fbc6af694b74f0cc704101"
+    "commit_hash": "18c5883be8ad3c5c5c36a5e39855d79ac80de7ca",
+    "file_hash": "3040917d581be433da899a2b37135150"
   },
   ".reference/api-guide/authentication.md": {
-    "commit_hash": "ade172e1d5db87dc86bc616cbb4df7ccd2eb2fd3",
-    "file_hash": "33922c28d017d62560802ac4b598b891"
+    "commit_hash": "442444f0bedc55af7ea1fcdc5755a343de1b1c57",
+    "file_hash": "beadf13af7a3011a6395a4aae6245c1c"
   },
   ".reference/api-guide/caching.md": {
     "commit_hash": "c0202a0aa5cbaf8573458b932878dfd5044c93ab",
@@ -20,8 +20,8 @@
     "file_hash": "659b7ca76f8efccef817591fef9d13fd"
   },
   ".reference/api-guide/fields.md": {
-    "commit_hash": "ade172e1d5db87dc86bc616cbb4df7ccd2eb2fd3",
-    "file_hash": "4eef6ca0f5d0ed719916ad9c2860aaec"
+    "commit_hash": "f9f10e041f9b2a2c936ee54a437d4c255f76e626",
+    "file_hash": "4ec603cf7fb6c935ae94adac539ac004"
   },
   ".reference/api-guide/filtering.md": {
     "commit_hash": "a323cf7c0a33d7ffd395a6805019f613fb79f985",
@@ -48,8 +48,8 @@
     "file_hash": "25bfccc85415e43f974520d45ef058a7"
   },
   ".reference/api-guide/permissions.md": {
-    "commit_hash": "70e54f45add6a96f92bbadbcff30fc211f2ce0c3",
-    "file_hash": "dff16073dedef12b66e6138e56aabb59"
+    "commit_hash": "363dbba4137fe488f33ed24e0a9025228e66301f",
+    "file_hash": "80bbba1ea6a15f13d596c7b77a10fca1"
   },
   ".reference/api-guide/relations.md": {
     "commit_hash": "ade172e1d5db87dc86bc616cbb4df7ccd2eb2fd3",
@@ -80,12 +80,12 @@
     "file_hash": "7af941ed485fb4826e419a887b5b4768"
   },
   ".reference/api-guide/serializers.md": {
-    "commit_hash": "ade172e1d5db87dc86bc616cbb4df7ccd2eb2fd3",
-    "file_hash": "d197065d62d7e3689b6e6fcb8e88ee13"
+    "commit_hash": "40172399afcc60510a78bdae39818ee6686b72e4",
+    "file_hash": "366116deb9174da170318e18d03f7162"
   },
   ".reference/api-guide/settings.md": {
-    "commit_hash": "c8b6d3dcdf0a9fe04eb914e29e18efa42fe59a6c",
-    "file_hash": "7c612d71bda27b43cb9de7982bd8b905"
+    "commit_hash": "f9f10e041f9b2a2c936ee54a437d4c255f76e626",
+    "file_hash": "e1745bd2d62b873253d4e8f338569b4f"
   },
   ".reference/api-guide/status-codes.md": {
     "commit_hash": "3e052376ace520135d42dcf52f35a51b7dcc5ac2",
