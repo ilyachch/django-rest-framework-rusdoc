@@ -192,8 +192,6 @@ urlpatterns = [
 
 За поддержкой обращайтесь в [REST framework discussion group](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework), попробуйте использовать канал `#restframework` на `irc.libera.chat`, или задайте вопрос на [Stack Overflow](https://stackoverflow.com/), обязательно указав тег ['django-rest-framework'](https://stackoverflow.com/questions/tagged/django-rest-framework).
 
-Для получения приоритетной поддержки подпишитесь на [профессиональный или премиум спонсорский план](https://fund.django-rest-framework.org/topics/funding/).
-
 ## Безопасность
 
 **Пожалуйста, сообщайте о проблемах безопасности по электронной почте security@encode.io**.
