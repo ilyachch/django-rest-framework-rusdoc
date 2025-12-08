@@ -354,3 +354,7 @@ DRF предлагает три различных метода настройк
 ## Django Rest Framework PSQ
 
 Пакет [Django Rest Framework PSQ](https://github.com/drf-psq/drf-psq) - это расширение, которое предоставляет поддержку для использования основанных на действиях **permission_classes**, **serializer_class** и **queryset**, зависящих от правил, основанных на разрешениях.
+
+## Axioms DRF PY
+
+Пакет [Axioms DRF PY][https://github.com/abhishektiwari/axioms-drf-py] — это расширение, которое обеспечивает поддержку аутентификации и тонкой авторизации на основе заявлений (**области действия**, **роли**, **группы**, **разрешения** и т. д., включая проверки на уровне объектов) с использованием токенов JWT, выдаваемых сервером авторизации OAuth2/OIDC, включая AWS Cognito, Auth0, Okta, Microsoft Entra и т. д.
