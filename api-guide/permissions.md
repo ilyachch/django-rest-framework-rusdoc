@@ -122,7 +122,11 @@ def example_view(request, format=None):
     return Response(content)
 ```
 
-**Примечание:** когда вы устанавливаете новые классы разрешений с помощью атрибута class или декораторов, вы говорите представлению игнорировать список по умолчанию, установленный в файле **settings.py**.
+---
+
+**Примечание:** когда вы устанавливаете новые классы разрешений с помощью атрибута class или декораторов, вы говорите представлению игнорировать список по умолчанию, установленный в файле `settings.py`.
+
+---
 
 При условии наследования от `rest_framework.permissions.BasePermission`, разрешения могут быть составлены с использованием стандартных побитовых операторов Python. Например, `IsAuthenticatedOrReadOnly` может быть записано:
 
@@ -136,7 +140,7 @@ class ReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 class ExampleView(APIView):
-    permission_classes = [IsAuthenticated|ReadOnly]
+    permission_classes = [IsAuthenticated | ReadOnly]
 
     def get(self, request, format=None):
         content = {
@@ -144,6 +148,9 @@ class ExampleView(APIView):
         }
         return Response(content)
 ```
+
+
+---
 
 **Примечание:** он поддерживает & (и), | (или) и ~ (не).
 
