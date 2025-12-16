@@ -28,7 +28,7 @@ class FileStatus:
         return str(self.path).startswith(".reference/")
 
 
-def run_command(command: List[str], cwd: Path = None) -> str:
+def run_command(command: List[str], cwd: Path | None = None) -> str:
     """Выполняет команду и возвращает результат"""
     logger.debug(f"Running command: {' '.join(command)}")
     process = subprocess.run(
@@ -47,7 +47,7 @@ def get_git_status() -> str:
     return run_command(["git", "status", "--porcelain"])
 
 
-def parse_status_line(line: str) -> FileStatus:
+def parse_status_line(line: str) -> FileStatus | None:
     """Разбирает строку статуса git и возвращает FileStatus"""
     if not line:
         return None
