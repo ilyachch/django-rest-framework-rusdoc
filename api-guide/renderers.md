@@ -212,7 +212,11 @@ class CustomBrowsableAPIRenderer(BrowsableAPIRenderer):
 
 Обратите внимание, что представления, которые имеют вложенные или списковые сериализаторы для своего ввода, не будут хорошо работать с `AdminRenderer`, так как HTML-формы не могут должным образом поддерживать их.
 
-**Примечание**: `AdminRenderer` способен включать ссылки на детальные страницы только в том случае, если в данных присутствует правильно настроенный атрибут `URL_FIELD_NAME` (по умолчанию `url`). Для `HyperlinkedModelSerializer` так и будет, но для классов `ModelSerializer` или простого `Serializer` вам нужно будет убедиться, что поле включено явно. Например, здесь мы используем метод модели `get_absolute_url`:
+---
+
+**Примечание**: `AdminRenderer` способен включать ссылки на детальные страницы только в том случае, если в данных присутствует правильно настроенный атрибут `URL_FIELD_NAME` (по умолчанию `url`). Для `HyperlinkedModelSerializer` так и будет, но для классов `ModelSerializer` или простого `Serializer` вам нужно будет убедиться, что поле включено явно.
+
+Например, здесь мы используем метод модели `get_absolute_url`:
 
 ```python
 class AccountSerializer(serializers.ModelSerializer):
@@ -221,6 +225,8 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
 ```
+
+---
 
 **.media_type**: `text/html`.
 
@@ -411,6 +417,8 @@ return Response(data, content_type='image/png')
 * Вывести код статуса HTTP и текст, например, "404 Not Found".
 
 Шаблоны будут отображаться с `RequestContext`, который включает ключи `status_code` и `details`.
+
+---
 
 **Примечание**: Если `DEBUG=True`, то вместо отображения кода статуса HTTP и текста будет отображаться стандартная страница ошибки трассировки Django.
 

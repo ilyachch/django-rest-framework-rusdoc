@@ -28,7 +28,14 @@ class FileStatus:
         return str(self.path).startswith(".reference/")
 
 
-def run_command(command: List[str], cwd: Path = None) -> str:
+@dataclasses.dataclass
+class GitChanges:
+    file_pairs: List[Tuple[Path, Path]]
+    skipped_reference_files: List[Path]
+    unpaired_modified_files: List[Path]
+
+
+def run_command(command: List[str], cwd: Path | None = None) -> str:
     """Выполняет команду и возвращает результат"""
     logger.debug(f"Running command: {' '.join(command)}")
     process = subprocess.run(
@@ -47,7 +54,7 @@ def get_git_status() -> str:
     return run_command(["git", "status", "--porcelain"])
 
 
-def parse_status_line(line: str) -> FileStatus:
+def parse_status_line(line: str) -> FileStatus | None:
     """Разбирает строку статуса git и возвращает FileStatus"""
     if not line:
         return None
@@ -64,11 +71,12 @@ def parse_status_line(line: str) -> FileStatus:
     return FileStatus(status=status, path=Path(file_path))
 
 
-def get_file_pairs() -> List[Tuple[Path, Path]]:
+def get_changes_to_commit() -> GitChanges:
     """
-    Находит пары файлов:
-    - измененный файл в корне
-    - удаленный файл в .reference с тем же относительным путем
+    Находит файлы для коммитов:
+    - пары: измененный файл + удаленный файл в .reference с тем же относительным путем
+    - одиночные удаленные файлы из .reference (без измененного аналога)
+    - измененные файлы без удаленного файла в .reference
     """
     status_output = get_git_status()
 
@@ -91,17 +99,32 @@ def get_file_pairs() -> List[Tuple[Path, Path]]:
         if file_status.is_deleted and file_status.is_in_reference:
             deleted_reference_files[file_status.path] = file_status
 
-    # Находим пары файлов
+    matched_reference_files: set[Path] = set()
+
+    # Находим пары файлов и отмечаем соответствующие файлы в .reference
     file_pairs = []
-    for modified_path, status in modified_files.items():
+    unpaired_modified_files: List[Path] = []
+
+    for modified_path in modified_files:
         reference_path = Path(".reference") / modified_path
 
         if reference_path in deleted_reference_files:
             file_pairs.append((modified_path, reference_path))
+            matched_reference_files.add(reference_path)
         else:
             logger.warning(f"No matching deleted reference file for {modified_path}")
+            unpaired_modified_files.append(modified_path)
 
-    return file_pairs
+    # Находим удаленные файлы в .reference без пары
+    skipped_reference_files = [
+        ref_path for ref_path in deleted_reference_files if ref_path not in matched_reference_files
+    ]
+
+    return GitChanges(
+        file_pairs=file_pairs,
+        skipped_reference_files=skipped_reference_files,
+        unpaired_modified_files=unpaired_modified_files,
+    )
 
 
 def commit_file_pair(
@@ -122,6 +145,24 @@ def commit_file_pair(
     run_command(["git", "add", str(modified_file), str(reference_file)])
 
     # Создаем коммит
+    run_command(["git", "commit", "-m", commit_message])
+
+    logger.info(f"Committed: {commit_message}")
+
+
+def commit_skipped_reference_file(reference_file: Path, dry_run: bool = False) -> None:
+    """Создает коммит для удаленного файла из .reference без пары"""
+    file_name = reference_file.name
+    commit_message = f"skipped {file_name}"
+
+    logger.info(f"Committing skipped reference file {file_name}...")
+
+    if dry_run:
+        logger.info(f"[DRY RUN] Would add: {reference_file}")
+        logger.info(f"[DRY RUN] Would commit with message: {commit_message}")
+        return
+
+    run_command(["git", "add", str(reference_file)])
     run_command(["git", "commit", "-m", commit_message])
 
     logger.info(f"Committed: {commit_message}")
@@ -159,16 +200,30 @@ def main() -> None:
     logger.debug(f"Arguments: dry_run={dry_run}, verbose={verbose}")
 
     try:
-        file_pairs = get_file_pairs()
+        changes = get_changes_to_commit()
 
-        if not file_pairs:
-            logger.warning("No matching file pairs found")
+        if changes.unpaired_modified_files:
+            logger.warning(
+                "Modified files without matching deleted reference: %s",
+                ", ".join(str(path) for path in changes.unpaired_modified_files),
+            )
+
+        if not changes.file_pairs and not changes.skipped_reference_files:
+            logger.warning("No matching file pairs or skipped reference files found")
             return
 
-        logger.info(f"Found {len(file_pairs)} file pairs to commit")
+        if changes.file_pairs:
+            logger.info(f"Found {len(changes.file_pairs)} file pairs to commit")
+        if changes.skipped_reference_files:
+            logger.info(
+                f"Found {len(changes.skipped_reference_files)} skipped reference files to commit"
+            )
 
-        for modified_file, reference_file in file_pairs:
+        for modified_file, reference_file in changes.file_pairs:
             commit_file_pair(modified_file, reference_file, dry_run)
+
+        for reference_file in changes.skipped_reference_files:
+            commit_skipped_reference_file(reference_file, dry_run)
 
         logger.info("All commits created successfully!")
 
