@@ -5,9 +5,10 @@ import json
 import logging
 import subprocess
 import tempfile
-import tomllib
 from functools import cache, cached_property
 from pathlib import Path
+
+import tomllib
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +60,10 @@ def write_files_json(path: Path, data: dict[str, CacheData]) -> None:
 
     path.write_text(
         json.dumps(
-            {key: {'commit_hash': data[key].commit_hash, 'file_hash': data[key].file_hash} for key in keys},
+            {
+                key: {'commit_hash': data[key].commit_hash, 'file_hash': data[key].file_hash}
+                for key in keys
+            },
             indent=2,
         )
     )
@@ -205,7 +209,12 @@ class GitRepository:
 
 
 def process_repository(
-    save: bool, tmp_folder_path: Path | None, dry_run: bool, config_file: Path, cache_file: Path
+    save: bool,
+    tmp_folder_path: Path | None,
+    dry_run: bool,
+    config_file: Path,
+    cache_file: Path,
+    details_file: Path | None,
 ) -> None:
     config = Config.from_config_file(config_file)
     files_cache = read_files_json(cache_file or config.cache_file)
@@ -247,11 +256,23 @@ def process_repository(
         write_files_json(cache_file, files_cache)
 
     if changed_files:
-        print(f'Sync with [original]({config.original_link})\n')
+        summary_lines = [f'Sync with [original]({config.original_link})\n']
+        details_lines = [f'Sync with [original]({config.original_link})\n']
+
         for file, change in changed_files.items():
+            summary_lines.append(f'- [ ] `{file}`')
+
             change_message = change if change != 'New file' else 'New file'
-            print(f' - `{file}`\n')
-            print(f'```\n{change_message}\n```\n\n\n')
+            details_lines.append(f' - `{file}`\n')
+            details_lines.append(f'```\n{change_message}\n```\n\n\n')
+
+        summary_text = "\n".join(summary_lines)
+        details_text = "".join(details_lines)
+
+        print(summary_text)
+
+        if details_file and not dry_run:
+            details_file.write_text(details_text)
 
     if not save:
         logger.info('Deleting temporary folder %s', repo.path)
@@ -272,6 +293,13 @@ if __name__ == '__main__':
         default='.files_cache.json',
         required=False,
         help='Path to the cache file',
+        type=Path,
+    )
+    parser.add_argument(
+        '--details-file',
+        default=None,
+        required=False,
+        help='Path to the file where detailed changes will be written',
         type=Path,
     )
     parser.add_argument(
@@ -311,6 +339,9 @@ if __name__ == '__main__':
     logging.basicConfig(level=(5 - verbose) * 10)
 
     logger.info('Processing repository')
-    logger.debug('Running with params %s', ", ".join(f"{key}={value}" for key, value in vars(args).items()))
+    logger.debug(
+        'Running with params %s', ', '.join(f'{key}={value}' for key, value in vars(args).items())
+    )
 
-    process_repository(save, temp_folder_path, dry_run, config_file, cache_file)
+    process_repository(save, temp_folder_path, dry_run, config_file, cache_file, args.details_file)
+

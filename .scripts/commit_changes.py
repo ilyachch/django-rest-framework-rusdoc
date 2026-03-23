@@ -17,15 +17,15 @@ class FileStatus:
 
     @property
     def is_modified(self) -> bool:
-        return "M" in self.status
+        return 'M' in self.status
 
     @property
     def is_deleted(self) -> bool:
-        return "D" in self.status
+        return 'D' in self.status
 
     @property
     def is_in_reference(self) -> bool:
-        return str(self.path).startswith(".reference/")
+        return str(self.path).startswith('.reference/')
 
 
 @dataclasses.dataclass
@@ -37,7 +37,7 @@ class GitChanges:
 
 def run_command(command: List[str], cwd: Path | None = None) -> str:
     """Выполняет команду и возвращает результат"""
-    logger.debug(f"Running command: {' '.join(command)}")
+    logger.debug(f'Running command: {" ".join(command)}')
     process = subprocess.run(
         command,
         cwd=cwd,
@@ -45,13 +45,13 @@ def run_command(command: List[str], cwd: Path | None = None) -> str:
         text=True,
     )
     if process.returncode != 0:
-        raise RuntimeError(f"Command failed: {process.stderr}")
+        raise RuntimeError(f'Command failed: {process.stderr}')
     return process.stdout.strip()
 
 
 def get_git_status() -> str:
     """Получает статус git в формате porcelain"""
-    return run_command(["git", "status", "--porcelain"])
+    return run_command(['git', 'status', '--porcelain'])
 
 
 def parse_status_line(line: str) -> FileStatus | None:
@@ -83,7 +83,7 @@ def get_changes_to_commit() -> GitChanges:
     modified_files: Dict[Path, FileStatus] = {}
     deleted_reference_files: Dict[Path, FileStatus] = {}
 
-    for line in status_output.split("\n"):
+    for line in status_output.split('\n'):
         if not line:
             continue
 
@@ -106,13 +106,13 @@ def get_changes_to_commit() -> GitChanges:
     unpaired_modified_files: List[Path] = []
 
     for modified_path in modified_files:
-        reference_path = Path(".reference") / modified_path
+        reference_path = Path('.reference') / modified_path
 
         if reference_path in deleted_reference_files:
             file_pairs.append((modified_path, reference_path))
             matched_reference_files.add(reference_path)
         else:
-            logger.warning(f"No matching deleted reference file for {modified_path}")
+            logger.warning(f'No matching deleted reference file for {modified_path}')
             unpaired_modified_files.append(modified_path)
 
     # Находим удаленные файлы в .reference без пары
@@ -127,63 +127,61 @@ def get_changes_to_commit() -> GitChanges:
     )
 
 
-def commit_file_pair(
-    modified_file: Path, reference_file: Path, dry_run: bool = False
-) -> None:
+def commit_file_pair(modified_file: Path, reference_file: Path, dry_run: bool = False) -> None:
     """Создает коммит для пары файлов"""
     file_name = modified_file.name
-    commit_message = f"update {file_name}"
+    commit_message = f'update {file_name}'
 
-    logger.info(f"Committing changes for {file_name}...")
+    logger.info(f'Committing changes for {file_name}...')
 
     if dry_run:
-        logger.info(f"[DRY RUN] Would add: {modified_file} {reference_file}")
-        logger.info(f"[DRY RUN] Would commit with message: {commit_message}")
+        logger.info(f'[DRY RUN] Would add: {modified_file} {reference_file}')
+        logger.info(f'[DRY RUN] Would commit with message: {commit_message}')
         return
 
     # Добавляем файлы в индекс
-    run_command(["git", "add", str(modified_file), str(reference_file)])
+    run_command(['git', 'add', str(modified_file), str(reference_file)])
 
     # Создаем коммит
-    run_command(["git", "commit", "-m", commit_message])
+    run_command(['git', 'commit', '-m', commit_message])
 
-    logger.info(f"Committed: {commit_message}")
+    logger.info(f'Committed: {commit_message}')
 
 
 def commit_skipped_reference_file(reference_file: Path, dry_run: bool = False) -> None:
     """Создает коммит для удаленного файла из .reference без пары"""
     file_name = reference_file.name
-    commit_message = f"skipped {file_name}"
+    commit_message = f'skipped {file_name}'
 
-    logger.info(f"Committing skipped reference file {file_name}...")
+    logger.info(f'Committing skipped reference file {file_name}...')
 
     if dry_run:
-        logger.info(f"[DRY RUN] Would add: {reference_file}")
-        logger.info(f"[DRY RUN] Would commit with message: {commit_message}")
+        logger.info(f'[DRY RUN] Would add: {reference_file}')
+        logger.info(f'[DRY RUN] Would commit with message: {commit_message}')
         return
 
-    run_command(["git", "add", str(reference_file)])
-    run_command(["git", "commit", "-m", commit_message])
+    run_command(['git', 'add', str(reference_file)])
+    run_command(['git', 'commit', '-m', commit_message])
 
-    logger.info(f"Committed: {commit_message}")
+    logger.info(f'Committed: {commit_message}')
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Create separate commits for each pair of related files"
+        description='Create separate commits for each pair of related files'
     )
     parser.add_argument(
-        "--dry-run",
-        action="store_true",
+        '--dry-run',
+        action='store_true',
         default=False,
-        help="Run without making actual commits",
+        help='Run without making actual commits',
     )
     parser.add_argument(
-        "-v",
-        "--verbose",
-        action="count",
+        '-v',
+        '--verbose',
+        action='count',
         default=0,
-        help="Increase verbosity (can be used multiple times)",
+        help='Increase verbosity (can be used multiple times)',
     )
 
     args = parser.parse_args()
@@ -193,30 +191,30 @@ def main() -> None:
     log_level = (5 - verbose) * 10
     logging.basicConfig(
         level=log_level,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     )
 
-    logger.info("Starting file pair commit process")
-    logger.debug(f"Arguments: dry_run={dry_run}, verbose={verbose}")
+    logger.info('Starting file pair commit process')
+    logger.debug(f'Arguments: dry_run={dry_run}, verbose={verbose}')
 
     try:
         changes = get_changes_to_commit()
 
         if changes.unpaired_modified_files:
             logger.warning(
-                "Modified files without matching deleted reference: %s",
-                ", ".join(str(path) for path in changes.unpaired_modified_files),
+                'Modified files without matching deleted reference: %s',
+                ', '.join(str(path) for path in changes.unpaired_modified_files),
             )
 
         if not changes.file_pairs and not changes.skipped_reference_files:
-            logger.warning("No matching file pairs or skipped reference files found")
+            logger.warning('No matching file pairs or skipped reference files found')
             return
 
         if changes.file_pairs:
-            logger.info(f"Found {len(changes.file_pairs)} file pairs to commit")
+            logger.info(f'Found {len(changes.file_pairs)} file pairs to commit')
         if changes.skipped_reference_files:
             logger.info(
-                f"Found {len(changes.skipped_reference_files)} skipped reference files to commit"
+                f'Found {len(changes.skipped_reference_files)} skipped reference files to commit'
             )
 
         for modified_file, reference_file in changes.file_pairs:
@@ -225,12 +223,12 @@ def main() -> None:
         for reference_file in changes.skipped_reference_files:
             commit_skipped_reference_file(reference_file, dry_run)
 
-        logger.info("All commits created successfully!")
+        logger.info('All commits created successfully!')
 
     except Exception as e:
-        logger.error(f"Error: {e}")
+        logger.error(f'Error: {e}')
         exit(1)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

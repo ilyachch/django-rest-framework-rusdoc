@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -31,7 +31,7 @@ jobs:
         run: |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "changes<<$EOF" >> "$GITHUB_OUTPUT"
-          python3 ./.scripts/monitor_repository.py >> "$GITHUB_OUTPUT"
+          python3 ./.scripts/monitor_repository.py --details-file CHANGES.md >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Report
@@ -40,13 +40,6 @@ jobs:
         run: |
           echo "Changes:"
           echo "$CHANGES"
-
-      - name: Write CHANGES.md to workspace
-        if: steps.check.outputs.changes != '' && !inputs.dry_run
-        env:
-          CHANGES: ${{ steps.check.outputs.changes }}
-        run: |
-          printf "%s" "$CHANGES" > CHANGES.md
 
       - name: Check if branch already exists
         id: check_branch_exists
