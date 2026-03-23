@@ -54,7 +54,7 @@ jobs:
 
       - name: Open PR
         if: steps.check.outputs.changes != '' && steps.check_branch_exists.outputs != '1' && !inputs.dry_run
-        uses: peter-evans/create-pull-request@v6.1.0
+        uses: peter-evans/create-pull-request@v8
         with:
           title: Sync with original
           body: ${{ steps.check.outputs.changes }}
