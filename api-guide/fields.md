@@ -440,7 +440,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 ---
 
-**Примечание**: классы `FileField` и `ImageField` подходят для использования только с `MultiPartParser` или `FileUploadParser`. Большинство парсеров, таких как, например, JSON, не поддерживают загрузку файлов.
+**Примечание:** классы `FileField` и `ImageField` подходят для использования только с `MultiPartParser` или `FileUploadParser`. Большинство парсеров, таких как, например, JSON, не поддерживают загрузку файлов.
 
 Для обработки загруженных файлов используются стандартные обработчики [FILE_UPLOAD_HANDLERS](https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-FILE_UPLOAD_HANDLERS) в Django.
 
@@ -585,7 +585,7 @@ modified = serializers.HiddenField(default=timezone.now)
 
 ---
 
-**Примечание**: `HiddenField()` не появляется в сериализаторе `partial=True` (при выполнении запроса `PATCH`).
+**Примечание:** `HiddenField()` не появляется в сериализаторе `partial=True` (при выполнении запроса `PATCH`).
 
 ---
 

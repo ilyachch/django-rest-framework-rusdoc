@@ -9,7 +9,7 @@
 
 ---
 
-**Примечание**: Код для этого руководства доступен в репозитории [encode/rest-framework-tutorial](https://github.com/encode/rest-framework-tutorial) на GitHub. Не стесняйтесь клонировать репозиторий и посмотреть код в действии.
+**Примечание:** Код для этого руководства доступен в репозитории [encode/rest-framework-tutorial](https://github.com/encode/rest-framework-tutorial) на GitHub. Не стесняйтесь клонировать репозиторий и посмотреть код в действии.
 
 ---
 
@@ -32,7 +32,7 @@ pip install pygments  # We'll be using this for the code highlighting
 
 ---
 
-**Совет**: Чтобы выйти из виртуальной среды в любое время, просто введите `deactivate`. Для получения дополнительной информации смотрите [документацию venv](https://docs.python.org/3/library/venv.html).
+**Совет:** Чтобы выйти из виртуальной среды в любое время, просто введите `deactivate`. Для получения дополнительной информации смотрите [документацию venv](https://docs.python.org/3/library/venv.html).
 
 ---
 
