@@ -92,7 +92,7 @@ class PurchaseList(generics.ListAPIView):
 
 ---
 
-# Общая фильтрация
+## Общая фильтрация
 
 Помимо возможности переопределения стандартного QuerySet, DRF также включает поддержку общих бэкендов фильтрации, которые позволяют легко строить сложные поисковые запросы и фильтры.
 
@@ -100,7 +100,7 @@ class PurchaseList(generics.ListAPIView):
 
 ![Пример фильтра](https://github.com/encode/django-rest-framework/raw/main/docs/img/filter-controls.png)
 
-## Настройка бэкендов фильтров
+#### Настройка бэкендов фильтров
 
 Бэкенды фильтров по умолчанию могут быть заданы глобально, с помощью параметра `DEFAULT_FILTER_BACKENDS`. Например:
 
@@ -124,7 +124,7 @@ class UserListView(generics.ListAPIView):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 ```
 
-## Фильтрация и поиск объектов
+### Фильтрация и поиск объектов
 
 Обратите внимание, что если для представления настроен бэкэнд фильтрации, то он будет использоваться не только для фильтрации списочных представлений, но и для фильтрации `QuerySet`, используемых для возврата одного объекта.
 
@@ -134,7 +134,7 @@ class UserListView(generics.ListAPIView):
 http://example.com/api/products/4675/?category=clothing&max_price=10.00
 ```
 
-## Переопределение исходного QuerySet
+### Переопределение исходного QuerySet
 
 Обратите внимание, что можно использовать и переопределенный `.get_queryset()`, и общую фильтрацию, и все будет работать так, как ожидается. Например, если у `Product` есть отношение "многие-ко-многим" с `User`, названное `purchase`, вы можете написать представление следующим образом:
 
@@ -155,9 +155,9 @@ class PurchasedProductsList(generics.ListAPIView):
 
 ---
 
-# Руководство по API
+## Руководство по API
 
-## DjangoFilterBackend
+### DjangoFilterBackend
 
 Библиотека [`django-filter`](https://django-filter.readthedocs.io/en/latest/index.html) включает класс `DjangoFilterBackend`, который поддерживает высоконастраиваемую фильтрацию полей для DRF.
 
@@ -213,7 +213,7 @@ http://example.com/api/products?category=clothing&in_stock=True
 
 Для более сложных требований к фильтрации можно указать класс `FilterSet`, который должен использоваться представлением. Более подробно о `FilterSet` можно прочитать в [документации django-filter](https://django-filter.readthedocs.io/en/latest/index.html). Также рекомендуется прочитать раздел [Интеграция DRF](https://django-filter.readthedocs.io/en/latest/guide/rest_framework.html).
 
-## SearchFilter
+### SearchFilter
 
 Класс `SearchFilter` поддерживает простой поиск по одному параметру запроса и основан на функциональности [поиска в админ-панели Django](https://docs.djangoproject.com/en/stable/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields).
 
@@ -287,7 +287,7 @@ class CustomSearchFilter(filters.SearchFilter):
 
 ---
 
-## OrderingFilter
+### OrderingFilter
 
 Класс `OrderingFilter` поддерживает простое упорядочивание результатов, управляемое параметрами запроса.
 
@@ -313,7 +313,7 @@ http://example.com/api/users?ordering=-username
 http://example.com/api/users?ordering=account,username
 ```
 
-### Указание того, какие поля могут быть использованы для упорядочивания
+#### Указание того, какие поля могут быть использованы для упорядочивания
 
 Рекомендуется явно указывать, какие поля API должен разрешать в фильтре упорядочивания. Это можно сделать, установив атрибут `ordering_fields` на представлении, например, так:
 
@@ -339,7 +339,7 @@ class BookingsListView(generics.ListAPIView):
     ordering_fields = '__all__'
 ```
 
-### Указание порядка по умолчанию
+#### Указание порядка по умолчанию
 
 Если у представления установлен атрибут `ordering`, то он будет использоваться в качестве упорядочивания по умолчанию.
 
@@ -358,7 +358,7 @@ class UserListView(generics.ListAPIView):
 
 ---
 
-# Пользовательская общая фильтрация
+## Пользовательская общая фильтрация
 
 Вы также можете предоставить свой собственный бэкэнд фильтрации или написать устанавливаемое приложение для использования другими разработчиками.
 
@@ -366,7 +366,7 @@ class UserListView(generics.ListAPIView):
 
 Помимо того, что клиенты могут выполнять поиск и фильтрацию, общие бэкенды фильтров могут быть полезны для ограничения того, какие объекты должны быть видны для каждого конкретного запроса или пользователя.
 
-## Пример
+### Пример
 
 Например, может потребоваться ограничить доступ пользователей только к созданным ими объектам.
 
@@ -381,7 +381,7 @@ class IsOwnerFilterBackend(filters.BaseFilterBackend):
 
 Мы могли бы добиться такого же поведения, переопределив `get_queryset()` в представлениях, но использование бэкенда фильтров позволяет более просто добавить это ограничение к нескольким представлениям или применить его ко всему API.
 
-## Настройка интерфейса
+### Настройка интерфейса
 
 Общие фильтры также могут представлять интерфейс в Web-интерфейсе API. Для этого необходимо реализовать метод `to_html()`, который возвращает отрендеренное HTML-представление фильтра. Этот метод должен иметь следующую сигнатуру:
 
@@ -389,22 +389,22 @@ class IsOwnerFilterBackend(filters.BaseFilterBackend):
 
 Метод должен возвращать отрендеренную HTML-строку.
 
-# Пакеты сторонних производителей
+## Пакеты сторонних производителей
 
 Следующие пакеты сторонних производителей предоставляют дополнительные реализации фильтров.
 
-## Django-rest-framework-filters
+### Django-rest-framework-filters
 
 [django-rest-framework-filters](https://github.com/philipn/django-rest-framework-filters) работает совместно с классом `DjangoFilterBackend` и позволяет легко создавать фильтры по отношениям, а также создавать несколько типов фильтров для поиска по заданному полю.
 
-## Djangorestframework-word-filter
+### Djangorestframework-word-filter
 
 [djangorestframework-word-filter](https://github.com/trollknurr/django-rest-framework-word-search-filter) разработан как альтернатива `filters.SearchFilter`, который будет искать полное слово в тексте, либо точное совпадение.
 
-## Django-url-filter
+### Django-url-filter
 
 [django-url-filter](https://github.com/miki725/django-url-filter) предоставляет безопасный способ фильтрации данных по удобным для человека URL-адресам. Он работает очень похоже на сериализаторы и поля DRF в том смысле, что они могут быть вложенными, за исключением того, что они называются `filtersets` и `filters`. Это обеспечивает простой способ фильтрации связанных данных. Кроме того, эта библиотека является универсальной, поэтому ее можно использовать для фильтрации других источников данных, а не только Django `QuerySet`.
 
-## drf-url-filters
+### drf-url-filters
 
 [drf-url-filter](https://github.com/manjitkumar/drf-url-filters) - это простое Django-приложение для применения фильтров к `Queryset` в `ModelViewSet` чистым, простым и настраиваемым способом. Оно также поддерживает валидацию входящих параметров запроса и их значений. Для валидации входящих параметров запроса используется красивый python-пакет `Voluptuous`. Самое приятное в `Voluptuous` то, что вы можете определить свои собственные валидации в соответствии с требованиями к параметрам запроса.
