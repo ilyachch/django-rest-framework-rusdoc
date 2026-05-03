@@ -34,9 +34,9 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-# API Reference
+## API Reference
 
-## Настройки политики API
+### Настройки политики API
 
 *Следующие настройки управляют основными политиками API и применяются к каждому представлению `APIView` на основе класса или `@api_view` на основе функции.*
 
@@ -112,7 +112,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Общие настройки представления
+### Общие настройки представления
 
 *Следующие настройки управляют поведением общих представлений на основе классов.*
 
@@ -132,7 +132,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 По умолчанию: `None`
 
-### SEARCH_PARAM
+#### SEARCH_PARAM
 
 Имя параметра запроса, который может быть использован для указания поискового термина, используемого `SearchFilter`.
 
@@ -146,7 +146,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Настройки версий
+### Настройки версий
 
 #### DEFAULT_VERSION
 
@@ -174,7 +174,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Настройки аутентификации
+### Настройки аутентификации
 
 *Следующие настройки управляют поведением неаутентифицированных запросов.*
 
@@ -188,11 +188,11 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 Класс, который должен использоваться для инициализации `request.auth` для неаутентифицированных запросов.
 
-По умолчанию: `Нет`
+По умолчанию: `None`
 
 ---
 
-## Настройки тестов
+### Настройки тестов
 
 *Следующие настройки управляют поведением APIRequestFactory и APIClient.*
 
@@ -221,7 +221,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Элементы управления генерацией схемы
+### Элементы управления генерацией схемы
 
 #### SCHEMA_COERCE_PATH_PK
 
@@ -237,7 +237,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Контроль типа содержимого
+### Контроль типа содержимого
 
 #### URL_FORMAT_OVERRIDE
 
@@ -259,7 +259,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Форматирование даты и времени
+### Форматирование даты и времени
 
 *Следующие параметры используются для управления тем, как представления даты и времени могут быть разобраны и отображены.*
 
@@ -311,7 +311,6 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 По умолчанию: `['iso-8601']`.
 
-
 #### DURATION_FORMAT
 
 Указывает формат по умолчанию, который следует использовать для рендеринга вывода полей сериализатора `DurationField`.  Если `None`, то поля сериализатора `DurationField` будут возвращать объекты Python `timedelta`, а кодировка продолжительности будет определяться рендерером.
@@ -322,7 +321,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Кодировки
+### Кодировки
 
 #### UNICODE_JSON
 
@@ -386,7 +385,7 @@ print(api_settings.DEFAULT_AUTHENTICATION_CLASSES)
 
 ---
 
-## Названия и описания представлений
+### Названия и описания представлений
 
 *Следующие настройки используются для создания названий и описаний представлений, которые используются в ответах на запросы `OPTIONS` и в API для просмотра.*
 
@@ -431,7 +430,7 @@ view_description(self, html=False)
 
 По умолчанию: `'rest_framework.views.get_view_description'`.
 
-## HTML Select Field cutoffs
+### HTML Select Field cutoffs
 
 Глобальные настройки для [выбора отсечений полей для визуализации реляционных полей](relations.md#выберите-отсечение-полей) в Web-интерфейсе API.
 
@@ -449,7 +448,7 @@ view_description(self, html=False)
 
 ---
 
-## Разные настройки
+### Разные настройки
 
 #### EXCEPTION_HANDLER
 

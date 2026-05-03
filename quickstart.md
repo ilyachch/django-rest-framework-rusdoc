@@ -13,8 +13,8 @@ mkdir tutorial
 cd tutorial
 
 # Create a virtual environment to isolate our package dependencies locally
-python3 -m venv env
-source env/bin/activate  # On Windows use `env\Scripts\activate`
+python3 -m venv .venv
+source .venv/bin/activate
 
 # Install Django and Django REST framework into the virtual environment
 pip install djangorestframework

@@ -93,7 +93,7 @@ def example_view(request, format=None):
 
 ## Django 5.1+ `LoginRequiredMiddleware`
 
-Если вы работаете с Django 5.1+ и используете [`LoginRequiredMiddleware`](https://docs.djangoproject.com/en/stable/ref/middleware/#django.contrib.auth.middleware.LoginRequiredMiddleware), обратите внимание, что все представления из DRF отказываются от этого промежуточного ПО. Это связано с тем, что аутентификация в DRF основана на классах аутентификации и разрешений, которые могут быть определены после применения промежуточного ПО. Кроме того, если запрос не аутентифицирован, промежуточное ПО перенаправляет пользователя на страницу входа в систему, что не подходит для API-запросов, где предпочтительнее возвращать код состояния `401 Unauthorized`.
+Если вы используете Django версии 5.1 и выше и применяете [`LoginRequiredMiddleware`](https://docs.djangoproject.com/en/stable/ref/middleware/#django.contrib.auth.middleware.LoginRequiredMiddleware), обратите внимание, что все представления из DRF исключены из действия этого промежуточного модуля. Это связано с тем, что аутентификация в DRF основана на классах аутентификации и прав доступа, которые могут определяться уже после применения промежуточного модуля.  Кроме того, если запрос не прошел аутентификацию, этот мидлвеар перенаправляет пользователя на страницу входа, что не подходит для API-запросов, где предпочтительнее возвращать статус-код 401.
 
 DRF предлагает эквивалентный механизм для представлений DRF через глобальные настройки `DEFAULT_AUTHENTICATION_CLASSES` и `DEFAULT_PERMISSION_CLASSES`. Их следует изменить соответствующим образом, если вам нужно обеспечить вход в систему при запросах API.
 
@@ -110,9 +110,9 @@ WSGIPassAuthorization On
 
 ---
 
-# API Reference
+## API Reference
 
-## BasicAuthentication
+### BasicAuthentication
 
 Эта схема аутентификации использует [HTTP Basic Authentication](https://tools.ietf.org/html/rfc2617), подписанную именем пользователя и паролем. Базовая аутентификация обычно подходит только для тестирования.
 
@@ -133,7 +133,7 @@ WWW-Authenticate: Basic realm="api"
 
 ---
 
-## TokenAuthentication
+### TokenAuthentication
 
 ---
 
@@ -198,9 +198,9 @@ curl -X GET http://127.0.0.1:8000/api/example/ -H 'Authorization: Token 9944b091
 
 ---
 
-### Генерация токенов
+#### Генерация токенов
 
-#### С помощью сигналов
+##### С помощью сигналов
 
 Если вы хотите, чтобы у каждого пользователя был автоматически сгенерированный токен, вы можете просто перехватить сигнал `post_save` пользователя.
 
@@ -228,7 +228,7 @@ for user in User.objects.all():
     Token.objects.get_or_create(user=user)
 ```
 
-#### Посредством конечной точки API
+##### Посредством конечной точки API
 
 При использовании `TokenAuthentication` вы можете захотеть предоставить клиентам механизм для получения токена, заданного именем пользователя и паролем. DRF предоставляет встроенное представление для обеспечения такого поведения. Чтобы использовать его, добавьте представление `obtain_auth_token` в URLconf:
 
@@ -283,11 +283,11 @@ urlpatterns += [
 ]
 ```
 
-#### С администратором Django
+##### С помощью админ-панели Django
 
 Токены также можно создавать вручную через интерфейс администратора. В случае, если вы используете большую базу пользователей, мы рекомендуем вам пропатчить класс `TokenAdmin`, чтобы настроить его под свои нужды, в частности, объявив поле `user` как `raw_field`.
 
-`ваше_приложение/admin.py`:
+`your_app/admin.py`:
 
 ```python
 from rest_framework.authtoken.admin import TokenAdmin
@@ -295,7 +295,7 @@ from rest_framework.authtoken.admin import TokenAdmin
 TokenAdmin.raw_id_fields = ['user']
 ```
 
-#### Использование команды Django manage.py
+##### Использование команды Django manage.py
 
 Начиная с версии 3.6.4 можно сгенерировать пользовательский токен с помощью следующей команды:
 
@@ -315,7 +315,7 @@ Generated token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b for user user1
 ./manage.py drf_create_token -r <username>
 ```
 
-## SessionAuthentication
+### SessionAuthentication
 
 Эта схема аутентификации использует бэкенд сессий Django по умолчанию для аутентификации. Сеансовая аутентификация подходит для клиентов AJAX, которые работают в том же сеансовом контексте, что и ваш сайт.
 
@@ -330,13 +330,13 @@ Generated token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b for user user1
 
 ---
 
-**Предупреждение**: Всегда используйте стандартное представление входа Django при создании страниц входа. Это обеспечит надлежащую защиту ваших представлений входа.
+**Предупреждение:** Всегда используйте стандартное представление входа Django при создании страниц входа. Это обеспечит надлежащую защиту ваших представлений входа.
 
 ---
 
 Проверка CSRF в DRF работает несколько иначе, чем в стандартном Django, из-за необходимости поддерживать как сеансовую, так и несеансовую аутентификацию для одних и тех же представлений. Это означает, что только аутентифицированные запросы требуют CSRF-токенов, а анонимные запросы могут быть отправлены без CSRF-токенов. Такое поведение не подходит для представлений входа в систему, к которым всегда должна применяться проверка CSRF.
 
-## RemoteUserAuthentication
+### RemoteUserAuthentication
 
 Эта схема аутентификации позволяет вам делегировать аутентификацию вашему веб-серверу, который устанавливает переменную окружения `REMOTE_USER`.
 
@@ -352,7 +352,7 @@ Generated token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b for user user1
 * [Apache Authentication How-To](https://httpd.apache.org/docs/2.4/howto/auth.html)
 * [NGINX (ограничение доступа)](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/)
 
-# Пользовательская аутентификация
+## Пользовательская аутентификация
 
 Чтобы реализовать собственную схему аутентификации, создайте подкласс `BaseAuthentication` и переопределите метод `.authenticate(self, request)`. Метод должен возвращать кортеж `(user, auth)`, если аутентификация прошла успешно, или `None` в противном случае.
 
@@ -373,7 +373,7 @@ Generated token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b for user user1
 
 ---
 
-## Пример
+### Пример
 
 Следующий пример аутентифицирует любой входящий запрос как пользователя, указанного в имени пользователя в пользовательском заголовке запроса 'X-USERNAME'.
 
@@ -398,19 +398,19 @@ class ExampleAuthentication(authentication.BaseAuthentication):
 
 ---
 
-# Пакеты сторонних производителей
+## Пакеты сторонних производителей
 
 Также доступны следующие пакеты сторонних производителей.
 
-## django-rest-knox
+### django-rest-knox
 
 Библиотека [Django-rest-knox](https://github.com/James1345/django-rest-knox) предоставляет модели и представления для обработки аутентификации на основе токенов более безопасным и расширяемым способом, чем встроенная схема `TokenAuthentication` - с учетом одностраничных приложений и мобильных клиентов. Она предоставляет токены для каждого клиента, а также представления для их генерации при предоставлении другой аутентификации (обычно базовой), для удаления токена (обеспечивая принудительный выход с сервера) и для удаления всех токенов (выход из всех клиентов, в которые вошел пользователь).
 
-## Django OAuth Toolkit
+### Django OAuth Toolkit
 
 Пакет [Django OAuth Toolkit](https://github.com/evonove/django-oauth-toolkit) обеспечивает поддержку OAuth 2.0 и работает с Python 3.4+. Пакет поддерживается [jazzband](https://github.com/jazzband/) и использует превосходный [OAuthLib](https://github.com/idan/oauthlib). Пакет хорошо документирован, хорошо поддерживается и в настоящее время является нашим **рекомендованным пакетом для поддержки OAuth 2.0**.
 
-### Установка и настройка
+#### Установка и настройка
 
 Установите с помощью `pip`.
 
@@ -435,13 +435,13 @@ REST_FRAMEWORK = {
 
 Более подробную информацию можно найти в документации [Django REST framework - Getting started](https://django-oauth-toolkit.readthedocs.io/en/latest/rest-framework/getting_started.html).
 
-## Django REST framework OAuth
+### Django REST framework OAuth
 
 Пакет [Django REST framework OAuth](https://jpadilla.github.io/django-rest-framework-oauth/) обеспечивает поддержку OAuth1 и OAuth2 для DRF.
 
 Ранее этот пакет был включен непосредственно в DRF, но теперь поддерживается и сопровождается как пакет стороннего разработчика.
 
-### Установка и настройка
+#### Установка и настройка
 
 Установите пакет с помощью `pip`.
 
@@ -451,27 +451,27 @@ pip install djangorestframework-oauth
 
 Подробнее о настройке и использовании смотрите документацию по OAuth фреймворку Django REST для [authentication](https://jpadilla.github.io/django-rest-framework-oauth/authentication/) и [permissions](https://jpadilla.github.io/django-rest-framework-oauth/permissions/).
 
-## JSON Web Token Authentication
+### JSON Web Token Authentication
 
 JSON Web Token - это довольно новый стандарт, который можно использовать для аутентификации на основе токенов. В отличие от встроенной схемы TokenAuthentication, аутентификация JWT не требует использования базы данных для проверки токена. Пакет для JWT-аутентификации - [djangorestframework-simplejwt](https://github.com/davesque/django-rest-framework-simplejwt), который предоставляет некоторые возможности, а также подключаемое приложение черного списка токенов.
 
-## Аутентификация Hawk HTTP
+### Аутентификация Hawk HTTP
 
 Библиотека [HawkREST](https://hawkrest.readthedocs.io/en/latest/) основана на библиотеке [Mohawk](https://mohawk.readthedocs.io/en/latest/) и позволяет вам работать с подписанными запросами и ответами [Hawk](https://github.com/hueniverse/hawk) в вашем API. [Hawk](https://github.com/hueniverse/hawk) позволяет двум сторонам безопасно общаться друг с другом, используя сообщения, подписанные общим ключом. Она основана на [HTTP MAC аутентификации доступа](https://tools.ietf.org/html/draft-hammer-oauth-v2-mac-token-05) (которая была основана на части [OAuth 1.0](https://oauth.net/core/1.0a/)).
 
-## Аутентификация подписью HTTP
+### Аутентификация подписью HTTP
 
 HTTP Signature (в настоящее время [проект IETF](https://datatracker.ietf.org/doc/draft-cavage-http-signatures/)) предоставляет способ достижения аутентификации происхождения и целостности сообщений HTTP. Подобно схеме [Amazon's HTTP Signature scheme](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html), используемой многими сервисами компании, она допускает безэталонную аутентификацию по каждому запросу. [Elvio Toccalino](https://github.com/etoccalino/) поддерживает пакет [djangorestframework-httpsignature](https://github.com/etoccalino/django-rest-framework-httpsignature) (устаревший), который предоставляет простой в использовании механизм аутентификации HTTP Signature. Вы можете использовать обновленную версию-форк [djangorestframework-httpsignature](https://github.com/etoccalino/django-rest-framework-httpsignature), которой является [drf-httpsig](https://github.com/ahknight/drf-httpsig).
 
-## Djoser
+### Djoser
 
 [Djoser](https://github.com/sunscrapers/djoser) библиотека предоставляет набор представлений для обработки основных действий, таких как регистрация, вход в систему, выход из системы, сброс пароля и активация учетной записи. Пакет работает с пользовательской моделью пользователя и использует аутентификацию на основе токенов. Это готовая к использованию REST-реализация системы аутентификации Django.
 
-## DRF Auth Kit
+### DRF Auth Kit
 
 Библиотека [DRF Auth Kit](https://github.com/huynguyengl99/drf-auth-kit) предоставляет современное решение для аутентификации REST с помощью файлов cookie JWT, входа через социальные сети, многофакторной аутентификации и комплексного управления пользователями. Пакет предлагает полную типобезопасность, автоматическую генерацию схемы OpenAPI с DRF Spectacular. Он поддерживает несколько типов аутентификации (JWT, DRF Token или Custom) и включает встроенную интернационализацию для более 50 языков.
 
-## django-rest-auth / dj-rest-auth
+### django-rest-auth / dj-rest-auth
 
 Эта библиотека предоставляет набор конечных точек REST API для регистрации, аутентификации (включая аутентификацию в социальных сетях), сброса пароля, получения и обновления данных пользователя и т.д. Имея эти конечные точки API, ваши клиентские приложения, такие как AngularJS, iOS, Android и другие, могут самостоятельно общаться с вашим бэкендом Django через REST API для управления пользователями.
 
@@ -480,26 +480,26 @@ HTTP Signature (в настоящее время [проект IETF](https://dat
 * [Django-rest-auth](https://github.com/Tivix/django-rest-auth) - оригинальный проект, [но в настоящее время не получает обновлений](https://github.com/Tivix/django-rest-auth/issues/568).
 * [Dj-rest-auth](https://github.com/jazzband/dj-rest-auth) - более новый форк проекта.
 
-## drf-social-oauth2
+### drf-social-oauth2
 
 [Drf-social-oauth2](https://github.com/wagnerdelima/drf-social-oauth2) - это фреймворк, который поможет вам аутентифицироваться у основных поставщиков социального oauth2, таких как Facebook, Google, Twitter, Orcid и др. Он генерирует токены в виде JWT с простой настройкой.
 
-## drfpasswordless
+### drfpasswordless
 
 [drfpasswordless](https://github.com/aaronn/django-rest-framework-passwordless) добавляет (по мотивам Medium, Square Cash) поддержку беспарольного входа в схему TokenAuthentication платформы DRF. Пользователи входят в систему и регистрируются с помощью токена, отправленного на контактную точку, например, адрес электронной почты или номер мобильного телефона.
 
-## django-rest-authemail
+### django-rest-authemail
 
 [django-rest-authemail](https://github.com/celiao/django-rest-authemail) предоставляет RESTful API интерфейс для регистрации и аутентификации пользователей. Для аутентификации используются адреса электронной почты, а не имена пользователей. Доступны конечные точки API для регистрации, проверки электронной почты при регистрации, входа в систему, выхода из системы, сброса пароля, проверки сброса пароля, изменения электронной почты, проверки изменения электронной почты, изменения пароля и детализации пользователя. Полностью функциональный пример проекта и подробные инструкции прилагаются.
 
-## Django-Rest-Durin
+### Django-Rest-Durin
 
 [Django-Rest-Durin](https://github.com/eshaan7/django-rest-durin) создана с идеей иметь одну библиотеку, которая делает аутентификацию токенов для нескольких Web/CLI/Mobile API клиентов через один интерфейс, но позволяет различную конфигурацию токенов для каждого API клиента, который потребляет API. Она обеспечивает поддержку нескольких токенов для каждого пользователя через пользовательские модели, представления, разрешения, которые работают с Django-Rest-Framework. Время истечения срока действия токена может быть разным для каждого API-клиента и настраивается через интерфейс администратора Django.
 
 Более подробную информацию можно найти в [Документации](https://django-rest-durin.readthedocs.io/en/latest/index.html).
 
-## django_pyoidc
+### django-pyoidc
 
-[dango_pyoidc](https://github.com/makinacorpus/django_pyoidc) добавляет поддержку аутентификации OpenID Connect (OIDC). Это позволяет делегировать управление пользователями провайдеру идентификации, который может быть использован для реализации Single-Sign-On (SSO). Он обеспечивает поддержку большинства сценариев использования, таких как настройка сопоставления информации о токенах с моделями пользователей, использование аудиторий OIDC для контроля доступа и т. д.
+[django_pyoidc](https://github.com/makinacorpus/django_pyoidc) добавляет поддержку аутентификации OpenID Connect (OIDC). Это позволяет делегировать управление пользователями провайдеру идентификации, который может быть использован для реализации Single-Sign-On (SSO). Он обеспечивает поддержку большинства сценариев использования, таких как настройка сопоставления информации о токенах с моделями пользователей, использование аудиторий OIDC для контроля доступа и т. д.
 
 Более подробную информацию можно найти в [Документации](https://django-pyoidc.readthedocs.io/latest/index.html).

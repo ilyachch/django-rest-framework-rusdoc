@@ -20,7 +20,7 @@ DRF включает ряд встроенных классов `Parser`, кот
 
 ---
 
-**Примечание**: При разработке клиентских приложений всегда помните о том, что при отправке данных в HTTP-запросе нужно обязательно устанавливать заголовок `Content-Type`.
+**Примечание:** При разработке клиентских приложений всегда помните о том, что при отправке данных в HTTP-запросе нужно обязательно устанавливать заголовок `Content-Type`.
 
 Если вы не зададите тип содержимого, большинство клиентов по умолчанию будут использовать `'application/x-www-form-urlencoded'`, что может оказаться не тем, чего вы хотите.
 
@@ -75,15 +75,15 @@ def example_view(request, format=None):
 
 ---
 
-# API Reference
+## API Reference
 
-## JSONParser
+### JSONParser
 
 Разбирает `JSON` содержимое запроса. `request.data` будет заполнен словарем данных.
 
 **.media_type**: `application/json`.
 
-## FormParser
+### FormParser
 
 Разбирает содержимое HTML-формы. `request.data` будет заполнен `QueryDict` данных.
 
@@ -91,7 +91,7 @@ def example_view(request, format=None):
 
 **.media_type**: `application/x-www-form-urlencoded`.
 
-## MultiPartParser
+### MultiPartParser
 
 Разбирает содержимое многокомпонентной HTML-формы, которая поддерживает загрузку файлов. `request.data` и `request.FILES` будут заполнены `QueryDict` и `MultiValueDict` соответственно.
 
@@ -99,7 +99,7 @@ def example_view(request, format=None):
 
 **.media_type**: `multipart/form-data`.
 
-## FileUploadParser
+### FileUploadParser
 
 Разбирает необработанное содержимое загружаемого файла. Свойство `request.data` будет представлять собой словарь с единственным ключом `'file'`, содержащим загруженный файл.
 
@@ -109,13 +109,16 @@ def example_view(request, format=None):
 
 **.media_type**: `*/*`
 
-##### Примечания:
+---
 
+**Примечание:**
 * `FileUploadParser` предназначен для использования с собственными клиентами, которые могут загружать файл как запрос необработанных данных. Для веб-загрузки или для собственных клиентов с поддержкой многочастной загрузки вместо него следует использовать `MultiPartParser`.
 * Поскольку `media_type` этого парсера соответствует любому типу содержимого, `FileUploadParser` обычно должен быть единственным парсером, установленным в представлении API.
 * `FileUploadParser` учитывает стандартную настройку Django `FILE_UPLOAD_HANDLERS` и атрибут `request.upload_handlers`. Более подробную информацию смотрите в [документации Django](https://docs.djangoproject.com/en/stable/topics/http/file-uploads/#upload-handlers).
 
-##### Базовый пример использования:
+---
+
+#### Базовый пример использования:
 
 ```python
 # views.py
@@ -138,7 +141,7 @@ urlpatterns = [
 
 ---
 
-# Пользовательские синтаксические анализаторы
+## Пользовательские синтаксические анализаторы
 
 Для реализации пользовательского парсера необходимо переопределить `BaseParser`, установить свойство `.media_type` и реализовать метод `.parse(self, stream, media_type, parser_context)`.
 
@@ -146,11 +149,11 @@ urlpatterns = [
 
 Аргументами, передаваемыми в `.parse()`, являются:
 
-### stream
+### `stream`
 
 Потокоподобный объект, представляющий тело запроса.
 
-### media_type
+### `media_type`
 
 Необзательно. Если указано, это тип носителя содержимого входящего запроса.
 
@@ -162,7 +165,7 @@ urlpatterns = [
 
 По умолчанию сюда входят следующие ключи: `view`, `request`, `args`, `kwargs`.
 
-## Пример
+### Пример
 
 Ниже приведен пример анализатора обычного текста, который заполнит свойство `request.data` строкой, представляющей тело запроса.
 
@@ -182,11 +185,11 @@ class PlainTextParser(BaseParser):
 
 ---
 
-# Пакеты сторонних производителей
+## Пакеты сторонних производителей
 
 Также доступны следующие пакеты сторонних производителей.
 
-## YAML
+### YAML
 
 [REST framework YAML](https://jpadilla.github.io/django-rest-framework-yaml/) обеспечивает поддержку разбора и рендеринга [YAML](http://www.yaml.org/). Ранее он был включен непосредственно в пакет DRF, а теперь поддерживается как сторонний пакет.
 
@@ -211,7 +214,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-## XML
+### XML
 
 [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/) предоставляет простой неформальный формат XML. Ранее он был включен непосредственно в пакет DRF, а теперь поддерживается как сторонний пакет.
 
@@ -236,10 +239,10 @@ REST_FRAMEWORK = {
 }
 ```
 
-## MessagePack
+### MessagePack
 
 [MessagePack](https://github.com/juanriaza/django-rest-framework-msgpack) - это быстрый и эффективный формат двоичной сериализации. [Juan Riaza](https://github.com/juanriaza) поддерживает пакет [djangorestframework-msgpack](https://github.com/juanriaza/django-rest-framework-msgpack), который обеспечивает поддержку рендеринга и парсера MessagePack для DRF.
 
-## CamelCase JSON
+### CamelCase JSON
 
 [djangorestframework-camel-case](https://github.com/vbabiy/djangorestframework-camel-case) предоставляет рендереры и парсеры JSON в верблюжьем регистре для DRF. Это позволяет сериализаторам использовать имена полей в стиле Python с подчеркиванием, но отображать их в API как имена полей в верблюжьем регистре в стиле Javascript. Поддерживается [Виталием Бабием](https://github.com/vbabiy).
