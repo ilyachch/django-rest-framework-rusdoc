@@ -140,9 +140,9 @@ color_channel = serializers.ChoiceField(
 
 ---
 
-# Булевы поля
+## Булевы поля
 
-## BooleanField
+### BooleanField
 
 Булево представление.
 
@@ -156,9 +156,9 @@ color_channel = serializers.ChoiceField(
 
 ---
 
-# Строковые поля
+## Строковые поля
 
-## CharField
+### CharField
 
 Текстовое представление. Опционально проверяет, чтобы текст был короче `max_length` и длиннее `min_length`.
 
@@ -173,7 +173,7 @@ color_channel = serializers.ChoiceField(
 
 Опция `allow_null` также доступна для строковых полей, хотя ее использование не рекомендуется в пользу `allow_blank`. Можно установить и `allow_blank=True`, и `allow_null=True`, но это означает, что для строковых представлений будут допустимы два разных типа пустых значений, что может привести к несоответствию данных и тонким ошибкам в работе приложения.
 
-## EmailField
+### EmailField
 
 Текстовое представление, проверяющее, является ли этот текст действительным адресом электронной почты.
 
@@ -181,7 +181,7 @@ color_channel = serializers.ChoiceField(
 
 **Сигнатура:** `EmailField(max_length=None, min_length=None, allow_blank=False)`.
 
-## RegexField
+### RegexField
 
 Текстовое представление, которое проверяет соответствие заданного значения определенному регулярному выражению.
 
@@ -193,7 +193,7 @@ color_channel = serializers.ChoiceField(
 
 Для проверки используется `django.core.validators.RegexValidator` от Django.
 
-## SlugField
+### SlugField
 
 Поле `RegexField`, которое проверяет вводимые данные на соответствие шаблону `[a-zA-Z0-9_-]+`.
 
@@ -201,7 +201,7 @@ color_channel = serializers.ChoiceField(
 
 **Сигнатура:** `SlugField(max_length=50, min_length=None, allow_blank=False)`.
 
-## URLField
+### URLField
 
 Поле `RegexField`, которое проверяет вводимые данные на соответствие шаблону URL. Ожидаются полностью определенные URL вида `http://<host>/<path>`.
 
@@ -209,7 +209,7 @@ color_channel = serializers.ChoiceField(
 
 **Сигнатура:** `URLField(max_length=200, min_length=None, allow_blank=False)`.
 
-## UUIDField
+### UUIDField
 
 Поле, которое гарантирует, что вводимые данные являются правильной строкой UUID. Метод `to_internal_value` возвращает экземпляр `uuid.UUID`. На выходе поле вернет строку в каноническом дефисном формате, например:
 
@@ -226,7 +226,7 @@ color_channel = serializers.ChoiceField(
     - `'urn'` - RFC 4122 URN-представление UUID: `'urn:uuid:5ce0e9a5-5ffa-654b-cee0-1238041fb31a'`.
     Изменение параметров `формата` влияет только на значения представления. Все форматы принимаются функцией `to_internal_value`.
 
-## FilePathField
+### FilePathField
 
 Поле, выбор которого ограничен именами файлов в определенном каталоге файловой системы
 
@@ -240,7 +240,7 @@ color_channel = serializers.ChoiceField(
 * `allow_files` - Указывает, должны ли включаться файлы в указанном месте. По умолчанию `True`. Либо это, либо `allow_folders` должно быть `True`.
 * `allow_folders` - Указывает, должны ли включаться папки в указанном месте. По умолчанию `False`. Либо это, либо `allow_files` должно быть `True`.
 
-## IPAddressField
+### IPAddressField
 
 Поле, гарантирующее, что вводимые данные являются действительной строкой IPv4 или IPv6.
 
@@ -253,9 +253,9 @@ color_channel = serializers.ChoiceField(
 
 ---
 
-# Числовые поля
+## Числовые поля
 
-## IntegerField
+### IntegerField
 
 Целочисленное представление.
 
@@ -266,7 +266,7 @@ color_channel = serializers.ChoiceField(
 * `max_value` Проверяет, что предоставленное число не больше этого значения.
 * `min_value` Проверяет, что предоставленное число не меньше этого значения.
 
-## BigIntegerField
+### BigIntegerField
 
 Представление большого целого числа.
 
@@ -278,7 +278,7 @@ color_channel = serializers.ChoiceField(
 * `min_value` Проверяет, что предоставленное число не меньше этого значения.
 * `coerce_to_string` Устанавливается в `True`, если для представления должны возвращаться строковые значения, или в `False`, если должны возвращаться объекты `BigInteger`. По умолчанию используется то же значение, что и для ключа настройки `COERCE_BIGINT_TO_STRING`, которое будет `False`, если не переопределено. Если сериализатор возвращает объекты `BigInteger`, то окончательный формат вывода будет определяться рендерером.
 
-## FloatField
+### FloatField
 
 Представление числа с плавающей точкой.
 
@@ -289,7 +289,7 @@ color_channel = serializers.ChoiceField(
 * `max_value` Проверяет, что предоставленное число не больше этого значения.
 * `min_value` Проверяет, что предоставленное число не меньше этого значения.
 
-## DecimalField
+### DecimalField
 
 Десятичное представление, представленное в Python экземпляром `Decimal`.
 
@@ -322,9 +322,9 @@ serializers.DecimalField(max_digits=19, decimal_places=10)
 
 ---
 
-# Поля даты и времени
+## Поля даты и времени
 
-## DateTimeField
+### DateTimeField
 
 Представление даты и времени.
 
@@ -356,7 +356,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
 ```
 
-## DateField
+### DateField
 
 Представление даты.
 
@@ -371,7 +371,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 Строки формата могут быть либо [Python strftime formats](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior), которые явно указывают формат, либо специальной строкой `'iso-8601'`, которая указывает, что должны использоваться даты в стиле [ISO 8601](https://www.w3.org/TR/NOTE-datetime). (например, `'2013-01-29'`)
 
-## TimeField
+### TimeField
 
 Представление времени.
 
@@ -386,7 +386,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 Строки формата могут быть либо [Python strftime formats](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior), которые явно указывают формат, либо специальной строкой `'iso-8601'`, которая указывает, что должно использоваться время в стиле [ISO 8601](https://www.w3.org/TR/NOTE-datetime). (например, `'12:34:56.000000'`)
 
-## DurationField
+### DurationField
 
 Представление длительности. Соответствует `django.db.models.fields.DurationField`.
 
@@ -404,9 +404,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 ---
 
-# Поля выбора
+## Поля выбора
 
-## ChoiceField
+### ChoiceField
 
 Поле, которое может принимать значение из ограниченного набора вариантов.
 
@@ -421,9 +421,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 Оба параметра `allow_blank` и `allow_null` являются допустимыми для `ChoiceField`, хотя настоятельно рекомендуется использовать только один из них, а не оба. `allow_blank` следует предпочесть для текстовых вариантов, а `allow_null` - для числовых или других нетекстовых вариантов.
 
-## MultipleChoiceField
+### MultipleChoiceField
 
-Поле, которое может принимать нулевое, одно или множество значений, выбираемых из ограниченного набора вариантов. Принимает один обязательный аргумент. `to_internal_value` возвращает `set`, содержащий выбранные значения.
+Поле, которое может принимать список из нуля, одного или нескольких значений, выбранных из ограниченного набора вариантов. Принимает один обязательный аргумент. `to_internal_value` возвращает `list`, содержащий выбранные значения без дубликатов.
 
 **Сигнатура:** `MultipleChoiceField(choices)`.
 
@@ -436,13 +436,17 @@ class CommentSerializer(serializers.ModelSerializer):
 
 ---
 
-# Поля для загрузки файлов
+## Поля для загрузки файлов
 
-#### Парсеры и загрузка файлов.
+---
 
-Классы `FileField` и `ImageField` подходят только для использования с `MultiPartParser` или `FileUploadParser`. Большинство парсеров, например, JSON, не поддерживают загрузку файлов. Для работы с загруженными файлами в Django используются штатные [FILE_UPLOAD_HANDLERS](https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-FILE_UPLOAD_HANDLERS).
+**Примечание**: классы `FileField` и `ImageField` подходят для использования только с `MultiPartParser` или `FileUploadParser`. Большинство парсеров, таких как, например, JSON, не поддерживают загрузку файлов.
 
-## FileField
+Для обработки загруженных файлов используются стандартные обработчики [FILE_UPLOAD_HANDLERS](https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-FILE_UPLOAD_HANDLERS) в Django.
+
+---
+
+### FileField
 
 Представление файла. Выполняет стандартную для Django проверку `FileField`.
 
@@ -454,7 +458,7 @@ class CommentSerializer(serializers.ModelSerializer):
 * `allow_empty_file` - Указывает, разрешены ли пустые файлы.
 * `use_url` - Если установлено значение `True`, то для выходного представления будут использоваться строковые значения URL. Если установлено значение `False`, то для вывода будут использоваться строковые значения имен файлов. По умолчанию принимает значение ключа настроек `UPLOADED_FILES_USE_URL`, которое равно `True`, если не установлено иное.
 
-## ImageField
+### ImageField
 
 Представление изображения. Проверяет соответствие содержимого загруженного файла известному формату изображения.
 
@@ -470,9 +474,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 ---
 
-# Составные поля
+## Составные поля
 
-## ListField
+### ListField
 
 Класс поля, который проверяет список объектов.
 
@@ -500,7 +504,7 @@ class StringListField(serializers.ListField):
 
 Теперь мы можем повторно использовать наш пользовательский класс `StringListField` во всем нашем приложении, без необходимости указывать для него аргумент `child`.
 
-## DictField
+### DictField
 
 Класс поля, который проверяет словарь объектов. Ключи в `DictField` всегда предполагаются как строковые значения.
 
@@ -522,7 +526,7 @@ class DocumentField(DictField):
     child = CharField()
 ```
 
-## HStoreField
+### HStoreField
 
 Предварительно настроенное `DictField`, совместимое с `HStoreField` от Django для postgres.
 
@@ -533,7 +537,7 @@ class DocumentField(DictField):
 
 Обратите внимание, что дочернее поле **должно** быть экземпляром `CharField`, так как расширение hstore хранит значения в виде строк.
 
-## JSONField
+### JSONField
 
 Класс поля, который проверяет, что входящая структура данных состоит из корректных примитивов JSON. В альтернативном двоичном режиме он представляет и проверяет двоичные строки, закодированные в JSON.
 
@@ -544,9 +548,9 @@ class DocumentField(DictField):
 
 ---
 
-# Разные поля
+## Разные поля
 
-## ReadOnlyField
+### ReadOnlyField
 
 Класс поля, который просто возвращает значение поля без изменений.
 
@@ -563,7 +567,7 @@ class AccountSerializer(serializers.ModelSerializer):
         fields = ['id', 'account_name', 'has_expired']
 ```
 
-## HiddenField
+### HiddenField
 
 Класс поля, которое не принимает значение на основе пользовательского ввода, а берет его из значения по умолчанию или вызываемого объекта.
 
@@ -581,21 +585,21 @@ modified = serializers.HiddenField(default=timezone.now)
 
 ---
 
-**Примечание:** `HiddenField()` не появляется в сериализаторе `partial=True` (при выполнении запроса `PATCH`).
+**Примечание**: `HiddenField()` не появляется в сериализаторе `partial=True` (при выполнении запроса `PATCH`).
 
 ---
 
-## ModelField
+### ModelField
 
 Общее поле, которое может быть привязано к любому произвольному полю модели. Класс `ModelField` делегирует задачу сериализации/десериализации связанному с ним полю модели. Это поле можно использовать для создания полей сериализатора для пользовательских полей модели, без необходимости создавать новое пользовательское поле сериализатора.
 
 Это поле используется `ModelSerializer` для соответствия классам полей пользовательской модели.
 
-**Сигнатура:** `ModelField(model_field=<Django ModelField instance>)`.
+**Сигнатура**: `ModelField(model_field=<Django ModelField instance>)`.
 
 Класс `ModelField` обычно предназначен для внутреннего использования, но при необходимости может быть использован в вашем API. Чтобы правильно инстанцировать `ModelField`, ему должно быть передано поле, привязанное к инстанцированной модели. Например: `ModelField(model_field=MyModel()._meta.get_field('custom_field'))`.
 
-## SerializerMethodField
+### SerializerMethodField
 
 Это поле, доступное только для чтения. Оно получает свое значение путем вызова метода класса сериализатора, к которому оно присоединено. Его можно использовать для добавления любых данных в сериализованное представление вашего объекта.
 
@@ -623,7 +627,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 ---
 
-# Пользовательские поля
+## Пользовательские поля
 
 Если вы хотите создать пользовательское поле, вам нужно создать подкласс `Field`, а затем переопределить один или оба метода `.to_representation()` и `.to_internal_value()`. Эти два метода используются для преобразования между исходным типом данных и примитивным, сериализуемым типом данных. Примитивными типами данных обычно являются число, строка, булево значение, `date`/`time`/`datetime` или `None`. Также это может быть любой список или словарь, содержащий только другие примитивные объекты. Могут поддерживаться и другие типы, в зависимости от используемого рендерера.
 
@@ -631,9 +635,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 Метод `.to_internal_value()` вызывается для восстановления примитивного типа данных в его внутреннее python-представление. Этот метод должен вызвать ошибку `serializers.ValidationError`, если данные недействительны.
 
-## Примеры
+### Примеры
 
-### Базовое пользовательское поле
+#### Базовое пользовательское поле
 
 Давайте рассмотрим пример сериализации класса, представляющего значение цвета RGB:
 
@@ -678,7 +682,7 @@ class ClassNameField(serializers.Field):
         return value.__class__.__name__
 ```
 
-### Вызов ошибок проверки
+#### Вызов ошибок проверки
 
 Наш класс `ColorField`, описанный выше, в настоящее время не выполняет никакой проверки данных. Чтобы указать на недопустимые данные, мы должны вызвать ошибку `serializers.ValidationError`, как показано ниже:
 
@@ -727,7 +731,7 @@ def to_internal_value(self, data):
 
 Этот стиль делает сообщения об ошибках более чистыми и отделенными от кода, поэтому его следует предпочесть.
 
-### Использование `source='*'`
+#### Использование `source='*'`
 
 Здесь мы рассмотрим пример _плоской_ модели `DataPoint` с атрибутами `x_coordinate` и `y_coordinate`.
 
@@ -858,26 +862,22 @@ ReturnDict([('coordinates',
 
 По этой причине подход с использованием вложенного сериализатора следует попробовать в первую очередь. Вы будете использовать подход с пользовательскими полями, когда вложенный сериализатор станет невыполнимым или слишком сложным.
 
-# Пакеты сторонних производителей
+## Пакеты сторонних производителей
 
 Также доступны следующие пакеты сторонних производителей.
 
-## Составные поля DRF
+### DRF Compound Fields
 
 Пакет [drf-compound-fields](https://drf-compound-fields.readthedocs.io) предоставляет "составные" поля сериализатора, такие как списки простых значений, которые могут быть описаны другими полями, а не сериализаторами с опцией `many=True`. Также предоставляются поля для типизированных словарей и значений, которые могут быть либо определенным типом, либо списком элементов этого типа.
 
-## Дополнительные поля DRF
+### DRF Extra Fields
 
 Пакет [drf-extra-fields](https://github.com/Hipo/drf-extra-fields) предоставляет дополнительные поля сериализатора для DRF, включая классы `Base64ImageField` и `PointField`.
 
-## djangorestframework-recursive
+### djangorestframework-recursive
 
 Пакет [djangorestframework-recursive](https://github.com/heywbj/django-rest-framework-recursive) предоставляет `RecursiveField` для сериализации и десериализации рекурсивных структур.
 
-## django-rest-framework-gis
+### django-rest-framework-gis
 
 Пакет [django-rest-framework-gis](https://github.com/djangonauts/django-rest-framework-gis) предоставляет географические дополнения для DRF, такие как поле `GeometryField` и сериализатор GeoJSON.
-
-## django-rest-framework-hstore
-
-Пакет [django-rest-framework-hstore](https://github.com/djangonauts/django-rest-framework-hstore) предоставляет `HStoreField` для поддержки поля модели [django-hstore](https://github.com/djangonauts/django-hstore) `DictionaryField`.
