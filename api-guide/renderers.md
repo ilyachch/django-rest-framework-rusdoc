@@ -72,9 +72,9 @@ def user_count_view(request, format=None):
 
 ---
 
-# API Reference
+## API Reference
 
-## JSONRenderer
+### JSONRenderer
 
 Переводит данные запроса в `JSON`, используя кодировку `utf-8`.
 
@@ -101,7 +101,7 @@ def user_count_view(request, format=None):
 
 **.charset**: `None`.
 
-## TemplateHTMLRenderer
+### TemplateHTMLRenderer
 
 Рендерит данные в HTML, используя стандартный шаблонный рендеринг Django. В отличие от других рендерингов, данные, передаваемые в `Response`, не нужно сериализовать. Также, в отличие от других рендереров, вы можете включить аргумент `template_name` при создании `Response`.
 
@@ -152,7 +152,7 @@ class UserDetail(generics.RetrieveAPIView):
 
 См. также: `StaticHTMLRenderer`
 
-## StaticHTMLRenderer
+### StaticHTMLRenderer
 
 Простой рендерер, который просто возвращает предварительно отрендеренный HTML. В отличие от других рендереров, данные, передаваемые в объект ответа, должны быть строкой, представляющей возвращаемое содержимое.
 
@@ -176,7 +176,7 @@ def simple_html_view(request):
 
 См. также: `TemplateHTMLRenderer`.
 
-## BrowsableAPIRenderer
+### BrowsableAPIRenderer
 
 Рендерит данные в HTML для Browsable API:
 
@@ -202,7 +202,7 @@ class CustomBrowsableAPIRenderer(BrowsableAPIRenderer):
         return JSONRenderer()
 ```
 
-## AdminRenderer
+### AdminRenderer
 
 Рендерит данные в HTML для отображения в стиле администратора:
 
@@ -236,7 +236,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
 **.template**: `'rest_framework/admin.html'`.
 
-## HTMLFormRenderer
+### HTMLFormRenderer
 
 Переводит данные, возвращаемые сериализатором, в форму HTML. Вывод этого рендерера не включает заключающие теги `<form>`, скрытый CSRF-вход или какие-либо кнопки отправки.
 
@@ -262,7 +262,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
 **.template**: `'rest_framework/horizontal/form.html'`.
 
-## MultiPartRenderer
+### MultiPartRenderer
 
 Этот рендерер используется для рендеринга данных многочастной формы HTML. **Он не подходит для рендеринга ответов**, а используется для создания тестовых запросов, используя [тестовый клиент и фабрику тестовых запросов](testing.md) DRF.
 
@@ -274,7 +274,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
 ---
 
-# Пользовательские рендеры
+## Пользовательские рендеры
 
 Для реализации пользовательского рендерера необходимо отнаследоваться от `BaseRenderer`, установить свойства `.media_type` и `.format` и реализовать метод `.render(self, data, accepted_media_type=None, renderer_context=None)`.
 
@@ -282,23 +282,13 @@ class AccountSerializer(serializers.ModelSerializer):
 
 Аргументы, передаваемые методу `.render()`, следующие:
 
-### `data`
+- `data`: данные запроса, заданные при создании экземпляра `Response()`.
 
-Данные запроса, заданные инстанцией `Response()`.
+- `accepted_media_type=None`: необязательный параметр.  Если указан, это принимаемый тип медиа, определяемый на этапе согласования контента. В зависимости от заголовка `Accept:` клиента он может быть более конкретным, чем атрибут `media_type` рендерера, и может включать параметры типа медиа.  Например, `"application/json; nested=true"`.
 
-### `accepted_media_type=None`
+- `renderer_context=None`: необязательный параметр.  Если он указан, это словарь контекстной информации, предоставляемый представлением. По умолчанию он содержит следующие ключи: `view`, `request`, `response`, `args`, `kwargs`.
 
-Дополнительно. Если указано, то это принятый тип носителя, определенный на этапе согласования содержимого.
-
-В зависимости от заголовка `Accept:` клиента, он может быть более конкретным, чем атрибут `media_type` рендерера, и может включать параметры типа медиа. Например, `'application/json; nested=true'`.
-
-### `renderer_context=None`
-
-Опционально. Если предоставляется, то это словарь контекстной информации, предоставляемой представлением.
-
-По умолчанию сюда входят следующие ключи: `view`, `request`, `response`, `args`, `kwargs`.
-
-## Пример
+### Пример
 
 Ниже приведен пример рендеринга обычного текста, который вернет ответ с параметром `data` в качестве содержимого ответа.
 
@@ -315,7 +305,7 @@ class PlainTextRenderer(renderers.BaseRenderer):
         return smart_str(data, encoding=self.charset)
 ```
 
-## Установка набора символов
+### Установка кодировки
 
 По умолчанию предполагается, что классы рендеринга используют кодировку `UTF-8`. Чтобы использовать другую кодировку, установите атрибут `charset` для рендерера.
 
@@ -348,7 +338,7 @@ class JPEGRenderer(renderers.BaseRenderer):
 
 ---
 
-# Расширенное использование рендеринга
+## Расширенное использование рендеринга
 
 Вы можете делать довольно гибкие вещи, используя рендереры DRF. Некоторые примеры...
 
@@ -357,7 +347,7 @@ class JPEGRenderer(renderers.BaseRenderer):
 * Указывать несколько типов представления HTML для использования клиентами API.
 * Недоопределять медиатип рендерера, например, используя `media_type = 'image/*'`, и использовать заголовок `Accept` для изменения кодировки ответа.
 
-## Различное поведение в зависимости от типа носителя
+### Различное поведение в зависимости от типа носителя
 
 В некоторых случаях вы можете захотеть, чтобы ваше представление использовало различные стили сериализации в зависимости от принятого типа носителя. Если вам нужно сделать это, вы можете обратиться к `request.accepted_renderer`, чтобы определить согласованный рендерер, который будет использоваться для ответа.
 
@@ -386,7 +376,7 @@ def list_users(request):
     return Response(data)
 ```
 
-## Недоопределение типа носителя.
+### Недоопределение типа носителя.
 
 В некоторых случаях вы можете захотеть, чтобы рендерер обслуживал различные типы медиа. В этом случае вы можете не указывать типы медиа, на которые он должен реагировать, используя значение `media_type`, такое как `image/*`, или `*/*`.
 
@@ -396,7 +386,7 @@ def list_users(request):
 return Response(data, content_type='image/png')
 ```
 
-## Проектирование типов носителей
+### Проектирование типов носителей
 
 Для целей многих Web API может быть достаточно простых ответов `JSON` с гиперссылками на отношения. Если вы хотите полностью внедрить RESTful дизайн и [HATEOAS](http://timelessrepo.com/haters-gonna-hateoas), вам необходимо более детально продумать дизайн и использование типов медиа.
 
@@ -404,7 +394,7 @@ return Response(data, content_type='image/png')
 
 Хорошими примерами пользовательских типов медиа являются использование GitHub пользовательского типа медиа [application/vnd.github+json](https://developer.github.com/v3/media/) и одобренная IANA гипермедиа на основе JSON [application/vnd.collection+json](http://www.amundsen.com/media-types/collection/) Майка Амундсена.
 
-## HTML представления ошибок
+### HTML представления ошибок
 
 Обычно рендерер ведет себя одинаково независимо от того, имеет ли он дело с обычным ответом или с ответом, вызванным возникшим исключением, например, исключением `Http404` или `PermissionDenied`, или подклассом `APIException`.
 
@@ -424,11 +414,11 @@ return Response(data, content_type='image/png')
 
 ---
 
-# Пакеты сторонних производителей
+## Пакеты сторонних производителей
 
 Также доступны следующие пакеты сторонних производителей.
 
-## YAML
+### YAML
 
 [REST framework YAML](https://jpadilla.github.io/django-rest-framework-yaml/) обеспечивает поддержку разбора и рендеринга [YAML](http://www.yaml.org/). Ранее он был включен непосредственно в пакет DRF, но теперь поддерживается как сторонний пакет.
 
@@ -453,7 +443,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-## XML
+### XML
 
 [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/) предоставляет простой неформальный формат XML. Ранее он был включен непосредственно в пакет DRF, но теперь поддерживается как сторонний пакет.
 
@@ -478,7 +468,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-## JSONP
+### JSONP
 
 [REST framework JSONP](https://jpadilla.github.io/django-rest-framework-jsonp/) обеспечивает поддержку рендеринга JSONP. Ранее он был включен непосредственно в пакет DRF, но теперь поддерживается как сторонний пакет.
 
@@ -508,11 +498,11 @@ REST_FRAMEWORK = {
 }
 ```
 
-## MessagePack
+### MessagePack
 
 [MessagePack](https://msgpack.org/) - это быстрый и эффективный формат двоичной сериализации. [Juan Riaza](https://github.com/juanriaza) поддерживает пакет [djangorestframework-msgpack](https://github.com/juanriaza/django-rest-framework-msgpack), который обеспечивает поддержку рендеринга и парсера MessagePack для DRF.
 
-## Microsoft Excel: XLSX (Двоичные конечные точки электронных таблиц)
+### Microsoft Excel: XLSX (Двоичные конечные точки электронных таблиц)
 
 XLSX - это самый популярный в мире формат двоичных электронных таблиц. [Тим Аллен](https://github.com/flipperpa) из [The Wharton School](https://github.com/wharton) поддерживает [drf-excel](https://github.com/wharton/drf-excel), который отображает конечную точку в виде электронной таблицы XLSX с помощью OpenPyXL и позволяет клиенту загрузить ее. Электронные таблицы могут быть стилизованы для каждого вида.
 
@@ -555,22 +545,22 @@ class MyExampleViewSet(XLSXFileMixin, ReadOnlyModelViewSet):
     filename = 'my_export.xlsx'
 ```
 
-## CSV
+### CSV
 
 Значения, разделенные запятыми, - это формат табличных данных в виде обычного текста, который легко импортируется в приложения электронных таблиц. [Mjumbe Poe](https://github.com/mjumbewu) поддерживает пакет [djangorestframework-csv](https://github.com/mjumbewu/django-rest-framework-csv), который обеспечивает поддержку CSV-рендеринга для DRF.
 
-## UltraJSON
+### UltraJSON
 
 [UltraJSON](https://github.com/esnme/ultrajson) - это оптимизированный кодировщик JSON на языке C, который может значительно ускорить рендеринг JSON. [Adam Mertz](https://github.com/Amertz08) поддерживает [drf_ujson2](https://github.com/Amertz08/drf_ujson2), форк ныне не поддерживаемого [drf-ujson-renderer](https://github.com/gizmag/drf-ujson-renderer), который реализует рендеринг JSON с использованием пакета UJSON.
 
-## CamelCase JSON
+### CamelCase JSON
 
 [djangorestframework-camel-case](https://github.com/vbabiy/djangorestframework-camel-case) предоставляет рендереры и парсеры JSON в верблюжьем регистре для DRF. Это позволяет сериализаторам использовать имена полей в стиле Python с подчеркиванием, но отображать их в API как имена полей в верблюжьем регистре в стиле Javascript. Поддерживается [Виталием Бабием](https://github.com/vbabiy).
 
-## Pandas (CSV, Excel, PNG)
+### Pandas (CSV, Excel, PNG)
 
 [Django REST Pandas](https://github.com/wq/django-rest-pandas) предоставляет сериализатор и рендереры, которые поддерживают дополнительную обработку и вывод данных через [Pandas](https://pandas.pydata.org/) DataFrame API. Django REST Pandas включает рендереры для файлов CSV в стиле Pandas, рабочих книг Excel (как `.xls`, так и `.xlsx`) и ряда [других форматов](https://github.com/wq/django-rest-pandas#supported-formats). Он поддерживается [S. Andrew Sheppard](https://github.com/sheppard) в рамках проекта [wq Project](https://github.com/wq).
 
-## LaTeX
+### LaTeX
 
 [Rest Framework Latex](https://github.com/mypebble/rest-framework-latex) предоставляет рендерер, который выводит PDF-файлы с использованием Lualatex. Он поддерживается [Pebble (S/F Software)](https://github.com/mypebble).
