@@ -1,5 +1,7 @@
 <!-- TRANSLATED by md-translate -->
-# Представления, основанные на классах
+# Представления
+
+## Представления, основанные на классах
 
 > Представления Django, основанные на классах, являются приятным отступлением от представлений старого стиля.
 >
@@ -48,61 +50,61 @@ class ListUsers(APIView):
 
 ---
 
-## Атрибуты политики API
+### Атрибуты политики API
 
 Следующие атрибуты управляют подключаемыми аспектами представлений API.
 
-### .renderer_classes
+#### .renderer_classes
 
-### .parser_classes
+#### .parser_classes
 
-### .authentication_classes
+#### .authentication_classes
 
-### .throttle_classes
+#### .throttle_classes
 
-### .permission_classes
+#### .permission_classes
 
-### .content_negotiation_class
+#### .content_negotiation_class
 
-## Методы инстанцирования политики API
+### Методы инстанцирования политики API
 
 Следующие методы используются DRF для инстанцирования различных подключаемых политик API. Как правило, вам не нужно переопределять эти методы.
 
-### .get_renderers(self)
+#### .get_renderers(self)
 
-### .get_parsers(self)
+#### .get_parsers(self)
 
-### .get_authenticators(self)
+#### .get_authenticators(self)
 
-### .get_throttles(self)
+#### .get_throttles(self)
 
-### .get_permissions(self)
+#### .get_permissions(self)
 
-### .get_content_negotiator(self)
+#### .get_content_negotiator(self)
 
-### .get_exception_handler(self)
+#### .get_exception_handler(self)
 
-## Методы реализации политики API
+### Методы реализации политики API
 
 Перед отправкой в метод обработчика вызываются следующие методы.
 
-### .check_permissions(self, request)
+#### .check_permissions(self, request)
 
-### .check_throttles(self, request)
+#### .check_throttles(self, request)
 
-### .perform_content_negotiation(self, request, force=False)
+#### .perform_content_negotiation(self, request, force=False)
 
-## Dispatch методы
+### Dispatch методы
 
 Следующие методы вызываются непосредственно методом `.dispatch()` представления. Они выполняют любые действия, которые должны произойти до или после вызова методов обработчика, таких как `.get()`, `.post()`, `put()`, `patch()` и `.delete()`.
 
-### .initial(self, request, *args, **kwargs)
+#### .initial(self, request, *args, **kwargs)
 
 Выполняет любые действия, которые должны произойти до вызова метода обработчика. Этот метод используется для обеспечения разрешений и дросселирования, а также для согласования содержимого.
 
 Обычно вам не нужно переопределять этот метод.
 
-### .handle_exception(self, exc)
+#### .handle_exception(self, exc)
 
 Любое исключение, выброшенное методом обработчика, будет передано в этот метод, который либо возвращает экземпляр `Response`, либо повторно вызывает исключение.
 
@@ -110,13 +112,13 @@ class ListUsers(APIView):
 
 Если вам нужно настроить ответы на ошибки, которые возвращает ваш API, вам следует подклассифицировать этот метод.
 
-### .initialize_request(self, request, *args, **kwargs)
+#### .initialize_request(self, request, *args, **kwargs)
 
 Гарантирует, что объект запроса, передаваемый методу обработчика, является экземпляром `Request`, а не обычным Django `HttpRequest`.
 
 Обычно вам не нужно переопределять этот метод.
 
-### .finalize_response(self, request, response, *args, **kwargs)
+#### .finalize_response(self, request, response, *args, **kwargs)
 
 Гарантирует, что любой объект `Response`, возвращенный из метода обработчика, будет преобразован в правильный тип содержимого, как определено в процессе согласования содержимого.
 
@@ -124,7 +126,7 @@ class ListUsers(APIView):
 
 ---
 
-# Представления на основе функций
+## Представления на основе функций
 
 > Говорить [что представления, основанные на классах] всегда являются лучшим решением - это ошибка.
 >
@@ -132,7 +134,7 @@ class ListUsers(APIView):
 
 DRF также позволяет работать с обычными представлениями, основанными на функциях. Он предоставляет набор простых декораторов, которые оборачивают ваши представления на основе функций, чтобы они получали экземпляр `Request` (а не обычный Django `HttpRequest`) и позволяли им возвращать `Response` (а не Django `HttpResponse`), а также позволяют вам настраивать, как обрабатывается запрос.
 
-## @api_view()
+### @api_view()
 
 **Сигнатура:** `@api_view(http_method_names=['GET'])`.
 
@@ -159,7 +161,7 @@ def hello_world(request):
     return Response({"message": "Hello, world!"})
 ```
 
-## Декораторы политики API
+### Декораторы политики API
 
 Чтобы переопределить настройки по умолчанию, DRF предоставляет набор дополнительных декораторов, которые можно добавить к вашим представлениям. Они должны быть *после* (ниже) декоратора `@api_view`. Например, чтобы создать представление, которое использует [throttle](throttling.md) для обеспечения того, что оно может быть вызвано только один раз в день определенным пользователем, используйте декоратор `@throttle_classes`, передавая список классов throttle:
 
@@ -192,7 +194,7 @@ def view(request):
 Каждый из этих декораторов эквивалентен установке соответствующих [атрибутов политики API](#атрибуты-политики-api).
 
 Все декораторы принимают один аргумент. Те, которые заканчиваются на `_class`, ожидают один класс, а те, которые заканчиваются на `_classes`, ожидают список или кортеж классов.
-## Декоратор схемы представления
+### Декоратор схемы представления
 
 Чтобы переопределить генерацию схемы по умолчанию для представлений на основе функций, вы можете использовать декоратор `@schema`. Он должен располагаться *после* (ниже) декоратора `@api_view`. Например:
 
@@ -201,7 +203,7 @@ from rest_framework.decorators import api_view, schema
 from rest_framework.schemas import AutoSchema
 
 class CustomAutoSchema(AutoSchema):
-    def get_link(self, path, method, base_url):
+    def get_operation(self, path, method):
         # override view introspection here...
 
 @api_view(['GET'])
@@ -210,7 +212,8 @@ def view(request):
     return Response({"message": "Hello for today! See you tomorrow!"})
 ```
 
-Этот декоратор принимает экземпляр `AutoSchema`, экземпляр подкласса `AutoSchema` или экземпляр `ManualSchema`, как описано в документации [Schemas documentation](schemas.md). Вы можете передать `None`, чтобы исключить представление из генерации схемы.
+Этот декоратор принимает один экземпляр `AutoSchema` или экземпляр подкласса `AutoSchema`, как описано в [документации по схемам](schemas.md). Вы можете передать значение `None`, чтобы исключить представление из процесса генерации схемы.
+
 
 ```python
 @api_view(['GET'])
