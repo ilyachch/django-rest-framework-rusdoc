@@ -3,7 +3,7 @@
 
 > Если вы занимаетесь веб-сервисами на основе REST... вам следует игнорировать request.POST.
 >
-> - Malcom Tredinnick, [Django developers group](https://groups.google.com/d/topic/django-developers/dxI4qVzrBY4/discussion)
+> - Malcolm Tredinnick, [Django developers group](https://groups.google.com/d/topic/django-developers/dxI4qVzrBY4/discussion)
 
 Класс `Request` DRF расширяет стандартный `HttpRequest`, добавляя поддержку гибкого разбора запросов DRF и аутентификации запросов.
 
