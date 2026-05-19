@@ -60,8 +60,8 @@
     "file_hash": "6e0ef6ec9d162e8f9c858fad9366838a"
   },
   ".reference/api-guide/requests.md": {
-    "commit_hash": "f56ec9546c846acddde7013cfc3aae9ddc40c6f0",
-    "file_hash": "1171975d6e51ea8a1e11f2fc122dd6c6"
+    "commit_hash": "d6e11ec34fc9bb868bef259e63a1c12f648f4500",
+    "file_hash": "fa62504de623ffeaa26d79a243221217"
   },
   ".reference/api-guide/responses.md": {
     "commit_hash": "f56ec9546c846acddde7013cfc3aae9ddc40c6f0",
