@@ -1,7 +1,7 @@
 {
   ".reference/README.md": {
-    "commit_hash": "021ab5664b085594876032cf062c1220bc1ca03c",
-    "file_hash": "d1da1f99d764d785f1912d97437900e9"
+    "commit_hash": "65066b326dc358aba87d7fba1101a94fc2dbf004",
+    "file_hash": "3f6e72c71b05bb1cec3ad339c213e06d"
   },
   ".reference/api-guide/authentication.md": {
     "commit_hash": "f56ec9546c846acddde7013cfc3aae9ddc40c6f0",
@@ -20,12 +20,12 @@
     "file_hash": "3540b8c9bd889bb6054289072d9c6acb"
   },
   ".reference/api-guide/fields.md": {
-    "commit_hash": "f56ec9546c846acddde7013cfc3aae9ddc40c6f0",
-    "file_hash": "f4845d2fb932f7463d8b385aaca56714"
+    "commit_hash": "977d764dcfb29179d8153a9c49f372097c892400",
+    "file_hash": "9d08aa6c86bbdba3d06879f7aac6d6bf"
   },
   ".reference/api-guide/filtering.md": {
-    "commit_hash": "f56ec9546c846acddde7013cfc3aae9ddc40c6f0",
-    "file_hash": "e81be0f031f636148469bde95bfb4083"
+    "commit_hash": "afc9184e5033e0c80f6349dac85c1133c512f24c",
+    "file_hash": "c533279d4cd615b73abafbd2dcbf22bb"
   },
   ".reference/api-guide/format-suffixes.md": {
     "commit_hash": "041b88f8bbb48d9688ebd5add294eee2dfc93d1c",
@@ -80,8 +80,8 @@
     "file_hash": "db37b906afd6550a53477ecdd266f2c6"
   },
   ".reference/api-guide/serializers.md": {
-    "commit_hash": "dff3c8d622096d6f193b382452e056896d4ff885",
-    "file_hash": "84475e77927c1a1f991ee0db2c362f7b"
+    "commit_hash": "68859ac5eed8010ee7d8a3c47fd766f74ebbda6f",
+    "file_hash": "d5d353b072703e9d93abb0818ccb353f"
   },
   ".reference/api-guide/settings.md": {
     "commit_hash": "f56ec9546c846acddde7013cfc3aae9ddc40c6f0",
