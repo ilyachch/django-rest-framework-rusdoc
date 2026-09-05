@@ -220,3 +220,18 @@ def view(request):
 def view(request):
     return Response({"message": "Will not appear in schema!"})
 ```
+
+### Декоратор области дросселирования
+
+Чтобы задать область дросселирования для представлений на основе функций, можно использовать декоратор `@throttle_scope`:
+
+```python
+from rest_framework.decorators import api_view, throttle_scope
+
+@api_view(['GET'])
+@throttle_scope("hello")
+def view(request):
+    return Response({"message": "Hello for today! See you tomorrow!"})
+```
+
+Подробнее см. в [документации по `ScopedRateThrottle`](throttling.md#scopedratethrottle).
