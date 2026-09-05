@@ -252,6 +252,29 @@ class EventSerializer(serializers.Serializer):
         return data
 ```
 
+---
+
+**Примечание:** **Валидация на уровне объекта и частичные обновления**
+
+При выполнении **частичного обновления** (`PATCH`) словарь `data`, передаваемый методу `validate()`, будет содержать **только те поля**, которые были предоставлены в запросе. Если логика вашей валидации зависит от нескольких полей, вы должны учитывать случаи, когда некоторые поля отсутствуют в `data`.
+
+Чтобы получить доступ к полям, не включенным в частичное обновление, их следует извлекать из существующего экземпляра объекта с помощью `self.instance`:
+
+```python
+def validate(self, data):
+    # Check if "status" is being updated, or use the existing value
+    status = data.get("status", self.instance.status)
+
+    # Check if "price" is being updated, or use the existing value
+    price = data.get("price", self.instance.price)
+
+    if status == "active" and price <= 0:
+        raise serializers.ValidationError("Active products must have a price.")
+    return data
+```
+
+---
+
 #### Валидаторы
 
 Отдельные поля сериализатора могут включать валидаторы, например, путем объявления их в экземпляре поля:
