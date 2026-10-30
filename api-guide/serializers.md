@@ -188,9 +188,11 @@ serializer.errors
 
 Каждый ключ в словаре будет именем поля, а значения будут списками строк любых сообщений об ошибках, соответствующих этому полю. Также может присутствовать ключ `non_field_errors`, в котором будут перечислены все общие ошибки валидации. Имя ключа `non_field_errors` можно настроить с помощью параметра DRF `NON_FIELD_ERRORS_KEY`.
 
-При десериализации списка элементов ошибки будут возвращены в виде списка словарей, представляющих каждый из десериализованных элементов.
+При десериализации списка элементов ошибки возвращаются в виде словаря, ключами которого являются индексы недопустимых элементов. Допустимые элементы в словаре не учитываются.
 
-#### Возбуждение исключения при недопустимых данных
+Чтобы временно использовать формат на основе списка, присущий версиям DRF до 3.18, установите для параметра `LIST_SERIALIZER_ERRORS_AS_DICT` значение `False`. Этот формат включает пустой словарь для каждого допустимого элемента и является устаревшим. Он будет удалён в DRF 3.20.
+ 
+#### Генерирование исключения при обнаружении недопустимых данных
 
 Метод `.is_valid()` принимает необязательный флаг `raise_exception`, который заставит его поднять исключение `serializers.ValidationError`, если есть ошибки валидации.
 
@@ -251,6 +253,27 @@ class EventSerializer(serializers.Serializer):
             raise serializers.ValidationError("finish must occur after start")
         return data
 ```
+
+---
+
+**Примечание:** При выполнении **частичного обновления** (`PATCH`) словарь `data`, передаваемый в метод `validate()`, будет **содержать только те поля**, которые указаны в запросе. Если ваша логика проверки зависит от нескольких полей, необходимо учитывать случаи, когда некоторые поля отсутствуют в `data`.
+
+Чтобы получить доступ к полям, не включённым в частичное обновление, вам следует извлечь их из существующего экземпляра объекта с помощью `self.instance`:
+
+```python
+def validate(self, data):
+    # Check if "status" is being updated, or use the existing value
+    status = data.get("status", self.instance.status)
+
+    # Check if "price" is being updated, or use the existing value
+    price = data.get("price", self.instance.price)
+
+    if status == "active" and price <= 0:
+        raise serializers.ValidationError("Active products must have a price.")
+    return data
+```
+
+---
 
 #### Валидаторы
 
@@ -619,6 +642,8 @@ class AccountSerializer(serializers.ModelSerializer):
 
 Поля модели, для которых установлено значение `editable=False`, и поля `AutoField` по умолчанию будут установлены в режим только для чтения, и их не нужно добавлять в опцию `read_only_fields`.
 
+Обратите внимание: если поле уже явно объявлено в классе сериализатора (или в родительском классе), то опция `read_only_fields` к этому полю не будет применяться. Вместо этого установите для самого поля значение `read_only=True`.
+
 ---
 
 **Примечание:** Существует особый случай, когда поле, доступное только для чтения, является частью ограничения `unique_together` на уровне модели. В этом случае поле требуется классу сериализатора для проверки ограничения, но оно также не должно быть доступно для редактирования пользователем.
@@ -658,7 +683,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return user
 ```
 
-Следует помнить, что если поле уже было явно объявлено в классе сериализатора, то опция `extra_kwargs` будет проигнорирована.
+Пожалуйста, имейте в виду, что если поле уже явно объявлено в классе сериализатора, то параметр `extra_kwargs` будет игнорироваться. То же самое относится и к параметру `read_only_fields`, который реализован с помощью `extra_kwargs`.
 
 ### Реляционные поля
 
@@ -931,6 +956,26 @@ class BookSerializer(serializers.Serializer):
 
     class Meta:
         list_serializer_class = BookListSerializer
+```
+
+Если дочерний сериализатор использует валидаторы уникальности (`UniqueValidator`, `UniqueTogetherValidator` или семейство `UniqueForDateValidator`), ему необходимо знать, какой объект обновляет каждый элемент списка, чтобы сам объект не был отмечен как конфликт уникальности. По умолчанию `.instance` дочернего сериализатора представляет собой весь набор запросов или список, переданный сериализатору списка, поэтому эти валидаторы будут генерировать `RuntimeError` при множественном обновлении. Чтобы решить эту проблему, переопределите метод `run_child_validation()` в вашем подклассе `ListSerializer`, чтобы установить значения `.instance` и `.initial_data` дочернего объекта для каждого элемента перед проверкой. Например, если `self.instance` представляет собой набор запросов:
+
+```py
+class BookListSerializer(serializers.ListSerializer):
+    def run_child_validation(self, data):
+        # `.instance` stays `None` for items that do not exist yet, and
+        # for malformed items, which child validation will then reject
+        # as usual.
+        self.child.instance = None
+        try:
+            self.child.instance = self.instance.filter(pk=data['id']).first()
+        except (TypeError, KeyError, ValueError):
+            pass
+        self.child.initial_data = data
+        return super().run_child_validation(data)
+
+    def update(self, instance, validated_data):
+        ...
 ```
 
 ### Настройка инициализации ListSerializer
@@ -1294,7 +1339,7 @@ REST framework 2 предоставил API, позволяющий разраб
 
 ### DRF Writable Nested
 
-Пакет [drf-writable-nested](https://github.com/beda-software/drf-writable-nested) предоставляет записываемый сериализатор вложенных моделей, который позволяет создавать/обновлять модели с вложенными связанными данными.
+Пакет [drf-writable-nested](https://github.com/beda-software/drf-writable-nested) предоставляет сериализатор вложенных моделей с возможностью записи, который позволяет создавать и обновлять модели с вложенными связанными данными.
 
 ### DRF Encrypt Content
 
