@@ -10,7 +10,7 @@ Django REST framework - это мощный и гибкий набор инст�
 * Web-интерфейс API - огромный выигрыш в удобстве использования для ваших разработчиков.
 * [Политики аутентификации](api-guide/authentication.md), включая пакеты для [OAuth1a](api-guide/authentication.md#django-rest-framework-oauth) и [OAuth2](api-guide/authentication.md#django-oauth-toolkit).
 * [Сериализация](api-guide/serializers.md), поддерживающая как [ORM](api-guide/serializers.md#modelserializer), так и [non-ORM](api-guide/serializers.md#сериализаторы) источники данных.
-* Настраивается все - просто используйте [обычные представления на основе функций](api-guide/views#Представления-на-основе-функций), если вам не нужны [более](api-guide/generic-views.md) [мощные](api-guide/viewsets.md) [возможности](api-guide/routers.md).
+* Настраивается все - просто используйте [обычные представления на основе функций](api-guide/views.md#Представления-на-основе-функций), если вам не нужны [более](api-guide/generic-views.md) [мощные](api-guide/viewsets.md) [возможности](api-guide/routers.md).
 * Обширная документация и [отличная поддержка сообщества](https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework).
 * Используется и пользуется доверием всемирно известных компаний, включая [Mozilla](https://www.mozilla.org/en-us/about/), [Red Hat](https://www.redhat.com/), [Heroku](https://www.heroku.com/) и [Eventbrite](https://www.eventbrite.co.uk/about/).
 

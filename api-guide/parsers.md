@@ -167,7 +167,7 @@ urlpatterns = [
 
 Ключ `encoding` содержит кодировку, указанную в заголовке `Content-Type:` запроса, или `settings.DEFAULT_CHARSET`, если такая кодировка отсутствует.  Если ваш парсер декодирует тело запроса как текст, определите кодировку с помощью `get_encoding()`, а не считывая ключ напрямую:
 
-```py
+```python
 from rest_framework.parsers import get_encoding
 
 def parse(self, stream, media_type=None, parser_context=None):

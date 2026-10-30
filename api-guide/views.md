@@ -225,7 +225,7 @@ def view(request):
 
 Чтобы задать область действия ограничения для представлений, основанных на функциях, можно использовать декоратор `@throttle_scope`:
 
-```py
+```python
 from rest_framework.decorators import api_view, throttle_scope
 
 @api_view(['GET'])

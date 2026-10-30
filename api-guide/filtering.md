@@ -100,7 +100,7 @@ class PurchaseList(generics.ListAPIView):
 
 ![Пример фильтра](https://github.com/encode/django-rest-framework/raw/main/docs/img/filter-controls.png)
 
-#### Настройка бэкендов фильтров
+### Настройка бэкендов фильтров
 
 Бэкенды фильтров по умолчанию могут быть заданы глобально, с помощью параметра `DEFAULT_FILTER_BACKENDS`. Например:
 
@@ -277,7 +277,7 @@ search_fields = ['=username', '=email']
 
 Подкласс `UnaccentedSearchFilter` осуществляет сопоставление без учета диакритических знаков, так что при поиске `Jeremy` также будет найден результат `Jérémy`. Он ведёт себя так же, как `SearchFilter`, за исключением того, что поисковые операции обернуты преобразованием `unaccent`: поиск по умолчанию становится `unaccent__icontains`, `^` становится `unaccent__istartswith`, `=` становится `unaccent__iexact`, а `$` становится `unaccent__iregex`. Префикс `@` (полнотекстовый поиск) остаётся без изменений, так как преобразование `unaccent` не может сочетаться с поисковым запросом полнотекстового поиска.
 
-```py
+```python
 from rest_framework import filters
 
 class MyView(generics.ListAPIView):
@@ -285,7 +285,7 @@ class MyView(generics.ListAPIView):
     search_fields = ['name']
 ```
 
-В настоящее время эта функция поддерживается только в [бэкенде PostgreSQL]([postgres-lookups](https://docs.djangoproject.com/en/stable/ref/contrib/postgres/lookups/#unaccent)) Django и требует установки расширения `unaccent`, а также наличия модуля `django.contrib.postgres` в списке `INSTALLED_APPS`.
+В настоящее время эта функция поддерживается только в [бэкенде PostgreSQL](https://docs.djangoproject.com/en/stable/ref/contrib/postgres/lookups/#unaccent) Django и требует установки расширения `unaccent`, а также наличия модуля `django.contrib.postgres` в списке `INSTALLED_APPS`.
 
 Для динамического изменения полей поиска в зависимости от содержимого запроса можно подклассифицировать `SearchFilter` и переопределить функцию `get_search_fields()`. Например, следующий подкласс будет искать по `title`, только если в запросе присутствует параметр запроса `title_only`:
 
