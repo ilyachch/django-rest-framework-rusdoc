@@ -1,0 +1,28 @@
+name: Checks
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, converted_to_draft]
+
+jobs:
+  checks:
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Install prek
+        run: pipx install prek==0.5.5
+      - name: Run prek
+        run: prek run --all-files
+      - name: Check temporary data
+        if: success() || failure()
+        run: |
+          files=$(find . -name CHANGES.md -print)
+          if [[ -d .reference ]]; then
+            files+=$(find .reference -type f \( -name '*.temp' -o -name '*.tmp' -o -name '*.md' \) -printf '\n%p')
+          fi
+          if [[ -n "$files" ]]; then
+            printf 'Unexpected temporary files:\n%s\n' "$files"
+            exit 1
+          fi

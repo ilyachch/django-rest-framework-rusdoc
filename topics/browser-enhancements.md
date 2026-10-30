@@ -32,10 +32,10 @@
 
 ```html
 <form action="/">
-        <input data-override='content-type' value='application/json' type='hidden'/>
-        <textarea data-override='content'>{}</textarea>
-        <input type="submit"/>
-    </form>
+    <input data-override='content-type' value='application/json' type='hidden'/>
+    <textarea data-override='content'>{}</textarea>
+    <input type="submit"/>
+</form>
 ```
 
 Обратите внимание, что до версии 3.3.0 эта поддержка осуществлялась на стороне сервера, а не на основе javascript.
@@ -86,4 +86,4 @@ class AcceptQueryParamOverride()
 
 ## Разве HTML5 не поддерживает формы PUT и DELETE?
 
-Нет. Одно время предполагалось, что HTML5 будет поддерживать формы `PUT` и `DELETE`, но позже это было [исключено из спецификации](https://www.w3.org/TR/html5-diff/#changes-2010-06-24). Остается [продолжающееся обсуждение](http://amundsen.com/examples/put-delete-forms/) добавления поддержки `PUT` и `DELETE`, а также того, как поддерживать типы содержимого, отличные от закодированных в форме данных.
+Нет. Одно время предполагалось, что HTML5 будет поддерживать формы `PUT` и `DELETE`, но позже это было [исключено из спецификации](https://www.w3.org/TR/html5-diff/#changes-2010-06-24). Остается [продолжающееся обсуждение](https://web.archive.org/web/20230202091223/http://amundsen.com/examples/put-delete-forms/) добавления поддержки `PUT` и `DELETE`, а также того, как поддерживать типы содержимого, отличные от закодированных в форме данных.

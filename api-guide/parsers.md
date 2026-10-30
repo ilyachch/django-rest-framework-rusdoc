@@ -163,7 +163,20 @@ urlpatterns = [
 
 Необзательно. Если этот аргумент указан, то он будет представлять собой словарь, содержащий любой дополнительный контекст, который может потребоваться для разбора содержимого запроса.
 
-По умолчанию сюда входят следующие ключи: `view`, `request`, `args`, `kwargs`.
+По умолчанию в него будут включены следующие ключи: `view`, `request`, `args`, `kwargs`, `encoding`.
+
+Ключ `encoding` содержит кодировку, указанную в заголовке `Content-Type:` запроса, или `settings.DEFAULT_CHARSET`, если такая кодировка отсутствует.  Если ваш парсер декодирует тело запроса как текст, определите кодировку с помощью `get_encoding()`, а не считывая ключ напрямую:
+
+```python
+from rest_framework.parsers import get_encoding
+
+def parse(self, stream, media_type=None, parser_context=None):
+    parser_context = parser_context or {}
+    encoding = get_encoding(parser_context)
+    return stream.read().decode(encoding)
+```
+
+Клиенты могут указывать любой набор символов, который распознает функция `codecs.lookup()`, включая кодеки типа "байт-в-байт", такие как `bz2_codec`, которые выполняют распаковку, а не декодирование.  Функция `get_encoding()` отклоняет такие кодировки с ошибкой `ParseError`, поэтому небольшой текст запроса не может превысить размер `DATA_UPLOAD_MAX_MEMORY_SIZE` после того, как Django уже проверил его.
 
 ### Пример
 

@@ -246,7 +246,7 @@ SnippetSerializer():
     style = ChoiceField(choices=[('autumn', 'autumn'), ('borland', 'borland'), ('bw', 'bw'), ('colorful', 'colorful')...
 ```
 
-Важно помнить, что классы `ModelSerializer` не обладают какими-то особыми волшебными свойствами — они просто представляют собой удобный способ создания классов сериализаторов:
+Важно помнить, что классы `ModelSerializer` не обладают какими-то особыми волшебными свойствами - они просто представляют собой удобный способ создания классов сериализаторов:
 
 * Автоматически определяемый набор полей.
 * Простые реализации по умолчанию для методов `create()` и `update()`.
@@ -368,7 +368,7 @@ Quit the server with CONTROL-C.
 
 В другом окне терминала мы можем протестировать сервер.
 
-Мы можем протестировать наш API с помощью [curl](https://curl.haxx.se/) или [HTTPie](https://github.com/httpie/httpie#installation). HTTPie — это удобный HTTP-клиент, написанный на Python. Давайте его установим.
+Мы можем протестировать наш API с помощью [curl](https://curl.haxx.se/) или [HTTPie](https://github.com/httpie/httpie#installation). HTTPie - это удобный HTTP-клиент, написанный на Python. Давайте его установим.
 
 Вы можете установить HTTPie с помощью pip:
 

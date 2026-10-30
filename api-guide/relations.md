@@ -498,7 +498,7 @@ class CustomerHyperlink(serializers.HyperlinkedRelatedField):
 
 ### Аргумент `queryset`.
 
-Аргумент `queryset` требуется только для *записываемого* поля отношения, в этом случае он используется для выполнения поиска экземпляра модели, который отображает примитивный пользовательский ввод в экземпляр модели.
+Аргумент `queryset` требуется только для *доступных для записи* полей отношений; в этом случае он используется для поиска экземпляра модели, который преобразует исходные данные, введенные пользователем, в экземпляр модели.
 
 В версии 2.x класс сериализатора мог *иногда* автоматически определять аргумент `queryset`, *если* использовался класс `ModelSerializer`.
 
@@ -673,4 +673,4 @@ def to_representation(self, value):
 
 Библиотека [rest-framework-generic-relations](https://github.com/Ian-Foote/rest-framework-generic-relations) обеспечивает сериализацию чтения/записи для общих внешних ключей.
 
-Библиотека [rest-framework-gm2m-relations][https://github.com/mojtabaakbari221b/rest-framework-gm2m-relations] обеспечивает сериализацию чтения/записи для [django-gm2m][https://github.com/tkhyn/django-gm2m].
+Библиотека [rest-framework-gm2m-relations](https://github.com/mojtabaakbari221b/rest-framework-gm2m-relations) обеспечивает сериализацию чтения/записи для [django-gm2m](https://github.com/tkhyn/django-gm2m).
