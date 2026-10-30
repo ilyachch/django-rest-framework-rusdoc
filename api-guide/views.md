@@ -220,3 +220,18 @@ def view(request):
 def view(request):
     return Response({"message": "Will not appear in schema!"})
 ```
+
+### Декоратор `@throttle_scope`
+
+Чтобы задать область действия ограничения для представлений, основанных на функциях, можно использовать декоратор `@throttle_scope`:
+
+```py
+from rest_framework.decorators import api_view, throttle_scope
+
+@api_view(['GET'])
+@throttle_scope("hello")
+def view(request):
+    return Response({"message": "Hello for today! See you tomorrow!"})
+```
+
+Более подробную информацию см. в [документации по ScopedRateThrottle](throttling.md#scopedratethrottle).
