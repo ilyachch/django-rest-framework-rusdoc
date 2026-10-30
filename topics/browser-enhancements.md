@@ -32,10 +32,10 @@
 
 ```html
 <form action="/">
-        <input data-override='content-type' value='application/json' type='hidden'/>
-        <textarea data-override='content'>{}</textarea>
-        <input type="submit"/>
-    </form>
+    <input data-override='content-type' value='application/json' type='hidden'/>
+    <textarea data-override='content'>{}</textarea>
+    <input type="submit"/>
+</form>
 ```
 
 Обратите внимание, что до версии 3.3.0 эта поддержка осуществлялась на стороне сервера, а не на основе javascript.
