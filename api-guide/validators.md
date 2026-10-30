@@ -114,7 +114,7 @@ class ExampleSerializer(serializers.Serializer):
 
 ---
 
-**Примечание:** Класс `UniqueTogetherValidator` всегда накладывает неявное ограничение на то, что все поля, к которым он применяется, всегда рассматриваются как обязательные. Поля со значениями `default` являются исключением из этого правила, так как они всегда предоставляют значение, даже если оно опущено при вводе пользователем.
+**Примечание:** Класс `UniqueTogetherValidator` всегда налагает неявное ограничение, согласно которому все поля, к которым оно применяется, всегда рассматриваются как обязательные для заполнения. Исключением из этого правила являются поля со значениями `default`, поскольку они всегда предоставляют значение, даже если оно не указано в пользовательском вводе. При использовании `ModelSerializer` поля модели с атрибутом `null=True` по умолчанию принимают значение `None`, а поля модели типа `CharField` или `TextField` с атрибутом `blank=True` — пустую строку, поэтому они также не рассматриваются как обязательные для заполнения.
 
 ---
 
@@ -246,6 +246,27 @@ class BillingRecordSerializer(serializers.ModelSerializer):
         fields = ['client', 'date', 'amount']
         extra_kwargs = {'client': {'required': False}}
         validators = []  # Remove a default "unique together" constraint.
+```
+
+### `UniqueConstraint` с условиями
+
+При использовании `UniqueConstraint` в Django с условиями, в которых упоминаются другие поля модели, DRF автоматически будет использовать `UniqueTogetherValidator` вместо `UniqueValidator` на уровне поля. Это обеспечивает правильное поведение валидации в тех случаях, когда ограничение фактически затрагивает несколько полей.
+
+Например, однополевое ограничение с условием превращается в многополевую валидацию, если условие ссылается на другие поля.
+
+```py
+class MyModel(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name'],
+                condition=models.Q(status='active'),
+                name='unique_active_name'
+            )
+        ]
 ```
 
 ### Обновление вложенных сериализаторов
