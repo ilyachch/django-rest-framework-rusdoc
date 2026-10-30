@@ -21,6 +21,16 @@ repos:
         entry: python3 .scripts/check_code_language.py
         language: system
         types: [markdown]
+      - id: markdown-python-language
+        name: Canonical Python code language
+        entry: python3 .scripts/check_python_language.py
+        language: system
+        types: [markdown]
+      - id: markdown-links
+        name: Markdown links and local targets
+        entry: python3 .scripts/check_links.py
+        language: system
+        types: [markdown]
       - id: markdown-heading-levels
         name: Markdown heading order
         entry: python3 .scripts/check_headings.py

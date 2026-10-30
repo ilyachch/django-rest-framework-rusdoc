@@ -5,7 +5,7 @@ import re
 import sys
 from pathlib import Path
 
-FENCE = re.compile(r'^ {0,3}(`{3,}|~{3,})(.*)$')
+FENCE = re.compile(r'^ *(`{3,}|~{3,})(.*)$')
 HEADING = re.compile(r'^ {0,3}(#{1,6})(?:\s|$)')
 SETEXT = re.compile(r'^ {0,3}(=+|-+)\s*$')
 LIST = re.compile(r'^\s*(?:[-+*]|\d+[.)])\s+')
@@ -32,7 +32,7 @@ def markdown_lines(text):
         if can_start_frontmatter and line.strip() and not line.lstrip().startswith('<!--'):
             can_start_frontmatter = False
         if fence:
-            if re.match(r'^ {0,3}' + re.escape(fence[0]) + '{' + str(len(fence)) + r',}\s*$', line):
+            if re.match(r'^ *' + re.escape(fence[0]) + '{' + str(len(fence)) + r',}\s*$', line):
                 fence = None
             yield number, line, 'code'
             continue

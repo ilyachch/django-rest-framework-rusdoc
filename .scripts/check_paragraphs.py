@@ -13,18 +13,8 @@ def check(text):
         if HEADING.match(line) or (paragraph is not None and SETEXT.match(line)):
             paragraph = None
             continue
-        if LIST.match(line):
-            paragraph = number
-            continue
-        if line.lstrip().startswith('>'):
-            line = re.sub(r'^\s*>\s?', '', line)
-            if not line or HEADING.match(line):
-                paragraph = None
-                continue
-            if LIST.match(line):
-                paragraph = number
-                continue
-        if line.startswith(('    ', '\t')) and paragraph is None:
+        if line[:1].isspace() or LIST.match(line) or line.startswith('>'):
+            paragraph = None
             continue
         if (RULE.match(line)
                 or line.lstrip().startswith('|') or re.match(r'^\s*\[[^]]+\]:', line)
