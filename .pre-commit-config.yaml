@@ -1,0 +1,33 @@
+repos:
+  - repo: local
+    hooks:
+      - id: markdown-paragraphs
+        name: Markdown paragraphs on one line
+        entry: python3 .scripts/check_paragraphs.py
+        language: system
+        types: [markdown]
+      - id: markdown-quotes
+        name: No guillemets
+        entry: python3 .scripts/check_quotes.py
+        language: system
+        types: [markdown]
+      - id: markdown-dashes
+        name: No em dashes
+        entry: python3 .scripts/check_dashes.py
+        language: system
+        types: [markdown]
+      - id: markdown-code-language
+        name: Markdown code block language
+        entry: python3 .scripts/check_code_language.py
+        language: system
+        types: [markdown]
+      - id: markdown-heading-levels
+        name: Markdown heading order
+        entry: python3 .scripts/check_headings.py
+        language: system
+        types: [markdown]
+      - id: markdown-blank-lines
+        name: No consecutive blank lines
+        entry: python3 .scripts/check_blank_lines.py
+        language: system
+        types: [markdown]
